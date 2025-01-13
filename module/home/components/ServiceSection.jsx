@@ -28,7 +28,7 @@ export default function ServiceSection() {
   }
 
   return (
-    <section className="mx-5 md:mx-12">
+    <section data-aos="fade-up" className="mx-5 md:mx-12">
       <div>
         <h2 className=" text-2xl md:text-3xl font-medium text-green">
           Paket Layanan
@@ -53,7 +53,7 @@ export default function ServiceSection() {
             <Card
               className={cn(
                 " shadow-none relative transition-all duration-300 ease-in-out w-full md:w-[65%] lg:w-full",
-                selected === index + 1 && "bg-green lg:scale-[1.01]",
+                selected === index + 1 && "bg-green",
                 showAll[index + 1]
                   ? "h-full"
                   : "h-[36rem] max-h-[36rem] md:h-[40rem] md:max-h-[40rem]"

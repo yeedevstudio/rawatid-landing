@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 export default function HeroSection() {
   const router = useRouter();
   return (
-    <section className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mx-5 md:mx-12">
-      <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 ">
+    <section data-aos="fade-up" className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mx-5 md:mx-12">
+      <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 ml-7">
         <h1 className="text-2xl md:text-4xl font-semibold text-green leading-tight md:leading-relaxed">
           Digitalisasi Rekam Medis dengan Rawat.ID
         </h1>
@@ -24,18 +24,21 @@ export default function HeroSection() {
           >
             Registrasi Sekarang
           </Button>
-          <Button className="text-green border border-green bg-white hover:bg-white shadow-none w-[35%] h-[2.5rem] md:h-[3rem] rounded-lg">
+          <Button
+            className="text-green border border-green bg-white hover:bg-white shadow-none w-[35%] h-[2.5rem] md:h-[3rem] rounded-lg"
+            onClick={() => router.push("/fitur")}
+          >
             Lihat Fitur
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-end">
         <Image
           src={"/images/hero_image.svg"}
           alt="hero_image"
-          width={500}
-          height={500}
-          className=" w-[20rem] h-[20rem]  md:w-[32rem] md:h-[30rem] lg:w-[39rem] lg:h-[29rem] rounded-tr-[12rem] rounded-bl-[12rem] lg:rounded-tr-[15rem] lg:rounded-bl-[15rem]"
+          width={900}
+          height={900}
+          className=" w-[20rem] h-[20rem]  md:w-[32rem] md:h-[30rem] lg:w-[39rem] lg:h-[29rem] rounded-tr-[12rem] rounded-bl-[12rem] lg:rounded-tr-[15rem] lg:rounded-bl-[15rem] "
         />
       </div>
     </section>

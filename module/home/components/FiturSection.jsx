@@ -51,7 +51,7 @@ export default function FiturSection() {
   }, []);
 
   return (
-    <section className="bg-grayHeader h-full py-10">
+    <section data-aos="fade-up" className="bg-grayHeader h-full py-10 ">
       <div className="mx-5 md:mx-12 flex flex-col gap-y-2 md:gap-y-4">
         <h2 className="text-2xl md:text-3xl text-green font-medium">
           Fitur Unggulan
@@ -77,7 +77,7 @@ export default function FiturSection() {
         </div>
         <div
           ref={cardContainerRef}
-          className="mt-[3rem] md:mt-[6rem] ml-5 md:ml-[3rem] overflow-x-scroll h-[32rem] flex gap-[2rem] md:gap-[3rem] scrollbar-hide"
+          className="mt-[3rem] md:mt-[6rem] ml-5 md:ml-[3rem] overflow-x-scroll h-[32rem] flex gap-[2rem] md:gap-[3rem] lg:gap-[5rem] scrollbar-hide"
         >
           {CardValue?.map((item, index) => (
             <div key={index} ref={index === 0 ? cardRef : null}>

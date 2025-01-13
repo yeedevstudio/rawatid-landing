@@ -14,7 +14,7 @@ export default function CardHome({
   return (
     <Card
       className={cn(
-        "w-[18rem] h-[28rem] md:w-[20rem] lg:w-[22rem] lg:h-[30.5rem] border-2 shadow-none cursor-pointer",
+        "w-[18rem] h-[28rem] md:w-[20rem] lg:w-[24rem] lg:h-[30.5rem] border-2 shadow-none cursor-pointer",
         selected && "border-green"
       )}
       onClick={onSelect}

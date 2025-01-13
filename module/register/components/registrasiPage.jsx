@@ -3,7 +3,7 @@ import FormRegis from "./FormRegis";
 
 export default function RegistrasiPage() {
   return (
-    <section className="mx-5 lg:mx-12">
+    <section data-aos="fade-up" className="mx-5 lg:mx-12">
       <div className="w-full my-20">
         <Image
           src={"/images/regis.svg"}

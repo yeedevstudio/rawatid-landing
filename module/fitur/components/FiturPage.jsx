@@ -21,7 +21,7 @@ export default function FiturPage() {
       </div>
       {/* card */}
       {fiturValue.map((item, index) => (
-        <div className="mx-4 mt-[4rem] md:mt-[8rem]" key={index} id={item?.id}>
+        <div data-aos="fade-up" className="mx-4 mt-[4rem] md:mt-[8rem]" key={index} id={item?.id}>
           <div className="grid grid-cols-2 gap-5 items-center">
             <h3 className="text-md md:text-4xl font-medium text-green leading-relaxed">
               {item?.title}

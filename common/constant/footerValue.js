@@ -3,17 +3,17 @@ export const footerLinks = [
     title: "Navigasi",
     links: [
       { title: "Beranda", url: "/" },
-      { title: "Tentang Kami", url: "/" },
+      // { title: "Tentang Kami", url: "/" },
       { title: "Lihat FItur", url: "/fitur" },
-      { title: "Blog", url: "/" },
+      // { title: "Blog", url: "/" },
     ],
   },
   {
     title: "Media Sosial",
     links: [
-      { title: "Facebook", url: "/" },
-      { title: "Instagram", url: "/" },
-      { title: "Twitter", url: "/" },
+      { title: "Facebook", url: "https://www.facebook.com/yeedevstudio" },
+      { title: "Instagram", url: "https://www.instagram.com/yeedevstudio/" },
+      { title: "Twitter", url: "https://x.com/yeedevstudio?mx=2" },
     ],
   },
 ];

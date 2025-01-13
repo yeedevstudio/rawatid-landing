@@ -7,7 +7,10 @@ const Footer = () => {
   return (
     <footer className="flex flex-col bg-green">
       <div className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
-        <div className="flex flex-col justify-start items-start gap-6">
+        <Link
+          href="/"
+          className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
+        >
           <Image
             src="/images/logo.svg"
             alt="logo"
@@ -16,13 +19,15 @@ const Footer = () => {
             className="object-contain bg-white p-1 rounded-full"
           />
           <p className="text-md md:text-lg text-white">
-           Rawat.ID Digitalisasi Rekam Medis Anda
+            Rawat.ID Digitalisasi Rekam Medis Anda
           </p>
-        </div>
+        </Link>
         <div className="footer__links">
           {footerLinks?.map((link) => (
             <div key={link?.title} className="footer__link">
-              <h3 className="text-md md:text-lg font-medium text-white">{link?.title}</h3>
+              <h3 className="text-md md:text-lg font-medium text-white">
+                {link?.title}
+              </h3>
               {link?.links.map((item) => (
                 <Link
                   href={item?.url}
@@ -37,7 +42,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
-        <p className="text-md md:text-lg font-normal text-white">&copy; 2024 Rawat ID</p>
+        <p className="text-md md:text-lg font-normal text-white">
+          &copy; 2024 Rawat ID
+        </p>
         {/* <div className="footer__copyrights-link">
           <Link href="/" className="text-white">
             Privacy Policy
