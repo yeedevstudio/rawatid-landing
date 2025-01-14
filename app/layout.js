@@ -30,17 +30,17 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/logo.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
         width: 800,
         height: 600,
       },
       {
-        url: "/logo.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
         width: 1200,
         height: 630,
       },
       {
-        url: "/logo.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
         width: 1600,
         height: 900,
       },
