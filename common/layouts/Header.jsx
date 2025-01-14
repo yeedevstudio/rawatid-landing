@@ -31,13 +31,13 @@ export default function Header() {
       <div className="hidden lg:flex items-center gap-20">
         <div className="flex gap-20 text-green">
           {headerValue?.map((item, index) => (
-            <Link href={item.url} key={index}>
+            <Link className="font-semibold text-sm md:text-lg bg-transparent" href={item.url} key={index}>
               {item.title}
             </Link>
           ))}
         </div>
         <Link href={"/register"}>
-          <Button className="bg-green text-white hover:bg-green shadow-none">
+          <Button className="bg-green text-white text-sm md:text-lg font-semibold hover:bg-green shadow-none">
             Registrasi
           </Button>
         </Link>
