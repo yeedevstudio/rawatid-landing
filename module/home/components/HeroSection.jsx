@@ -9,10 +9,10 @@ export default function HeroSection() {
   const router = useRouter();
   return (
     <section
-      data-aos="fade-up"
-      className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mx-5 md:mx-12"
+      data-aos=""
+      className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mx-5 md:mx-12 "
     >
-      <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 ml-0 md:ml-7">
+      <div data-aos="fade-right" className="flex flex-col gap-3 md:gap-6 lg:gap-8 ml-0 md:ml-7">
         <h1 className="text-2xl md:text-4xl font-semibold text-green leading-tight md:leading-relaxed">
           Digitalisasi Rekam Medis dengan Rawat.ID
         </h1>
@@ -37,7 +37,7 @@ export default function HeroSection() {
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-end">
+      <div data-aos="fade-left" className="flex items-center justify-end">
         <Image
           src={"/images/hero_image.svg"}
           alt="hero_image"

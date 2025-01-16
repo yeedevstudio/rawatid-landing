@@ -56,7 +56,7 @@ export default function FiturSection() {
         <h2 className="text-2xl md:text-3xl text-green font-medium">
           Fitur Unggulan
         </h2>
-        <h3 className="text-lg md:text-2xl font-normal">
+        <h3 className="text-base md:text-xl font-normal">
           Fitur rekam medis elektronik lengkap dan anjungan pendaftaran sampai
           laporan pendapatan, tinggal sesuaikan dengan kebutuhanmu!
         </h3>

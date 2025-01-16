@@ -28,7 +28,7 @@ export default function Header() {
       <Link href="/">
         <Image src={"/images/logo.svg"} alt="logo" width={40} height={40} />
       </Link>
-      <div className="hidden lg:flex items-center gap-20">
+      <nav className="hidden lg:flex items-center gap-20">
         <div className="flex gap-20 text-green">
           {headerValue?.map((item, index) => (
             <Link className="font-semibold text-sm md:text-lg bg-transparent" href={item.url} key={index}>
@@ -41,7 +41,7 @@ export default function Header() {
             Registrasi
           </Button>
         </Link>
-      </div>
+      </nav>
       <div className="flex lg:hidden">
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
           <SheetTrigger asChild>
@@ -61,7 +61,7 @@ export default function Header() {
               />
               <SheetTitle className="text-green text-2xl">Rawat.ID</SheetTitle>
             </Link>
-            <div className="px-4 mt-10">
+            <nav className="px-4 mt-10">
               <ul className="flex flex-col gap-10 text-green">
                 {headerValue?.map((item, index) => (
                   <Link href={item.url} key={index} onClick={handleClose}>
@@ -69,7 +69,7 @@ export default function Header() {
                   </Link>
                 ))}
               </ul>
-            </div>
+            </nav>
             <div className="mx-4 mt-10">
               <Button
                 onClick={handleClose}
