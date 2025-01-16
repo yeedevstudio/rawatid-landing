@@ -11,6 +11,7 @@ export const headerValue = [
     title: "Lihat Fitur",
     url: "/fitur",
   },
+  { title: "Blog", url: "https://rawatidblog.wordpress.com/" },
   {
     title: "Demo",
     url: "https://demo.rawat.id",
