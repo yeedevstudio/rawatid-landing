@@ -4,7 +4,7 @@ export async function GET(req, { params }) {
   const { districtId } = params;
 
   const res = await fetch(
-    `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${districtId}.json`
+    `${process.env.API_URL_RAWAT}/villages/${districtId}.json`
   );
   if (!res.ok) {
     return NextResponse.json(

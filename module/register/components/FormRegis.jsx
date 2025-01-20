@@ -128,7 +128,6 @@ export default function FormRegis() {
   };
 
   const handleSubmit = () => {
-    console.log(values);
     setLoadingSubmit(true);
     setTimeout(() => {
       setLoadingSubmit(false);

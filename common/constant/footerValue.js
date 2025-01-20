@@ -6,6 +6,7 @@ export const footerLinks = [
       // { title: "Tentang Kami", url: "/" },
       { title: "Lihat FItur", url: "/fitur" },
       { title: "Blog", url: "https://rawatidblog.wordpress.com/" },
+      { title: "Registrasi", url: "/register" },
     ],
   },
   {

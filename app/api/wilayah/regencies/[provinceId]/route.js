@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(req, { params }) {
   const { provinceId } = params;
 
-  const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
+  const res = await fetch(`${process.env.API_URL_RAWAT}/regencies/${provinceId}.json`);
   if (!res.ok) {
     return NextResponse.json({ error: "Failed to fetch regencies" }, { status: 500 });
   }

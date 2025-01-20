@@ -18,6 +18,7 @@ export default {
         greenImage: "#D8EDEE",
         neutral100: "#0A0A0A",
         neutral90: "#404040",
+        neutral50: "#C2C2C2",
         green60: "#99D1CC",
 
         background: "hsl(var(--background))",

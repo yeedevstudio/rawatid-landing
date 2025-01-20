@@ -1,11 +1,12 @@
 import { Poppins } from "next/font/google";
+import { lazy } from "react";
 import "./globals.css";
 
-import Header from "@/common/layouts/Header";
-import Footer from "@/common/layouts/Footer";
-import { Toaster } from "@/components/ui/sonner";
 import AOSProvider from "@/common/layouts/AosProvider";
+import { Toaster } from "@/components/ui/sonner";
 
+const Header = lazy(() => import("@/common/layouts/Header"));
+const Footer = lazy(() => import("@/common/layouts/Footer"));
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -24,9 +25,9 @@ export const metadata = {
     url: "https://www.yeedev.id/",
   },
   openGraph: {
+    canocical: "https://rawat.id",
     url: "https://rawat.id",
     siteName: "Rawat.ID",
-    locale: "id_ID",
     type: "website",
     images: [
       {
@@ -50,7 +51,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={`${poppins.className} antialiased relative`}>
         <Header />
         <AOSProvider>{children}</AOSProvider>

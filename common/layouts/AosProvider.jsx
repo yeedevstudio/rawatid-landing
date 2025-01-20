@@ -1,4 +1,3 @@
-// components/AOSProvider.js (Client Component)
 "use client";
 
 import { useEffect } from "react";
@@ -13,5 +12,5 @@ export default function AOSProvider({ children }) {
     });
   }, []);
 
-  return <>{children}</>;
+  return <main className="transition-all duration-200">{children}</main>;
 }
