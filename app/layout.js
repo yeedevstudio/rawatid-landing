@@ -31,17 +31,17 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png",
         width: 800,
         height: 600,
       },
       {
-        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png",
         width: 1200,
         height: 630,
       },
       {
-        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1736854216/logo_y6bey1.svg",
+        url: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png",
         width: 1600,
         height: 900,
       },
