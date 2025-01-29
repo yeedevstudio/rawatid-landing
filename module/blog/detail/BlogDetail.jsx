@@ -1,22 +1,22 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
+// import components
+import Tags from "./Tags";
+import Authors from "./Authors";
 import LinkPopuler from "./LinkPopuler";
-import { cn } from "@/lib/utils";
 import ContainerBlog from "@/common/components/ContainerBlog";
 import ButtonCopy from "@/common/components/ButtonCopy";
-import LinkArtikel from "@/module/blog/components/LinkArtikel";
+import LinkArtikel from "@/module/blog/detail/LinkArtikel";
 import RelatedArticle from "./RelatedArticle";
+import ButtonBack from "@/common/components/ButtonBack";
 
-export default function BlogDetail({
-  post,
-  allPosts,
-  categories,
-  author,
-  postCategory,
-}) {
+export default function BlogDetail({ post, allPosts, author, postCategory }) {
+  const usedCategories = new Set();
   return (
     <ContainerBlog>
+      <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
         <button
           aria-label="category"
@@ -36,7 +36,7 @@ export default function BlogDetail({
         <h1 className="py-6 text-xl md:text-2xl lg:text-3xl font-medium text-green tracking-wider">
           {post?.title}
         </h1>
-        <div className="relative rounded-2xl overflow-hidden h-[50vh] w-full mb-20">
+        <div className="relative rounded-2xl overflow-hidden h-[50vh] w-full mb-5 md:mb-20">
           <Image
             src={
               process.env.NEXT_PUBLIC_BASE_URL +
@@ -51,15 +51,15 @@ export default function BlogDetail({
         <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
           <section className="col-span-2">
             {post?.content.map((block, index) => {
+              const elements = [];
+
               switch (block.type) {
                 case "heading": {
-                  const HeadingTag = `h${block.level || 1}`;
-                  return (
+                  const HeadingTag = `h${block.level || 2}`;
+                  elements.push(
                     <HeadingTag
-                      key={index}
-                      className={cn(
-                        "mt-2 font-semibold text-lg md:text-xl lg:text-2xl"
-                      )}
+                      key={`heading-${index}`}
+                      className="mt-2 font-semibold text-lg md:text-xl lg:text-2xl"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
@@ -73,13 +73,14 @@ export default function BlogDetail({
                       ))}
                     </HeadingTag>
                   );
+                  break;
                 }
 
                 case "paragraph":
-                  return (
+                  elements.push(
                     <p
-                      key={index}
-                      className="text-justify mt-2 text-sm md:text-base lg:text-lg"
+                      key={`paragraph-${index}`}
+                      className="text-justify text-sm md:text-base lg:text-lg"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
@@ -93,25 +94,28 @@ export default function BlogDetail({
                       ))}
                     </p>
                   );
+                  break;
 
                 case "list":
                   const ListTag = block.format === "ordered" ? "ol" : "ul";
-                  return (
-                    <ListTag key={index} className="mt-5">
+                  elements.push(
+                    <ListTag key={`list-${index}`} className="mt-2">
                       {block.children.map((listItem, idx) => (
-                        <li key={idx} className="">
+                        <li key={`listItem-${index}-${idx}`} className="">
                           {listItem.children.map((child, cIdx) => {
                             const lines = child.text.split("\n");
                             return (
-                              <div key={cIdx}>
+                              <div key={`listItemChild-${index}-${cIdx}`}>
                                 {lines.map((line, lineIdx) => (
-                                  <React.Fragment key={lineIdx}>
+                                  <React.Fragment
+                                    key={`listItemLine-${index}-${lineIdx}`}
+                                  >
                                     {lineIdx === 0 ? (
                                       <span className="font-medium text-base md:text-lg lg:text-xl">{`${
                                         idx + 1
                                       } . ${line}`}</span>
                                     ) : (
-                                      <span className="block ml-7 text-justify text-sm md:text-base lg:text-lg">
+                                      <span className="ml-5 md:ml-7 text-justify text-sm md:text-base lg:text-lg">
                                         {line}
                                       </span>
                                     )}
@@ -125,12 +129,13 @@ export default function BlogDetail({
                       ))}
                     </ListTag>
                   );
+                  break;
 
                 case "image":
-                  return (
+                  elements.push(
                     <div
-                      key={index}
-                      className="mt-5 relative overflow-hidden border h-[40vh] rounded-sm"
+                      key={`image-${index}`}
+                      className="relative overflow-hidden border h-[40vh] rounded-sm"
                     >
                       <Image
                         src={
@@ -144,12 +149,13 @@ export default function BlogDetail({
                       />
                     </div>
                   );
+                  break;
 
                 case "quote":
-                  return (
+                  elements.push(
                     <blockquote
-                      key={index}
-                      className="mt-5 italic text-neutral90 text-sm md:text-base lg:text-lg"
+                      key={`quote-${index}`}
+                      className="italic text-neutral90 text-sm md:text-base lg:text-lg"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
@@ -163,83 +169,105 @@ export default function BlogDetail({
                       ))}
                     </blockquote>
                   );
+                  break;
 
                 case "code":
-                  return (
-                    <pre
-                      key={index}
-                      className="mt-5 bg-gray-800 text-white p-4 rounded overflow-x-auto text-sm md:text-base relative scrollbar-hide"
-                    >
-                      <code>
-                        {block.children.map((child, idx) => (
-                          <React.Fragment key={idx}>
-                            {child.text}
-                            <br />
-                          </React.Fragment>
-                        ))}
-                      </code>
-                      <ButtonCopy
-                        className="absolute right-5 top-5"
-                        text={block.children
-                          .map((child) => child.text)
-                          .join("\n")}
-                      />
-                    </pre>
+                  elements.push(
+                    <div className="relative">
+                      <pre
+                        key={`code-${index}`}
+                        className="pt-14 pb-4 bg-gray-800 text-white p-2 rounded overflow-x-auto text-sm md:text-base scrollbar-hide"
+                      >
+                        <code>
+                          {block.children.map((child, idx) => (
+                            <React.Fragment key={idx}>
+                              {child.text}
+                              <br />
+                            </React.Fragment>
+                          ))}
+                        </code>
+                        <ButtonCopy
+                          className="absolute right-1 top-2 md:right-5 md:top-5"
+                          text={block.children
+                            .map((child) => child.text)
+                            .join("\n")}
+                        />
+                      </pre>
+                    </div>
                   );
+                  break;
 
                 default:
-                  return null;
+                  break;
               }
-            })}
-            <section className="my-10">
-              <h2 className="text-sm md:text-base lg:text-lg font-medium">
-                Tags
-              </h2>
-              <div className="pt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
-                {categories?.map((data, index) => (
-                  <button
-                    key={index}
-                    className="py-1 px-3 border rounded-md border-neutral50 text-sm md:text-base lg:text-lg"
+
+              if ((index + 1) % 6 === 0 && postCategory?.length > 0) {
+                let randomIndex;
+
+                do {
+                  randomIndex = Math.floor(Math.random() * postCategory.length);
+                } while (
+                  usedCategories.has(randomIndex) &&
+                  usedCategories.size < postCategory.length
+                );
+
+                usedCategories.add(randomIndex);
+
+                const selectedCategory = postCategory[randomIndex];
+                elements.push(
+                  <div
+                    key={`postCategory-${index}`}
+                    className="w-full py-3 px-2 my-10 rounded-lg bg-green text-white"
                   >
-                    # {data?.name}
-                  </button>
-                ))}
-              </div>
-            </section>
+                    <h3 className="text-sm md:text-base lg:text-lg">
+                      Baca Juga :
+                      <Link
+                        href={`/blog/${selectedCategory?.slug}`}
+                        className="underline ml-2"
+                      >
+                        {selectedCategory?.title}
+                      </Link>
+                    </h3>
+                  </div>
+                );
+              }
+
+              if (elements.length < 6 && postCategory?.length > 0) {
+                const randomIndex = Math.floor(
+                  Math.random() * postCategory.length
+                );
+                const selectedCategory = postCategory[randomIndex];
+
+                elements.push(
+                  <div
+                    key="postCategory-bottom"
+                    className="w-full py-3 px-2 my-10 rounded-lg bg-green text-white"
+                  >
+                    <h3 className="text-sm md:text-base lg:text-lg">
+                      Baca Juga :
+                      <Link
+                        href={`/blog/${selectedCategory?.slug}`}
+                        className="underline ml-2"
+                      >
+                        {selectedCategory?.title}
+                      </Link>
+                    </h3>
+                  </div>
+                );
+              }
+
+              return elements;
+            })}
+
+            <Tags post={post} />
           </section>
           <section className="flex flex-col gap-2 md:gap-6">
             <LinkArtikel post={post} />
             <LinkPopuler blog={allPosts} />
           </section>
         </section>
-        <section className="flex items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6">
-          <Image
-            src={
-              process.env.NEXT_PUBLIC_BASE_URL +
-              author?.[0]?.avatar?.formats?.thumbnail?.url
-            }
-            alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
-            width={70}
-            height={70}
-            className="rounded-full h-[5rem] w-[5rem]"
-          />
-
-          <div>
-            <h3 className="text-xs md:text-sm lg:text-base">Author</h3>
-            <h2 className="text-sm md:text-base lg:text-lg font-medium">
-              {post?.author?.name}
-            </h2>
-            <h3 className="text-xs md:text-sm lg:text-base">
-              {post?.author?.job}
-            </h3>
-            <p className="text-neutral90 text-sm md:text-base lg:text-lg">
-              {post?.author?.bio}
-            </p>
-          </div>
-        </section>
-        <section className="my-24">
-          <RelatedArticle blog={postCategory} />
-        </section>
+        <Authors post={post} author={author} />
+        <RelatedArticle blog={postCategory} />
       </article>
     </ContainerBlog>
   );

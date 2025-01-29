@@ -25,10 +25,10 @@ export const CardArticle = ({
         )}
       >
         <Image
-          src={src}
+          src={process.env.NEXT_PUBLIC_BASE_URL + src}
           alt={alt}
           fill
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", position: "absolute" }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
@@ -36,7 +36,7 @@ export const CardArticle = ({
         <h2 className="p-1 w-fit rounded-md border border-neutral50 text-xs md:text-sm lg:text-base my-2 md:my-4">
           {category}
         </h2>
-        <h1 className="text-sm md:text-lg lg:text-xl font-medium tracking-wider">
+        <h1 className="text-sm md:text-base lg:text-lg font-medium tracking-wider">
           {title}
         </h1>
       </div>
@@ -69,11 +69,11 @@ export const CardArticleAll = ({
       )}
     >
       <Image
-        src={src}
+        src={process.env.NEXT_PUBLIC_BASE_URL + src}
         alt={alt}
         fill
-        style={{ objectFit: "cover" }}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        style={{ objectFit: "cover", position: "absolute" }}
+        // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
     <div>
@@ -81,7 +81,7 @@ export const CardArticleAll = ({
         {category}
       </h2>
     </div>
-    <h1 className="text-sm md:text-lg lg:text-xl font-medium tracking-wider">
+    <h1 className="text-sm md:text-base lg:text-lg font-medium tracking-wider">
       {title}
     </h1>
   </div>
@@ -96,10 +96,11 @@ export const CardArticleSidebar = ({
   width,
   selected,
   onSelect,
+  headline,
 }) => (
   <div
     className={cn(
-      "flex  gap-2 md:gap-6 h-full border p-2 md:p-3 rounded-[20px] cursor-pointer relative",
+      "grid grid-cols-2  gap-2 md:gap-6 h-full border p-2 md:p-3 rounded-[20px] cursor-pointer relative",
       selected && "border-green"
     )}
     onClick={onSelect}
@@ -107,25 +108,30 @@ export const CardArticleSidebar = ({
     <div
       className={cn(
         height ? height : "h-full",
-        width ? width : "w-[45rem]",
+        width ? width : "w-full",
         "relative rounded-2xl overflow-hidden"
       )}
     >
       <Image
-        src={src}
+        src={process.env.NEXT_PUBLIC_BASE_URL + src}
         alt={alt}
         fill
-        style={{ objectFit: "cover" }}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        style={{ objectFit: "cover", position: "absolute" }}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 30vw"
       />
     </div>
     <div>
       <h2 className="p-1 w-fit rounded-md border border-neutral50 text-xs md:text-sm lg:text-base my-2 md:my-4">
         {category}
       </h2>
-      <h1 className="text-sm md:text-lg lg:text-xl font-medium tracking-wider ">
+      <h1 className="text-sm md:text-base lg:text-lg font-medium tracking-wider">
         {title}
       </h1>
+      {headline && (
+        <p className="text-xs md:text-sm lg:text-base mt-5 font-light text-neutral90">
+          {headline}
+        </p>
+      )}
     </div>
   </div>
 );

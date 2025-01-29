@@ -1,12 +1,11 @@
 import { Poppins } from "next/font/google";
-import { lazy } from "react";
 import "./globals.css";
 
-import AOSProvider from "@/common/layouts/AosProvider";
 import { Toaster } from "@/components/ui/sonner";
+import AOSProvider from "@/common/layouts/AosProvider";
+import Header from "@/common/layouts/Header";
+import Footer from "@/common/layouts/Footer";
 
-const Header = lazy(() => import("@/common/layouts/Header"));
-const Footer = lazy(() => import("@/common/layouts/Footer"));
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],

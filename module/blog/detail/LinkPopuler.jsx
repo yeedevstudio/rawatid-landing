@@ -13,7 +13,7 @@ export default function LinkPopuler({ blog }) {
     router.push(`/blog/${slug}`);
   };
 
-  const blogFilter = blog.filter((blog) => blog.featured === true);
+  const blogFilter = blog.filter((blog) => blog.featured === true).slice(0, 4);
 
   return (
     <div>
@@ -24,15 +24,10 @@ export default function LinkPopuler({ blog }) {
         {blogFilter?.map((article, index) => (
           <div key={index}>
             <CardArticleSidebar
-              src={
-                process.env.NEXT_PUBLIC_BASE_URL +
-                article?.thumbnail?.formats?.small?.url
-              }
+              src={article?.thumbnail?.formats?.small?.url}
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
               title={article.title}
-              // width={50}
-              height={60}
               index={index}
               selected={selected === index}
               onSelect={() => handleSelected(index, article.slug)}

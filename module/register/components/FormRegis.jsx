@@ -20,10 +20,6 @@ export default function FormRegis() {
   const [regencies, setRegencies] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [villages, setVillages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingRegencies, setLoadingRegencies] = useState(false);
-  const [loadingDistricts, setLoadingDistricts] = useState(false);
-  const [loadingVillages, setLoadingVillages] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [values, setValues] = useState({
@@ -57,7 +53,6 @@ export default function FormRegis() {
       const res = await fetch("/api/wilayah/provinces");
       const data = await res.json();
       setProvinces(data);
-      setLoading(false);
     }
     fetchProvinces();
   }, []);
@@ -69,7 +64,6 @@ export default function FormRegis() {
       const res = await fetch(`/api/wilayah/regencies/${values?.provinsi}`);
       const data = await res.json();
       setRegencies(data);
-      setLoadingRegencies(false);
     }
     fetchRegencies();
   }, [values.provinsi]);
@@ -81,7 +75,6 @@ export default function FormRegis() {
       const res = await fetch(`/api/wilayah/districts/${values?.kabupaten}`);
       const data = await res.json();
       setDistricts(data);
-      setLoadingDistricts(false);
     }
     fetchDistricts();
   }, [values.kabupaten]);
@@ -93,7 +86,6 @@ export default function FormRegis() {
       const res = await fetch(`/api/wilayah/villages/${values?.kecamatan}`);
       const data = await res.json();
       setVillages(data);
-      setLoadingVillages(false);
     }
     fetchVillages();
   }, [values.kecamatan]);

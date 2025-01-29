@@ -8,7 +8,7 @@ import { CardArticleAll } from "@/common/components/CardArticle";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 
-export default function BlogAll({ data }) {
+export default function BlogCategory({ data, category }) {
   const router = useRouter();
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
@@ -35,14 +35,14 @@ export default function BlogAll({ data }) {
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
-        href="/fitur"
+        href={`/blog/category/${category?.slug}`}
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
-        Artikel terbaru
+        {category?.name}
       </Link>
       {loading ? (
         <div className="grid grid-cols-3 gap-2 md:gap-6 py-6">
-          {blogFilter?.map((article, index) => (
+          {data?.map((article, index) => (
             <div key={index}>
               <Skeleton className="w-full h-[300px] rounded-xl " />
             </div>

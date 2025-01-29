@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { CardArticleAll } from "@/common/components/CardArticle";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,7 +18,7 @@ export default function RelatedArticle({ blog }) {
   const blogFilter = blog?.slice(0, 6) || [];
 
   return (
-    <div>
+    <section className="my-24">
       <Link
         href="/fitur"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
@@ -36,22 +36,19 @@ export default function RelatedArticle({ blog }) {
           {blogFilter?.map((article, index) => (
             <div key={index} className={article.span}>
               <CardArticleAll
-                src={
-                  process.env.NEXT_PUBLIC_BASE_URL +
-                  article?.thumbnail?.formats?.small?.url
-                }
+                src={article?.thumbnail?.formats?.small?.url}
                 alt={article?.thumbnail?.formats?.small?.url}
                 category={article.category?.name}
-                height={"h-[300px]"}
+                height={"h-[180px]"}
                 title={article.title}
                 index={index}
                 selected={selected === index}
-                onSelect={() => handleSelected(index)}
+                onSelect={() => handleSelected(index, article.slug)}
               />
             </div>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
