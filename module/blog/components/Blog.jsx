@@ -12,14 +12,13 @@ export default function BlogPage({ data }) {
     (item) => item?.category?.slug === "pelayanan"
   );
   const dataTeknologi = data?.filter(
-    (item) => item?.category?.slug === "Teknologi"
+    (item) => item?.category?.slug === "teknologi"
   );
 
   return (
     <ContainerBlog>
       <BlogHighlight data={data} />
       <BlogAll data={data} />
-      <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
       <BlogCategory
         data={dataPelayanan}
         category={dataPelayanan[0]?.category}
@@ -28,6 +27,7 @@ export default function BlogPage({ data }) {
         data={dataTeknologi}
         category={dataTeknologi[0]?.category}
       />
+      <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
     </ContainerBlog>
   );
 }
