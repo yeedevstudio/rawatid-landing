@@ -35,7 +35,7 @@ export default function BlogAll({ data }) {
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
-        href="/fitur"
+        href="/blog/all"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
         Artikel terbaru

@@ -19,7 +19,6 @@ export async function generateMetadata({ params }) {
     if (dataSlug) {
       return {
         title: `Category | ${dataSlug?.name}`,
-        description: dataSlug?.headline,
         canonical: `${process.env.NEXT_PUBLIC_URL}/category/${slug}`,
       };
     }
@@ -29,8 +28,6 @@ export async function generateMetadata({ params }) {
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
-    console.error("Error generating metadata:", error);
-
     return {
       title: "Category | Error",
       description: "An error occurred while fetching the blog post.",

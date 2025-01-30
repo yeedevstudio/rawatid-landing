@@ -56,8 +56,6 @@ export async function generateMetadata({ params }) {
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
-    console.error("Error generating metadata:", error);
-
     return {
       title: "Rawat ID | Error",
       description: "An error occurred while fetching the blog post.",

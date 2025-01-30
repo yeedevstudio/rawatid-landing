@@ -50,8 +50,6 @@ export async function generateMetadata({ params }) {
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
-    console.error("Error generating metadata:", error);
-
     return {
       title: "Author | Error",
       description: "An error occurred while fetching the blog post.",
@@ -67,20 +65,25 @@ export default async function Page({ params }) {
   }
 
   try {
-    const [postSlugRes, postAllRes] = await Promise.all([
+    const [postSlugRes, postAllRes, authorAllRes] = await Promise.all([
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`
       ),
       fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
+      fetch(
+        `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`
+      ),
     ]);
 
-    const [postSlug, postAll] = await Promise.all([
+    const [postSlug, postAll, author] = await Promise.all([
       postSlugRes.json(),
       postAllRes.json(),
+      authorAllRes.json(),
     ]);
 
     const dataSlug = postSlug.data || null;
     const dataAll = postAll.data || [];
+    const dataAuthor = author.data?.[0] || null;
 
     if (!dataSlug) {
       return <NotFound />;
@@ -91,6 +94,7 @@ export default async function Page({ params }) {
         data={dataSlug}
         post={dataAll}
         title={"Author"}
+        author={dataAuthor}
         slug={dataSlug?.[0]?.author?.name}
       />
     );

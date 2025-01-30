@@ -19,7 +19,6 @@ export async function generateMetadata({ params }) {
     if (dataSlug) {
       return {
         title: `Tags | ${slug}`,
-        description: dataSlug?.headline,
         canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
       };
     }
@@ -29,7 +28,6 @@ export async function generateMetadata({ params }) {
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
-    console.error("Error generating metadata:", error);
 
     return {
       title: "Tags | Error",
@@ -80,7 +78,6 @@ export default async function Page({ params }) {
       />
     );
   } catch (error) {
-    console.error("Error fetching data:", error);
     return <Error />;
   }
 }
