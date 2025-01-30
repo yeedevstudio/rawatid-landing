@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ButtonBack from "@/common/components/ButtonBack";
 
-export default function PageByAll({ data }) {
+export default function PageBySearch({ data }) {
   const router = useRouter();
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
@@ -37,13 +37,8 @@ export default function PageByAll({ data }) {
 
   return (
     <ContainerBlog>
-      <ButtonBack />
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
-        Artikel Terbaru
-      </h1>
-
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-6 py-6">
           {data?.map((article, index) => (
             <div key={index}>
               <Skeleton className="w-full h-[300px] rounded-xl " />
@@ -51,7 +46,7 @@ export default function PageByAll({ data }) {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
           {blogFilter?.map((article, index) => (
             <div key={index} className={article.span}>
               <CardArticleAll
