@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BlogAll from "../components/BlogAll";
 
-export default function PageCategory({ data, post }) {
+export default function PageBy({ data, post, slug, title }) {
   const router = useRouter();
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
@@ -34,8 +34,8 @@ export default function PageCategory({ data, post }) {
 
   return (
     <ContainerBlog>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green">
-        Category : {data?.[0]?.category?.name}
+      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
+        {title} : {slug}
       </h1>
 
       {loading ? (

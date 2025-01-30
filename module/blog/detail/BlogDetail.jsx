@@ -18,12 +18,13 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
     <ContainerBlog>
       <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
-        <button
+        <Link
+          href={`/blog/category/${post?.category?.slug}`}
           aria-label="category"
           className="text-sm md:text-base lg:text-lg border border-neutral50 p-1 px-2 rounded-lg hover:border-green hover:text-green transition-all duration-150 ease-in-out"
         >
           {post?.category?.name}
-        </button>
+        </Link>
         <span className="text-sm md:text-base lg:text-lg">
           {new Date(post?.updatedAt).toLocaleDateString("id-ID", {
             day: "2-digit",

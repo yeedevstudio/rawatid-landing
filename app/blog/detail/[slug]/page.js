@@ -1,3 +1,5 @@
+import Error from "@/app/error";
+import NotFound from "@/app/not-found";
 import BlogDetail from "@/module/blog/detail/BlogDetail";
 
 export async function generateMetadata({ params }) {
@@ -30,17 +32,17 @@ export async function generateMetadata({ params }) {
           type: "article",
           images: [
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 800,
               height: 600,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1200,
               height: 630,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1600,
               height: 900,
             },
@@ -91,7 +93,7 @@ export default async function Page({ params }) {
     const dataSlug = postSlug.data?.[0] || null;
 
     if (!dataSlug) {
-      return <div>Post not found</div>;
+      return <NotFound />;
     }
 
     const dataAll = postAll.data || [];
@@ -121,7 +123,6 @@ export default async function Page({ params }) {
       />
     );
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return <div>Failed to load data. Please try again later.</div>;
+    return <Error />;
   }
 }

@@ -12,7 +12,7 @@ export default function RelatedArticle({ blog }) {
 
   const handleSelected = (index, slug) => {
     setSelected(index);
-    router.push(`/blog/${slug}`);
+    router.push(`/blog/detail/${slug}`);
   };
 
   const blogFilter = blog?.slice(0, 6) || [];
@@ -20,7 +20,7 @@ export default function RelatedArticle({ blog }) {
   return (
     <section className="my-24">
       <Link
-        href="/fitur"
+        href="/"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
         Artikel terkait

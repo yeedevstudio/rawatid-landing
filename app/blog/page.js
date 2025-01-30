@@ -1,4 +1,5 @@
 import BlogPage from "@/module/blog";
+import Error from "../error";
 
 export const metadata = {
   title: "Rawat ID | Blog",
@@ -24,6 +25,6 @@ export default async function Page() {
 
     return <BlogPage data={dataSlug} />;
   } catch (error) {
-    return <div>Failed to load data. Please try again later.</div>;
+    return <Error />;
   }
 }

@@ -10,7 +10,7 @@ export default function LinkPopuler({ blog }) {
 
   const handleSelected = (index, slug) => {
     setSelected(index);
-    router.push(`/blog/${slug}`);
+    router.push(`/blog/detail/${slug}`);
   };
 
   const blogFilter = blog.filter((blog) => blog.featured === true).slice(0, 4);

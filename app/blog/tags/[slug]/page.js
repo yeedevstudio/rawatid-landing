@@ -1,4 +1,6 @@
-import PageTags from "@/module/blog/Tags/PageTags";
+import Error from "@/app/error";
+import NotFound from "@/app/not-found";
+import PageBy from "@/module/blog/components/PageBy";
 
 export async function generateMetadata({ params }) {
   const slug = params?.slug || "";
@@ -30,17 +32,17 @@ export async function generateMetadata({ params }) {
           type: "article",
           images: [
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 800,
               height: 600,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1200,
               height: 630,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1600,
               height: 900,
             },
@@ -86,12 +88,26 @@ export default async function Page({ params }) {
     const dataSlug = postSlug.data || null;
     const dataAll = postAll.data || [];
 
-    if (!dataSlug) {
-      return <div>Post not found</div>;
+    let filteredTags = null;
+    if (dataSlug.length !== 0) {
+      filteredTags =
+        dataSlug?.[0]?.tags?.filter((tag) => tag.slug === slug) || [];
     }
 
-    return <PageTags data={dataSlug} post={dataAll} slug={slug} />;
+    if (!dataSlug) {
+      return <NotFound />;
+    }
+
+    return (
+      <PageBy
+        data={dataSlug}
+        post={dataAll}
+        slug={filteredTags?.[0]?.name}
+        title={"Tags"}
+      />
+    );
   } catch (error) {
-    return <div>Failed to load data. Please try again later.</div>;
+    console.error("Error fetching data:", error);
+    return <Error />;
   }
 }

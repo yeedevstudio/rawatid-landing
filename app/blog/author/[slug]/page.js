@@ -1,5 +1,6 @@
-import PageAuthor from "@/module/blog/author/PageAuthor";
-import BlogDetail from "@/module/blog/detail/BlogDetail";
+import Error from "@/app/error";
+import NotFound from "@/app/not-found";
+import PageBy from "@/module/blog/components/PageBy";
 
 export async function generateMetadata({ params }) {
   const slug = params?.slug || "";
@@ -31,17 +32,17 @@ export async function generateMetadata({ params }) {
           type: "article",
           images: [
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 800,
               height: 600,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1200,
               height: 630,
             },
             {
-              url: dataSlug?.thumbnail?.url,
+              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
               width: 1600,
               height: 900,
             },
@@ -88,11 +89,13 @@ export default async function Page({ params }) {
     const dataAll = postAll.data || [];
 
     if (!dataSlug) {
-      return <div>Post not found</div>;
+      return <NotFound />;
     }
 
-    return <PageAuthor data={dataSlug} post={dataAll} />;
+    return (
+      <PageBy data={dataSlug} post={dataAll} title={"Author"} slug={dataSlug?.[0]?.author?.name} />
+    );
   } catch (error) {
-    return <div>Failed to load data. Please try again later.</div>;
+    return <Error />;
   }
 }

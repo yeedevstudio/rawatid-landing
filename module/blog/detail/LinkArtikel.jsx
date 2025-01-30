@@ -19,7 +19,7 @@ export default function LinkArtikel({ post }) {
         <IconBrandX className="h-9 w-9 text-white bg-green rounded-md cursor-pointer" />
         <IconBrandFacebook className="h-9 w-9 text-white bg-green rounded-md cursor-pointer" />
         <IconBrandLinkedin className="h-9 w-9 text-white bg-green rounded-md cursor-pointer" />
-        <ButtonCopy text={process.env.NEXT_PUBLIC_URL + "/" + post?.slug} />
+        <ButtonCopy text={process.env.NEXT_PUBLIC_URL + "/detail/" + post?.slug} />
       </div>
     </div>
   );
