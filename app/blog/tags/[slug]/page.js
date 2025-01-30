@@ -21,45 +21,18 @@ export async function generateMetadata({ params }) {
         title: `Tags | ${slug}`,
         description: dataSlug?.headline,
         canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
-        openGraph: {
-          article: {
-            publishedTime: dataSlug?.publishedAt,
-            modifiedTime: dataSlug?.publishedAt,
-            authors: [dataSlug?.author?.name, dataSlug?.author?.job],
-          },
-          title: dataSlug?.title,
-          description: dataSlug?.headline,
-          type: "article",
-          images: [
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
-              width: 800,
-              height: 600,
-            },
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
-              width: 1200,
-              height: 630,
-            },
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
-              width: 1600,
-              height: 900,
-            },
-          ],
-        },
       };
     }
 
     return {
-      title: "Rawat ID | Not Found",
+      title: "Tags | Not Found",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
 
     return {
-      title: "Rawat ID | Error",
+      title: "Tags | Error",
       description: "An error occurred while fetching the blog post.",
     };
   }
