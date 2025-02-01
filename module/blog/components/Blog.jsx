@@ -16,8 +16,7 @@ export default function BlogPage({ data }) {
 
   const filteredData = data?.filter(
     (item) =>
-      item?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item?.headline?.toLowerCase().includes(searchQuery.toLowerCase())
+      item?.title?.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
   const dataBerita = data?.filter((item) => item?.category?.slug === "berita");

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { headerValue } from "../constant/headerValue";
+import { headerValue, headerValueBlog } from "../constant/headerValue";
 import {
   Sheet,
   SheetContent,
@@ -97,6 +97,19 @@ export default function Header() {
           <Link href="/">
             <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
           </Link>
+          <nav className="hidden lg:flex items-center gap-20">
+            <div className="flex gap-20 text-green">
+              {headerValueBlog?.map((item, index) => (
+                <Link
+                  className="text-sm md:text-lg bg-transparent"
+                  href={item.url}
+                  key={index}
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
+          </nav>
         </header>
       )}
     </>

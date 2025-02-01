@@ -17,3 +17,18 @@ export const headerValue = [
     url: "https://demo.rawat.id",
   },
 ];
+
+export const headerValueBlog = [
+  {
+    title: "Pelayanan",
+    url: "/blog/category/pelayanan",
+  },
+  {
+    title: "Teknologi",
+    url: "/blog/category/teknologi",
+  },
+  {
+    title: "Berita",
+    url: "/blog/category/berita",
+  },
+];

@@ -17,7 +17,7 @@ export default function Authors({ post, author }) {
       />
 
       <div>
-        <h3 className="text-xs md:text-sm lg:text-base">Author</h3>
+        <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
         <Link href={`/blog/author/${post?.author?.slug}`}>
           <h2 className="text-base md:text-lg lg:text-xl font-medium">
             {post?.author?.name}
