@@ -16,7 +16,7 @@ export default async function Page() {
 
   try {
     const [postSlugRes] = await Promise.all([
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
     ]);
 
     const [postSlug] = await Promise.all([postSlugRes.json()]);

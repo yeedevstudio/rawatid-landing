@@ -52,8 +52,8 @@ export default function PageBy({ data, post, slug, title, author }) {
             className="rounded-full h-[8rem] w-[8rem]"
           />
           <div className="flex flex-col items-center justify-center">
-            <h3 className="text-xs md:text-sm lg:text-base">Author</h3>
-            <h2 className="text-base md:text-lg lg:text-xl font-medium">
+            <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
+            <h2 className="text-base md:text-lg lg:text-xl font-medium capitalize">
               {author?.name}
             </h2>
             <p className="text-neutral90 text-sm md:text-base lg:text-lg">

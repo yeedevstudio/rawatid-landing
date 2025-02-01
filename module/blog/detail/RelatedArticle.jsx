@@ -19,12 +19,9 @@ export default function RelatedArticle({ blog }) {
 
   return (
     <section className="my-24">
-      <Link
-        href="/"
-        className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
-      >
+      <div className="text-sm md:text-lg lg:text-xl text-green font-medium">
         Artikel terkait
-      </Link>
+      </div>
       {!blog ? (
         <div className="grid grid-cols-3 gap-2 md:gap-6 py-6">
           <Skeleton className="w-full h-[300px] max-h-full rounded-xl " />

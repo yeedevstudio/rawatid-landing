@@ -15,7 +15,7 @@ export default function ButtonBack() {
       onClick={handleBack}
     >
       <IconCircleArrowLeft />
-      Back
+      Kembali
     </button>
   );
 }

@@ -48,7 +48,7 @@ export default async function Page({ params }) {
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`
       ),
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
     ]);
 
     const [postSlug, postAll] = await Promise.all([

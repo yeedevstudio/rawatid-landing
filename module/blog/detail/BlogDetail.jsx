@@ -15,7 +15,7 @@ import ButtonBack from "@/common/components/ButtonBack";
 export default function BlogDetail({ post, allPosts, author, postCategory }) {
   const usedCategories = new Set();
   return (
-    <ContainerBlog>
+    <ContainerBlog aos="fade-up">
       <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
         <Link

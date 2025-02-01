@@ -69,7 +69,7 @@ export default async function Page({ params }) {
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`
       ),
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
       fetch(
         `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`
       ),
@@ -93,7 +93,7 @@ export default async function Page({ params }) {
       <PageBy
         data={dataSlug}
         post={dataAll}
-        title={"Author"}
+        title={"Penulis"}
         author={dataAuthor}
         slug={dataSlug?.[0]?.author?.name}
       />

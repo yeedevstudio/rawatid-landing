@@ -19,7 +19,7 @@ export const CardArticle = ({
     >
       <div
         className={cn(
-          "h-[12rem] md:h-full",
+          "h-[12rem] md:h-full min-h-[12rem] md:min-h-[15rem]",
           "w-full",
           "relative rounded-2xl overflow-hidden"
         )}
@@ -63,7 +63,7 @@ export const CardArticleAll = ({
   >
     <div
       className={cn(
-        height ? height : "h-full",
+        height ? height : "h-full min-h-[15rem]",
         width ? width : "w-full",
         "relative rounded-2xl overflow-hidden"
       )}
@@ -107,7 +107,7 @@ export const CardArticleSidebar = ({
   >
     <div
       className={cn(
-        height ? height : "h-full",
+        height ? height : "h-full min-h-[12rem]",
         width ? width : "w-full",
         "relative rounded-2xl overflow-hidden"
       )}

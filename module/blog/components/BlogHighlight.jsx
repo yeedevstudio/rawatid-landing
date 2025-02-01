@@ -78,7 +78,6 @@ export default function BlogHighlight({ data }) {
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
               title={article.title}
-              height={"h-[200px]"}
               index={index}
               selected={selected === index}
               onSelect={() => handleSelected(index, article.slug)}

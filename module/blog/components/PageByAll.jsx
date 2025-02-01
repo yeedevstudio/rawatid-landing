@@ -1,21 +1,20 @@
 "use client";
-
-import {
-  CardArticleAll,
-  CardArticleSidebar,
-} from "@/common/components/CardArticle";
-import ContainerBlog from "@/common/components/ContainerBlog";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import { CardArticleAll } from "@/common/components/CardArticle";
+import { Skeleton } from "@/components/ui/skeleton";
+import ContainerBlog from "@/common/components/ContainerBlog";
 import ButtonBack from "@/common/components/ButtonBack";
+import PaginationPage from "@/common/components/PaginationPage";
 
-export default function PageByAll({ data }) {
+export default function PageByAll({ data, pagination }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
+
+  const currentPage = parseInt(searchParams.get("page")) || 1;
 
   const handleSelected = (index, slug) => {
     setSelected(index);
@@ -23,15 +22,8 @@ export default function PageByAll({ data }) {
   };
 
   useEffect(() => {
-    const setTimeLoading = setTimeout(() => {
-      if (data) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-    }, 2000);
-    return () => clearTimeout(setTimeLoading);
-  }, []);
+    setLoading(false);
+  }, [data]);
 
   const blogFilter = show ? data : data?.slice(0, 24);
 
@@ -44,7 +36,7 @@ export default function PageByAll({ data }) {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 py-6">
-          {data?.map((article, index) => (
+          {data?.map((_, index) => (
             <div key={index}>
               <Skeleton className="w-full h-[300px] rounded-xl " />
             </div>
@@ -69,6 +61,12 @@ export default function PageByAll({ data }) {
           ))}
         </div>
       )}
+
+      <PaginationPage
+        page={currentPage}
+        pageCount={pagination.pageCount}
+        onPageChange={(newPage) => router.push(`/blog/all?page=${newPage}`)}
+      />
     </ContainerBlog>
   );
 }

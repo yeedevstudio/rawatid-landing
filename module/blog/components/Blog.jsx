@@ -37,7 +37,7 @@ export default function BlogPage({ data }) {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <IconSearch className="h-12 w-10 text-white bg-green p-2 absolute top-0 left-0 rounded-l-lg" />
+        <IconSearch className="h-12 w-10 text-white bg-green p-2 absolute top-0 left-0 rounded-l-md" />
       </div>
       {searchQuery && filteredData?.length > 0 ? (
         <PageBySearch data={filteredData} />
