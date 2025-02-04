@@ -222,9 +222,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 elements.push(
                   <div
                     key={`postCategory-${index}`}
-                    className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
+                    className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
                   >
-                    <h3 className="text-sm md:text-base lg:text-lg">
+                    <h3 className="text-sm md:text-base lg:text-base">
                       Baca Juga :
                       <Link
                         href={`/blog/${selectedCategory?.slug}`}
@@ -246,9 +246,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 elements.push(
                   <div
                     key="postCategory-bottom"
-                    className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
+                    className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
                   >
-                    <h3 className="text-sm md:text-base lg:text-lg">
+                    <h3 className="text-sm md:text-base lg:text-base">
                       Baca Juga :
                       <Link
                         href={`/blog/${selectedCategory?.slug}`}

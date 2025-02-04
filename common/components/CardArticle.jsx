@@ -108,7 +108,7 @@ export const CardArticleSidebar = ({
       className={cn(
         height ? height : "h-full ",
         width ? width : "w-full",
-        "relative rounded-2xl overflow-hidden min-h-[12rem]"
+        "relative rounded-2xl overflow-hidden min-h-[25rem]"
       )}
     >
       <Image

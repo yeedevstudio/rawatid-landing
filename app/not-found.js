@@ -11,7 +11,7 @@ export default function NotFound() {
         <h2 className="text-lg md:text-xl lg:text-2xl font-medium text-neutral90">
           Halaman tidak ditemukan
         </h2>
-        <p className="text-xs md:text-sm lg:text-base text-neutral90">
+        <p className="text-xs md:text-sm lg:text-base text-neutral90 text-center px-5 md:px-0">
           Sepertinya Anda salah alamat, atau halaman ini telah dihapus. Silahkan
           coba eksplor halaman lainnya
         </p>

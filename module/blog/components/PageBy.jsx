@@ -37,7 +37,7 @@ export default function PageBy({ data, post, slug, title, author }) {
 
   return (
     <ContainerBlog>
-      <ButtonBack/>
+      <ButtonBack />
       <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
         {title} : {slug}
       </h1>
@@ -56,7 +56,7 @@ export default function PageBy({ data, post, slug, title, author }) {
             <h2 className="text-base md:text-lg lg:text-xl font-medium capitalize">
               {author?.name}
             </h2>
-            <p className="text-neutral90 text-sm md:text-base lg:text-lg">
+            <p className="text-neutral90 text-sm md:text-base lg:text-lg text-center pt-2">
               {author?.bio}
             </p>
           </div>
@@ -79,7 +79,6 @@ export default function PageBy({ data, post, slug, title, author }) {
                 src={article?.thumbnail?.formats?.small?.url}
                 alt={article?.thumbnail?.formats?.small?.url}
                 category={article.category?.name}
-                height={"h-[25rem]"}
                 title={article.title}
                 index={index}
                 selected={selected === index}

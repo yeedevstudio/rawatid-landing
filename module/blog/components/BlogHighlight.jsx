@@ -48,12 +48,12 @@ export default function BlogHighlight({ data }) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 gap-2 md:gap-6 md:my-[6rem] h-full">
-        <Skeleton className="w-full h-full max-h-full rounded-xl" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 md:my-[6rem] h-full">
+        <Skeleton className="w-full h-full min-h-[400px] max-h-full rounded-xl" />
         <div className="grid grid-cols-1 gap-2 md:gap-6">
-          <Skeleton className="w-full h-[200px] rounded-xl " />
-          <Skeleton className="w-full h-[200px] rounded-xl" />
-          <Skeleton className="w-full h-[200px] rounded-xl" />
+          <Skeleton className="w-full h-[400px] rounded-xl " />
+          <Skeleton className="w-full h-[400px] rounded-xl" />
+          <Skeleton className="w-full h-[400px] rounded-xl" />
         </div>
       </div>
     );

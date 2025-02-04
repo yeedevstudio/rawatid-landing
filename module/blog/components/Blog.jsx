@@ -14,14 +14,13 @@ import PageBySearch from "./PageBySearch";
 export default function BlogPage({ data }) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = data?.filter(
-    (item) =>
-      item?.title?.toLowerCase().includes(searchQuery.toLowerCase()) 
+  const filteredData = data?.filter((item) =>
+    item?.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const dataBerita = data?.filter((item) => item?.category?.slug === "berita");
-  const dataPelayanan = data?.filter(
-    (item) => item?.category?.slug === "pelayanan"
+  const dataInformasi = data?.filter(
+    (item) => item?.category?.slug === "informasi-umum"
   );
   const dataTeknologi = data?.filter(
     (item) => item?.category?.slug === "teknologi"
@@ -44,15 +43,15 @@ export default function BlogPage({ data }) {
         <>
           <BlogHighlight data={data} />
           <BlogAll data={data} />
-          <BlogCategory
-            data={dataPelayanan}
-            category={dataPelayanan[0]?.category}
-          />
+          <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
           <BlogCategory
             data={dataTeknologi}
             category={dataTeknologi[0]?.category}
           />
-          <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
+          <BlogCategory
+            data={dataInformasi}
+            category={dataInformasi[0]?.category}
+          />
         </>
       )}
     </ContainerBlog>

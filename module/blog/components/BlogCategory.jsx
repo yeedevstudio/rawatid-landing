@@ -66,14 +66,16 @@ export default function BlogCategory({ data, category }) {
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-center py-5">
-            <Link
-              href={`/blog/category/${category?.slug}`}
-              className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
-            >
-              Lihat semua
-            </Link>
-          </div>
+          {data.length > 4 && (
+            <div className="flex items-center justify-center py-5">
+              <Link
+                href={`/blog/category/${category?.slug}`}
+                className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
+              >
+                Lihat semua
+              </Link>
+            </div>
+          )}
         </>
       )}
     </div>
