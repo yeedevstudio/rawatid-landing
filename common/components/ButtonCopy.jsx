@@ -19,12 +19,12 @@ const ButtonCopy = ({ text, className }) => {
   return (
     <button
       className={cn(
-        "border border-neutral50 p-1 md:px-3 md:py-2 rounded-md text-neutral50 hover:bg-neutral-200 transition-all duration-300 ease-in-out flex items-center text-sm md:text-base",
+        "border border-neutral50 p-1 md:px-3 md:py-2 rounded-md text-neutral50 hover:bg-neutral-200 transition-all duration-300 ease-in-out flex items-center text-xs md:text-base",
         className
       )}
       onClick={() => copyToClipboard(text)}
     >
-      <IconCopy className="h-5 w-5 " /> Salin
+      <IconCopy className="h-4 w-4 md:h-5 md:w-5 " /> Salin
     </button>
   );
 };

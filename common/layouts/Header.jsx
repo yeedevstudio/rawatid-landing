@@ -110,6 +110,39 @@ export default function Header() {
               ))}
             </div>
           </nav>
+          <div className="flex lg:hidden">
+            <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
+              <SheetTrigger asChild>
+                <IconMenu2 className="w-8 h-8 text-green" />
+              </SheetTrigger>
+              <SheetContent side="left">
+                <Link
+                  href="/"
+                  onClick={handleClose}
+                  className={"flex items-center gap-3 px-4 mt-7"}
+                >
+                  <Image
+                    src={"/images/logo.svg"}
+                    alt="logo"
+                    width={50}
+                    height={50}
+                  />
+                  <SheetTitle className="text-green text-2xl">
+                    Blog Rawat.ID
+                  </SheetTitle>
+                </Link>
+                <nav className="px-4 mt-10">
+                  <ul className="flex flex-col gap-10 text-green">
+                    {headerValueBlog?.map((item, index) => (
+                      <Link href={item.url} key={index} onClick={handleClose}>
+                        {item.title}
+                      </Link>
+                    ))}
+                  </ul>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </header>
       )}
     </>

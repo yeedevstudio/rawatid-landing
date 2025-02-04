@@ -15,8 +15,10 @@ export default function BlogHighlight({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
 
   const blogFilter = data.filter((blog) => blog.featured === true);
+  const blog = show ? blogFilter : blogFilter?.slice(0, 4);
 
   const handleSelected = (index, slug) => {
     setSelected(index);
@@ -71,7 +73,7 @@ export default function BlogHighlight({ data }) {
         />
       </div>
       <div className="grid grid-cols-1 gap-2 md:gap-6">
-        {blogFilter.map((article, index) => (
+        {blog.map((article, index) => (
           <div key={index}>
             <CardArticleSidebar
               src={article?.thumbnail?.formats?.small?.url}

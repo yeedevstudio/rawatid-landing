@@ -17,9 +17,9 @@ export default function LinkArtikel({ post }) {
       <h2 className="text-sm md:text-base lg:text-lg font-medium text-green">
         Bagikan artikel
       </h2>
-      <div className="flex items-center gap-2 md:gap-6 py-6">
+      <div className="flex items-center gap-2 md:gap-3 lg:gap-6 py-6">
         <IconBrandWhatsapp
-          className="h-9 w-9  text-white bg-green rounded-md cursor-pointer"
+          className="h-6 w-6 md:h-9 md:w-9  text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
               `https://wa.me/?text=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
@@ -29,7 +29,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandX
-          className="h-9 w-9 text-white bg-green rounded-md cursor-pointer"
+          className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
               `https://twitter.com/intent/tweet?text=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
@@ -39,9 +39,9 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandFacebook
-          className="h-9 w-9 text-white bg-green rounded-md cursor-pointer"
+          className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
-            router.push(
+            window.open(
               `https://www.facebook.com/sharer/sharer.php?u=${
                 (process.env.NEXT_PUBLIC_URL + "/detail/" + post?.slug,
                 "_blank",
@@ -51,7 +51,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandLinkedin
-          className="h-9 w-9 text-white bg-green rounded-md cursor-pointer"
+          className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
               `https://www.linkedin.com/shareArticle?mini=true&url=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
@@ -61,10 +61,10 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandInstagram
-          className="h-9 w-9 text-white bg-green rounded-md cursor-pointer"
+          className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
-              `https://www.instagram.com/sharer/sharer.php?u=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
+              `https://www.instagram.com/direct/new/?link=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
               "_blank",
               "noopener,noreferrer"
             )

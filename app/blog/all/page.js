@@ -15,9 +15,9 @@ export default async function Page({ searchParams }) {
     throw new Error("API URL is not defined in environment variables.");
   }
 
-  console.log(searchParams.page);
+
   const currentPage = parseInt(searchParams?.page) || 1;
-  const pageSize = 2;
+  const pageSize = 8;
 
   try {
     const res = await fetch(

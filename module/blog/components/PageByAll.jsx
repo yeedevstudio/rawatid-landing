@@ -50,7 +50,7 @@ export default function PageByAll({ data, pagination }) {
                 src={article?.thumbnail?.formats?.small?.url}
                 alt={article?.thumbnail?.formats?.small?.url}
                 category={article.category?.name}
-                height={"h-[20rem]"}
+                height={"h-[10rem] md:h-[12rem] lg:h-[14rem]"}
                 title={article.title}
                 index={index}
                 selected={selected === index}

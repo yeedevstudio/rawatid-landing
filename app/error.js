@@ -28,7 +28,7 @@ export default function Error() {
         </Link>
         <Link
           href={"/"}
-          className="bg-green text-white hover:bg-green60 transition-all duration-300 ease-in-out py-2 px-4 rounded-md"
+          className="bg-green text-white hover:bg-green60 transition-all duration-300 ease-in-out py-2 px-4 rounded-md text-center"
         >
           Kembali ke Beranda
         </Link>

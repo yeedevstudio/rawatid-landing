@@ -21,7 +21,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         <Link
           href={`/blog/category/${post?.category?.slug}`}
           aria-label="category"
-          className="text-sm md:text-base lg:text-lg border border-neutral50 p-1 px-2 rounded-lg hover:border-green hover:text-green transition-all duration-150 ease-in-out"
+          className="text-sm md:text-sm text-white bg-green px-4 py-1 rounded-lg"
         >
           {post?.category?.name}
         </Link>
@@ -81,7 +81,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                   elements.push(
                     <p
                       key={`paragraph-${index}`}
-                      className="text-justify text-sm md:text-base lg:text-lg"
+                      className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
@@ -106,9 +106,13 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                           {listItem.children.map((child, cIdx) => {
                             const lines = child.text.split("\n");
                             return (
-                              <div key={`listItemChild-${index}-${cIdx}`}>
+                              <div
+                                key={`listItemChild-${index}-${cIdx}`}
+                                className="mb-5"
+                              >
                                 {lines.map((line, lineIdx) => (
-                                  <React.Fragment
+                                  <div
+                                    className="mt-2 text-justify"
                                     key={`listItemLine-${index}-${lineIdx}`}
                                   >
                                     {lineIdx === 0 ? (
@@ -116,12 +120,12 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                                         idx + 1
                                       } . ${line}`}</span>
                                     ) : (
-                                      <span className="ml-5 md:ml-7 text-justify text-sm md:text-base lg:text-lg">
+                                      <span className="ml-5 md:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
                                         {line}
                                       </span>
                                     )}
                                     <br />
-                                  </React.Fragment>
+                                  </div>
                                 ))}
                               </div>
                             );
@@ -156,7 +160,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                   elements.push(
                     <blockquote
                       key={`quote-${index}`}
-                      className="italic text-neutral90 text-sm md:text-base lg:text-lg"
+                      className="italic text-neutral90 text-sm md:text-base lg:text-lg leading-loose"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
@@ -177,7 +181,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                     <div className="relative">
                       <pre
                         key={`code-${index}`}
-                        className="pt-14 pb-4 bg-gray-800 text-white p-2 rounded overflow-x-auto text-sm md:text-base scrollbar-hide"
+                        className="pt-14 pb-4 bg-gray-800 text-white p-2 rounded overflow-x-auto text-sm md:text-base scrollbar-hide leading-loose"
                       >
                         <code>
                           {block.children.map((child, idx) => (
@@ -218,7 +222,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 elements.push(
                   <div
                     key={`postCategory-${index}`}
-                    className="w-full py-3 px-2 my-10 rounded-lg bg-green text-white"
+                    className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
                   >
                     <h3 className="text-sm md:text-base lg:text-lg">
                       Baca Juga :
@@ -242,7 +246,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 elements.push(
                   <div
                     key="postCategory-bottom"
-                    className="w-full py-3 px-2 my-10 rounded-lg bg-green text-white"
+                    className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
                   >
                     <h3 className="text-sm md:text-base lg:text-lg">
                       Baca Juga :

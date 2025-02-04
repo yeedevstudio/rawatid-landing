@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Authors({ post, author }) {
   return (
-    <section className="flex items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6 my-20">
+    <section className="flex items-center gap-2 md:gap-6 lg;gap-10 rounded-2xl w-full py-6 px-12 my-20 bg-green border border-white hover:border-black transition-all duration-300 ease-in-out">
       <Image
         src={
           process.env.NEXT_PUBLIC_BASE_URL +
@@ -17,13 +17,13 @@ export default function Authors({ post, author }) {
       />
 
       <div>
-        <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
+        <h3 className="text-white text-xs md:text-sm lg:text-base">Penulis</h3>
         <Link href={`/blog/author/${post?.author?.slug}`}>
-          <h2 className="text-base md:text-lg lg:text-xl font-medium">
+          <h2 className="text-white text-lg/8 md:text-xl/8 lg:text-2xl/8 font-medium">
             {post?.author?.name}
           </h2>
         </Link>
-        <p className="text-neutral90 text-sm md:text-base lg:text-lg">
+        <p className="text-white text-sm md:text-base lg:text-lg">
           {post?.author?.bio}
         </p>
       </div>

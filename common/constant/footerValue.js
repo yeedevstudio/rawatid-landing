@@ -18,3 +18,23 @@ export const footerLinks = [
     ],
   },
 ];
+
+
+export const footerBlogLinks = [
+  {
+    title: "Navigasi",
+    links: [
+      { title: "Berita", url: "/blog/category/berita" },
+      { title: "Kesehatan", url: "/blog/category/kesehatan" },
+      { title: "Teknologi", url: "/blog/category/teknologi" },
+    ],
+  },
+  {
+    title: "Media Sosial",
+    links: [
+      { title: "Facebook", url: "https://www.facebook.com/yeedevstudio" },
+      { title: "Instagram", url: "https://www.instagram.com/yeedevstudio/" },
+      { title: "Twitter", url: "https://x.com/yeedevstudio?mx=2" },
+    ],
+  },
+];
