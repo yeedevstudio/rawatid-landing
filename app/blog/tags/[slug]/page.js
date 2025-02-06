@@ -18,19 +18,19 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Tags | ${slug}`,
+        title: `Tag | ${slug}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
       };
     }
 
     return {
-      title: "Tags | Not Found",
+      title: "Tag | Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
 
     return {
-      title: "Tags | Error",
+      title: "Tag | Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

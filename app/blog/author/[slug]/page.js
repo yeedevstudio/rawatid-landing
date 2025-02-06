@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Author | ${dataSlug?.name}`,
+        title: `Penulis | ${dataSlug?.name}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
         openGraph: {
           canocical: process.env.NEXT_PUBLIC_URL + "/author/" + slug,
@@ -46,12 +46,12 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-      title: "Author | Not Found",
+      title: "Penulis | Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     return {
-      title: "Author | Error",
+      title: "Penulis | Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

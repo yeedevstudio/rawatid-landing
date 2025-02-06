@@ -36,12 +36,12 @@ export default function BlogCategory({ data, category }) {
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
         href={`/blog/category/${category?.slug}`}
-        className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
+        className="text-sm md:text-lg lg:text-xl text-green font-medium underline capitalize"
       >
         {category?.name}
       </Link>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">
           {data?.map((article, index) => (
             <div key={index}>
               <Skeleton className="w-full h-[300px] rounded-xl " />
@@ -50,7 +50,7 @@ export default function BlogCategory({ data, category }) {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
             {blogFilter?.map((article, index) => (
               <div key={index} className={article.span}>
                 <CardArticleAll

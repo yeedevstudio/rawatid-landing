@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CardArticleSidebar } from "@/common/components/CardArticle";
+import { CardArticlePopuler } from "@/common/components/CardArticle";
 import { useRouter } from "next/navigation";
 
 export default function LinkPopuler({ blog }) {
@@ -23,10 +23,11 @@ export default function LinkPopuler({ blog }) {
       <div className="py-6 grid grid-cols-1 gap-2 md:gap-6">
         {blogFilter?.map((article, index) => (
           <div key={index}>
-            <CardArticleSidebar
+            <CardArticlePopuler
               src={article?.thumbnail?.formats?.small?.url}
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
+              height={"h-[8rem] md:h-[12rem] lg:h-[10rem]"}
               title={article.title}
               index={index}
               selected={selected === index}

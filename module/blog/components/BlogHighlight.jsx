@@ -48,19 +48,19 @@ export default function BlogHighlight({ data }) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 md:my-[6rem] h-full">
-        <Skeleton className="w-full h-full min-h-[400px] max-h-full rounded-xl" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 md:my-[6rem] h-full">
+        <Skeleton className="w-full h-full min-h-[300px] lg:min-h-[400px] max-h-full rounded-xl" />
         <div className="grid grid-cols-1 gap-2 md:gap-6">
-          <Skeleton className="w-full h-[400px] rounded-xl " />
-          <Skeleton className="w-full h-[400px] rounded-xl" />
-          <Skeleton className="w-full h-[400px] rounded-xl" />
+          <Skeleton className="w-full h-[300px] lg:h-[400px] rounded-xl " />
+          <Skeleton className="w-full h-[300px] lg:h-[400px]  rounded-xl" />
+          <Skeleton className="w-full h-[300px] lg:h-[400px]  rounded-xl" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 h-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 h-full">
       <div className="transition-all duration-300 ease-in-out">
         <CardArticle
           src={currentArticle?.thumbnail?.formats?.small?.url}
@@ -79,6 +79,7 @@ export default function BlogHighlight({ data }) {
               src={article?.thumbnail?.formats?.small?.url}
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
+              height={"h-[12rem] md:h-[15rem]"}
               title={article.title}
               index={index}
               selected={selected === index}

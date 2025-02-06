@@ -75,7 +75,7 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <p className="text-md md:text-lg text-white">
-                Rawat.ID Digitalisasi Rekam Medis Anda
+               Blog Rawat.ID Sumber Informasi Terkini
               </p>
             </Link>
             <div className="footer__links">

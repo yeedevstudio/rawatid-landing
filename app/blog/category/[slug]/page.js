@@ -18,18 +18,18 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Category | ${dataSlug?.name}`,
+        title: `Kategori | ${dataSlug?.name}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/category/${slug}`,
       };
     }
 
     return {
-      title: "Category | Not Found",
+      title: "Kategori | Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     return {
-      title: "Category | Error",
+      title: "Kategori | Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

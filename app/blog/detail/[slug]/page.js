@@ -52,12 +52,12 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-      title: "Rawat ID | Not Found",
+      title: "Rawat ID | Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     return {
-      title: "Rawat ID | Error",
+      title: "Rawat ID | Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

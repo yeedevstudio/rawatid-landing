@@ -49,7 +49,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-6">
           <section className="col-span-2">
             {post?.content.map((block, index) => {
               const elements = [];
@@ -60,7 +60,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                   elements.push(
                     <HeadingTag
                       key={`heading-${index}`}
-                      className="mt-2 font-semibold text-lg md:text-xl lg:text-2xl"
+                      className="mt-2 font-semibold text-lg md:text-xl lg:text-3xl"
                     >
                       {block.children.map((child, idx) => (
                         <React.Fragment key={idx}>
