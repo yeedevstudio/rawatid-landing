@@ -17,7 +17,7 @@ export default function LinkArtikel({ post }) {
       <h2 className="text-sm md:text-base lg:text-lg font-medium text-green">
         Bagikan artikel
       </h2>
-      <div className="flex items-center gap-2 lg:gap-4 py-6">
+      <div className="flex items-center gap-4 md:gap-6 lg:gap-4 py-6">
         <IconBrandWhatsapp
           className="h-6 w-6 md:h-9 md:w-9  text-white bg-green rounded-md cursor-pointer"
           onClick={() =>

@@ -19,8 +19,8 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
         <Link
-          href={`/blog/category/${post?.category?.slug}`}
-          aria-label="category"
+          href={`/blog/kategori/${post?.category?.slug}`}
+          aria-label="kategori"
           className="text-sm md:text-sm text-white bg-green px-4 py-1 rounded-lg"
         >
           {post?.category?.name}
@@ -37,7 +37,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         <h1 className="py-6 text-xl md:text-2xl lg:text-3xl font-medium text-green tracking-wider">
           {post?.title}
         </h1>
-        <div className="relative rounded-2xl overflow-hidden h-[50vh] w-full mb-5 md:mb-20">
+        <div className="relative rounded-2xl overflow-hidden h-[30vh] lg:h-[50vh] w-full mb-5 md:mb-10 lg:mb-12">
           <Image
             src={
               process.env.NEXT_PUBLIC_BASE_URL +
@@ -49,8 +49,8 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-6">
-          <section className="col-span-2">
+        <section className="grid grid-cols-1 lg:grid-cols-[60%_35%] gap-2 md:gap-12">
+          <section className="w-full">
             {post?.content.map((block, index) => {
               const elements = [];
 
@@ -227,7 +227,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                     <h3 className="text-sm md:text-base lg:text-base">
                       Baca Juga :
                       <Link
-                        href={`/blog/${selectedCategory?.slug}`}
+                        href={`/blog/detail/${selectedCategory?.slug}`}
                         className="underline ml-2"
                       >
                         {selectedCategory?.title}
@@ -251,7 +251,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                     <h3 className="text-sm md:text-base lg:text-base">
                       Baca Juga :
                       <Link
-                        href={`/blog/${selectedCategory?.slug}`}
+                        href={`/blog/detail/${selectedCategory?.slug}`}
                         className="underline ml-2"
                       >
                         {selectedCategory?.title}
@@ -266,7 +266,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
 
             <Tags post={post} />
           </section>
-          <section className="flex flex-col gap-2 md:gap-6">
+          <section className="w-full flex flex-col gap-2 md:gap-6">
             <LinkArtikel post={post} />
             <LinkPopuler blog={allPosts} />
           </section>

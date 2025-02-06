@@ -30,12 +30,12 @@ export default function BlogAll({ data }) {
     return () => clearTimeout(setTimeLoading);
   }, []);
 
-  const blogFilter = show ? data : data?.slice(0, 8);
+  const blogFilter = show ? data : data?.slice(0, 6);
 
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
-        href="/blog/all"
+        href="/blog/semua"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
         Artikel terbaru
@@ -66,14 +66,16 @@ export default function BlogAll({ data }) {
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-center py-5">
-            <Link
-              href="/blog/all"
-              className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
-            >
-              Lihat semua
-            </Link>
-          </div>
+          {data?.length > 6 && (
+            <div className="flex items-center justify-center py-5">
+              <Link
+                href="/blog/semua"
+                className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
+              >
+                Lihat semua
+              </Link>
+            </div>
+          )}
         </>
       )}
     </div>

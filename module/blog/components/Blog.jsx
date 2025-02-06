@@ -18,6 +18,7 @@ export default function BlogPage({ data }) {
     item?.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const dataKesehatan = data?.filter((item) => item?.category?.slug === "kesehatan");
   const dataBerita = data?.filter((item) => item?.category?.slug === "berita");
   const dataInformasi = data?.filter(
     (item) => item?.category?.slug === "informasi-umum"
@@ -43,11 +44,12 @@ export default function BlogPage({ data }) {
         <>
           <BlogHighlight data={data} />
           <BlogAll data={data} />
-          <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
+          <BlogCategory data={dataKesehatan} category={dataKesehatan[0]?.category} />
           <BlogCategory
             data={dataTeknologi}
             category={dataTeknologi[0]?.category}
           />
+          <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
           <BlogCategory
             data={dataInformasi}
             category={dataInformasi[0]?.category}

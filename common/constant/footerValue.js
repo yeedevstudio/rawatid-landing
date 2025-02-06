@@ -19,14 +19,14 @@ export const footerLinks = [
   },
 ];
 
-
 export const footerBlogLinks = [
   {
     title: "Navigasi",
     links: [
-      { title: "Berita", url: "/blog/category/berita" },
-      { title: "Kesehatan", url: "/blog/category/kesehatan" },
-      { title: "Teknologi", url: "/blog/category/teknologi" },
+      { title: "Kesehatan", url: "/blog/kategori/kesehatan" },
+      { title: "Teknologi", url: "/blog/kategori/teknologi" },
+      { title: "Berita", url: "/blog/kategori/berita" },
+      { title: "Informasi Umum", url: "/blog/kategori/informasi-umum" },
     ],
   },
   {

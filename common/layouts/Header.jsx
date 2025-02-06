@@ -94,7 +94,7 @@ export default function Header() {
         </header>
       ) : (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
-          <Link href="/">
+          <Link href="/blog">
             <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
@@ -109,6 +109,11 @@ export default function Header() {
                 </Link>
               ))}
             </div>
+            <Link href={"/register"}>
+              <Button className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none">
+                Registrasi EMR
+              </Button>
+            </Link>
           </nav>
           <div className="flex lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
@@ -117,9 +122,9 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
-                  href="/"
+                  href="/blog"
                   onClick={handleClose}
-                  className={"flex items-center gap-3 px-4 mt-7"}
+                  className={"flex items-center gap-1 px-1 mt-7"}
                 >
                   <Image
                     src={"/images/logo.svg"}
@@ -127,7 +132,7 @@ export default function Header() {
                     width={50}
                     height={50}
                   />
-                  <SheetTitle className="text-green text-2xl">
+                  <SheetTitle className="text-green text-xl">
                     Blog Rawat.ID
                   </SheetTitle>
                 </Link>
@@ -140,6 +145,14 @@ export default function Header() {
                     ))}
                   </ul>
                 </nav>
+                <div className="mx-4 mt-10">
+                  <Button
+                    onClick={handleClose}
+                    className="bg-green text-white hover:bg-green shadow-none w-full"
+                  >
+                    <Link href="/register">Registrasi EMR</Link>
+                  </Button>
+                </div>
               </SheetContent>
             </Sheet>
           </div>

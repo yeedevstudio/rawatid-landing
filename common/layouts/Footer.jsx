@@ -12,6 +12,8 @@ const Footer = () => {
 
   const blogPage = pageName === "blog" || router.startsWith("/blog/");
 
+  const date = new Date().getFullYear();
+
   return (
     <footer className="flex flex-col bg-green">
       {!blogPage ? (
@@ -29,7 +31,7 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <p className="text-md md:text-lg text-white">
-                Rawat.ID Digitalisasi Rekam Medis Anda
+                Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
               </p>
             </Link>
             <div className="footer__links">
@@ -56,7 +58,7 @@ const Footer = () => {
           </nav>
           <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
             <p className="text-md md:text-lg font-normal text-white">
-              &copy; 2024 Rawat ID
+              &copy; {date} Rawat.ID
             </p>
           </div>
         </div>
@@ -75,7 +77,7 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <p className="text-md md:text-lg text-white">
-               Blog Rawat.ID Sumber Informasi Terkini
+              Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
               </p>
             </Link>
             <div className="footer__links">
@@ -102,7 +104,7 @@ const Footer = () => {
           </nav>
           <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
             <p className="text-md md:text-lg font-normal text-white">
-              &copy; 2024 Blog Rawat ID
+              &copy; {date} Blog Rawat.ID
             </p>
           </div>
         </div>

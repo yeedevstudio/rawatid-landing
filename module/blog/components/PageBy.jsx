@@ -43,21 +43,23 @@ export default function PageBy({ data, post, slug, title, author }) {
       </h1>
 
       {author && (
-        <section className="flex flex-col items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6 my-20">
+        <section className="flex flex-col items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6 my-10 md:my-20">
           <Image
             src={process.env.NEXT_PUBLIC_BASE_URL + author?.avatar?.url}
             alt={author?.avatar?.name}
             width={60}
             height={60}
-            className="rounded-full h-[8rem] w-[8rem]"
+            className="rounded-full h-[6rem] w-[6rem]"
           />
           <div className="flex flex-col items-center justify-center">
             <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
-            <h2 className="text-base md:text-lg lg:text-xl font-medium capitalize">
+            <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
               {author?.name}
             </h2>
-            <p className="text-neutral90 text-sm md:text-base lg:text-lg text-center pt-2">
-              {author?.bio}
+            <p className=" text-xs md:text-sm lg:text-sm text-center md:text-justify mt-2 px-2 md:px-6">
+              <span className="font-semibold text-lg mr-1">"</span>
+              {author?.bio.split(" ").slice(0, 50).join(" ")}
+              <span className="font-semibold text-lg ml-1">"</span>
             </p>
           </div>
         </section>

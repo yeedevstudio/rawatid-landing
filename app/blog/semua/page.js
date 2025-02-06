@@ -3,7 +3,7 @@ import NotFound from "@/app/not-found";
 import PageByAll from "@/module/blog/components/PageByAll";
 
 export const metadata = {
-  title: "Rawat ID | Blog",
+  title: "Rawat.ID - Blog",
   description:
     "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan dan Teknologi.",
   keywords:

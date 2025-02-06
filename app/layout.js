@@ -14,13 +14,13 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Rawat ID",
+  title: "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
   description:
     "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!",
   keywords:
-    "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat.ID",
+    "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat.ID, Rekam Medis Elektronik, Rumah Sakit, Klinik",
   authors: {
-    name: "Yeddev Studio",
+    name: "Yeedev Studio",
     url: "https://www.yeedev.id/",
   },
   openGraph: {

@@ -11,47 +11,26 @@ export async function generateMetadata({ params }) {
 
   try {
     const postSlugRes = await fetch(
-      `${process.env.API_URL}/authors?populate=*&filters[slug][$eq]=${slug}`
+      `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;
 
     if (dataSlug) {
       return {
-        title: `Penulis | ${dataSlug?.name}`,
+        title: `Tag - ${slug}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
-        openGraph: {
-          canocical: process.env.NEXT_PUBLIC_URL + "/author/" + slug,
-          siteName: "Rawat.ID",
-          type: "website",
-          images: [
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.avatar?.url,
-              width: 800,
-              height: 600,
-            },
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.avatar?.url,
-              width: 1200,
-              height: 630,
-            },
-            {
-              url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.avatar?.url,
-              width: 1600,
-              height: 900,
-            },
-          ],
-        },
       };
     }
 
     return {
-      title: "Penulis | Tidak Ditemukan",
+      title: "Tag - Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
+
     return {
-      title: "Penulis | Kesalahan",
+      title: "Tag - Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }
@@ -65,25 +44,26 @@ export default async function Page({ params }) {
   }
 
   try {
-    const [postSlugRes, postAllRes, authorAllRes] = await Promise.all([
+    const [postSlugRes, postAllRes] = await Promise.all([
       fetch(
-        `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`
+        `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`
       ),
       fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
-      fetch(
-        `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`
-      ),
     ]);
 
-    const [postSlug, postAll, author] = await Promise.all([
+    const [postSlug, postAll] = await Promise.all([
       postSlugRes.json(),
       postAllRes.json(),
-      authorAllRes.json(),
     ]);
 
     const dataSlug = postSlug.data || null;
     const dataAll = postAll.data || [];
-    const dataAuthor = author.data?.[0] || null;
+
+    let filteredTags = null;
+    if (dataSlug.length !== 0) {
+      filteredTags =
+        dataSlug?.[0]?.tags?.filter((tag) => tag.slug === slug) || [];
+    }
 
     if (!dataSlug) {
       return <NotFound />;
@@ -93,9 +73,8 @@ export default async function Page({ params }) {
       <PageBy
         data={dataSlug}
         post={dataAll}
-        title={"Penulis"}
-        author={dataAuthor}
-        slug={dataSlug?.[0]?.author?.name}
+        slug={filteredTags?.[0]?.name}
+        title={"Tags"}
       />
     );
   } catch (error) {

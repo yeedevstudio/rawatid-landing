@@ -20,15 +20,19 @@ export const headerValue = [
 
 export const headerValueBlog = [
   {
-    title: "Berita",
-    url: "/blog/category/berita",
+    title: "Beranda",
+    url: "/",
   },
   {
     title: "Kesehatan",
-    url: "/blog/category/kesehatan",
+    url: "/blog/kategori/kesehatan",
   },
   {
     title: "Teknologi",
-    url: "/blog/category/teknologi",
+    url: "/blog/kategori/teknologi",
+  },
+  {
+    title: "Berita",
+    url: "/blog/kategori/berita",
   },
 ];

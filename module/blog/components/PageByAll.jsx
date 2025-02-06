@@ -65,7 +65,7 @@ export default function PageByAll({ data, pagination }) {
       <PaginationPage
         page={currentPage}
         pageCount={pagination.pageCount}
-        onPageChange={(newPage) => router.push(`/blog/all?page=${newPage}`)}
+        onPageChange={(newPage) => router.push(`/blog/semua?page=${newPage}`)}
       />
     </ContainerBlog>
   );

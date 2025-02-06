@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Rawat ID | ${dataSlug?.title}`,
+        title: `Rawat.ID - ${dataSlug?.title}`,
         description: dataSlug?.headline,
         canonical: `${process.env.NEXT_PUBLIC_URL}/${slug}`,
         openGraph: {
@@ -52,12 +52,12 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-      title: "Rawat ID | Tidak Ditemukan",
+      title: "Rawat.ID | Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     return {
-      title: "Rawat ID | Kesalahan",
+      title: "Rawat.ID | Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

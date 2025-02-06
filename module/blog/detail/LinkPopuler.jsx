@@ -27,7 +27,7 @@ export default function LinkPopuler({ blog }) {
               src={article?.thumbnail?.formats?.small?.url}
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
-              height={"h-[8rem] md:h-[12rem] lg:h-[10rem]"}
+              height={"h-[11rem] md:h-[16rem] lg:h-[11rem]"}
               title={article.title}
               index={index}
               selected={selected === index}

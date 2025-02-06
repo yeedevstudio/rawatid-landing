@@ -108,7 +108,7 @@ export const CardArticleSidebar = ({
       className={cn(
         height ? height : "h-full ",
         width ? width : "w-full",
-        "relative rounded-2xl overflow-hidden lg:min-h-[15rem]"
+        "relative rounded-2xl overflow-hidden min-h-[12rem] lg:min-h-[15rem]"
       )}
     >
       <Image
@@ -122,12 +122,20 @@ export const CardArticleSidebar = ({
       <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
       </h2>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5">
+      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-5 hidden sm:block">
         {title}
       </h1>
+      <h1 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-5 block sm:hidden">
+        {title.split(" ").slice(0, 3).join(" ")}...
+      </h1>
       {headline && (
-        <p className="text-xs md:text-sm lg:text-base mt-5 font-light text-neutral90 tracking-wider text-justify">
-          {headline.split(" ").slice(0, 50).join(" ")}
+        <p className="text-xs md:text-sm lg:text-base mt-2 md:mt-5 font-light text-neutral90 tracking-wider text-justify">
+          <span className="block sm:hidden">
+            {headline.split(" ").slice(0, 10).join(" ")}...
+          </span>
+          <span className="hidden sm:block">
+            {headline.split(" ").slice(0, 50).join(" ")}
+          </span>
         </p>
       )}
     </div>
@@ -170,9 +178,7 @@ export const CardArticlePopuler = ({
       <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
       </h2>
-      <h1 className="text-sm md:text-base lg:text-lg font-medium">
-        {title}
-      </h1>
+      <h1 className="text-sm md:text-base lg:text-lg font-medium">{title}</h1>
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-5 font-light text-neutral90 tracking-wider text-justify">
           {headline.split(" ").slice(0, 50).join(" ")}
