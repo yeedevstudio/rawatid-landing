@@ -18,8 +18,12 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+        title:
+          "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
         canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,
+        alternates: {
+          canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,
+        },
       };
     }
 
@@ -47,7 +51,9 @@ export default async function Page({ params }) {
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[category][slug][$eq]=${slug}`
       ),
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
+      fetch(
+        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`
+      ),
     ]);
 
     const [postSlug, postAll] = await Promise.all([

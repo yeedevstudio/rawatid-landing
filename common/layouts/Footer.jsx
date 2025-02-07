@@ -30,10 +30,10 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <h1 className="text-md md:text-lg text-white">
+              <h2 className="text-md md:text-lg text-white">
                 Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
                 Klinik
-              </h1>
+              </h2>
             </Link>
             <div className="footer__links">
               {footerLinks?.map((link) => (
@@ -77,10 +77,10 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <h1 className="text-md md:text-lg text-white">
+              <h2 className="text-md md:text-lg text-white">
                 Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
                 Klinik
-              </h1>
+              </h2>
             </Link>
             <div className="footer__links">
               {footerBlogLinks?.map((link) => (

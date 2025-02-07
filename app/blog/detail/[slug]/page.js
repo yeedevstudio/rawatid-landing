@@ -20,6 +20,9 @@ export async function generateMetadata({ params }) {
       return {
         title: `Rawat.ID - ${dataSlug?.title}`,
         description: dataSlug?.headline,
+        alternates: {
+          canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
+        },
         canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
         openGraph: {
           article: {

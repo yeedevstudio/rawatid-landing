@@ -20,6 +20,9 @@ export async function generateMetadata({ params }) {
       return {
         title: `Tag Rawat.ID - ${slug}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/tag/${slug}`,
+        alternates: {
+          canonical: `${process.env.NEXT_PUBLIC_URL}/tag/${slug}`,
+        },
       };
     }
 

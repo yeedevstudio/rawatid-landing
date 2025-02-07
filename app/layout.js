@@ -19,13 +19,17 @@ export const metadata = {
     "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
   description:
     "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!",
-  keywords:
+  keywords: [
     "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat.ID, Rekam Medis Elektronik, Rumah Sakit, Klinik",
+  ],
   authors: {
     name: "Yeedev Studio",
     url: "https://www.yeedev.id/",
   },
-   canonical: "https://rawat.id",
+  alternates: {
+    canonical: "https://rawat.id",
+  },
+  canonical: "https://rawat.id",
   openGraph: {
     canonical: "https://rawat.id",
     url: "https://rawat.id",
