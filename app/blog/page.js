@@ -7,7 +7,7 @@ export const metadata = {
   description:
     "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
   keywords:
-    "Rawat.ID, Kesehatan, Informasi Umum, Berita, Teknologi, Rekam Medis, Rawat, Tips tenaga kesehatan, Blog Kesehatan, Inovasi teknologi kesehatan, blog rawat.id, blog kesehatan",
+    "Rawat.ID, artikel, beranda, Kesehatan, Informasi Umum, Berita, Teknologi, Rekam Medis, Rawat, Tips tenaga kesehatan, Blog Kesehatan, Inovasi teknologi kesehatan, blog rawat.id, blog kesehatan",
 };
 
 export default async function Page() {
