@@ -36,7 +36,7 @@ export default function Header() {
             <div className="flex gap-20 text-green">
               {headerValue?.map((item, index) => (
                 <Link href={item.url} key={index}>
-                  <h1 className="text-sm md:text-lg">{item.title}</h1>
+                  <h2 className="text-sm md:text-lg">{item.title}</h2>
                 </Link>
               ))}
             </div>
@@ -74,7 +74,7 @@ export default function Header() {
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValue?.map((item, index) => (
                       <Link href={item.url} key={index} onClick={handleClose}>
-                        <h1 className="text-sm md:text-lg">{item.title}</h1>
+                        <h2 className="text-sm md:text-lg">{item.title}</h2>
                       </Link>
                     ))}
                   </ul>
@@ -101,7 +101,7 @@ export default function Header() {
             <div className="flex gap-20 text-green">
               {headerValueBlog?.map((item, index) => (
                 <Link href={item.url} key={index}>
-                  <h1 className="text-sm md:text-lg">{item.title}</h1>
+                  <h2 className="text-sm md:text-lg">{item.title}</h2>
                 </Link>
               ))}
             </div>
@@ -139,7 +139,7 @@ export default function Header() {
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValueBlog?.map((item, index) => (
                       <Link href={item.url} key={index} onClick={handleClose}>
-                        <h1 className="text-sm md:text-lg">{item.title}</h1>
+                        <h2 className="text-sm md:text-lg">{item.title}</h2>
                       </Link>
                     ))}
                   </ul>

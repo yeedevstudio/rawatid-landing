@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
         title: `Penulis Rawat.ID- ${dataSlug?.name}`,
         canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,
         openGraph: {
-          canocical: process.env.NEXT_PUBLIC_URL + "/penulis/" + slug,
+          canonical: process.env.NEXT_PUBLIC_URL + "/penulis/" + slug,
           siteName: "Rawat.ID",
           type: "website",
           images: [
@@ -69,7 +69,9 @@ export default async function Page({ params }) {
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`
       ),
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
+      fetch(
+        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`
+      ),
       fetch(
         `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`
       ),

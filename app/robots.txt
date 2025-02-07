@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://rawat.id
+
+# Sitemaps
+Sitemap: https://rawat.id/sitemap.xml

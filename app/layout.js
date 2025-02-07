@@ -25,7 +25,7 @@ export const metadata = {
     name: "Yeedev Studio",
     url: "https://www.yeedev.id/",
   },
-  canonical: "https://rawat.id",
+   canonical: "https://rawat.id",
   openGraph: {
     canonical: "https://rawat.id",
     url: "https://rawat.id",
