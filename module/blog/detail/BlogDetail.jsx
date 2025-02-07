@@ -45,7 +45,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <p
             key={`paragraph-${index}`}
-            className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8"
+            className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8 mt-10"
           >
             {block.children.map((child, idx) => (
               <React.Fragment key={idx}>
