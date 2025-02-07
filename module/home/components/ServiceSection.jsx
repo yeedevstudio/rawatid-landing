@@ -131,6 +131,7 @@ export default function ServiceSection() {
               <CardFooter className="absolute bottom-0 w-full ">
                 <Link href={`/register?id=${index + 1}`} className="w-full">
                   <Button
+                    aria-label="Daftar Sekarang"
                     className={cn(
                       "w-full bg-white border-2 shadow-none hover:bg-white rounded-lg h-[2.5rem] md:h-[3rem]",
                       selected === index + 1 ? "text-green" : "text-black"

@@ -38,7 +38,7 @@ export default function BlogCategory({ data, category }) {
         href={`/blog/kategori/${category?.slug}`}
         className="text-lg md:text-lg lg:text-xl text-green font-medium underline capitalize"
       >
-        {category?.name}
+        <h1>{category?.name}</h1>
       </Link>
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">

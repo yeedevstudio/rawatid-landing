@@ -12,7 +12,10 @@ export default function PromotionSection() {
             bantu dampingi implementasi sampai bisa, dan gratis biaya untuk 1
             tahun pertama kalau kamu daftar sekarang!
           </h2>
-          <Button className="bg-green text-white hover:bg-green shadow-none w-[50%] md:w-[40%] lg:w-[20%] h-[2.5rem] md:h-[3rem] rounded-lg">
+          <Button
+            aria-label="Registrasi Sekarang"
+            className="bg-green text-white hover:bg-green shadow-none w-[50%] md:w-[40%] lg:w-[20%] h-[2.5rem] md:h-[3rem] rounded-lg"
+          >
             <Link href="/register">Registrasi Sekarang</Link>
           </Button>
         </div>

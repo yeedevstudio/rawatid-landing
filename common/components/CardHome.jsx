@@ -27,8 +27,10 @@ export default function CardHome({
           height={100}
           className="my-4 w-full h-[12rem] object-cover rounded-lg"
         />
-        <h1 className="text-xl font-medium">{title}</h1>
-        <h2 className="text-sm md:text-normal text-neutral90 mt-2 md:mt-5">{description}</h2>
+        <h3 className="text-xl font-medium">{title}</h3>
+        <h4 className="text-sm md:text-normal text-neutral90 mt-2 md:mt-5">
+          {description}
+        </h4>
       </CardContent>
     </Card>
   );

@@ -35,17 +35,16 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
               {headerValue?.map((item, index) => (
-                <Link
-                  className="text-sm md:text-lg bg-transparent"
-                  href={item.url}
-                  key={index}
-                >
+                <Link href={item.url} key={index}>
                   <h1 className="text-sm md:text-lg">{item.title}</h1>
                 </Link>
               ))}
             </div>
             <Link href={"/register"}>
-              <Button className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none">
+              <Button
+                className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none"
+                aria-label="Registrasi Sekarang"
+              >
                 Registrasi
               </Button>
             </Link>
@@ -84,6 +83,7 @@ export default function Header() {
                   <Button
                     onClick={handleClose}
                     className="bg-green text-white hover:bg-green shadow-none w-full"
+                    aria-label="Registrasi Sekarang"
                   >
                     <Link href="/register">Registrasi</Link>
                   </Button>
@@ -106,7 +106,10 @@ export default function Header() {
               ))}
             </div>
             <Link href={"/register"}>
-              <Button className="bg-green text-white text-sm md:text-lg hover:bg-green shadow-none">
+              <Button
+                className="bg-green text-white text-sm md:text-lg hover:bg-green shadow-none"
+                aria-label="Registrasi Sekarang"
+              >
                 Registrasi EMR
               </Button>
             </Link>
@@ -145,6 +148,7 @@ export default function Header() {
                   <Button
                     onClick={handleClose}
                     className="bg-green text-white hover:bg-green shadow-none w-full"
+                    aria-label="Registrasi Sekarang"
                   >
                     <Link href="/register">Registrasi EMR</Link>
                   </Button>

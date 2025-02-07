@@ -30,16 +30,17 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <p className="text-md md:text-lg text-white">
-                Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
-              </p>
+              <h1 className="text-md md:text-lg text-white">
+                Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
+                Klinik
+              </h1>
             </Link>
             <div className="footer__links">
               {footerLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
-                  <h3 className="text-md md:text-lg font-medium text-white">
+                  <h2 className="text-md md:text-lg font-medium text-white">
                     {link?.title}
-                  </h3>
+                  </h2>
                   {link?.links.map((item) => (
                     <Link
                       passHref
@@ -49,7 +50,7 @@ const Footer = () => {
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
                     >
-                      {item?.title}
+                      <h3>{item?.title}</h3>
                     </Link>
                   ))}
                 </div>
@@ -76,16 +77,17 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <p className="text-md md:text-lg text-white">
-                Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
-              </p>
+              <h1 className="text-md md:text-lg text-white">
+                Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
+                Klinik
+              </h1>
             </Link>
             <div className="footer__links">
               {footerBlogLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
-                  <h1 className="text-md md:text-lg font-medium text-white">
+                  <h2 className="text-md md:text-lg font-medium text-white">
                     {link?.title}
-                  </h1>
+                  </h2>
                   {link?.links.map((item) => (
                     <Link
                       passHref
@@ -95,7 +97,7 @@ const Footer = () => {
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
                     >
-                      {item?.title}
+                      <h3>{item?.title}</h3>
                     </Link>
                   ))}
                 </div>

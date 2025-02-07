@@ -36,6 +36,7 @@ export function CustomSelect({ id, label, value, onChange, options }) {
           <Button
             variant="outline"
             role="combobox"
+            aria-label="Pilih Data"
             aria-expanded={open}
             className={cn(
               "w-full justify-between text-sm md:text-lg font-normal shadow-none hover:bg-white",

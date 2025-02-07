@@ -38,7 +38,7 @@ export default function BlogAll({ data }) {
         href="/blog/semua"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
-        Artikel terbaru
+        <h1>Artikel terbaru</h1>
       </Link>
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">

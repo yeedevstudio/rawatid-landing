@@ -31,10 +31,7 @@ export default function ConfirmDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Apa kamu yakin akan mendaftar?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className=" border-red-200 text-red-200 hover:bg-white hover:text-red-200">

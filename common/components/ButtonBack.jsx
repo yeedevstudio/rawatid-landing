@@ -13,6 +13,7 @@ export default function ButtonBack() {
     <button
       className="flex items-center gap-2 py-1 mb-5 text-green hover:text-green60 transition-all duration-200 ease-in-out active:scale-105"
       onClick={handleBack}
+      aria-label="Kembali"
     >
       <IconCircleArrowLeft />
       Kembali
