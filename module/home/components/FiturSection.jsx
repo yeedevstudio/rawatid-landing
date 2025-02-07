@@ -81,7 +81,7 @@ export default function FiturSection() {
         >
           {CardValue?.map((item, index) => (
             <div key={index} ref={index === 0 ? cardRef : null}>
-              <Link href={item.link}>
+              <Link href={item.link} passHref title={item.title}>
                 <CardHome
                   images={item.images}
                   altImage={item.altImage}
@@ -98,6 +98,7 @@ export default function FiturSection() {
 
       <Link
         href="/fitur"
+        title="Lihat Selengkapnya"
         className="text-lg md:text-xl text-green font-medium underline mx-5 md:mx-12 md:mt-[2rem]"
       >
         Lihat Selengkapnya

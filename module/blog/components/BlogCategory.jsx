@@ -35,6 +35,7 @@ export default function BlogCategory({ data, category }) {
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
+        title="Artikel terbaru"
         href={`/blog/kategori/${category?.slug}`}
         className="text-lg md:text-lg lg:text-xl text-green font-medium underline capitalize"
       >

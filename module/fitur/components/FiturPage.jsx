@@ -13,6 +13,7 @@ export default function FiturPage() {
         </h1>
         <Link
           href="#card_1"
+          title="Lihat Semua Fitur"
           className="text-lg md:text-2xl font-normal text-green flex items-center gap-2 md:gap-4"
         >
           <h2>Lihat Semua Fitur</h2>
@@ -21,7 +22,12 @@ export default function FiturPage() {
       </div>
       {/* card */}
       {fiturValue.map((item, index) => (
-        <div data-aos="fade-up" className="mx-4 mt-[4rem] md:mt-[8rem]" key={index} id={item?.id}>
+        <div
+          data-aos="fade-up"
+          className="mx-4 mt-[4rem] md:mt-[8rem]"
+          key={index}
+          id={item?.id}
+        >
           <div className="grid grid-cols-2 gap-5 items-center">
             <h3 className="text-md md:text-4xl font-medium text-green leading-relaxed">
               {item?.title}

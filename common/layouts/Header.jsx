@@ -29,18 +29,18 @@ export default function Header() {
     <>
       {!blogPage ? (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
-          <Link href="/">
+          <Link href="/" title="Rawat.ID">
             <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
               {headerValue?.map((item, index) => (
-                <Link href={item.url} key={index}>
+                <Link href={item.url} key={index} title={item.title}>
                   <h2 className="text-sm md:text-lg">{item.title}</h2>
                 </Link>
               ))}
             </div>
-            <Link href={"/register"}>
+            <Link href={"/register"} title="Registrasi" passHref>
               <Button
                 className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none"
                 aria-label="Registrasi Sekarang"
@@ -56,6 +56,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
+                  title="Rawat.ID"
                   href="/"
                   onClick={handleClose}
                   className={"flex items-center gap-3 px-4 mt-7"}
@@ -73,20 +74,27 @@ export default function Header() {
                 <nav className="px-4 mt-10">
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValue?.map((item, index) => (
-                      <Link href={item.url} key={index} onClick={handleClose}>
+                      <Link
+                        title={item.title}
+                        href={item.url}
+                        key={index}
+                        onClick={handleClose}
+                      >
                         <h2 className="text-sm md:text-lg">{item.title}</h2>
                       </Link>
                     ))}
                   </ul>
                 </nav>
                 <div className="mx-4 mt-10">
-                  <Button
-                    onClick={handleClose}
-                    className="bg-green text-white hover:bg-green shadow-none w-full"
-                    aria-label="Registrasi Sekarang"
-                  >
-                    <Link href="/register">Registrasi</Link>
-                  </Button>
+                  <Link href="/register" passHref title="Registrasi">
+                    <Button
+                      onClick={handleClose}
+                      className="bg-green text-white hover:bg-green shadow-none w-full"
+                      aria-label="Registrasi Sekarang"
+                    >
+                      Registrasi
+                    </Button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>
@@ -94,18 +102,18 @@ export default function Header() {
         </header>
       ) : (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
-          <Link href="/">
+          <Link href="/" title="beranda">
             <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
               {headerValueBlog?.map((item, index) => (
-                <Link href={item.url} key={index}>
+                <Link href={item.url} key={index} title={item.title}>
                   <h2 className="text-sm md:text-lg">{item.title}</h2>
                 </Link>
               ))}
             </div>
-            <Link href={"/register"}>
+            <Link href={"/register"} title="Registrasi Sekarang">
               <Button
                 className="bg-green text-white text-sm md:text-lg hover:bg-green shadow-none"
                 aria-label="Registrasi Sekarang"
@@ -121,6 +129,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
+                  title="Blog Rawat.ID"
                   href="/"
                   onClick={handleClose}
                   className={"flex items-center gap-1 px-1 mt-7"}
@@ -138,20 +147,27 @@ export default function Header() {
                 <nav className="px-4 mt-10">
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValueBlog?.map((item, index) => (
-                      <Link href={item.url} key={index} onClick={handleClose}>
+                      <Link
+                        title={item.title}
+                        href={item.url}
+                        key={index}
+                        onClick={handleClose}
+                      >
                         <h2 className="text-sm md:text-lg">{item.title}</h2>
                       </Link>
                     ))}
                   </ul>
                 </nav>
                 <div className="mx-4 mt-10">
-                  <Button
-                    onClick={handleClose}
-                    className="bg-green text-white hover:bg-green shadow-none w-full"
-                    aria-label="Registrasi Sekarang"
-                  >
-                    <Link href="/register">Registrasi EMR</Link>
-                  </Button>
+                  <Link href="/register" passHref title="Registrasi">
+                    <Button
+                      onClick={handleClose}
+                      className="bg-green text-white hover:bg-green shadow-none w-full"
+                      aria-label="Registrasi Sekarang"
+                    >
+                      Registrasi EMR
+                    </Button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>

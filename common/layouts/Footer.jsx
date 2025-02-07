@@ -20,6 +20,7 @@ const Footer = () => {
         <div>
           <nav className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
             <Link
+              title="Rawat.ID"
               href="/"
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
             >
@@ -49,6 +50,7 @@ const Footer = () => {
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
+                      title={item?.title}
                     >
                       <h3>{item?.title}</h3>
                     </Link>
@@ -68,6 +70,7 @@ const Footer = () => {
           <nav className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
             <Link
               href="/"
+              title="Rawat.ID"
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
             >
               <Image
@@ -96,6 +99,7 @@ const Footer = () => {
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
+                      title={item?.title}
                     >
                       <h3>{item?.title}</h3>
                     </Link>

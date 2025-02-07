@@ -227,7 +227,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       <div className="flex items-center gap-2 md:gap-6">
         <Link
           href={`/blog/kategori/${post?.category?.slug}`}
-          aria-label="kategori"
+          title="kategori"
           className="text-sm md:text-sm text-white bg-green px-4 py-1 rounded-lg"
         >
           {post?.category?.name}
@@ -252,7 +252,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             }
             alt={post?.thumbnail?.formats?.thumbnail?.name}
             fill
-            style={{ objectFit: "cover", }}
+            style={{ objectFit: "cover" }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
