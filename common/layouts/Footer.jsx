@@ -25,7 +25,7 @@ const Footer = () => {
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
             >
               <Image
-                src="/images/logo.svg"
+                src="/images/logo.webp"
                 alt="logo"
                 width={48}
                 height={48}
@@ -74,7 +74,7 @@ const Footer = () => {
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
             >
               <Image
-                src="/images/logo.svg"
+                src="/images/logo.webp"
                 alt="logo"
                 width={48}
                 height={48}

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { headerValue, headerValueBlog } from "../constant/headerValue";
 import {
   Sheet,
@@ -30,7 +30,13 @@ export default function Header() {
       {!blogPage ? (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
           <Link href="/" title="Rawat.ID">
-            <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
+            <Image
+              src={"/images/logo.webp"}
+              alt="logo"
+              width={50}
+              height={50}
+              priority={true}
+            />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
@@ -52,7 +58,13 @@ export default function Header() {
           <div className="flex lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
-                <IconMenu2 className="w-8 h-8 text-green" />
+                <button aria-label="Menu">
+                  <IconMenu2
+                    className="w-8 h-8 text-green"
+                    role="button"
+                    tabIndex="0"
+                  />
+                </button>
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
@@ -62,7 +74,7 @@ export default function Header() {
                   className={"flex items-center gap-3 px-4 mt-7"}
                 >
                   <Image
-                    src={"/images/logo.svg"}
+                    src={"/images/logo.webp"}
                     alt="logo"
                     width={50}
                     height={50}
@@ -103,7 +115,12 @@ export default function Header() {
       ) : (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
           <Link href="/" title="beranda">
-            <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
+            <Image
+              src={"/images/logo.webp"}
+              alt="logo"
+              width={50}
+              height={50}
+            />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
@@ -125,7 +142,13 @@ export default function Header() {
           <div className="flex lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
-                <IconMenu2 className="w-8 h-8 text-green" />
+                <button aria-label="Menu">
+                  <IconMenu2
+                    className="w-8 h-8 text-green"
+                    role="button"
+                    tabIndex="0"
+                  />
+                </button>
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
@@ -135,7 +158,7 @@ export default function Header() {
                   className={"flex items-center gap-1 px-1 mt-7"}
                 >
                   <Image
-                    src={"/images/logo.svg"}
+                    src={"/images/logo.webp"}
                     alt="logo"
                     width={50}
                     height={50}

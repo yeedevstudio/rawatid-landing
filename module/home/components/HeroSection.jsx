@@ -37,7 +37,7 @@ export default function HeroSection() {
           </Button>
         </div>
       </div>
-      <div data-aos="fade-left" className="flex items-center justify-end">
+      <div data-aos="fade-left" className="flex items-center justify-center lg:justify-end">
         <Image
           src={"/images/hero_image.svg"}
           alt="hero_image"
