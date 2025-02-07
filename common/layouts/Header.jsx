@@ -36,6 +36,8 @@ export default function Header() {
               width={50}
               height={50}
               priority={true}
+              quality={90}
+              decoding="sync"
             />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
@@ -78,6 +80,9 @@ export default function Header() {
                     alt="logo"
                     width={50}
                     height={50}
+                    priority={true}
+                    quality={90}
+                    decoding="sync"
                   />
                   <SheetTitle className="text-green text-2xl">
                     Rawat.ID
@@ -120,6 +125,9 @@ export default function Header() {
               alt="logo"
               width={50}
               height={50}
+              priority={true}
+              quality={90}
+              decoding="sync"
             />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
@@ -162,6 +170,9 @@ export default function Header() {
                     alt="logo"
                     width={50}
                     height={50}
+                    priority={true}
+                    quality={90}
+                    decoding="sync"
                   />
                   <SheetTitle className="text-green text-xl">
                     Blog Rawat.ID
