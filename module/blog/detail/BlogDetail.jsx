@@ -205,7 +205,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
 
     renderedElements.push(
       <div
-        key={`postCategory-end-${Date.now()}`} // Gunakan key unik berdasarkan timestamp
+        key={`postCategory-end-${Date.now()}`}
         className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
       >
         <h3 className="text-sm md:text-base lg:text-base">

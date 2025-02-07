@@ -25,7 +25,7 @@ export const CardArticle = ({
         )}
       >
         <Image
-          src={process.env.NEXT_PUBLIC_BASE_URL + src}
+          src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
           alt={alt}
           fill
           style={{ objectFit: "cover", position: "absolute" }}
@@ -69,7 +69,7 @@ export const CardArticleAll = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src}
+        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"  }
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}
@@ -112,7 +112,7 @@ export const CardArticleSidebar = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src}
+        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}

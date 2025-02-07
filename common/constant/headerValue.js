@@ -21,7 +21,7 @@ export const headerValue = [
 export const headerValueBlog = [
   {
     title: "Beranda",
-    url: "/",
+    url: "/blog",
   },
   {
     title: "Kesehatan",

@@ -94,7 +94,7 @@ export default function Header() {
         </header>
       ) : (
         <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
-          <Link href="/blog">
+          <Link href="/">
             <Image src={"/images/logo.svg"} alt="logo" width={50} height={50} />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
@@ -122,7 +122,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link
-                  href="/blog"
+                  href="/"
                   onClick={handleClose}
                   className={"flex items-center gap-1 px-1 mt-7"}
                 >

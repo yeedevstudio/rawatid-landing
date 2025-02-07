@@ -44,7 +44,7 @@ export default function BlogCategory({ data, category }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">
           {data?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[300px] rounded-xl " />
+              <Skeleton className="w-full h-[12rem] md:h-[14rem] lg:h-[25.5rem] rounded-xl " />
             </div>
           ))}
         </div>

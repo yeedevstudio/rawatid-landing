@@ -69,7 +69,7 @@ export default function PageBy({ data, post, slug, title, author }) {
         <div className="grid grid-cols-1 gap-2 md:gap-6 py-6">
           {data?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[25rem] rounded-xl " />
+              <Skeleton className="w-full h-[12rem] md:h-[14rem] lg:h-[19.5rem] rounded-xl " />
             </div>
           ))}
         </div>
@@ -82,6 +82,7 @@ export default function PageBy({ data, post, slug, title, author }) {
                 alt={article?.thumbnail?.formats?.small?.url}
                 category={article.category?.name}
                 title={article.title}
+                height={"h-[12rem] md:h-[14rem] lg:h-[18rem]"}
                 index={index}
                 selected={selected === index}
                 onSelect={() => handleSelected(index, article.slug)}
