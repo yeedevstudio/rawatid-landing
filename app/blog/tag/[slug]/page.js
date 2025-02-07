@@ -18,19 +18,19 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Tag - ${slug}`,
-        canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
+        title: `Tag Rawat.ID - ${slug}`,
+        canonical: `${process.env.NEXT_PUBLIC_URL}/tag/${slug}`,
       };
     }
 
     return {
-      title: "Tag - Tidak Ditemukan",
+      title: "Tag Rawat.ID - Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
 
     return {
-      title: "Tag - Kesalahan",
+      title: "Tag Rawat.ID - Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }
@@ -74,7 +74,7 @@ export default async function Page({ params }) {
         data={dataSlug}
         post={dataAll}
         slug={filteredTags?.[0]?.name}
-        title={"Tags"}
+        title={"Tag"}
       />
     );
   } catch (error) {

@@ -2,13 +2,6 @@ import Error from "@/app/error";
 import NotFound from "@/app/not-found";
 import PageByAll from "@/module/blog/components/PageByAll";
 
-export const metadata = {
-  title: "Rawat.ID - Blog",
-  description:
-    "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan dan Teknologi.",
-  keywords:
-    "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat.ID, Tips tenaga kesehatan, Blog Kesehatan, Inovasi teknologi kesehatan, blog rawat.id, blog kesehatan",
-};
 
 export default async function Page({ searchParams }) {
   if (!process.env.API_URL) {

@@ -252,14 +252,13 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             }
             alt={post?.thumbnail?.formats?.thumbnail?.name}
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         <section className="grid grid-cols-1 lg:grid-cols-[60%_35%] gap-2 md:gap-12">
           <section className="w-full">
             {renderedElements}
-
             <Tags post={post} />
           </section>
           <section className="w-full flex flex-col gap-2 md:gap-6">

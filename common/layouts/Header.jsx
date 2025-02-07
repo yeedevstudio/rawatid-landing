@@ -40,7 +40,7 @@ export default function Header() {
                   href={item.url}
                   key={index}
                 >
-                  {item.title}
+                  <h1 className="text-sm md:text-lg">{item.title}</h1>
                 </Link>
               ))}
             </div>
@@ -75,7 +75,7 @@ export default function Header() {
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValue?.map((item, index) => (
                       <Link href={item.url} key={index} onClick={handleClose}>
-                        {item.title}
+                        <h1 className="text-sm md:text-lg">{item.title}</h1>
                       </Link>
                     ))}
                   </ul>
@@ -100,17 +100,13 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-20">
             <div className="flex gap-20 text-green">
               {headerValueBlog?.map((item, index) => (
-                <Link
-                  className="text-sm md:text-lg bg-transparent"
-                  href={item.url}
-                  key={index}
-                >
-                  {item.title}
+                <Link href={item.url} key={index}>
+                  <h1 className="text-sm md:text-lg">{item.title}</h1>
                 </Link>
               ))}
             </div>
             <Link href={"/register"}>
-              <Button className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none">
+              <Button className="bg-green text-white text-sm md:text-lg hover:bg-green shadow-none">
                 Registrasi EMR
               </Button>
             </Link>
@@ -140,7 +136,7 @@ export default function Header() {
                   <ul className="flex flex-col gap-10 text-green">
                     {headerValueBlog?.map((item, index) => (
                       <Link href={item.url} key={index} onClick={handleClose}>
-                        {item.title}
+                        <h1 className="text-sm md:text-lg">{item.title}</h1>
                       </Link>
                     ))}
                   </ul>

@@ -77,15 +77,15 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <p className="text-md md:text-lg text-white">
-              Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
+                Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik
               </p>
             </Link>
             <div className="footer__links">
               {footerBlogLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
-                  <h3 className="text-md md:text-lg font-medium text-white">
+                  <h1 className="text-md md:text-lg font-medium text-white">
                     {link?.title}
-                  </h3>
+                  </h1>
                   {link?.links.map((item) => (
                     <Link
                       passHref

@@ -18,10 +18,10 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Penulis - ${dataSlug?.name}`,
-        canonical: `${process.env.NEXT_PUBLIC_URL}/author/${slug}`,
+        title: `Penulis Rawat.ID- ${dataSlug?.name}`,
+        canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,
         openGraph: {
-          canocical: process.env.NEXT_PUBLIC_URL + "/author/" + slug,
+          canocical: process.env.NEXT_PUBLIC_URL + "/penulis/" + slug,
           siteName: "Rawat.ID",
           type: "website",
           images: [
@@ -46,12 +46,12 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-      title: "Penulis - Tidak Ditemukan",
+      title: "Penulis Rawat.ID - Tidak Ditemukan",
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
     return {
-      title: "Penulis - Kesalahan",
+      title: "Penulis Rawat.ID - Kesalahan",
       description: "An error occurred while fetching the blog post.",
     };
   }

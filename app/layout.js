@@ -14,7 +14,9 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+  icon: "/favicon.ico",
+  title:
+    "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
   description:
     "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!",
   keywords:
