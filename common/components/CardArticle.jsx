@@ -69,7 +69,7 @@ export const CardArticleAll = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"  }
+        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}
@@ -122,18 +122,21 @@ export const CardArticleSidebar = ({
       <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
       </h2>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-5 hidden sm:block">
+      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 hidden  lg:block">
         {title}
       </h1>
-      <h1 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-5 block sm:hidden">
+      <h1 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 block lg:hidden">
         {title.split(" ").slice(0, 3).join(" ")}...
       </h1>
       {headline && (
-        <p className="text-xs md:text-sm lg:text-base mt-2 md:mt-5 font-light text-neutral90 tracking-wider text-justify">
-          <span className="block sm:hidden">
+        <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-5 font-light text-neutral90 tracking-wider text-justify">
+          <span className="block md:hidden">
             {headline.split(" ").slice(0, 10).join(" ")}...
           </span>
-          <span className="hidden sm:block">
+          <span className="hidden md:block">
+            {headline.split(" ").slice(0, 20).join(" ")}
+          </span>
+          <span className="hidden md:hidden lg:block">
             {headline.split(" ").slice(0, 50).join(" ")}
           </span>
         </p>

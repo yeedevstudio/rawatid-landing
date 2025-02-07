@@ -19,7 +19,7 @@ const ButtonCopy = ({ text, className }) => {
   return (
     <button
       className={cn(
-        "border border-neutral50 p-1 md:px-3 md:py-2 rounded-md text-neutral50 hover:bg-neutral-200 transition-all duration-300 ease-in-out flex items-center text-xs md:text-base",
+        "border border-[#595959] p-1 md:px-3 md:py-2 rounded-md text-[#595959] hover:bg-neutral-300 transition-all duration-300 ease-in-out flex items-center text-xs md:text-base",
         className
       )}
       onClick={() => copyToClipboard(text)}

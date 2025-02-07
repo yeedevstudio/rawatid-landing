@@ -18,7 +18,7 @@ export default function Authors({ post, author }) {
       </div>
 
       <div className="w-[70%] flex flex-col items-center justify-cente md:items-start md:justify-start">
-        <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
+        <span className="text-xs md:text-sm lg:text-base">Penulis</span>
         <Link href={`/blog/penulis/${post?.author?.slug}`} title="Penulis">
           <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
             {post?.author?.name}

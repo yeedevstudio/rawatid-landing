@@ -49,10 +49,13 @@ export default function PageBy({ data, post, slug, title, author }) {
             alt={author?.avatar?.name}
             width={60}
             height={60}
+            layout="intrinsic"
             className="rounded-full h-[6rem] w-[6rem]"
+            style={{ objectFit: "cover" }}
+            priority
           />
           <div className="flex flex-col items-center justify-center">
-            <h3 className="text-xs md:text-sm lg:text-base">Penulis</h3>
+            <span className="text-xs md:text-sm lg:text-base">Penulis</span>
             <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
               {author?.name}
             </h2>
