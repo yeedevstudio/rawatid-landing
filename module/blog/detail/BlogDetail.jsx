@@ -64,27 +64,24 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       case "list":
         const ListTag = block.format === "ordered" ? "ol" : "ul";
         elements.push(
-          <ListTag key={`list-${index}`} className="mt-2">
+          <ListTag key={`list-${index}`}>
             {block.children.map((listItem, idx) => (
-              <li key={`listItem-${index}-${idx}`} className="">
+              <li key={`listItem-${index}-${idx}`} className="mt-10 md:mt-10">
                 {listItem.children.map((child, cIdx) => {
                   const lines = child.text.split("\n");
                   return (
-                    <div
-                      key={`listItemChild-${index}-${cIdx}`}
-                      className="mb-5"
-                    >
+                    <div key={`listItemChild-${index}-${cIdx}`} className="">
                       {lines.map((line, lineIdx) => (
                         <div
                           className="mt-2 text-justify"
                           key={`listItemLine-${index}-${lineIdx}`}
                         >
                           {lineIdx === 0 ? (
-                            <span className="font-medium text-base md:text-lg lg:text-xl">{`${
+                            <span className="font-medium text-base md:text-lg lg:text-xl mb-2 block">{`${
                               idx + 1
                             } . ${line}`}</span>
                           ) : (
-                            <span className="ml-5 md:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
+                            <span className="ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
                               {line}
                             </span>
                           )}
@@ -184,7 +181,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       elements.push(
         <div
           key={`postCategory-${index}`}
-          className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
+          className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
         >
           <h3 className="text-sm md:text-base lg:text-base">
             Baca Juga :
