@@ -55,14 +55,14 @@ export default function PageBy({ data, post, slug, title, author }) {
             priority
           />
           <div className="flex flex-col items-center justify-center">
-            <span className="text-xs md:text-sm lg:text-base">Penulis</span>
+            <span itemProp="author" className="text-xs md:text-sm lg:text-base">Penulis</span>
             <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
               {author?.name}
             </h2>
             <p className=" text-xs md:text-sm lg:text-sm text-center md:text-justify mt-2 px-2 md:px-6">
-              <span className="font-semibold text-lg mr-1">"</span>
+              <span itemProp="qoute" className="font-semibold text-lg mr-1">"</span>
               {author?.bio.split(" ").slice(0, 50).join(" ")}
-              <span className="font-semibold text-lg ml-1">"</span>
+              <span itemProp="qoute" className="font-semibold text-lg ml-1">"</span>
             </p>
           </div>
         </section>

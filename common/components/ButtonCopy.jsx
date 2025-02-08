@@ -25,7 +25,7 @@ const ButtonCopy = ({ text, className }) => {
       onClick={() => copyToClipboard(text)}
       aria-label="Salin"
     >
-      <IconCopy className="h-4 w-4 md:h-5 md:w-5 " /> Salin
+      <IconCopy title="Salin" className="h-4 w-4 md:h-5 md:w-5 " /> Salin
     </button>
   );
 };

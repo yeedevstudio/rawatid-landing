@@ -19,7 +19,8 @@ export async function generateMetadata({ params }) {
     if (dataSlug) {
       return {
         title: `Rawat.ID - ${dataSlug?.title}`,
-        description: dataSlug?.headline,
+        description: dataSlug?.headline.slice(0, 70),
+        keywords: dataSlug?.tags?.map((tag) => tag.name) || ["Rawat.ID"],
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
         },

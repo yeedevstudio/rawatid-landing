@@ -2,10 +2,9 @@ import BlogPage from "@/module/blog";
 import Error from "../error";
 
 export const metadata = {
-  title:
-    "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+  title: "Rawat.ID - Blog Kesehatan, Teknologi dan Informasi Umum",
   description:
-    "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
+    "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, solusi efektif untuk tenaga kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
   keywords: [
     "Rawat.ID",
     "artikel",

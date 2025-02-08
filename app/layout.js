@@ -20,7 +20,15 @@ export const metadata = {
   description:
     "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!",
   keywords: [
-    "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat.ID, Rekam Medis Elektronik, Rumah Sakit, Klinik",
+    "Rawat.Id",
+    "faskes",
+    "Sistem Informasi Manajemen Kesehatan",
+    "Kesehatan",
+    "Rekam Medis",
+    "Rawat.ID",
+    "Rekam Medis Elektronik",
+    "Rumah Sakit",
+    "Klinik",
   ],
   authors: {
     name: "Yeedev Studio",

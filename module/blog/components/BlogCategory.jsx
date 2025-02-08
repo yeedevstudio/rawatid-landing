@@ -35,6 +35,7 @@ export default function BlogCategory({ data, category }) {
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
+        itemProp="button"
         title="Artikel terbaru"
         href={`/blog/kategori/${category?.slug}`}
         className="text-lg md:text-lg lg:text-xl text-green font-medium underline capitalize"
@@ -70,6 +71,8 @@ export default function BlogCategory({ data, category }) {
           {data.length > 4 && (
             <div className="flex items-center justify-center py-5">
               <Link
+                itemProp="button"
+                title="lihat semua"
                 href={`/blog/kategori/${category?.slug}`}
                 className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
               >

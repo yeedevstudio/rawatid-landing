@@ -35,6 +35,7 @@ export default function BlogAll({ data }) {
   return (
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
+        itemProp="button"
         title="Artikel terbaru"
         href="/blog/semua"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
@@ -70,6 +71,7 @@ export default function BlogAll({ data }) {
           {data?.length > 6 && (
             <div className="flex items-center justify-center py-5">
               <Link
+                itemProp="button"
                 title="Lihat semua"
                 href="/blog/semua"
                 className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"

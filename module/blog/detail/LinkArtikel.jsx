@@ -19,6 +19,7 @@ export default function LinkArtikel({ post }) {
       </h2>
       <div className="flex items-center gap-4 md:gap-6 lg:gap-4 py-6">
         <IconBrandWhatsapp
+          title="whatsapp"
           className="h-6 w-6 md:h-9 md:w-9  text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
@@ -29,6 +30,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandX
+          title="twitter"
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
@@ -39,6 +41,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandFacebook
+          title="facebook"
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
@@ -51,6 +54,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandLinkedin
+          title="linkedin"
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
@@ -61,6 +65,7 @@ export default function LinkArtikel({ post }) {
           }
         />
         <IconBrandInstagram
+          title="instagram"
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(

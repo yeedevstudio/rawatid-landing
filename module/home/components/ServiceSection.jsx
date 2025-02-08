@@ -130,6 +130,7 @@ export default function ServiceSection() {
               </CardContent>
               <CardFooter className="absolute bottom-0 w-full ">
                 <Link
+                  itemProp="button"
                   href={`/register?id=${index + 1}`}
                   className="w-full"
                   title={`Daftar Sekarang ${index + 1}`}

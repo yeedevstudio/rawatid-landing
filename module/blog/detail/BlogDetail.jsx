@@ -226,13 +226,17 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
         <Link
+          itemProp="kategori"
           href={`/blog/kategori/${post?.category?.slug}`}
           title="kategori"
           className="text-sm md:text-sm text-white bg-green px-4 py-1 rounded-lg"
         >
           {post?.category?.name}
         </Link>
-        <span className="text-sm md:text-base lg:text-lg">
+        <span
+          itemProp="datePublished"
+          className="text-sm md:text-base lg:text-lg"
+        >
           {new Date(post?.updatedAt).toLocaleDateString("id-ID", {
             day: "2-digit",
             month: "long",
@@ -261,10 +265,10 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             {renderedElements}
             <Tags post={post} />
           </section>
-          <section className="w-full flex flex-col gap-2 md:gap-6">
+          <aside className="w-full flex flex-col gap-2 md:gap-6">
             <LinkArtikel post={post} />
             <LinkPopuler blog={allPosts} />
-          </section>
+          </aside>
         </section>
         <Authors post={post} author={author} />
         <RelatedArticle blog={postCategory} />

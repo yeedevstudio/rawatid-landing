@@ -12,6 +12,7 @@ export default function FiturPage() {
           Fitur Unggulan
         </h1>
         <Link
+          itemProp="button"
           href="#card_1"
           title="Lihat Semua Fitur"
           className="text-lg md:text-2xl font-normal text-green flex items-center gap-2 md:gap-4"

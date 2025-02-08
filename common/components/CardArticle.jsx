@@ -33,12 +33,12 @@ export const CardArticle = ({
         />
       </div>
       <div className="">
-        <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+        <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
           {category}
-        </h2>
-        <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5">
+        </h3>
+        <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5">
           {title}
-        </h1>
+        </h2>
       </div>
     </div>
   );
@@ -76,12 +76,12 @@ export const CardArticleAll = ({
       />
     </div>
     <div className="">
-      <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
-      </h2>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5 ">
+      </h3>
+      <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5 ">
         {title}
-      </h1>
+      </h2>
     </div>
   </div>
 );
@@ -119,15 +119,15 @@ export const CardArticleSidebar = ({
       />
     </div>
     <div>
-      <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
-      </h2>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 hidden  lg:block">
+      </h3>
+      <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 hidden  lg:block">
         {title}
-      </h1>
-      <h1 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 block lg:hidden">
+      </h2>
+      <h2 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 block lg:hidden">
         {title.split(" ").slice(0, 3).join(" ")}...
-      </h1>
+      </h2>
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-5 font-light text-neutral90 tracking-wider text-justify">
           <span className="block md:hidden">
@@ -178,10 +178,10 @@ export const CardArticlePopuler = ({
       />
     </div>
     <div>
-      <h2 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
         {category}
-      </h2>
-      <h1 className="text-sm md:text-base lg:text-lg font-medium">{title}</h1>
+      </h3>
+      <h2 className="text-sm md:text-base lg:text-lg font-medium">{title}</h2>
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-5 font-light text-neutral90 tracking-wider text-justify">
           {headline.split(" ").slice(0, 50).join(" ")}
