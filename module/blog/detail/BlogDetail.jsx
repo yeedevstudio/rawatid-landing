@@ -74,19 +74,16 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <ListTag
             key={`list-${index}`}
-            className="list-decimal list-inside md:list-outside mt-5 md:mt-10"
+            className="list-decimal  md:list-outside mt-5 md:mt-10"
           >
             {block.children.map((listItem, idx) => (
-              <li
-                key={`listItem-${index}-${idx}`}
-                className="flex items-start gap-2 "
-              >
+              <li key={`listItem-${index}-${idx}`} className="flex">
                 {block.format === "ordered" ? (
-                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="mt-1 lg:mt-0 font-medium text-base md:text-lg lg:text-xl mr-2">
                     {idx + 1}.
                   </span>
                 ) : (
-                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="mt-1 lg:mt-0 font-medium text-base md:text-lg lg:text-xl mr-2">
                     •
                   </span>
                 )}
@@ -99,15 +96,16 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                       return (
                         <div
                           key={`listItemChild-${index}-${cIdx}`}
-                          className="mb-5 md:10 flex flex-wrap"
+                          className="mb-5 md:10"
                         >
                           <a
                             href={child.url}
-                            className="text-blue-500 underline"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {child.children[0].text}
+                            <p className="text-wrap underline text-blue-500 break-all">
+                              {child.children[0].text}
+                            </p>
                           </a>
                         </div>
                       );
