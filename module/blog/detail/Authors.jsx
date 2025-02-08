@@ -15,6 +15,7 @@ export default function Authors({ post, author }) {
           }
           alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
           fill
+          priority
           style={{ objectFit: "cover", position: "absolute" }}
         />
       </div>

@@ -99,7 +99,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                       return (
                         <div
                           key={`listItemChild-${index}-${cIdx}`}
-                          className="mb-5 md:10"
+                          className="mb-5 md:10 flex flex-wrap"
                         >
                           <a
                             href={child.url}
@@ -122,7 +122,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                             key={`listItemLine-${index}-${lineIdx}`}
                           >
                             {lineIdx === 0 ? (
-                              <span className="text-sm/8 md:text-base/8 lg:text-lg/8 block">
+                              <span className="text-sm/8 md:text-base/8 lg:text-lg/8 flex flex-wrap lg:block">
                                 {line}
                               </span>
                             ) : (

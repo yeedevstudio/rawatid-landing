@@ -18,7 +18,7 @@ export default function LinkPopuler({ blog }) {
   return (
     <div>
       <h2 className="text-sm md:text-base lg:text-lg font-medium text-green">
-        Terpopuler
+        Artikel terpopuler
       </h2>
       <div className="py-6 grid grid-cols-1 gap-2 md:gap-6">
         {blogFilter?.map((article, index) => (
