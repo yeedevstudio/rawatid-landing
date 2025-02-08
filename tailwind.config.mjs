@@ -15,7 +15,7 @@ export default {
       colors: {
         grayHeader: "#F5F5F5",
         // green: "#038F7A",
-        green: "#036355",
+        green: "#035E4D",
         greenImage: "#D8EDEE",
         neutral100: "#0A0A0A",
         neutral90: "#404040",
