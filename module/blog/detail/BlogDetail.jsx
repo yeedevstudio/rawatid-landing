@@ -21,10 +21,18 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
     switch (block.type) {
       case "heading": {
         const HeadingTag = `h${block.level || 2}`;
+        const headingSizes = {
+          1: "text-xl md:text-2xl lg:text-3xl font-bold",
+          2: "text-xl md:text-2xl lg:text-3xl font-semibold",
+          3: "text-xl md:text-2xl lg:text-3xl font-medium",
+          4: "text-lg md:text-xl lg:text-2xl font-medium",
+          5: "text-lg md:text-xl lg:text-2xl font-light",
+          6: "text-base md:text-lg lg:text-xl font-light",
+        };
         elements.push(
           <HeadingTag
             key={`heading-${index}`}
-            className="mt-10 font-semibold text-lg md:text-xl lg:text-3xl"
+            className={`mt-10 ${headingSizes[block.level] || "text-xl"}`}
           >
             {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
@@ -114,7 +122,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                             key={`listItemLine-${index}-${lineIdx}`}
                           >
                             {lineIdx === 0 ? (
-                              <span className="font-medium text-base md:text-lg lg:text-xl block">
+                              <span className="text-sm/8 md:text-base/8 lg:text-lg/8 block">
                                 {line}
                               </span>
                             ) : (

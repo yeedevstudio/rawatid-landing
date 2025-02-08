@@ -9,7 +9,9 @@ export default function Authors({ post, author }) {
         <Image
           src={
             process.env.NEXT_PUBLIC_BASE_URL +
-            author?.[0]?.avatar?.formats?.thumbnail?.url
+            (author?.[0]?.avatar?.formats?.large?.url ||
+              author?.[0]?.avatar?.medium?.url ||
+              author?.[0]?.avatar?.url)
           }
           alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
           fill
