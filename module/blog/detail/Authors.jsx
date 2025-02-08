@@ -17,7 +17,7 @@ export default function Authors({ post, author }) {
         />
       </div>
 
-      <div className="w-[70%] flex flex-col items-center justify-cente md:items-start md:justify-start">
+      <div className="flex flex-col items-center justify-cente md:items-start md:justify-start">
         <span itemProp="author" className="text-xs md:text-sm lg:text-base">
           Penulis
         </span>

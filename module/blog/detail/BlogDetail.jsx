@@ -24,11 +24,11 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <HeadingTag
             key={`heading-${index}`}
-            className="mt-2 font-semibold text-lg md:text-xl lg:text-3xl"
+            className="mt-10 font-semibold text-lg md:text-xl lg:text-3xl"
           >
-            {block.children.map((child, idx) => (
+            {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
-                {child.text.split("\n").map((line, lineIdx) => (
+                {child?.text?.split("\n").map((line, lineIdx) => (
                   <React.Fragment key={lineIdx}>
                     {line}
                     <br />
@@ -64,33 +64,71 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
       case "list":
         const ListTag = block.format === "ordered" ? "ol" : "ul";
         elements.push(
-          <ListTag key={`list-${index}`}>
+          <ListTag
+            key={`list-${index}`}
+            className="list-decimal list-inside md:list-outside mt-5 md:mt-10"
+          >
             {block.children.map((listItem, idx) => (
-              <li key={`listItem-${index}-${idx}`} className="mt-10 md:mt-10">
-                {listItem.children.map((child, cIdx) => {
-                  const lines = child.text.split("\n");
-                  return (
-                    <div key={`listItemChild-${index}-${cIdx}`} className="">
-                      {lines.map((line, lineIdx) => (
+              <li
+                key={`listItem-${index}-${idx}`}
+                className="flex items-start gap-2 "
+              >
+                {block.format === "ordered" ? (
+                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
+                    {idx + 1}.
+                  </span>
+                ) : (
+                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
+                    •
+                  </span>
+                )}
+
+                <div className="">
+                  {listItem.children.map((child, cIdx) => {
+                    if (!child.text && child.type !== "link") return null;
+
+                    if (child.type === "link" && child.children?.[0]?.text) {
+                      return (
                         <div
-                          className="mt-2 text-justify"
-                          key={`listItemLine-${index}-${lineIdx}`}
+                          key={`listItemChild-${index}-${cIdx}`}
+                          className="mb-5 md:10"
                         >
-                          {lineIdx === 0 ? (
-                            <span className="font-medium text-base md:text-lg lg:text-xl mb-2 block">{`${
-                              idx + 1
-                            } . ${line}`}</span>
-                          ) : (
-                            <span className="ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
-                              {line}
-                            </span>
-                          )}
-                          <br />
+                          <a
+                            href={child.url}
+                            className="text-blue-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {child.children[0].text}
+                          </a>
                         </div>
-                      ))}
-                    </div>
-                  );
-                })}
+                      );
+                    }
+
+                    const lines = child.text.split("\n");
+                    return (
+                      <div key={`listItemChild-${index}-${cIdx}`}>
+                        {lines.map((line, lineIdx) => (
+                          <div
+                            className="text-justify"
+                            key={`listItemLine-${index}-${lineIdx}`}
+                          >
+                            {lineIdx === 0 ? (
+                              <span className="font-medium text-base md:text-lg lg:text-xl block">
+                                {line}
+                              </span>
+                            ) : (
+                              <span className="ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
+                                {line}
+                              </span>
+                            )}
+                            <br />
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
               </li>
             ))}
           </ListTag>
@@ -101,12 +139,14 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <div
             key={`image-${index}`}
-            className="relative overflow-hidden border h-[40vh] rounded-sm"
+            className="relative overflow-hidden border h-[40vh] rounded-sm mt-10"
           >
             <Image
               src={
                 process.env.NEXT_PUBLIC_BASE_URL +
-                block.image?.formats?.thumbnail?.url
+                (block.image?.formats?.large?.url ||
+                  block.image?.formats?.medium?.url ||
+                  block.image?.url)
               }
               alt={block?.image?.formats?.thumbnail?.name}
               fill
@@ -165,7 +205,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         break;
     }
 
-    if ((index + 1) % 2 === 0 && postCategory?.length > 0) {
+    if ((index + 1) % 12 === 0 && postCategory?.length > 0) {
       let randomIndex;
 
       do {
@@ -252,7 +292,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           <Image
             src={
               process.env.NEXT_PUBLIC_BASE_URL +
-              post?.thumbnail?.formats?.thumbnail?.url
+              (post?.thumbnail?.formats?.large?.url ||
+                post?.thumbnail?.formats?.medium?.url ||
+                post?.thumbnail?.url)
             }
             alt={post?.thumbnail?.formats?.thumbnail?.name}
             fill

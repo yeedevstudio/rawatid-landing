@@ -18,7 +18,7 @@ export default function BlogHighlight({ data }) {
   const [show, setShow] = useState(false);
 
   const blogFilter = data.filter((blog) => blog.featured === true);
-  const blog = show ? blogFilter : blogFilter?.slice(0, 4);
+  const blog = show ? blogFilter : blogFilter?.slice(0, 3);
 
   const handleSelected = (index, slug) => {
     setSelected(index);
