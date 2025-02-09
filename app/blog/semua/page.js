@@ -35,7 +35,7 @@ export default async function Page({ searchParams }) {
   }
 
   const currentPage = parseInt(searchParams?.page) || 1;
-  const pageSize = 8;
+  const pageSize = 9;
 
   try {
     const res = await fetch(
