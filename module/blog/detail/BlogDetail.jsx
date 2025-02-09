@@ -29,52 +29,54 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           5: "text-lg md:text-xl lg:text-2xl font-light",
           6: "text-base md:text-lg lg:text-xl font-light",
         };
+
         elements.push(
-          <React.Fragment key={`heading-${index}`}>
+          <HeadingTag
+            key={`heading-${index}`}
+            className={`mt-10 ${headingSizes[block.level] || "text-xl"}`}
+          >
             {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
-                {child?.text?.split("\n").map((line, lineIdx) => (
-                  <HeadingTag
-                    key={lineIdx}
-                    className={`mt-10 ${
-                      headingSizes[block.level] || "text-xl"
-                    }  
-                    ${child.italic ? "italic" : ""} 
-                    ${child.underline ? "underline" : ""}`}
-                  >
-                    {line}
-                    <br />
-                  </HeadingTag>
+                {child.text.split("\n").map((line, lineIdx, arr) => (
+                  <React.Fragment key={`${idx}-${lineIdx}`}>
+                    <span
+                      className={`${child.bold ? "font-bold" : ""} ${
+                        child.italic ? "italic" : ""
+                      } ${child.underline ? "underline" : ""}`}
+                    >
+                      {line}
+                    </span>
+                    {lineIdx < arr.length - 1 && <br />}
+                  </React.Fragment>
                 ))}
               </React.Fragment>
             ))}
-          </React.Fragment>
+          </HeadingTag>
         );
         break;
       }
 
       case "paragraph":
         elements.push(
-          <React.Fragment
+          <p
             key={`paragraph-${index}`}
-            className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8 mt-10"
+            className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8 mt-5 md:mt-10"
           >
-            {block.children.map((child, idx) => (
-              <React.Fragment key={idx}>
-                {child.text.split("\n").map((line, lineIdx) => (
-                  <p
-                    key={lineIdx}
+            {block.children.map((child, idx) =>
+              child.text.split("\n").map((line, lineIdx, arr) => (
+                <React.Fragment key={`${idx}-${lineIdx}`}>
+                  <span
                     className={`${child.bold ? "font-bold" : ""} 
-                  ${child.italic ? "italic" : ""} 
-                  ${child.underline ? "underline" : ""}`}
+                                    ${child.italic ? "italic" : ""} 
+                                    ${child.underline ? "underline" : ""}`}
                   >
                     {line}
-                    <br />
-                  </p>
-                ))}
-              </React.Fragment>
-            ))}
-          </React.Fragment>
+                  </span>
+                  {lineIdx < arr.length - 1 && <br />}
+                </React.Fragment>
+              ))
+            )}
+          </p>
         );
         break;
 
@@ -83,12 +85,12 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <ListTag
             key={`list-${index}`}
-            className="list-decimal  md:list-outside mt-5 md:mt-10"
+            className="list-decimal md:list-outside mt-5 md:mt-10"
           >
             {block.children.map((listItem, idx) => (
-              <li key={`listItem-${index}-${idx}`} className="flex">
+              <li key={`listItem-${index}-${idx}`} className="flex mt-5 text-justify">
                 {block.format === "ordered" ? (
-                  <span className="mt-1 lg:mt-0 font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="mt-1 lg:mt-0 font-medium text-sm/8 md:text-base/8 lg:text-lg/8 mr-2">
                     {idx + 1}.
                   </span>
                 ) : (
@@ -97,60 +99,44 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                   </span>
                 )}
 
-                <div className="">
+                <div>
                   {listItem.children.map((child, cIdx) => {
                     if (!child.text && child.type !== "link") return null;
 
                     if (child.type === "link" && child.children?.[0]?.text) {
                       return (
-                        <div
+                        <a
                           key={`listItemChild-${index}-${cIdx}`}
-                          className="mb-5 md:10"
+                          href={child.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline text-blue-500 break-all"
                         >
-                          <a
-                            href={child.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <p className="text-wrap underline text-blue-500 break-all">
-                              {child.children[0].text}
-                            </p>
-                          </a>
-                        </div>
+                          {child.children[0].text}
+                        </a>
                       );
                     }
 
-                    const lines = child.text.split("\n");
                     return (
-                      <div key={`listItemChild-${index}-${cIdx}`}>
-                        {lines.map((line, lineIdx) => (
-                          <div
-                            className="text-justify"
-                            key={`listItemLine-${index}-${lineIdx}`}
-                          >
-                            {lineIdx === 0 ? (
-                              <span
-                                className={`text-sm/8 md:text-base/8 lg:text-lg/8 flex flex-wrap lg:block 
-                                ${child.bold ? "font-bold" : ""} 
-                                ${child.italic ? "italic" : ""} 
-                                ${child.underline ? "underline" : ""}`}
-                              >
-                                {line}
-                              </span>
-                            ) : (
-                              <span
-                                className={`ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8 
-                                ${child?.bold ? "font-bold" : ""} 
-                                ${child?.italic ? "italic" : ""} 
-                                ${child?.underline ? "underline" : ""}`}
-                              >
-                                {line}
-                              </span>
-                            )}
-                            <br />
-                          </div>
+                      <span
+                        key={`listItemChild-${index}-${cIdx}`}
+                        className="text-justify"
+                      >
+                        {child.text.split("\n").map((line, lineIdx, arr) => (
+                          <React.Fragment key={`${cIdx}-${lineIdx}`}>
+                            <span
+                              className={`text-sm/8 md:text-base/8 lg:text-lg/8 text-justify ${
+                                child.bold ? "font-bold" : ""
+                              } ${child.italic ? "italic" : ""} ${
+                                child.underline ? "underline" : ""
+                              }`}
+                            >
+                              {line}
+                            </span>
+                            {lineIdx < arr.length - 1 && <br />}
+                          </React.Fragment>
                         ))}
-                      </div>
+                      </span>
                     );
                   })}
                 </div>

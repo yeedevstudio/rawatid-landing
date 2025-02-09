@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
       <head>
         <Script
           id="hotjar"
-          // strategy="lazyOnload"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(h,o,t,j,a,r){
