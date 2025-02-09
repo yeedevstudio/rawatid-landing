@@ -30,42 +30,51 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           6: "text-base md:text-lg lg:text-xl font-light",
         };
         elements.push(
-          <HeadingTag
-            key={`heading-${index}`}
-            className={`mt-10 ${headingSizes[block.level] || "text-xl"}`}
-          >
+          <React.Fragment key={`heading-${index}`}>
             {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
                 {child?.text?.split("\n").map((line, lineIdx) => (
-                  <React.Fragment key={lineIdx}>
+                  <HeadingTag
+                    key={lineIdx}
+                    className={`mt-10 ${
+                      headingSizes[block.level] || "text-xl"
+                    }  
+                    ${child.italic ? "italic" : ""} 
+                    ${child.underline ? "underline" : ""}`}
+                  >
                     {line}
                     <br />
-                  </React.Fragment>
+                  </HeadingTag>
                 ))}
               </React.Fragment>
             ))}
-          </HeadingTag>
+          </React.Fragment>
         );
         break;
       }
 
       case "paragraph":
         elements.push(
-          <p
+          <React.Fragment
             key={`paragraph-${index}`}
             className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8 mt-10"
           >
             {block.children.map((child, idx) => (
               <React.Fragment key={idx}>
                 {child.text.split("\n").map((line, lineIdx) => (
-                  <React.Fragment key={lineIdx}>
+                  <p
+                    key={lineIdx}
+                    className={`${child.bold ? "font-bold" : ""} 
+                  ${child.italic ? "italic" : ""} 
+                  ${child.underline ? "underline" : ""}`}
+                  >
                     {line}
                     <br />
-                  </React.Fragment>
+                  </p>
                 ))}
               </React.Fragment>
             ))}
-          </p>
+          </React.Fragment>
         );
         break;
 
@@ -120,11 +129,21 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                             key={`listItemLine-${index}-${lineIdx}`}
                           >
                             {lineIdx === 0 ? (
-                              <span className="text-sm/8 md:text-base/8 lg:text-lg/8 flex flex-wrap lg:block">
+                              <span
+                                className={`text-sm/8 md:text-base/8 lg:text-lg/8 flex flex-wrap lg:block 
+                                ${child.bold ? "font-bold" : ""} 
+                                ${child.italic ? "italic" : ""} 
+                                ${child.underline ? "underline" : ""}`}
+                              >
                                 {line}
                               </span>
                             ) : (
-                              <span className="ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8">
+                              <span
+                                className={`ml-5 md:ml-6 lg:ml-7 text-sm/8 md:text-base/8 lg:text-lg/8 
+                                ${child?.bold ? "font-bold" : ""} 
+                                ${child?.italic ? "italic" : ""} 
+                                ${child?.underline ? "underline" : ""}`}
+                              >
                                 {line}
                               </span>
                             )}
