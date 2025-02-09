@@ -88,13 +88,16 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
             className="list-decimal md:list-outside mt-5 md:mt-10"
           >
             {block.children.map((listItem, idx) => (
-              <li key={`listItem-${index}-${idx}`} className="flex mt-5 text-justify">
+              <li
+                key={`listItem-${index}-${idx}`}
+                className="flex mt-5 text-justify"
+              >
                 {block.format === "ordered" ? (
-                  <span className="mt-1 lg:mt-0 font-medium text-sm/8 md:text-base/8 lg:text-lg/8 mr-2">
+                  <span className="font-medium text-sm/8 md:text-base/8 lg:text-lg/8 mr-2">
                     {idx + 1}.
                   </span>
                 ) : (
-                  <span className="mt-1 lg:mt-0 font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
                     •
                   </span>
                 )}
@@ -172,14 +175,14 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <blockquote
             key={`quote-${index}`}
-            className="italic text-neutral90 text-sm md:text-base lg:text-lg leading-loose"
+            className="italic text-neutral-900 text-sm md:text-base lg:text-lg leading-loose text-justify mt-5 md:mt-10"
           >
             {block.children.map((child, idx) => (
               <React.Fragment key={idx}>
-                {child.text.split("\n").map((line, lineIdx) => (
-                  <React.Fragment key={lineIdx}>
-                    " {line} "
-                    <br />
+                {child.text.split("\n").map((line, lineIdx, arr) => (
+                  <React.Fragment key={`${idx}-${lineIdx}`}>
+                    {lineIdx === 0 && "“"} <span>{line}</span>
+                    {lineIdx < arr.length - 1 ? <br /> : "”"}
                   </React.Fragment>
                 ))}
               </React.Fragment>
