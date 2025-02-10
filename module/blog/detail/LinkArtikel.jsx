@@ -1,4 +1,5 @@
 "use client";
+
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -8,10 +9,20 @@ import {
 } from "@tabler/icons-react";
 import React from "react";
 import ButtonCopy from "../../../common/components/ButtonCopy";
-import { useRouter } from "next/navigation";
 
 export default function LinkArtikel({ post }) {
-  const router = useRouter();
+  const handleShare = () => {
+    const shareUrl = `${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      // alert("Link telah disalin! Tempel di DM Instagram.");
+    });
+    window.open(
+      "https://www.instagram.com/direct/new/",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <div>
       <h2 className="text-sm md:text-base lg:text-lg font-medium text-green">
@@ -34,7 +45,7 @@ export default function LinkArtikel({ post }) {
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
-              `https://twitter.com/intent/tweet?text=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
+              `https://twitter.com/intent/tweet?text=${post?.title}&url=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
               "_blank",
               "noopener,noreferrer"
             )
@@ -45,11 +56,9 @@ export default function LinkArtikel({ post }) {
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
-              `https://www.facebook.com/sharer/sharer.php?u=${
-                (process.env.NEXT_PUBLIC_URL + "/detail/" + post?.slug,
-                "_blank",
-                "noopener,noreferrer")
-              }`
+              `https://www.facebook.com/sharer/sharer.php?u=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
+              "_blank",
+              "noopener,noreferrer"
             )
           }
         />
@@ -58,7 +67,7 @@ export default function LinkArtikel({ post }) {
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
           onClick={() =>
             window.open(
-              `https://www.linkedin.com/shareArticle?mini=true&url=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
+              `https://www.linkedin.com/sharing/share-offsite/?url=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
               "_blank",
               "noopener,noreferrer"
             )
@@ -67,13 +76,7 @@ export default function LinkArtikel({ post }) {
         <IconBrandInstagram
           title="instagram"
           className="h-6 w-6 md:h-9 md:w-9 text-white bg-green rounded-md cursor-pointer"
-          onClick={() =>
-            window.open(
-              `https://www.instagram.com/direct/new/?link=${process.env.NEXT_PUBLIC_URL}/detail/${post?.slug}`,
-              "_blank",
-              "noopener,noreferrer"
-            )
-          }
+          onClick={handleShare}
         />
         <ButtonCopy
           text={process.env.NEXT_PUBLIC_URL + "/detail/" + post?.slug}

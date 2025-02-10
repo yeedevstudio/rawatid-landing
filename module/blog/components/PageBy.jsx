@@ -72,7 +72,7 @@ export default function PageBy({ data, post, slug, title, author }) {
         <div className="grid grid-cols-1 gap-2 md:gap-6 py-6">
           {data?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[12rem] md:h-[14rem] lg:h-[19.5rem] rounded-xl " />
+              <Skeleton className="w-full h-[16rem] md:h-[18rem] lg:h-[19.5rem] rounded-xl " />
             </div>
           ))}
         </div>

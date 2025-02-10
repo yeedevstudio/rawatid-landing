@@ -93,11 +93,11 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 className="flex mt-5 text-justify"
               >
                 {block.format === "ordered" ? (
-                  <span className="font-medium text-sm/8 md:text-base/8 lg:text-lg/8 mr-2">
+                  <span className="mt-1 md:mt-0 font-medium text-sm/8 md:text-base/8 lg:text-lg/8 mr-2">
                     {idx + 1}.
                   </span>
                 ) : (
-                  <span className="font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="mt-1 md:mt-0font-medium text-base md:text-lg lg:text-xl mr-2">
                     •
                   </span>
                 )}
