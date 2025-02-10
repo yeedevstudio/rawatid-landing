@@ -289,7 +289,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         </Link>
         <span
           itemProp="datePublished"
-          className="text-sm md:text-base lg:text-lg"
+          className="text-sm md:text-base"
         >
           {new Date(post?.updatedAt).toLocaleDateString("id-ID", {
             day: "2-digit",
