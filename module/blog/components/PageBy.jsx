@@ -44,40 +44,56 @@ export default function PageBy({ data, post, slug, title, author }) {
 
       {author && (
         <section className="flex flex-col items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6 my-10 md:my-20">
-          <Image
-            src={process.env.NEXT_PUBLIC_BASE_URL + author?.avatar?.url}
-            alt={author?.avatar?.name}
-            width={60}
-            height={60}
-            layout="intrinsic"
-            className="rounded-full h-[6rem] w-[6rem]"
-            style={{ objectFit: "cover" }}
-            priority
-          />
+          <div className="relative w-[5rem] h-[5rem] md:h-[7rem] md:w-[7rem] lg:h-[10rem] lg:w-[10rem] rounded-full overflow-hidden border">
+            <Image
+              src={
+                process.env.NEXT_PUBLIC_BASE_URL +
+                (author?.avatar?.formats?.large?.url ||
+                  author?.avatar?.medium?.url ||
+                  author?.avatar?.url)
+              }
+              alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
+              fill
+              priority
+              style={{ objectFit: "cover", position: "absolute" }}
+            />
+          </div>
           <div className="flex flex-col items-center justify-center">
-            <span itemProp="author" className="text-xs md:text-sm lg:text-base">Penulis</span>
+            <span itemProp="author" className="text-xs md:text-sm lg:text-base">
+              Penulis
+            </span>
             <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
               {author?.name}
             </h2>
             <p className=" text-xs md:text-sm lg:text-sm text-center md:text-justify mt-2 px-2 md:px-6">
-              <span itemProp="qoute" className="font-semibold text-lg mr-1">"</span>
+              <span
+                itemProp="qoute"
+                className="md:font-semibold md:text-lg mr-1"
+              >
+                "
+              </span>
               {author?.bio.split(" ").slice(0, 50).join(" ")}
-              <span itemProp="qoute" className="font-semibold text-lg ml-1">"</span>
+              <span
+                itemProp="qoute"
+                className="md:font-semibold md:text-lg ml-1"
+              >
+                "
+              </span>
             </p>
           </div>
         </section>
       )}
 
       {loading ? (
-        <div className="grid grid-cols-1 gap-2 md:gap-6 py-6">
+        <div className="grid grid-cols-1 gap-2 md:gap-4 py-6">
           {data?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[16rem] md:h-[18rem] lg:h-[19.5rem] rounded-xl " />
+              <Skeleton className="w-full h-[16rem] md:h-[16rem] lg:h-[19rem] rounded-xl " />
             </div>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
           {blogFilter?.map((article, index) => (
             <div key={index} className={article.span}>
               <CardArticleSidebar

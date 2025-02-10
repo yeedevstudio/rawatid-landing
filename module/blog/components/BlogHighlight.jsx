@@ -28,7 +28,7 @@ export default function BlogHighlight({ data }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % blogFilter.length);
-    }, 5000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, [blogFilter.length]);
@@ -49,18 +49,18 @@ export default function BlogHighlight({ data }) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 md:my-[6rem] h-full">
-        <Skeleton className="w-full h-full min-h-[18rem] lg:min-h-[15rem] max-h-full rounded-xl" />
+        <Skeleton className="w-full h-full min-h-[18rem] md:min-h-[25rem] lg:min-h-[15rem] max-h-full rounded-xl" />
         <div className="grid grid-cols-1 gap-2 md:gap-6">
-          <Skeleton className="w-full h-[13rem] md:h-[16.5rem] rounded-xl " />
-          <Skeleton className="w-full h-[13rem] md:h-[16.5rem] rounded-xl" />
-          <Skeleton className="w-full h-[13rem] md:h-[16.5rem] rounded-xl" />
+          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl " />
+          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
+          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 h-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 h-full">
       <div className="transition-all duration-300 ease-in-out">
         <CardArticle
           src={currentArticle?.thumbnail?.formats?.small?.url}
@@ -72,14 +72,13 @@ export default function BlogHighlight({ data }) {
           onSelect={() => handleSelected(currentIndex, currentArticle.slug)}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 md:gap-6">
+      <div className="grid grid-cols-1 gap-2">
         {blog.map((article, index) => (
           <div key={index}>
             <CardArticleSidebar
               src={article?.thumbnail?.formats?.small?.url}
               alt={article.thumbnail.formats?.small.url}
               category={article.category?.name}
-              height={"h-[12rem] md:h-[15rem]"}
               title={article.title}
               index={index}
               selected={selected === index}

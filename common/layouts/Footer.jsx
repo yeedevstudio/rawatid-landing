@@ -20,9 +20,9 @@ const Footer = () => {
         <div>
           <nav className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
             <Link
-              title="Rawat.ID"
               href="/"
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
+              itemProp="button"
             >
               <Image
                 src="/images/logo.webp"
@@ -50,7 +50,7 @@ const Footer = () => {
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
-                      title={item?.title}
+                      itemProp="button"
                     >
                       <h3>{item?.title}</h3>
                     </Link>
@@ -69,9 +69,8 @@ const Footer = () => {
         <div>
           <nav className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
             <Link
-              href="/"
-              title="Rawat.ID"
-              className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
+              href="/blog"
+              className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth w-[50%]"
             >
               <Image
                 src="/images/logo.webp"
@@ -81,12 +80,12 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <h2 className="text-md md:text-lg text-white">
-                Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
-                Klinik
+                Blog Teknologi dan Kesehatan dari Rawat.ID - Rekam Medis
+                Elektronik Lengkap untuk Rumah Sakit dan Klinik
               </h2>
             </Link>
             <div className="footer__links">
-              {footerBlogLinks?.map((link) => (
+              {footerLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
                   <h2 className="text-md md:text-lg font-medium text-white">
                     {link?.title}
@@ -99,7 +98,7 @@ const Footer = () => {
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
-                      title={item?.title}
+                      itemProp="button"
                     >
                       <h3>{item?.title}</h3>
                     </Link>
@@ -110,7 +109,7 @@ const Footer = () => {
           </nav>
           <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
             <p className="text-md md:text-lg font-normal text-white">
-              &copy; {date} Blog Rawat.ID
+              &copy; {date} Rawat.ID
             </p>
           </div>
         </div>

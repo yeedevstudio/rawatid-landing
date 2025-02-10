@@ -41,19 +41,21 @@ export default function Header() {
             />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
-            <div className="flex gap-20 text-green">
+            <div className="flex gap-20 ">
               {headerValue?.map((item, index) => (
-                <Link href={item.url} key={index} title={item.title}>
-                  <h2 className="text-sm md:text-lg">{item.title}</h2>
+                <Link href={item.url} key={index} itemProp="button">
+                  <h2 className="text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out">
+                    {item.title}
+                  </h2>
                 </Link>
               ))}
             </div>
-            <Link href={"/register"} title="Registrasi" passHref>
+            <Link href={"/register"} itemProp="button" passHref>
               <Button
-                className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none"
+                className="bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none transition-all duration-300 ease-in-out"
                 aria-label="Registrasi Sekarang"
               >
-                Registrasi
+                Registrasi EMR
               </Button>
             </Link>
           </nav>
@@ -89,27 +91,29 @@ export default function Header() {
                   </SheetTitle>
                 </Link>
                 <nav className="px-4 mt-10">
-                  <ul className="flex flex-col gap-10 text-green">
+                  <ul className="flex flex-col gap-10">
                     {headerValue?.map((item, index) => (
                       <Link
-                        title={item.title}
+                        itemProp="button"
                         href={item.url}
                         key={index}
                         onClick={handleClose}
                       >
-                        <h2 className="text-sm md:text-lg">{item.title}</h2>
+                        <h2 className="text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out">
+                          {item.title}
+                        </h2>
                       </Link>
                     ))}
                   </ul>
                 </nav>
                 <div className="mx-4 mt-10">
-                  <Link href="/register" passHref title="Registrasi">
+                  <Link href="/register" passHref itemProp="button">
                     <Button
                       onClick={handleClose}
-                      className="bg-green text-white hover:bg-green shadow-none w-full"
+                      className="bg-green text-white hover:bg-greenHover shadow-none w-full transition-all duration-300 ease-in-out"
                       aria-label="Registrasi Sekarang"
                     >
-                      Registrasi
+                      Registrasi EMR
                     </Button>
                   </Link>
                 </div>
@@ -131,16 +135,18 @@ export default function Header() {
             />
           </Link>
           <nav className="hidden lg:flex items-center gap-20">
-            <div className="flex gap-20 text-green">
+            <div className="flex gap-20">
               {headerValueBlog?.map((item, index) => (
-                <Link href={item.url} key={index} title={item.title}>
-                  <h2 className="text-sm md:text-lg">{item.title}</h2>
+                <Link href={item.url} key={index} itemProp="button">
+                  <h2 className="text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out">
+                    {item.title}
+                  </h2>
                 </Link>
               ))}
             </div>
-            <Link href={"/register"} title="Registrasi Sekarang">
+            <Link href={"/register"} itemProp="button">
               <Button
-                className="bg-green text-white text-sm md:text-lg hover:bg-green shadow-none"
+                className="bg-green text-white text-sm md:text-lg hover:bg-greenHover shadow-none transition-all duration-300 ease-in-out"
                 aria-label="Registrasi Sekarang"
               >
                 Registrasi EMR
@@ -179,24 +185,26 @@ export default function Header() {
                   </SheetTitle>
                 </Link>
                 <nav className="px-4 mt-10">
-                  <ul className="flex flex-col gap-10 text-green">
+                  <ul className="flex flex-col gap-10">
                     {headerValueBlog?.map((item, index) => (
                       <Link
-                        title={item.title}
+                        itemProp="button"
                         href={item.url}
                         key={index}
                         onClick={handleClose}
                       >
-                        <h2 className="text-sm md:text-lg">{item.title}</h2>
+                        <h2 className="text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out">
+                          {item.title}
+                        </h2>
                       </Link>
                     ))}
                   </ul>
                 </nav>
                 <div className="mx-4 mt-10">
-                  <Link href="/register" passHref title="Registrasi">
+                  <Link href="/register" passHref itemProp="button">
                     <Button
                       onClick={handleClose}
-                      className="bg-green text-white hover:bg-green shadow-none w-full"
+                      className="bg-green text-white hover:bg-greenHover shadow-none w-full transition-all duration-300 ease-in-out"
                       aria-label="Registrasi Sekarang"
                     >
                       Registrasi EMR

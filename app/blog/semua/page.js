@@ -3,8 +3,7 @@ import NotFound from "@/app/not-found";
 import PageByAll from "@/module/blog/components/PageByAll";
 
 export const metadata = {
-  title:
-    "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+  title: " Blog Teknologi dan Kesehatan dari Rawat.ID",
   description:
     "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
   keywords: [

@@ -11,11 +11,11 @@ export default function AdvertisSection() {
         height={400}
         className="w-full md:w-[20rem] lg:w-[70%]"
       />
-      <div className="flex flex-col gap-4 w-full">
-        <h2 className=" text-xl md:text-2xl lg:text-3xl font-medium text-white ">
+      <div className="flex flex-col gap-4 w-full text-white">
+        <h2 className=" text-xl md:text-2xl lg:text-3xl font-medium">
           Ribet Pindah dari Sistem Lama? Kami Bantu Sampai Selesai!
         </h2>
-        <h3 className="text-base md:text-xl lg:text-2xl font-normal text-white">
+        <h3 className="text-base md:text-xl lg:text-2xl font-normal">
           Kami akan bantu Kamu migrasi data Rumah Sakit dan Klinik ke Rawat.ID,
           transisi sistem manajemen sampai sistem siap digunakan!
         </h3>

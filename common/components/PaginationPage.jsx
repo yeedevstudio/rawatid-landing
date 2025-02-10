@@ -20,6 +20,7 @@ export default function PaginationPage({ page, pageCount, onPageChange }) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+          
             className={`cursor-pointer  transition-all duration-300 ease-in-out ${
               page <= 1
                 ? "opacity-50 cursor-not-allowed"
@@ -33,7 +34,7 @@ export default function PaginationPage({ page, pageCount, onPageChange }) {
         {Array.from({ length: pageCount }, (_, index) => (
           <PaginationItem key={index}>
             <PaginationLink
-              className={`cursor-pointer  transition-all duration-300 ease-in-out hover:bg-green60  ${
+              className={`cursor-pointer transition-all duration-300 ease-in-out hover:bg-greenHover hover:text-white ${
                 page === index + 1 ? "bg-green text-white " : ""
               }`}
               onClick={() => handlePageChange(index + 1)}

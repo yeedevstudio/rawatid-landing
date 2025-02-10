@@ -24,17 +24,17 @@ export default function Authors({ post, author }) {
         <span itemProp="author" className="text-xs md:text-sm lg:text-base">
           Penulis
         </span>
-        <Link href={`/blog/penulis/${post?.author?.slug}`} title="Penulis">
+        <Link href={`/blog/penulis/${post?.author?.slug}`}>
           <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
             {post?.author?.name}
           </h2>
         </Link>
         <p className=" text-xs md:text-sm lg:text-sm text-center md:text-justify text-neutral90">
-          <span itemProp="qoute" className="font-semibold text-lg mr-1">
+          <span itemProp="qoute" className="md:font-semibold md:text-lg mr-1">
             "
           </span>
           {post?.author?.bio.split(" ").slice(0, 50).join(" ")}
-          <span itemProp="qoute" className="font-semibold text-lg ml-1">
+          <span itemProp="qoute" className="md:font-semibold md:text-lg ml-1">
             "
           </span>
         </p>

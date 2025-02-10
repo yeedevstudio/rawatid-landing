@@ -14,7 +14,7 @@ export default {
     extend: {
       colors: {
         grayHeader: "#F5F5F5",
-        // green: "#038F7A",
+        greenHover: "#038F7A",
         green: "#035E4D",
         greenImage: "#D8EDEE",
         neutral100: "#0A0A0A",

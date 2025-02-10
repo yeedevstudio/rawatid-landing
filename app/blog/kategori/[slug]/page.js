@@ -18,8 +18,7 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title:
-          "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+        title: "Blog Teknologi dan Kesehatan dari Rawat.ID",
         canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,

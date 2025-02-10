@@ -2,7 +2,7 @@ import BlogPage from "@/module/blog";
 import Error from "../error";
 
 export const metadata = {
-  title: "Rawat.ID - Blog Kesehatan, Teknologi dan Informasi Umum",
+  title: " Blog Teknologi dan Kesehatan dari Rawat.ID",
   description:
     "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, solusi efektif untuk tenaga kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
   keywords: [

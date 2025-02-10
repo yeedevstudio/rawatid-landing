@@ -12,14 +12,14 @@ export const CardArticle = ({
   return (
     <div
       className={cn(
-        "h-full flex flex-col justify-between border p-2 md:p-3 rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out",
+        "h-full flex flex-col justify-between border p-2 md:p-2 rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out",
         selected && "border-green"
       )}
       onClick={onSelect}
     >
       <div
         className={cn(
-          "h-[12rem] md:h-full min-h-[12rem] md:min-h-[15rem]",
+          "md:h-full min-h-[12rem] md:min-h-[18rem] ",
           "w-full",
           "relative rounded-2xl overflow-hidden"
         )}
@@ -33,10 +33,10 @@ export const CardArticle = ({
         />
       </div>
       <div className="">
-        <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+        <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-2 md:my-2 text-white bg-green">
           {category}
         </h3>
-        <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5">
+        <h2 className="text-lg md:text-xl lg:text-xl font-medium tracking-wider py-2">
           {title}
         </h2>
       </div>
@@ -56,7 +56,7 @@ export const CardArticleAll = ({
 }) => (
   <div
     className={cn(
-      "h-full border p-2 md:p-3 rounded-[20px] cursor-pointer",
+      "h-full border p-2 md:p-2 rounded-[20px] cursor-pointer",
       selected && "border-green"
     )}
     onClick={onSelect}
@@ -76,10 +76,10 @@ export const CardArticleAll = ({
       />
     </div>
     <div className="">
-      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-2 text-white bg-green">
         {category}
       </h3>
-      <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-5 ">
+      <h2 className="text-lg md:text-xl lg:text-xl font-medium tracking-wider py-2 ">
         {title}
       </h2>
     </div>
@@ -99,7 +99,7 @@ export const CardArticleSidebar = ({
 }) => (
   <div
     className={cn(
-      "grid grid-cols-2 gap-2 md:gap-6 h-full border p-2 md:p-3 rounded-[20px] cursor-pointer",
+      "grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 h-full border p-2 md:p-2 rounded-[20px] cursor-pointer",
       selected && "border-green"
     )}
     onClick={onSelect}
@@ -108,7 +108,7 @@ export const CardArticleSidebar = ({
       className={cn(
         height ? height : "h-full ",
         width ? width : "w-full",
-        "relative rounded-2xl overflow-hidden min-h-[12rem] lg:min-h-[15rem]"
+        "relative rounded-2xl overflow-hidden min-h-[12rem] md:min-h-[13rem] lg:min-h-[8rem]"
       )}
     >
       <Image
@@ -119,25 +119,25 @@ export const CardArticleSidebar = ({
       />
     </div>
     <div>
-      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-1 md:my-1 text-white bg-green">
         {category}
       </h3>
-      <h2 className="text-lg md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 hidden  lg:block">
-        {title}
+      <h2 className="text-lg md:text-xl lg:text-xl font-medium tracking-wider py-1 md:py-2 hidden lg:block">
+        {title.split(" ").slice(0, 8).join(" ")}
       </h2>
-      <h2 className="text-base md:text-xl lg:text-2xl font-medium tracking-wider py-1 md:py-2 lg:py-5 block lg:hidden">
+      <h2 className="text-base md:text-xl lg:text-xl font-medium tracking-wider py-1 md:py-2 block lg:hidden">
         {title.split(" ").slice(0, 3).join(" ")}...
       </h2>
       {headline && (
-        <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-5 font-light text-neutral90 tracking-wider text-justify">
+        <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-2 font-light text-neutral90 tracking-wider text-justify">
           <span className="block md:hidden">
             {headline.split(" ").slice(0, 10).join(" ")}...
           </span>
           <span className="hidden md:block">
-            {headline.split(" ").slice(0, 20).join(" ")}
+            {headline.split(" ").slice(0, 15).join(" ")}
           </span>
           <span className="hidden md:hidden lg:block">
-            {headline.split(" ").slice(0, 50).join(" ")}
+            {headline.split(" ").slice(0, 19).join(" ")}
           </span>
         </p>
       )}
@@ -178,7 +178,7 @@ export const CardArticlePopuler = ({
       />
     </div>
     <div>
-      <h3 className="p-1 w-fit rounded-md text-xs px-4 my-2 md:my-4 text-white bg-green">
+      <h3 className="p-1 w-fit rounded-md text-xs px-5 my-2 md:my-4 text-white bg-green">
         {category}
       </h3>
       <h2 className="text-sm md:text-base lg:text-lg font-medium">{title}</h2>

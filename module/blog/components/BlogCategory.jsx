@@ -36,30 +36,29 @@ export default function BlogCategory({ data, category }) {
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
         itemProp="button"
-        title="Artikel terbaru"
         href={`/blog/kategori/${category?.slug}`}
         className="text-lg md:text-lg lg:text-xl text-green font-medium underline capitalize"
       >
         <h1>{category?.name}</h1>
       </Link>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6">
           {data?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[16rem] md:h-[20rem] lg:h-[25.5rem] rounded-xl " />
+              <Skeleton className="w-full h-[18rem] md:h-[20rem] lg:h-[22rem] rounded-xl " />
             </div>
           ))}
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
             {blogFilter?.map((article, index) => (
               <div key={index} className={article.span}>
                 <CardArticleAll
                   src={article?.thumbnail?.formats?.small?.url}
                   alt={article?.thumbnail?.formats?.small?.url}
                   category={article.category?.name}
-                  height={"h-[10rem] md:h-[12rem] lg:h-[14rem]"}
+                  height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
                   title={article.title}
                   index={index}
                   selected={selected === index}
@@ -72,7 +71,6 @@ export default function BlogCategory({ data, category }) {
             <div className="flex items-center justify-center py-5">
               <Link
                 itemProp="button"
-                title="lihat semua"
                 href={`/blog/kategori/${category?.slug}`}
                 className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
               >

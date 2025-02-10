@@ -36,23 +36,22 @@ export default function BlogAll({ data }) {
     <div className=" my-[3rem] md:my-[6rem]">
       <Link
         itemProp="button"
-        title="Artikel terbaru"
         href="/blog/semua"
         className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
       >
         <h1>Artikel terbaru</h1>
       </Link>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6">
           {blogFilter?.map((article, index) => (
             <div key={index}>
-              <Skeleton className="w-full h-[16rem] md:h-[20rem] lg:h-[25.5rem] rounded-xl " />
+              <Skeleton className="w-full h-[18rem] md:h-[20rem] lg:h-[22rem] rounded-xl " />
             </div>
           ))}
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 py-6 transition-all duration-150 ease-in-out">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
             {blogFilter?.map((article, index) => (
               <div key={index} className={article.span}>
                 <CardArticleAll
@@ -60,7 +59,7 @@ export default function BlogAll({ data }) {
                   alt={article?.thumbnail?.formats?.small?.url}
                   category={article.category?.name}
                   title={article.title}
-                  height={"h-[10rem] md:h-[12rem] lg:h-[14rem]"}
+                  height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
                   index={index}
                   selected={selected === index}
                   onSelect={() => handleSelected(index, article.slug)}
@@ -69,12 +68,11 @@ export default function BlogAll({ data }) {
             ))}
           </div>
           {data?.length > 6 && (
-            <div className="flex items-center justify-center py-5">
+            <div className="flex items-center justify-center py-4">
               <Link
                 itemProp="button"
-                title="Lihat semua"
                 href="/blog/semua"
-                className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
+                className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-greenHover py-1.5 px-5 rounded-lg transition-all duration-300 ease-in-out"
               >
                 Lihat semua
               </Link>

@@ -20,17 +20,17 @@ export default function HeroSection() {
           Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas,
           faskes jadi lebih untung!
         </h2>
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full transition-all duration-300 ease-in-out">
           <Button
             aria-label="Registrasi Sekarang"
-            className="bg-green text-white text-sm md:text-lg  hover:bg-green shadow-none w-[60%] h-[2.5rem] md:h-[3rem] rounded-lg"
+            className="bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none w-[60%] h-[2.5rem] md:h-[3rem] rounded-lg"
             onClick={() => router.push("/register")}
           >
             Registrasi Sekarang
           </Button>
           <Button
             aria-label="Lihat Fitur"
-            className="text-green text-sm md:text-lg  border border-green bg-white hover:bg-white shadow-none w-[35%] h-[2.5rem] md:h-[3rem] rounded-lg"
+            className="text-green text-sm md:text-lg  border border-green bg-white hover:bg-neutral-100 shadow-none w-[35%] h-[2.5rem] md:h-[3rem] rounded-lg"
             onClick={() => router.push("/fitur")}
           >
             Lihat Fitur

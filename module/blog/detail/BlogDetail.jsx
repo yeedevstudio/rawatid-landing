@@ -33,7 +33,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <HeadingTag
             key={`heading-${index}`}
-            className={`mt-10 ${headingSizes[block.level] || "text-xl"}`}
+            className={`${index === 0 ? "mt-0" : "mt-10"} ${
+              headingSizes[block.level] || "text-xl"
+            }`}
           >
             {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
@@ -60,7 +62,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <p
             key={`paragraph-${index}`}
-            className="text-justify text-sm/8 md:text-base/8 lg:text-lg/8 mt-5 md:mt-10"
+            className={`text-justify text-sm/8 md:text-base/8 lg:text-lg/8 ${
+              index === 0 ? "mt-0" : "mt-5 md:mt-10"
+            }`}
           >
             {block.children.map((child, idx) =>
               child.text.split("\n").map((line, lineIdx, arr) => (
@@ -85,7 +89,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <ListTag
             key={`list-${index}`}
-            className="list-decimal md:list-outside mt-5 md:mt-10"
+            className={`list-decimal md:list-outside ${
+              index === 0 ? "mt-0" : "mt-5 md:mt-10"
+            }`}
           >
             {block.children.map((listItem, idx) => (
               <li
@@ -97,7 +103,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                     {idx + 1}.
                   </span>
                 ) : (
-                  <span className="mt-1 md:mt-0font-medium text-base md:text-lg lg:text-xl mr-2">
+                  <span className="mt-1 md:mt-0 font-medium text-base md:text-lg lg:text-xl mr-2">
                     •
                   </span>
                 )}
@@ -153,7 +159,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <div
             key={`image-${index}`}
-            className="relative overflow-hidden border h-[40vh] rounded-sm mt-10"
+            className={`relative overflow-hidden rounded-sm ${
+              index === 0 ? "mt-0" : "mt-5 md:mt-10"
+            }`}
           >
             <Image
               src={
@@ -163,10 +171,15 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                   block.image?.url)
               }
               alt={block?.image?.formats?.thumbnail?.name}
-              fill
+              height={post?.thumbnail?.height}
+              width={post?.thumbnail?.width}
               style={{ objectFit: "cover" }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
+            {block?.image?.caption && (
+              <span className="mt-2 block text-xs italic">
+                Sumber : {block?.image?.caption}
+              </span>
+            )}
           </div>
         );
         break;
@@ -175,7 +188,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         elements.push(
           <blockquote
             key={`quote-${index}`}
-            className="italic text-neutral-900 text-sm md:text-base lg:text-lg leading-loose text-justify mt-5 md:mt-10"
+            className={`italic text-neutral-900 text-sm md:text-base lg:text-lg leading-loose text-justify ${
+              index === 0 ? "mt-0" : "mt-5 md:mt-10"
+            }`}
           >
             {block.children.map((child, idx) => (
               <React.Fragment key={idx}>
@@ -196,7 +211,9 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           <div className="relative">
             <pre
               key={`code-${index}`}
-              className="pt-14 pb-4 bg-gray-800 text-white p-2 rounded overflow-x-auto text-sm md:text-base scrollbar-hide leading-loose"
+              className={`pt-14 pb-4 bg-gray-800 text-white p-2 rounded overflow-x-auto text-sm md:text-base scrollbar-hide leading-loose ${
+                index === 0 ? "mt-0" : "mt-5 md:mt-10"
+              }`}
             >
               <code>
                 {block.children.map((child, idx) => (
@@ -276,7 +293,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
   }
 
   return (
-    <ContainerBlog aos="fade-up">
+    <div className="mx-5 md:mx-[4rem] lg:mx-[7rem] my-[2rem]" aos="fade-up">
       <ButtonBack />
       <div className="flex items-center gap-2 md:gap-6">
         <Link
@@ -289,7 +306,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         </Link>
         <span
           itemProp="datePublished"
-          className="text-sm md:text-base"
+          className="text-xs md:text-sm text-muted-foreground"
         >
           {new Date(post?.updatedAt).toLocaleDateString("id-ID", {
             day: "2-digit",
@@ -302,7 +319,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         <h1 className="py-6 text-xl md:text-2xl lg:text-3xl font-semibold text-green tracking-wider">
           {post?.title}
         </h1>
-        <div className="relative rounded-2xl overflow-hidden h-[30vh] lg:h-[50vh] w-full mb-5 md:mb-10 lg:mb-12">
+        <div className="relative rounded-2xl overflow-hidden w-full mb-5 lg:mb-10 ">
           <Image
             src={
               process.env.NEXT_PUBLIC_BASE_URL +
@@ -310,18 +327,17 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 post?.thumbnail?.formats?.medium?.url ||
                 post?.thumbnail?.url)
             }
+            height={post?.thumbnail?.formats?.thumbnail?.height}
+            width={post?.thumbnail?.width}
             alt={post?.thumbnail?.formats?.thumbnail?.name}
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <section className="grid grid-cols-1 lg:grid-cols-[60%_35%] gap-2 md:gap-12">
+        <section className="grid grid-cols-1 lg:grid-cols-[60%_35%] gap-2 md:gap-12 relative overflow-visible min-h-screen">
           <section className="w-full">
             {renderedElements}
             <Tags post={post} />
           </section>
-          <aside className="w-full flex flex-col gap-2 md:gap-6">
+          <aside className="w-full flex flex-col gap-2 md:gap-6 sticky top-2 h-fit">
             <LinkArtikel post={post} />
             <LinkPopuler blog={allPosts} />
           </aside>
@@ -329,6 +345,6 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         <Authors post={post} author={author} />
         <RelatedArticle blog={postCategory} />
       </article>
-    </ContainerBlog>
+    </div>
   );
 }
