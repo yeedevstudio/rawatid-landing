@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 // import components
@@ -10,9 +12,17 @@ import ButtonCopy from "@/common/components/ButtonCopy";
 import LinkArtikel from "@/module/blog/detail/LinkArtikel";
 import RelatedArticle from "./RelatedArticle";
 import ButtonBack from "@/common/components/ButtonBack";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function BlogDetail({ post, allPosts, author, postCategory }) {
   const usedCategories = new Set();
+  const [loading, setLoading] = useState(true);
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_BASE_URL +
+    (post?.thumbnail?.formats?.large?.url ||
+      post?.thumbnail?.formats?.medium?.url ||
+      post?.thumbnail?.url);
 
   const renderedElements = post?.content?.flatMap((block, index) => {
     const elements = [];
@@ -352,17 +362,22 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           {post?.title}
         </h1>
         <div className="relative rounded-2xl overflow-hidden w-full mb-5 lg:mb-10 ">
-          <Image
-            src={
-              process.env.NEXT_PUBLIC_BASE_URL +
-              (post?.thumbnail?.formats?.large?.url ||
-                post?.thumbnail?.formats?.medium?.url ||
-                post?.thumbnail?.url)
-            }
-            height={post?.thumbnail?.formats?.thumbnail?.height}
-            width={post?.thumbnail?.width}
-            alt={post?.thumbnail?.formats?.thumbnail?.name}
-          />
+          {loading && (
+            <Skeleton className="w-full h-[18rem] md:h-[20rem] lg:h-[22rem] rounded-xl " />
+          )}
+
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              height={post?.thumbnail?.formats?.thumbnail?.height}
+              width={10000}
+              alt={post?.thumbnail?.formats?.thumbnail?.name || "Post Image"}
+              className={`w-full h-auto transition-opacity duration-500 ${
+                loading ? "opacity-0" : "opacity-100"
+              }`}
+              onLoadingComplete={() => setLoading(false)}
+            />
+          )}
         </div>
         <section className="grid grid-cols-1 lg:grid-cols-[60%_35%] gap-2 md:gap-12 relative overflow-visible min-h-screen">
           <section className="w-full">
