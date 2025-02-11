@@ -1,25 +1,19 @@
-import Image from "next/image";
+import { AvatarSection } from "@/common/components/Avatar";
 import Link from "next/link";
 import React from "react";
 
 export default function Authors({ post, author }) {
   return (
     <section className="flex flex-col md:flex-row items-center gap-2 md:gap-6 lg:gap-10 rounded-2xl w-full py-6 px-1 md:px-12 lg:px-24 my-20  border  hover:border-green transition-all duration-300 ease-in-out">
-      <div className="relative w-[5rem] h-[5rem] md:h-[7rem] md:w-[7rem] lg:h-[10rem] lg:w-[10rem] rounded-full overflow-hidden border">
-        <Image
-          src={
-            process.env.NEXT_PUBLIC_BASE_URL +
-            (author?.[0]?.avatar?.formats?.large?.url ||
-              author?.[0]?.avatar?.medium?.url ||
-              author?.[0]?.avatar?.url)
-          }
-          alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
-          fill
-          priority
-          style={{ objectFit: "cover", position: "absolute" }}
-        />
-      </div>
-
+      <AvatarSection
+        src={
+          process.env.NEXT_PUBLIC_BASE_URL +
+          (author?.[0]?.avatar?.formats?.large?.url ||
+            author?.[0]?.avatar?.medium?.url ||
+            author?.[0]?.avatar?.url)
+        }
+        alt={author?.[0]?.name}
+      />
       <div className="flex flex-col items-center justify-cente md:items-start md:justify-start">
         <span itemProp="author" className="text-xs md:text-sm lg:text-base">
           Penulis

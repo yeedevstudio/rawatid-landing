@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 // import components
 import { Input } from "@/components/ui/input";
@@ -9,14 +10,44 @@ import BlogHighlight from "./BlogHighlight";
 import BlogAll from "./BlogAll";
 import ContainerBlog from "@/common/components/ContainerBlog";
 import BlogCategory from "./BlogCategory";
-import PageBySearch from "./PageBySearch";
+import { toast } from "sonner";
 
-export default function BlogPage({ data }) {
+export default function BlogPage({ data, post }) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
 
-  const filteredData = data?.filter((item) =>
-    item?.title?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.length > 0) {
+      const results = post.filter((article) =>
+        article.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredResults(results);
+    } else {
+      setFilteredResults([]);
+    }
+  };
+
+  const handlePush = () => {
+    if (!searchQuery.trim()) {
+      toast.error("Masukkan Kata Kunci", {
+        duration: 3000,
+        position: "top-right",
+        style: { color: "green", border: "1px solid green" },
+      });
+    } else {
+      router.push(`/blog/cari/${searchQuery}`);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && searchQuery.trim() !== "") {
+      router.push(`/blog/cari/${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   const dataKesehatan = data?.filter(
     (item) => item?.category?.slug === "kesehatan"
@@ -36,31 +67,49 @@ export default function BlogPage({ data }) {
           className="w-full h-12 pl-12 focus:pl-12 active:pl-12"
           placeholder="Cari Artikel"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearch}
+          onKeyDown={handleKeyDown}
         />
-        <IconSearch className="h-12 w-10 text-white bg-green p-2 absolute top-0 left-0 rounded-l-md" />
+
+        <IconSearch
+          onClick={handlePush}
+          className="h-12 w-10 text-white bg-green hover:bg-greenHover p-2 absolute top-0 left-0 rounded-l-md transition-all duration-300 ease-in-out hover:cursor-pointer"
+        />
+
+        {filteredResults.length > 0 && (
+          <ul className="absolute w-full bg-white border rounded-md shadow-md z-50 top-12">
+            {filteredResults?.slice(0, 5)?.map((article) => (
+              <li
+                key={article.id}
+                className="px-4 py-2 hover:bg-gray-200 cursor-pointer border-b text-xs/8 md:text-sm/8 lg:text-base/8"
+                onClick={() =>
+                  router.push(`/blog/cari/${encodeURIComponent(article.title)}`)
+                }
+              >
+                {article.title}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      {searchQuery && filteredData?.length > 0 ? (
-        <PageBySearch data={filteredData} />
-      ) : (
-        <>
-          <BlogHighlight data={data} />
-          <BlogAll data={data} />
-          <BlogCategory
-            data={dataKesehatan}
-            category={dataKesehatan[0]?.category}
-          />
-          <BlogCategory
-            data={dataTeknologi}
-            category={dataTeknologi[0]?.category}
-          />
-          <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
-          <BlogCategory
-            data={dataInformasi}
-            category={dataInformasi[0]?.category}
-          />
-        </>
-      )}
+
+      <>
+        <BlogHighlight data={data} />
+        <BlogAll data={data} />
+        <BlogCategory
+          data={dataKesehatan}
+          category={dataKesehatan[0]?.category}
+        />
+        <BlogCategory
+          data={dataTeknologi}
+          category={dataTeknologi[0]?.category}
+        />
+        <BlogCategory data={dataBerita} category={dataBerita[0]?.category} />
+        <BlogCategory
+          data={dataInformasi}
+          category={dataInformasi[0]?.category}
+        />
+      </>
     </ContainerBlog>
   );
 }

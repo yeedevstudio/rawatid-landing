@@ -33,17 +33,22 @@ export default async function Page() {
   }
 
   try {
-    const [postSlugRes] = await Promise.all([
+    const [postSlugRes, allPostRes] = await Promise.all([
       fetch(
         `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=30`
       ),
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
     ]);
 
-    const [postSlug] = await Promise.all([postSlugRes.json()]);
+    const [postSlug, AllPost] = await Promise.all([
+      postSlugRes.json(),
+      allPostRes.json(),
+    ]);
 
     const dataSlug = postSlug.data || null;
+    const dataAll = AllPost.data || [];
 
-    return <BlogPage data={dataSlug} />;
+    return <BlogPage data={dataSlug} post={dataAll} />;
   } catch (error) {
     return <Error />;
   }

@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import AOSProvider from "@/common/layouts/AosProvider";
 import Header from "@/common/layouts/Header";
 import Footer from "@/common/layouts/Footer";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/common/components/LoadingSpinner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -104,9 +106,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${poppins.className} antialiased relative`}>
-        <Header />
-        <AOSProvider>{children}</AOSProvider>
-        <Footer />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Header />
+          <AOSProvider>{children}</AOSProvider>
+          <Footer />
+        </Suspense>
         <Toaster />
       </body>
     </html>

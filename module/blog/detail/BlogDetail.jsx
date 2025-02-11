@@ -6,7 +6,6 @@ import Link from "next/link";
 import Tags from "./Tags";
 import Authors from "./Authors";
 import LinkPopuler from "./LinkPopuler";
-import ContainerBlog from "@/common/components/ContainerBlog";
 import ButtonCopy from "@/common/components/ButtonCopy";
 import LinkArtikel from "@/module/blog/detail/LinkArtikel";
 import RelatedArticle from "./RelatedArticle";
@@ -39,18 +38,33 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           >
             {block?.children?.map((child, idx) => (
               <React.Fragment key={idx}>
-                {child.text.split("\n").map((line, lineIdx, arr) => (
-                  <React.Fragment key={`${idx}-${lineIdx}`}>
-                    <span
-                      className={`${child.bold ? "font-bold" : ""} ${
-                        child.italic ? "italic" : ""
-                      } ${child.underline ? "underline" : ""}`}
-                    >
-                      {line}
-                    </span>
-                    {lineIdx < arr.length - 1 && <br />}
-                  </React.Fragment>
-                ))}
+                {child.type === "link" ? (
+                  <a
+                    href={child.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    {child.children?.map((linkChild, linkIdx) => (
+                      <React.Fragment key={linkIdx}>
+                        {linkChild.text || ""}
+                      </React.Fragment>
+                    ))}
+                  </a>
+                ) : child.text ? (
+                  child.text.split("\n").map((line, lineIdx, arr) => (
+                    <React.Fragment key={`${idx}-${lineIdx}`}>
+                      <span
+                        className={`${child.bold ? "font-bold" : ""} ${
+                          child.italic ? "italic" : ""
+                        } ${child.underline ? "underline" : ""}`}
+                      >
+                        {line}
+                      </span>
+                      {lineIdx < arr.length - 1 && <br />}
+                    </React.Fragment>
+                  ))
+                ) : null}
               </React.Fragment>
             ))}
           </HeadingTag>
@@ -66,20 +80,38 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
               index === 0 ? "mt-0" : "mt-5 md:mt-10"
             }`}
           >
-            {block.children.map((child, idx) =>
-              child.text.split("\n").map((line, lineIdx, arr) => (
-                <React.Fragment key={`${idx}-${lineIdx}`}>
-                  <span
-                    className={`${child.bold ? "font-bold" : ""} 
+            {block.children.map((child, idx) => (
+              <React.Fragment key={idx}>
+                {child.type === "link" && child.children ? (
+                  <a
+                    href={child.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    {child.children.map((linkChild, linkIdx) => (
+                      <React.Fragment key={linkIdx}>
+                        {linkChild.text || ""}
+                      </React.Fragment>
+                    ))}
+                  </a>
+                ) : (
+                  child.text &&
+                  child.text.split("\n").map((line, lineIdx, arr) => (
+                    <React.Fragment key={`${idx}-${lineIdx}`}>
+                      <span
+                        className={`${child.bold ? "font-bold" : ""} 
                                     ${child.italic ? "italic" : ""} 
                                     ${child.underline ? "underline" : ""}`}
-                  >
-                    {line}
-                  </span>
-                  {lineIdx < arr.length - 1 && <br />}
-                </React.Fragment>
-              ))
-            )}
+                      >
+                        {line}
+                      </span>
+                      {lineIdx < arr.length - 1 && <br />}
+                    </React.Fragment>
+                  ))
+                )}
+              </React.Fragment>
+            ))}
           </p>
         );
         break;

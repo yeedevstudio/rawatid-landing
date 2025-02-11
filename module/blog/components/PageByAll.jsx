@@ -25,8 +25,6 @@ export default function PageByAll({ data, pagination }) {
     setLoading(false);
   }, [data]);
 
-  const blogFilter = show ? data : data?.slice(0, 24);
-
   return (
     <ContainerBlog>
       <ButtonBack />
@@ -44,7 +42,7 @@ export default function PageByAll({ data, pagination }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
-          {blogFilter?.map((article, index) => (
+          {data?.map((article, index) => (
             <div key={index} className={article.span}>
               <CardArticleAll
                 src={article?.thumbnail?.formats?.small?.url}

@@ -12,6 +12,7 @@ export default function Tags({ post }) {
       <div className="pt-3 flex flex-wrap gap-2 md:gap-4">
         {post?.tags?.map((data, index) => (
           <button
+            aria-label={`tag ${data?.title}`}
             key={index}
             onClick={() => router.push(`/blog/tag/${data?.slug}`)}
             className="p-2 text-xs md:text-sm text-left text-green"

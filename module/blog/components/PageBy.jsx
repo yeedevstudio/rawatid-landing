@@ -43,45 +43,15 @@ export default function PageBy({ data, post, slug, title, author }) {
       </h1>
 
       {author && (
-        <section className="flex flex-col items-center gap-2 md:gap-6 rounded-2xl w-full border border-neutral50 p-6 my-10 md:my-20">
-          <div className="relative w-[5rem] h-[5rem] md:h-[7rem] md:w-[7rem] lg:h-[10rem] lg:w-[10rem] rounded-full overflow-hidden border">
-            <Image
-              src={
-                process.env.NEXT_PUBLIC_BASE_URL +
-                (author?.avatar?.formats?.large?.url ||
-                  author?.avatar?.medium?.url ||
-                  author?.avatar?.url)
-              }
-              alt={author?.[0]?.avatar?.formats?.thumbnail?.name}
-              fill
-              priority
-              style={{ objectFit: "cover", position: "absolute" }}
-            />
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <span itemProp="author" className="text-xs md:text-sm lg:text-base">
-              Penulis
-            </span>
-            <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
-              {author?.name}
-            </h2>
-            <p className=" text-xs md:text-sm lg:text-sm text-center md:text-justify mt-2 px-2 md:px-6">
-              <span
-                itemProp="qoute"
-                className="md:font-semibold md:text-lg mr-1"
-              >
-                "
-              </span>
-              {author?.bio.split(" ").slice(0, 50).join(" ")}
-              <span
-                itemProp="qoute"
-                className="md:font-semibold md:text-lg ml-1"
-              >
-                "
-              </span>
-            </p>
-          </div>
-        </section>
+        <AvatarSection
+          src={
+            process.env.NEXT_PUBLIC_BASE_URL +
+            (author?.avatar?.formats?.large?.url ||
+              author?.avatar?.medium?.url ||
+              author?.avatar?.url)
+          }
+          alt={author?.avatar?.hash}
+        />
       )}
 
       {loading ? (

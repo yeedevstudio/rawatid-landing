@@ -85,7 +85,7 @@ const Footer = () => {
               </h2>
             </Link>
             <div className="footer__links">
-              {footerLinks?.map((link) => (
+              {footerBlogLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
                   <h2 className="text-base md:text-lg font-medium text-white">
                     {link?.title}
