@@ -369,7 +369,7 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
           {imageUrl && (
             <Image
               src={imageUrl}
-              height={post?.thumbnail?.formats?.thumbnail?.height}
+              height={post?.thumbnail?.formats?.small?.height}
               width={10000}
               alt={post?.thumbnail?.formats?.thumbnail?.name || "Post Image"}
               className={`w-full h-auto transition-opacity duration-500 ${
