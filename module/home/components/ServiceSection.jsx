@@ -133,7 +133,6 @@ export default function ServiceSection() {
                   itemProp="button"
                   href={`/register?id=${index + 1}`}
                   className="w-full"
-                  title={`Daftar Sekarang ${index + 1}`}
                 >
                   <Button
                     aria-label="Daftar Sekarang"

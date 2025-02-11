@@ -31,7 +31,7 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <h2 className="text-md md:text-lg text-white">
+              <h2 className="text-base md:text-lg text-white">
                 Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan
                 Klinik
               </h2>
@@ -39,7 +39,7 @@ const Footer = () => {
             <div className="footer__links">
               {footerLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
-                  <h2 className="text-md md:text-lg font-medium text-white">
+                  <h2 className="text-base md:text-lg font-medium text-white">
                     {link?.title}
                   </h2>
                   {link?.links.map((item) => (
@@ -60,7 +60,7 @@ const Footer = () => {
             </div>
           </nav>
           <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
-            <p className="text-md md:text-lg font-normal text-white">
+            <p className="text-xs md:text-sm font-normal text-white">
               &copy; {date} Rawat.ID
             </p>
           </div>
@@ -79,7 +79,7 @@ const Footer = () => {
                 height={48}
                 className="object-contain bg-white p-1 rounded-full"
               />
-              <h2 className="text-md md:text-lg text-white">
+              <h2 className="text-base md:text-lg text-white">
                 Blog Teknologi dan Kesehatan dari Rawat.ID - Rekam Medis
                 Elektronik Lengkap untuk Rumah Sakit dan Klinik
               </h2>
@@ -87,7 +87,7 @@ const Footer = () => {
             <div className="footer__links">
               {footerLinks?.map((link) => (
                 <div key={link?.title} className="footer__link">
-                  <h2 className="text-md md:text-lg font-medium text-white">
+                  <h2 className="text-base md:text-lg font-medium text-white">
                     {link?.title}
                   </h2>
                   {link?.links.map((item) => (
@@ -108,7 +108,7 @@ const Footer = () => {
             </div>
           </nav>
           <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
-            <p className="text-md md:text-lg font-normal text-white">
+            <p className="text-xs md:text-sm font-normal text-white">
               &copy; {date} Rawat.ID
             </p>
           </div>
