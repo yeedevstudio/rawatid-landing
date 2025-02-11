@@ -49,6 +49,12 @@ export default async function sitemap() {
         changeFrequency: "daily",
         priority: 0.8,
       },
+      {
+        url: "https://rawat.id/blog/cari/",
+        lastModified: new Date().toISOString(),
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
       ...categories.map((category) => ({
         url: `https://rawat.id/blog/kategori/${category?.slug}`,
         lastModified: new Date().toISOString(),
