@@ -11,7 +11,8 @@ export async function generateMetadata({ params }) {
 
   try {
     const postSlugRes = await fetch(
-      `${process.env.API_URL}/categories?populate=*&filters[slug][$eq]=${slug}`
+      `${process.env.API_URL}/categories?populate=*&filters[slug][$eq]=${slug}`,
+      { cache: "no-store" }
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;

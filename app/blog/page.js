@@ -33,12 +33,14 @@ export default async function Page() {
   }
 
   try {
-    const [postSlugRes] = await Promise.all([
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
-    ]);
+    const res = await fetch(
+      `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
 
-    const [postSlug] = await Promise.all([postSlugRes.json()]);
-
+    const postSlug = await res.json();
     const dataSlug = postSlug.data || null;
 
     return <BlogPage data={dataSlug} />;

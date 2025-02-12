@@ -11,7 +11,10 @@ export async function generateMetadata({ params }) {
 
   try {
     const postSlugRes = await fetch(
-      `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`
+      `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`,
+      {
+        cache: "no-store",
+      }
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;
@@ -31,7 +34,6 @@ export async function generateMetadata({ params }) {
       description: "The post you are looking for could not be found.",
     };
   } catch (error) {
-
     return {
       title: "Tag Rawat.ID - Kesalahan",
       description: "An error occurred while fetching the blog post.",
@@ -51,7 +53,9 @@ export default async function Page({ params }) {
       fetch(
         `${process.env.API_URL}/posts?populate=*&filters[tags][slug][$eq]=${slug}`
       ),
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`),
+      fetch(
+        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`
+      ),
     ]);
 
     const [postSlug, postAll] = await Promise.all([

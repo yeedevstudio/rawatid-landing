@@ -70,13 +70,16 @@ export default async function Page({ params }) {
   try {
     const [postSlugRes, postAllRes, authorAllRes] = await Promise.all([
       fetch(
-        `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`
+        `${process.env.API_URL}/posts?populate=*&filters[author][slug][$eq]=${slug}`,
+        { cache: "no-store" }
       ),
       fetch(
-        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`
+        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`,
+        { cache: "no-store" }
       ),
       fetch(
-        `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`
+        `${process.env.API_URL}//authors?populate=*&filters[slug][$eq]=${slug}`,
+        { cache: "no-store" }
       ),
     ]);
 

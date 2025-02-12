@@ -1,9 +1,13 @@
 export default async function sitemap() {
   try {
     const [postsRes, categoriesRes, authorsRes] = await Promise.all([
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
-      fetch(`${process.env.API_URL}/categories`),
-      fetch(`${process.env.API_URL}/authors?populate=*`),
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
+        next: { revalidate: 60 },
+      }),
+      fetch(`${process.env.API_URL}/categories`, { next: { revalidate: 60 } }),
+      fetch(`${process.env.API_URL}/authors?populate=*`, {
+        next: { revalidate: 60 },
+      }),
     ]);
 
     if (!postsRes.ok || !categoriesRes.ok || !authorsRes.ok) {
@@ -41,7 +45,7 @@ export default async function sitemap() {
         url: "https://rawat.id/blog",
         lastModified: new Date().toISOString(),
         changeFrequency: "daily",
-        priority: 0.8,
+        priority: 1,
       },
       {
         url: "https://rawat.id/blog/semua",
@@ -59,18 +63,18 @@ export default async function sitemap() {
         url: `https://rawat.id/blog/kategori/${category?.slug}`,
         lastModified: new Date().toISOString(),
         changeFrequency: "daily",
-        priority: 0.8,
+        priority: 0.6,
       })),
       ...authors.map((author) => ({
         url: `https://rawat.id/blog/penulis/${author?.slug}`,
         lastModified: new Date().toISOString(),
         changeFrequency: "daily",
-        priority: 0.8,
+        priority: 0.6,
       })),
       ...posts.map((post) => ({
         url: `https://rawat.id/blog/detail/${post?.slug}`,
         lastModified: new Date(post?.updatedAt).toISOString(),
-        changeFrequency: "weekly",
+        changeFrequency: "daily",
         priority: 1,
       })),
     ];
