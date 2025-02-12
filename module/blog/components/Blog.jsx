@@ -12,7 +12,7 @@ import ContainerBlog from "@/common/components/ContainerBlog";
 import BlogCategory from "./BlogCategory";
 import { toast } from "sonner";
 
-export default function BlogPage({ data, post }) {
+export default function BlogPage({ data }) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
@@ -22,7 +22,7 @@ export default function BlogPage({ data, post }) {
     setSearchQuery(query);
 
     if (query.length > 0) {
-      const results = post.filter((article) =>
+      const results = data?.filter((article) =>
         article.title.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredResults(results);
