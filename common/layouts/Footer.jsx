@@ -70,7 +70,7 @@ const Footer = () => {
           <nav className="flex max-md:flex-col flex-wrap justify-between gap-5 px-5 md:px-12 py-10">
             <Link
               href="/blog"
-              className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth w-[50%]"
+              className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
             >
               <Image
                 src="/images/logo.webp"
