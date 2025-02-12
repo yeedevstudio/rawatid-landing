@@ -45,8 +45,6 @@ const Footer = () => {
                   {link?.links.map((item) => (
                     <Link
                       passHref
-                      target="_blank"
-                      rel="noopener noreferrer"
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
@@ -93,8 +91,6 @@ const Footer = () => {
                   {link?.links.map((item) => (
                     <Link
                       passHref
-                      target="_blank"
-                      rel="noopener noreferrer"
                       href={item?.url}
                       className="text-sm md:text-lg font-normal text-white"
                       key={item?.title}
