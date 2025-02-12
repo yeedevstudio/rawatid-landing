@@ -16,11 +16,19 @@ export async function generateMetadata({ params }) {
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;
 
+    const truncateText = (text, maxLength) => {
+      if (!text) return "";
+      if (text.length <= maxLength) return text;
+      return text.slice(0, maxLength).replace(/\s+\S*$/, "") + "...";
+    };
+
     if (dataSlug) {
       return {
-        title: `Rawat.ID - ${dataSlug?.title}`,
-        description: dataSlug?.headline,
-        keywords: dataSlug?.tags?.map((tag) => tag.name) || ["Rawat.ID"],
+        title: truncateText(`Rawat.ID - ${dataSlug?.title || ""}`, 60),
+        description: truncateText(dataSlug?.headline || "", 200),
+        keywords: (
+          dataSlug?.tags?.map((tag) => tag.name) || ["Rawat.ID"]
+        ).concat(["blog", "artikel"]),
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
         },
