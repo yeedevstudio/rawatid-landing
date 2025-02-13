@@ -50,7 +50,11 @@ export default function PageBy({ data, post, slug, title, author }) {
               author?.avatar?.medium?.url ||
               author?.avatar?.url)
           }
-          alt={author?.avatar?.hash}
+          alt={
+            author?.avatar?.alternativeText ||
+            author?.avatar?.name ||
+            author?.avatar?.hash
+          }
         />
       )}
 

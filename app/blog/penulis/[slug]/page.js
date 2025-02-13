@@ -18,7 +18,8 @@ export async function generateMetadata({ params }) {
 
     if (dataSlug) {
       return {
-        title: `Penulis Rawat.ID- ${dataSlug?.name}`,
+        title: `Penulis Rawat.ID - ${dataSlug?.name}`,
+        description: dataSlug?.bio,
         canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,

@@ -70,12 +70,28 @@ export default async function sitemap() {
         lastModified: new Date().toISOString(),
         changeFrequency: "daily",
         priority: 0.6,
+        images: [
+          {
+            loc: author?.avatar?.url
+              ? `https://blog.rawat.id${author.avatar.url}`
+              : "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png",
+            title: `Penulis Rawat.ID - ${author?.name}`,
+          },
+        ],
       })),
       ...posts.map((post) => ({
         url: `https://rawat.id/blog/detail/${post?.slug}`,
         lastModified: new Date(post?.updatedAt).toISOString(),
         changeFrequency: "daily",
         priority: 1,
+        images: [
+          {
+            loc: post?.thumbnail?.url
+              ? `https://blog.rawat.id${post.thumbnail.url}`
+              : "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png",
+            title: `Penulis Rawat.ID - ${post?.title}`,
+          },
+        ],
       })),
     ];
   } catch (error) {

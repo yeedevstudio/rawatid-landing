@@ -12,7 +12,11 @@ export default function Authors({ post, author }) {
             author?.[0]?.avatar?.medium?.url ||
             author?.[0]?.avatar?.url)
         }
-        alt={author?.[0]?.name}
+        alt={
+          author?.[0]?.avatar?.alternativeText ||
+          author?.[0]?.avatar?.name ||
+          author?.[0]?.avatar?.hash
+        }
       />
       <div className="flex flex-col items-center justify-cente md:items-start md:justify-start">
         <span itemProp="author" className="text-xs md:text-sm lg:text-base">

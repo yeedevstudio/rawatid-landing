@@ -32,16 +32,15 @@ export async function generateMetadata({ params }) {
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
         },
-        canonical: `${process.env.NEXT_PUBLIC_URL}/detail/${slug}`,
         openGraph: {
-          article: {
-            publishedTime: dataSlug?.publishedAt,
-            modifiedTime: dataSlug?.publishedAt,
-            authors: [dataSlug?.author?.name, dataSlug?.author?.job],
-          },
+          type: "article",
           title: dataSlug?.title,
           description: dataSlug?.headline,
-          type: "article",
+          article: {
+            publishedTime: dataSlug?.publishedAt || new Date().toISOString(),
+            modifiedTime: dataSlug?.publishedAt || new Date().toISOString(),
+            authors: [dataSlug?.author?.name, dataSlug?.author?.job],
+          },
           images: [
             {
               url: process.env.NEXT_PUBLIC_BASE_URL + dataSlug?.thumbnail?.url,
