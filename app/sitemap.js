@@ -1,7 +1,7 @@
 export default async function sitemap() {
   try {
     const [postsRes, categoriesRes, authorsRes] = await Promise.all([
-      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
+      fetch(`${process.env.API_URL}/posts?populate=*`, {
         next: { revalidate: 60 },
       }),
       fetch(`${process.env.API_URL}/categories`, { next: { revalidate: 60 } }),
