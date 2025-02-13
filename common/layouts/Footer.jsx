@@ -57,7 +57,7 @@ const Footer = () => {
               ))}
             </div>
           </nav>
-          <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
+          <div className="flex justify-end items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
             <p className="text-xs md:text-sm font-normal text-white">
               &copy; {date} Rawat.ID
             </p>
@@ -103,7 +103,7 @@ const Footer = () => {
               ))}
             </div>
           </nav>
-          <div className="flex justify-between items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
+          <div className="flex justify-end items-center flex-wrap border-t border-gray-100 sm:mx-12 mx-5 py-5">
             <p className="text-xs md:text-sm font-normal text-white">
               &copy; {date} Rawat.ID
             </p>
