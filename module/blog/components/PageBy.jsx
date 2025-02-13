@@ -10,6 +10,7 @@ import BlogAll from "../components/BlogAll";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonBack from "@/common/components/ButtonBack";
+import { AvatarSection } from "@/common/components/Avatar";
 
 export default function PageBy({ data, post, slug, title, author }) {
   const router = useRouter();
@@ -43,19 +44,46 @@ export default function PageBy({ data, post, slug, title, author }) {
       </h1>
 
       {author && (
-        <AvatarSection
-          src={
-            process.env.NEXT_PUBLIC_BASE_URL +
-            (author?.avatar?.formats?.large?.url ||
-              author?.avatar?.medium?.url ||
-              author?.avatar?.url)
-          }
-          alt={
-            author?.avatar?.alternativeText ||
-            author?.avatar?.name ||
-            author?.avatar?.hash
-          }
-        />
+        <section className="flex flex-col  items-center gap-2 md:gap-6 lg:gap-10 rounded-2xl w-full py-6 px-1 md:px-12 lg:px-24 my-20 border">
+          <AvatarSection
+            src={
+              process.env.NEXT_PUBLIC_BASE_URL +
+              (author?.avatar?.formats?.large?.url ||
+                author?.avatar?.medium?.url ||
+                author?.avatar?.url)
+            }
+            alt={
+              author?.avatar?.alternativeText ||
+              author?.avatar?.name ||
+              author?.avatar?.hash
+            }
+          />
+          <div className="flex flex-col items-center justify-center ">
+            <span itemProp="author" className="text-xs md:text-sm lg:text-base">
+              Penulis
+            </span>
+
+            <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize py-2 md:py-4">
+              {author?.name}
+            </h2>
+
+            <p className=" text-xs md:text-sm lg:text-sm text-center  text-neutral90 px-12">
+              <span
+                itemProp="qoute"
+                className="md:font-semibold md:text-lg mr-1"
+              >
+                "
+              </span>
+              {author?.bio.split(" ").slice(0, 50).join(" ")}
+              <span
+                itemProp="qoute"
+                className="md:font-semibold md:text-lg ml-1"
+              >
+                "
+              </span>
+            </p>
+          </div>
+        </section>
       )}
 
       {loading ? (
