@@ -303,33 +303,3 @@ export const rawatIDOptions = [
   },
 ];
 
-export const articlesValue = [
-  {
-    src: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1715789014/PublicPage/Desktop_-_1_c1sew4.svg",
-    alt: "logo",
-    category: "Kesehatan",
-    title: "5 Kebiasaan Sehat Untuk Menjaga Kesehatan Tubuh",
-    width: 785,
-    height: 531,
-    span: "row-span-2 col-span-2",
-  },
-  {
-    src: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1717167389/PublicPage/Desktop_-_6_dz6yum.svg",
-    alt: "logo",
-    category: "Kesehatan",
-    title: "Pentingnya Detoksifikasi: Fakta atau Mitos?",
-    width: 700,
-    height: 100,
-    span: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://res.cloudinary.com/ddugt5n5v/image/upload/v1715787383/PublicPage/Desktop_-_4_j48cty.svg",
-    alt: "logo",
-    category: "Kesehatan",
-    title: "Mengelola Stres di Era Digital: Tips dan Mengelola Stres di Era Digital: Tips dan Mengelola Stres di Era Digital: Tips dan",
-    width: 400,
-    height: 100,
-    span: "col-span-1 row-span-1",
-  },
-];
-

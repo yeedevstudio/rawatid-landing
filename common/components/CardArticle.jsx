@@ -178,7 +178,12 @@ export const CardArticlePopuler = ({
       <h3 className="p-1 w-fit rounded-md text-xs px-5 my-2 md:my-4 text-white bg-green">
         {category}
       </h3>
-      <h2 className="text-sm md:text-base lg:text-lg font-medium">{title}</h2>
+      <h2 className="text-sm md:text-base lg:text-lg font-medium hidden lg:block">
+        {title.split(" ").slice(0, 7).join(" ")}...
+      </h2>
+      <h2 className="text-sm md:text-base lg:text-lg font-medium block lg:hidden">
+        {title}
+      </h2>
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-5 font-light text-neutral90 tracking-wider text-justify">
           {headline.split(" ").slice(0, 50).join(" ")}
