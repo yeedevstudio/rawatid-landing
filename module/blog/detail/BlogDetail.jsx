@@ -210,9 +210,10 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
                 process.env.NEXT_PUBLIC_BASE_URL +
                 (block.image?.formats?.large?.url ||
                   block.image?.formats?.medium?.url ||
-                  block.image?.url)
+                  block.image?.formats?.small?.url ||
+                  block.image?.thumbnail?.url)
               }
-              alt={block?.image?.formats?.thumbnail?.name}
+              alt={block?.image?.name}
               height={post?.thumbnail?.height}
               width={post?.thumbnail?.width}
               style={{ objectFit: "cover" }}
