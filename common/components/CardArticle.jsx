@@ -131,13 +131,10 @@ export const CardArticleSidebar = ({
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-2 font-light text-neutral90 tracking-wider text-justify">
           <span className="block md:hidden">
-            {headline.split(" ").slice(0, 10).join(" ")}...
+            {headline.split(" ").slice(0, 16).join(" ")}...
           </span>
           <span className="hidden md:block">
-            {headline.split(" ").slice(0, 15).join(" ")}
-          </span>
-          <span className="hidden md:hidden lg:block">
-            {headline.split(" ").slice(0, 19).join(" ")}
+            {headline.split(" ").slice(0, 21).join(" ")}...
           </span>
         </p>
       )}
