@@ -36,7 +36,7 @@ export default async function Page() {
     const res = await fetch(
       `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`,
       {
-        next: { revalidate: 60 },
+        cache: "no-store",
       }
     );
 

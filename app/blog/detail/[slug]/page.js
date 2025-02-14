@@ -11,7 +11,8 @@ export async function generateMetadata({ params }) {
 
   try {
     const postSlugRes = await fetch(
-      `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`
+      `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`,
+      { cache: "no-store" }
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;
@@ -85,11 +86,16 @@ export default async function Page({ params }) {
     const [postSlugRes, postAllRes, categoryAllRes, authorAllRes] =
       await Promise.all([
         fetch(
-          `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`
+          `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`,
+          { cache: "no-store" }
         ),
-        fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`),
-        fetch(`${process.env.API_URL}/categories`),
-        fetch(`${process.env.API_URL}/authors?populate=*`),
+        fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
+          cache: "no-store",
+        }),
+        fetch(`${process.env.API_URL}/categories`, { cache: "no-store" }),
+        fetch(`${process.env.API_URL}/authors?populate=*`, {
+          cache: "no-store",
+        }),
       ]);
 
     const [postSlug, postAll, categoryAll, authorAll] = await Promise.all([
