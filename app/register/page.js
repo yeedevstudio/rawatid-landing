@@ -1,9 +1,8 @@
 import RegistrasiPage from "@/module/register";
 
 export const metadata = {
-  canonical: "https://rawat.id/register",
   alternates: {
-    canonical: "https://rawat.id/register",
+    canonical: "https://www.rawat.id/register",
   },
 };
 

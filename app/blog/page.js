@@ -21,9 +21,8 @@ export const metadata = {
     "blog rawat.id",
     "blog kesehatan",
   ],
-  canonical: "https://rawat.id/blog",
   alternates: {
-    canonical: "https://rawat.id/blog",
+    canonical: "https://www.rawat.id/blog",
   },
 };
 

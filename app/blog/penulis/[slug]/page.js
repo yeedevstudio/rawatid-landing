@@ -23,12 +23,10 @@ export async function generateMetadata({ params }) {
       return {
         title: `Penulis Rawat.ID - ${dataSlug?.name}`,
         description: dataSlug?.bio,
-        canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/penulis/${slug}`,
         },
         openGraph: {
-          canonical: process.env.NEXT_PUBLIC_URL + "/penulis/" + slug,
           siteName: "Rawat.ID",
           type: "website",
           images: [

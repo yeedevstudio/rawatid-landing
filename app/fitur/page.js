@@ -1,9 +1,8 @@
 import FiturPage from "@/module/fitur";
 
 export const metadata = {
-  canonical: "https://rawat.id/fitur",
   alternates: {
-    canonical: "https://rawat.id/fitur",
+    canonical: "https://www.rawat.id/fitur",
   },
 };
 

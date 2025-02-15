@@ -38,12 +38,10 @@ export const metadata = {
     url: "https://www.yeedev.id/",
   },
   alternates: {
-    canonical: "https://rawat.id",
+    canonical: "https://www.rawat.id",
   },
-  canonical: "https://rawat.id",
   openGraph: {
-    canonical: "https://rawat.id",
-    url: "https://rawat.id",
+    url: "https://www.rawat.id",
     siteName: "Rawat.ID",
     type: "website",
     images: [
