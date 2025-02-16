@@ -14,8 +14,15 @@ import RelatedArticle from "./RelatedArticle";
 import ButtonBack from "@/common/components/ButtonBack";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function BlogDetail({ post, allPosts, author, postCategory }) {
+export default function BlogDetail({
+  post,
+  allPosts,
+  author,
+  postCategory,
+  slug,
+}) {
   const usedCategories = new Set();
+  const usedSlugs = new Set();
   const [loading, setLoading] = useState(true);
 
   const imageUrl =
@@ -199,25 +206,26 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
 
       case "image":
         elements.push(
-          <div
-            key={`image-${index}`}
-            className={`relative overflow-hidden rounded-sm ${
-              index === 0 ? "mt-0" : "mt-5 md:mt-10"
-            }`}
-          >
-            <Image
-              src={
-                process.env.NEXT_PUBLIC_BASE_URL +
-                (block.image?.formats?.large?.url ||
-                  block.image?.formats?.medium?.url ||
-                  block.image?.formats?.small?.url ||
-                  block.image?.thumbnail?.url)
-              }
-              alt={block?.image?.name}
-              height={post?.thumbnail?.height}
-              width={post?.thumbnail?.width}
-              style={{ objectFit: "cover" }}
-            />
+          <div key={`image-${index}`}>
+            <div
+              className={`relative overflow-hidden rounded-sm flex flex-col justify-center items-center ${
+                index === 0 ? "mt-0" : "mt-5 md:mt-10"
+              }`}
+            >
+              <Image
+                src={
+                  process.env.NEXT_PUBLIC_BASE_URL +
+                  (block.image?.formats?.large?.url ||
+                    block.image?.formats?.medium?.url ||
+                    block.image?.formats?.small?.url ||
+                    block.image?.formats?.thumbnail?.url)
+                }
+                alt={block?.image?.alternativeText || block?.image?.name}
+                height={block?.image?.height}
+                width={block?.image?.width}
+                style={{ objectFit: "cover" }}
+              />
+            </div>
             {block?.image?.caption && (
               <span className="mt-2 block text-xs italic">
                 Sumber : {block?.image?.caption}
@@ -281,21 +289,67 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
 
     if ((index + 1) % 12 === 0 && postCategory?.length > 0) {
       let randomIndex;
+      let selectedCategory;
+      let attempts = 0;
 
       do {
         randomIndex = Math.floor(Math.random() * postCategory.length);
+        selectedCategory = postCategory[randomIndex];
+        attempts++;
       } while (
-        usedCategories.has(randomIndex) &&
-        usedCategories.size < postCategory.length
+        (usedCategories.has(randomIndex) ||
+          usedSlugs.has(selectedCategory?.slug)) &&
+        usedCategories.size < postCategory.length &&
+        attempts < 100
       );
 
-      usedCategories.add(randomIndex);
+      if (
+        selectedCategory &&
+        !usedSlugs.has(selectedCategory?.slug) &&
+        !usedCategories.has(randomIndex)
+      ) {
+        usedCategories.add(randomIndex);
+        usedSlugs.add(selectedCategory?.slug);
 
-      const selectedCategory = postCategory[randomIndex];
-      elements.push(
+        elements.push(
+          <div
+            key={`postCategory-${index}`}
+            className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
+          >
+            <h3 className="text-sm md:text-base lg:text-base">
+              Baca Juga :
+              <Link
+                href={`/blog/detail/${selectedCategory?.slug}`}
+                className="underline ml-2"
+              >
+                {selectedCategory?.title}
+              </Link>
+            </h3>
+          </div>
+        );
+      }
+    }
+
+    return elements;
+  });
+
+  if (renderedElements.length < 6 && postCategory?.length > 0) {
+    let randomIndex;
+    let selectedCategory;
+    let attempts = 0;
+
+    do {
+      randomIndex = Math.floor(Math.random() * postCategory.length);
+      selectedCategory = postCategory[randomIndex];
+      attempts++;
+    } while (usedSlugs.has(selectedCategory?.slug) && attempts < 100);
+
+    if (selectedCategory && !usedSlugs.has(selectedCategory?.slug)) {
+      usedSlugs.add(selectedCategory?.slug);
+      renderedElements.push(
         <div
-          key={`postCategory-${index}`}
-          className="w-full py-3 px-5 my-10 rounded-lg bg-green text-white"
+          key={`postCategory-end-${Date.now()}`}
+          className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
         >
           <h3 className="text-sm md:text-base lg:text-base">
             Baca Juga :
@@ -309,30 +363,6 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         </div>
       );
     }
-
-    return elements;
-  });
-
-  if (renderedElements.length < 6 && postCategory?.length > 0) {
-    const randomIndex = Math.floor(Math.random() * postCategory.length);
-    const selectedCategory = postCategory[randomIndex];
-
-    renderedElements.push(
-      <div
-        key={`postCategory-end-${Date.now()}`}
-        className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
-      >
-        <h3 className="text-sm md:text-base lg:text-base">
-          Baca Juga :
-          <Link
-            href={`/blog/detail/${selectedCategory?.slug}`}
-            className="underline ml-2"
-          >
-            {selectedCategory?.title}
-          </Link>
-        </h3>
-      </div>
-    );
   }
 
   return (
@@ -364,15 +394,15 @@ export default function BlogDetail({ post, allPosts, author, postCategory }) {
         </h1>
         <div className="relative rounded-2xl overflow-hidden w-full mb-5 lg:mb-10 ">
           {loading && (
-            <Skeleton className="w-full h-[18rem] md:h-[20rem] lg:h-[22rem] rounded-xl " />
+            <Skeleton className="w-full h-[12rem] md:h-[27rem] lg:h-[32rem] rounded-xl " />
           )}
 
           {imageUrl && (
             <Image
               src={imageUrl}
               height={post?.thumbnail?.formats?.small?.height}
-              width={10000}
-              alt={post?.thumbnail?.formats?.thumbnail?.name || "Post Image"}
+              width={1000}
+              alt={post?.thumbnail?.name || "Post Image"}
               className={`w-full h-auto transition-opacity duration-500 ${
                 loading ? "opacity-0" : "opacity-100"
               }`}

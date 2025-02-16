@@ -135,6 +135,7 @@ export default async function Page({ params }) {
         categories={dataCategories}
         author={dataAuthorFilter}
         postCategory={dataPostCategory}
+        slug={slug}
       />
     );
   } catch (error) {

@@ -16,6 +16,7 @@ export default function BlogPage({ data }) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
+  const [suggestion, setSuggestion] = useState("");
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -26,8 +27,17 @@ export default function BlogPage({ data }) {
         article.title.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredResults(results);
+
+      const match = results?.[0];
+      if (match) {
+        const suggestionText = match.title.slice(query.length);
+        setSuggestion(suggestionText);
+      } else {
+        setSuggestion("");
+      }
     } else {
       setFilteredResults([]);
+      setSuggestion("");
     }
   };
 
@@ -47,6 +57,24 @@ export default function BlogPage({ data }) {
     if (e.key === "Enter" && searchQuery.trim() !== "") {
       router.push(`/blog/cari/${encodeURIComponent(searchQuery)}`);
     }
+    if (e.key === "ArrowRight" && suggestion) {
+      setSearchQuery(searchQuery + suggestion);
+      setSuggestion("");
+    }
+  };
+
+  const getHighlightedText = (text, query) => {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, "gi");
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-green60 rounded-[2px]">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
   };
 
   const dataKesehatan = data?.filter(
@@ -70,7 +98,12 @@ export default function BlogPage({ data }) {
           onChange={handleSearch}
           onKeyDown={handleKeyDown}
         />
-
+        {suggestion && (
+          <div className="absolute z-10 top-0 left-0 h-12 pl-[48.8px] pt-[1px] flex items-center pointer-events-none text-gray-200 text-sm md:text-lg max-w-xs md:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+            {searchQuery}
+            <span>{suggestion}</span>
+          </div>
+        )}
         <IconSearch
           onClick={handlePush}
           className="h-12 w-10 text-white bg-green hover:bg-greenHover p-2 absolute top-0 left-0 rounded-l-md transition-all duration-300 ease-in-out hover:cursor-pointer"
@@ -86,7 +119,7 @@ export default function BlogPage({ data }) {
                   router.push(`/blog/cari/${encodeURIComponent(article.title)}`)
                 }
               >
-                {article.title}
+                {getHighlightedText(article.title, searchQuery)}
               </li>
             ))}
           </ul>
