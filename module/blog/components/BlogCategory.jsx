@@ -30,7 +30,7 @@ export default function BlogCategory({ data, category }) {
     return () => clearTimeout(setTimeLoading);
   }, []);
 
-  const blogFilter = show ? data : data?.slice(0, 8);
+  const blogFilter = show ? data : data?.slice(0, 6);
 
   return (
     <div className=" my-[3rem] md:my-[6rem]">
@@ -67,7 +67,7 @@ export default function BlogCategory({ data, category }) {
               </div>
             ))}
           </div>
-          {data.length > 4 && (
+          {data.length > 6 && (
             <div className="flex items-center justify-center py-5">
               <Link
                 itemProp="button"
