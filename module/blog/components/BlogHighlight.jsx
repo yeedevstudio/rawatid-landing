@@ -76,8 +76,8 @@ export default function BlogHighlight({ data }) {
         {blog.map((article, index) => (
           <div key={index}>
             <CardArticleSidebar
-              src={article?.thumbnail?.formats?.small?.url}
-              alt={article.thumbnail.formats?.small.url}
+               src={article?.thumbnail?.url}
+               alt={article?.thumbnail?.formats?.thumbnail?.url}
               category={article.category?.name}
               title={article.title}
               index={index}
