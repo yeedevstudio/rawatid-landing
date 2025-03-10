@@ -32,17 +32,22 @@ export default async function Page() {
   }
 
   try {
-    const res = await fetch(
-      `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`,
-      {
+    const [postRes, categoriesRes] = await Promise.all([
+      fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
         cache: "no-store",
-      }
-    );
+      }),
+      fetch(`${process.env.API_URL}/categories`, { cache: "no-store" }),
+    ]);
 
-    const postSlug = await res.json();
+    const [postSlug, categories] = await Promise.all([
+      postRes.json(),
+      categoriesRes.json(),
+    ]);
+
     const dataSlug = postSlug.data || null;
+    const dataCategories = categories.data || [];
 
-    return <BlogPage data={dataSlug} />;
+    return <BlogPage data={dataSlug} categories={dataCategories} />;
   } catch (error) {
     return <Error />;
   }

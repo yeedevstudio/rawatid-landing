@@ -56,7 +56,7 @@ export default function BlogAll({ data }) {
               <div key={index} className={article.span}>
                 <CardArticleAll
                   src={article?.thumbnail?.url}
-                  alt={article?.thumbnail?.formats?.thumbnail?.url}
+                  alt={article?.thumbnail?.url}
                   category={article.category?.name}
                   title={article.title}
                   height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
