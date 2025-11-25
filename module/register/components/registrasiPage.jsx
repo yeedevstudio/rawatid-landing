@@ -6,7 +6,7 @@ export default function RegistrasiPage() {
     <section data-aos="fade-up" className="mx-5 lg:mx-12">
       <div className="w-full my-20 rounded-lg">
         <Image
-          src={"/images/hero_regis.svg"}
+          src={"/images/registration-bg.png"}
           alt="hero_image"
           width={2000}
           height={900}

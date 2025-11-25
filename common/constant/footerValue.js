@@ -3,18 +3,16 @@ export const footerLinks = [
     title: "Navigasi",
     links: [
       { title: "Beranda", url: "/" },
-      // { title: "Tentang Kami", url: "/" },
       { title: "Lihat FItur", url: "/fitur" },
       { title: "Blog", url: "/blog" },
       { title: "Registrasi", url: "/register" },
     ],
   },
   {
-    title: "Media Sosial",
+    title: "Link Lainnya",
     links: [
-      { title: "Facebook", url: "https://www.facebook.com/yeedevstudio" },
-      { title: "Instagram", url: "https://www.instagram.com/yeedevstudio/" },
-      { title: "Twitter", url: "https://x.com/yeedevstudio?mx=2" },
+      { title: "Instagram", url: "https://www.instagram.com/rawat_indonesia/" },
+      { title: "Panduan", url: "https://panduan.rawat.id" },
     ],
   },
 ];

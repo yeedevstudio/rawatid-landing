@@ -17,22 +17,43 @@ export default function ConfirmDialog({
   label,
   handleSubmit,
   loading,
+  validate,
 }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleTriggerClick = (e) => {
+    if (disable) {
+      e.preventDefault();
+      return;
+    }
+    
+    if (validate) {
+      const isValid = validate();
+      if (!isValid) {
+        e.preventDefault();
+        return;
+      }
+    }
+    
+    setOpen(true);
+  };
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <div
+        onClick={handleTriggerClick}
         className={cn(
-          "bg-green hover:bg-greenHover text-white w-[35%] lg:w-[14%] h-[2.5rem] rounded-lg text-lg transition-all duration-300 ease-in-out",
-          disable && "opacity-50 cursor-not-allowed"
+          "bg-green hover:bg-greenHover text-white w-[35%] lg:w-[14%] h-[2.5rem] rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center cursor-pointer",
+          disable && "opacity-50 cursor-not-allowed pointer-events-none"
         )}
       >
         {loading ? "Loading..." : label}
-      </AlertDialogTrigger>
+      </div>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Yakin ingin daftar sekarang?</AlertDialogTitle>
+          <AlertDialogTitle>Apakah data Anda sudah benar?</AlertDialogTitle>
           <AlertDialogDescription>
-            Tenang, data kamu aman di Rawat.ID
+            Tim Rawat.ID akan menghubungi Anda berdasarkan kontak dilampirkan.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

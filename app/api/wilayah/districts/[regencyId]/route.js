@@ -3,16 +3,14 @@ import { NextResponse } from "next/server";
 export async function GET(req, { params }) {
   const { regencyId } = params;
 
-  const res = await fetch(
-    `${process.env.API_URL_RAWAT}/districts/${regencyId}.json`
-  );
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: "Failed to fetch districts" },
-      { status: 500 }
-    );
+  try {
+    const res = await fetch(`https://cm-api.rawat.id/districts/city/${regencyId}`);
+    if (!res.ok) {
+      return NextResponse.json({ error: "Failed to fetch districts" }, { status: res.status });
+    }
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch districts" }, { status: 500 });
   }
-
-  const districts = await res.json();
-  return NextResponse.json(districts);
 }

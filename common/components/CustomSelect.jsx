@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,10 +20,20 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 
-export function CustomSelect({ id, label, value, onChange, options }) {
+export function CustomSelect({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+  isLoading,
+  isDisabled,
+  error,
+}) {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(value);
 
+  // Sync internal state with prop value
   React.useEffect(() => {
     setSelected(value);
   }, [value]);
@@ -38,42 +48,49 @@ export function CustomSelect({ id, label, value, onChange, options }) {
             role="combobox"
             aria-label="Pilih Data"
             aria-expanded={open}
+            disabled={isDisabled || isLoading}
             className={cn(
               "w-full justify-between text-sm md:text-lg font-normal shadow-none hover:bg-white",
               open &&
                 "focus-visible:ring-1 focus-visible:ring-green border-green",
-              !value && "text-muted-foreground"
+              !value && "text-muted-foreground",
+              error && "border-red-500 focus-visible:ring-red-500"
             )}
           >
-            {value
-              ? options?.find((option) => option?.value === selected)?.label
-              : "Pilih Data"}
-            <ChevronsUpDown className="opacity-50" />
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Memuat...
+              </span>
+            ) : value ? (
+              options?.find((option) => option?.value === selected)?.label
+            ) : (
+              "Pilih Data"
+            )}
+            {!isLoading && <ChevronsUpDown className="opacity-50" />}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0 w-full">
+        <PopoverContent className="w-[300px] p-0 shadow-none">
           <Command>
-            <CommandInput placeholder="Cari..." />
+            <CommandInput placeholder={`Cari ${label}...`} />
             <CommandList>
-              <CommandEmpty>Not found...</CommandEmpty>
+              <CommandEmpty>Data tidak ditemukan.</CommandEmpty>
               <CommandGroup>
-                {options.map((option) => (
+                {options?.map((option) => (
                   <CommandItem
-                    key={option?.value}
-                    value={option?.value}
-                    onSelect={(currentValue) => {
-                      const newValue =
-                        currentValue === selected ? "" : currentValue;
-                      setSelected(newValue);
-                      onChange(newValue);
+                    key={option.value}
+                    value={option.label}
+                    onSelect={() => {
+                      onChange(option.value);
+                      setSelected(option.value);
                       setOpen(false);
                     }}
                   >
-                    {option?.label}
+                    {option.label}
                     <Check
                       className={cn(
                         "ml-auto",
-                        value === option?.value ? "opacity-100" : "opacity-0"
+                        selected === option.value ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>
