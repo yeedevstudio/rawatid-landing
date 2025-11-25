@@ -5,9 +5,6 @@ import ConfirmDialog from "@/common/components/ConfirmDialog";
 import { CustomSelect } from "@/common/components/CustomSelect";
 import SuccessDialog from "@/common/components/SuccessDialog";
 import TextField from "@/common/components/TextField";
-import {
-  CardServiceValue,
-} from "@/common/constant/cardValue";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -24,10 +21,6 @@ export default function FormRegis() {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [errors, setErrors] = useState({});
-
-  // ... (existing state)
-
-
   
   // Loading states for dropdowns
   const [loadingProvinces, setLoadingProvinces] = useState(false);
@@ -213,26 +206,9 @@ export default function FormRegis() {
   }));
 
   const facilityTypeOptions = facilityTypes?.map((type) => ({
-    value: type.code, // Assuming ID is needed for submission, or code if API requires
+    value: type.code,
     label: type.name,
   }));
-
-  // Reuse facility type options for "Jabatan Anda" as per original code, or define separate if needed.
-  // Original code used `jenisFaskesOptions` for both. 
-  // Assuming "Jabatan Anda" might need different options, but for now keeping it consistent or using a static list if appropriate.
-  // The request didn't specify an API for "Jabatan Anda". I will use a static list or the same if it makes sense, 
-  // but "Jabatan" (Position) is different from "Jenis Faskes" (Facility Type). 
-  // The original code used `jenisFaskesOptions` for `jabatan_diri` which seems odd but I will stick to the requested changes.
-  // Wait, the original code imported `jenisFaskesOptions` from constant. 
-  // I should probably keep `jenisFaskesOptions` for `jabatan_diri` if it's not related to the API, 
-  // OR if the user meant "Jenis Faskes" field only.
-  // The user request said: "Get : ... to get list of type facility for Jenis Faskes field".
-  // It didn't mention `jabatan_diri`. I will import `jenisFaskesOptions` back for `jabatan_diri` to be safe, 
-  // or just use a placeholder if I can't find the original definition easily (it was in `CardValue`).
-  // I will re-import `jenisFaskesOptions` for `jabatan_diri` to avoid breaking it, but use API data for `jenis_faskes`.
-  
-
-
 
   const handleCheckboxChange = (isChecked) => {
     setIsTermsAccepted(isChecked);
@@ -298,7 +274,6 @@ export default function FormRegis() {
 
         if (res.ok) {
              setShowSuccessModal(true);
-              // Optional: Reset form or redirect
         } else {
             console.error("Submission error:", data);
             toast.error(data.message || "Registrasi Gagal. Silakan coba lagi.");
@@ -320,20 +295,20 @@ export default function FormRegis() {
       <div className="my-5 border rounded-lg p-5 grid grid-cols-1 gap-8">
         <div>
           <h2 className="text-md md:text-lg font-normal text-green">
-            Data Faskes
+            Data Fasilitas Kesehatan
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2 mb-5">
             <TextField
               id={"faskes"}
-              label={"Nama Faskes"}
+              label={"Nama Fasilitas Kesehatan"}
               type={"text"}
-              placeholder={"Masukkan Nama Faskes"}
+              placeholder={"Masukkan Nama Fasilitas Kesehatan"}
               values={values.nama_faskes}
               onChange={handleValuesChange("nama_faskes")}
               error={errors.nama_faskes}
             />
             <CustomSelect
-              label={"Jenis Faskes"}
+              label={"Jenis Fasilitas Kesehatan"}
               options={facilityTypeOptions}
               value={values.jenis_faskes}
               onChange={handleChange("jenis_faskes")}
@@ -367,7 +342,7 @@ export default function FormRegis() {
               error={errors.kecamatan}
             />
             <CustomSelect
-              label={"Desa/Kelurahan"}
+              label={"Kelurahan/Desa"}
               options={villageOptions}
               value={values.desa}
               onChange={handleChange("desa")}
@@ -377,17 +352,17 @@ export default function FormRegis() {
             />
             <TextField
               id={"telp_faskes"}
-              label={"Nomor Telepon"}
+              label={"Nomor Telepon Fasilitas Kesehatan"}
               type={"text"}
-              placeholder={"Nomor Telepon"}
+              placeholder={"Nomor Telepon Fasilitas Kesehatan"}
               values={values.telepon}
               onChange={handleValuesChange("telepon")}
             />
             <TextField
               id={"email_faskes"}
-              label={"Email"}
+              label={"Email Fasilitas Kesehatan"}
               type={"email"}
-              placeholder={"Email"}
+              placeholder={"Email Fasilitas Kesehatan"}
               values={values.email}
               onChange={handleValuesChange("email")}
               error={errors.email}
@@ -396,9 +371,9 @@ export default function FormRegis() {
           <div className="grid grid-cols-1 gap-5">
             <TextField
               id={"alamat_faskes"}
-              label={"Alamat"}
+              label={"Alamat Fasilitas Kesehatan"}
               type={"textarea"}
-              placeholder={"Masukkan Alamat"}
+              placeholder={"Masukkan Alamat Fasilitas Kesehatan"}
               values={values.alamat}
               onChange={handleValuesChange("alamat")}
               error={errors.alamat}
@@ -406,13 +381,13 @@ export default function FormRegis() {
           </div>
         </div>
         <div>
-          <h2 className="text-lg font-normal text-green">Data Diri</h2>
+          <h2 className="text-lg font-normal text-green">Data Penanggung Jawab (PIC)</h2>
           <div className="grid grid-cols-1 gap-5 pt-2">
           <TextField
               id={"nama"}
-              label={"Nama"}
+              label={"Nama Penanggung Jawab"}
               type={"text"}
-              placeholder={"Masukkan Nama Penanggung Jawab"}
+              placeholder={"Masukkan Nama..."}
               values={values.nama_diri}
               onChange={handleValuesChange("nama_diri")}
               error={errors.nama_diri}
@@ -423,7 +398,7 @@ export default function FormRegis() {
               id={"telp_diri"}
               label={"Nomor Telepon"}
               type={"text"}
-              placeholder={"Nomor Telepon"}
+              placeholder={"Nomor Telepon.."}
               values={values.telp_diri}
               onChange={handleValuesChange("telp_diri")}
             />
@@ -431,7 +406,7 @@ export default function FormRegis() {
               id={"email_diri"}
               label={"Email"}
               type={"email"}
-              placeholder={"Email"}
+              placeholder={"Masukkan Email..."}
               values={values.email_diri}
               onChange={handleValuesChange("email_diri")}
               error={errors.email_diri}
@@ -440,9 +415,9 @@ export default function FormRegis() {
           <div className="grid grid-cols-1 gap-8 pt-4">
             <TextField
               id={"jabatan_diri"}
-              label={"Jabatan Anda"}
+              label={"Jabatan Penanggung Jawab"}
               type={"text"}
-              placeholder={"Masukkan Jabatan Anda"}
+              placeholder={"Masukkan Jabatan Penanggung Jawab..."}
               values={values.jabatan_diri}
               onChange={handleValuesChange("jabatan_diri")}
               error={errors.jabatan_diri}
