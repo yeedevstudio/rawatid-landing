@@ -302,7 +302,7 @@ export default function FormRegis() {
               id={"faskes"}
               label={"Nama Fasilitas Kesehatan"}
               type={"text"}
-              placeholder={"Masukkan Nama Fasilitas Kesehatan"}
+              placeholder={"Masukkan Nama..."}
               values={values.nama_faskes}
               onChange={handleValuesChange("nama_faskes")}
               error={errors.nama_faskes}
@@ -314,6 +314,23 @@ export default function FormRegis() {
               onChange={handleChange("jenis_faskes")}
               isLoading={loadingFacilityTypes}
               error={errors.jenis_faskes}
+            />
+            <TextField
+              id={"telp_faskes"}
+              label={"Nomor Telepon"}
+              type={"text"}
+              placeholder={"Masukkan Nomor Telepon..."}
+              values={values.telepon}
+              onChange={handleValuesChange("telepon")}
+            />
+            <TextField
+              id={"email_faskes"}
+              label={"Email"}
+              type={"email"}
+              placeholder={"Masukkan Email..."}
+              values={values.email}
+              onChange={handleValuesChange("email")}
+              error={errors.email}
             />
             <CustomSelect
               label={"Provinsi"}
@@ -350,30 +367,14 @@ export default function FormRegis() {
               isDisabled={!values.kecamatan}
               error={errors.desa}
             />
-            <TextField
-              id={"telp_faskes"}
-              label={"Nomor Telepon Fasilitas Kesehatan"}
-              type={"text"}
-              placeholder={"Nomor Telepon Fasilitas Kesehatan"}
-              values={values.telepon}
-              onChange={handleValuesChange("telepon")}
-            />
-            <TextField
-              id={"email_faskes"}
-              label={"Email Fasilitas Kesehatan"}
-              type={"email"}
-              placeholder={"Email Fasilitas Kesehatan"}
-              values={values.email}
-              onChange={handleValuesChange("email")}
-              error={errors.email}
-            />
+            
           </div>
           <div className="grid grid-cols-1 gap-5">
             <TextField
               id={"alamat_faskes"}
-              label={"Alamat Fasilitas Kesehatan"}
+              label={"Alamat"}
               type={"textarea"}
-              placeholder={"Masukkan Alamat Fasilitas Kesehatan"}
+              placeholder={"Masukkan Alamat..."}
               values={values.alamat}
               onChange={handleValuesChange("alamat")}
               error={errors.alamat}
@@ -398,7 +399,7 @@ export default function FormRegis() {
               id={"telp_diri"}
               label={"Nomor Telepon"}
               type={"text"}
-              placeholder={"Nomor Telepon.."}
+              placeholder={"Masukkan Nomor Telepon..."}
               values={values.telp_diri}
               onChange={handleValuesChange("telp_diri")}
             />
