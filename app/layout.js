@@ -102,6 +102,13 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        <Script
+          id="google-adsense"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9201441298846648"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
       </head>
       <body className={`${poppins.className} antialiased relative`}>
         <Suspense fallback={<LoadingSpinner />}>
