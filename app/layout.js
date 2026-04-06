@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -6,7 +7,6 @@ import { Toaster } from "@/components/ui/sonner";
 import AOSProvider from "@/common/layouts/AosProvider";
 import Header from "@/common/layouts/Header";
 import Footer from "@/common/layouts/Footer";
-import { Suspense } from "react";
 import { LoadingSpinner } from "@/common/components/LoadingSpinner";
 
 const poppins = Poppins({
@@ -28,7 +28,6 @@ export const metadata = {
     "Sistem Informasi Manajemen Kesehatan",
     "Kesehatan",
     "Rekam Medis",
-    "Rawat.ID",
     "Rekam Medis Elektronik",
     "Rumah Sakit",
     "Klinik",
@@ -64,13 +63,33 @@ export const metadata = {
   },
 };
 
+// ============================================================================
+// Scripts Configuration
+// ============================================================================
+
+const scripts = {
+  hotjar: {
+    id: "hotjar",
+    strategy: "lazyOnload",
+  },
+  googleAnalytics: {
+    id: "google-analytics",
+    strategy: "afterInteractive",
+  },
+  googleAdsense: {
+    id: "google-adsense",
+    strategy: "lazyOnload",
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Hotjar Analytics */}
         <Script
-          id="hotjar"
-          strategy="lazyOnload"
+          id={scripts.hotjar.id}
+          strategy={scripts.hotjar.strategy}
           dangerouslySetInnerHTML={{
             __html: `
               (function(h,o,t,j,a,r){
@@ -84,13 +103,15 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+
+        {/* Google Analytics */}
         <Script
-          strategy="afterInteractive"
+          strategy={scripts.googleAnalytics.strategy}
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
         />
         <Script
-          id="google-analytics"
-          strategy="afterInteractive"
+          id={scripts.googleAnalytics.id}
+          strategy={scripts.googleAnalytics.strategy}
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -102,20 +123,24 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+
+        {/* Google AdSense */}
         <Script
-          id="google-adsense"
+          id={scripts.googleAdsense.id}
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9201441298846648"
           crossOrigin="anonymous"
-          strategy="lazyOnload"
+          strategy={scripts.googleAdsense.strategy}
         />
       </head>
+
       <body className={`${poppins.className} antialiased relative`}>
         <Suspense fallback={<LoadingSpinner />}>
           <Header />
           <AOSProvider>{children}</AOSProvider>
           <Footer />
         </Suspense>
+
         <Toaster />
       </body>
     </html>
