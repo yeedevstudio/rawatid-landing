@@ -1,5 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Allow search engines and ad networks to crawl the site
+  headers: async () => {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "index, follow",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
