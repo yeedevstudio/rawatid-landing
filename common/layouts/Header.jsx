@@ -20,6 +20,23 @@ export default function Header() {
   const pageName = router.split("/")[1];
 
   const blogPage = pageName === "blog" || router.startsWith("/blog/");
+  const tentangKamiPage = pageName === "tentang-kami";
+
+  const headerClassName = tentangKamiPage
+    ? "bg-greenBrand w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between"
+    : "bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between";
+
+  const navLinkClassName = tentangKamiPage
+    ? "text-sm md:text-lg text-white hover:text-green60 transition-all duration-300 ease-in-out"
+    : "text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out";
+
+  const ctaButtonClassName = tentangKamiPage
+    ? "bg-transparent border border-white text-white text-sm md:text-lg hover:bg-white/10 shadow-none transition-all duration-300 ease-in-out"
+    : "bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none transition-all duration-300 ease-in-out";
+
+  const menuIconClassName = tentangKamiPage
+    ? "w-8 h-8 text-white"
+    : "w-8 h-8 text-green";
 
   const handleClose = () => {
     setSheetOpen(false);
@@ -28,7 +45,7 @@ export default function Header() {
   return (
     <>
       {!blogPage ? (
-        <header className="bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between">
+        <header className={headerClassName}>
           <Link href="/" title="Rawat.ID">
             <Image
               src={"/images/logo.webp"}
@@ -44,15 +61,13 @@ export default function Header() {
             <div className="flex gap-20 ">
               {headerValue?.map((item, index) => (
                 <Link href={item.url} key={index} itemProp="button">
-                  <h2 className="text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out">
-                    {item.title}
-                  </h2>
+                  <h2 className={navLinkClassName}>{item.title}</h2>
                 </Link>
               ))}
             </div>
             <Link href={"/register"} itemProp="button" passHref>
               <Button
-                className="bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none transition-all duration-300 ease-in-out"
+                className={ctaButtonClassName}
                 aria-label="Registrasi Sekarang"
               >
                 Registrasi EMR
@@ -64,7 +79,7 @@ export default function Header() {
               <SheetTrigger asChild>
                 <button aria-label="Menu">
                   <IconMenu2
-                    className="w-8 h-8 text-green"
+                    className={menuIconClassName}
                     role="button"
                     tabIndex="0"
                   />
