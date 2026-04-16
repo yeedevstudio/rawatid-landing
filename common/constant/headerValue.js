@@ -3,10 +3,10 @@ export const headerValue = [
     title: "Beranda",
     url: "/",
   },
-  // {
-  //   title: "Tentang Kami",
-  //   url: "/",
-  // },
+  {
+    title: "Tentang Kami",
+    url: "/tentang-kami",
+  },
   {
     title: "Lihat Fitur",
     url: "/fitur",

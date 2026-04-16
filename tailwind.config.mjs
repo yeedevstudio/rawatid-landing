@@ -16,6 +16,7 @@ export default {
         grayHeader: "#F5F5F5",
         greenHover: "#038F7A",
         green: "#035E4D",
+        greenBrand: "#04B99E",
         greenImage: "#D8EDEE",
         neutral100: "#0A0A0A",
         neutral90: "#404040",
