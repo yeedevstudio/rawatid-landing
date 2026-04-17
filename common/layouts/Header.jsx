@@ -20,21 +20,27 @@ export default function Header() {
   const pageName = router.split("/")[1];
 
   const blogPage = pageName === "blog" || router.startsWith("/blog/");
-  const tentangKamiPage = pageName === "tentang-kami";
+  const greenHeaderPages = new Set([
+    "tentang-kami",
+    "terms-of-service",
+    "privacy-policy",
+    "disclaimer",
+  ]);
+  const greenHeaderPage = greenHeaderPages.has(pageName);
 
-  const headerClassName = tentangKamiPage
+  const headerClassName = greenHeaderPage
     ? "bg-greenBrand w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between"
     : "bg-grayHeader w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between";
 
-  const navLinkClassName = tentangKamiPage
+  const navLinkClassName = greenHeaderPage
     ? "text-sm md:text-lg text-white hover:text-green60 transition-all duration-300 ease-in-out"
     : "text-sm md:text-lg text-green hover:text-greenHover transition-all duration-300 ease-in-out";
 
-  const ctaButtonClassName = tentangKamiPage
+  const ctaButtonClassName = greenHeaderPage
     ? "bg-transparent border border-white text-white text-sm md:text-lg hover:bg-white/10 shadow-none transition-all duration-300 ease-in-out"
     : "bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none transition-all duration-300 ease-in-out";
 
-  const menuIconClassName = tentangKamiPage
+  const menuIconClassName = greenHeaderPage
     ? "w-8 h-8 text-white"
     : "w-8 h-8 text-green";
 

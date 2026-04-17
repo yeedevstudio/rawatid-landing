@@ -125,6 +125,10 @@ export default function RootLayout({ children }) {
         />
 
         {/* Google AdSense */}
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-9201441298846648"
+        />
         <Script
           id={scripts.googleAdsense.id}
           async
