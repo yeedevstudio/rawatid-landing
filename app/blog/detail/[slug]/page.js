@@ -3,7 +3,7 @@ import NotFound from "@/app/not-found";
 import BlogDetail from "@/module/blog/detail/BlogDetail";
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   if (!process.env.API_URL) {
     throw new Error("API URL is not defined in environment variables.");
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   if (!process.env.API_URL) {
     throw new Error("API URL is not defined in environment variables.");

@@ -3,7 +3,7 @@ import NotFound from "@/app/not-found";
 import PageBy from "@/module/blog/components/PageBy";
 
 export async function generateMetadata({ params }) {
-  const slug = params?.slug || "";
+  const { slug = "" } = await params;
 
   if (!process.env.API_URL) {
     throw new Error("API URL is not defined in environment variables.");
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const slug = params?.slug || {};
+  const { slug = "" } = await params;
 
   if (!process.env.API_URL) {
     throw new Error("API URL is not defined in environment variables.");
