@@ -1,13 +1,46 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 export default function TentangKamiPage() {
-  const sections = [
-    { id: "visi", label: "Visi Kami" },
-    { id: "latar-belakang", label: "Latar Belakang dan Fokus Kami" },
-    { id: "misi", label: "Misi Kami" },
-    { id: "hubungi", label: "Hubungi Kami" },
-  ];
+  const sections = useMemo(
+    () => [
+      { id: "visi", label: "Visi Kami" },
+      { id: "latar-belakang", label: "Latar Belakang dan Fokus Kami" },
+      { id: "misi", label: "Misi Kami" },
+      { id: "hubungi", label: "Hubungi Kami" },
+    ],
+    []
+  );
+
+  const [activeId, setActiveId] = useState(sections[0]?.id);
+
+  useEffect(() => {
+    const elements = sections
+      .map((s) => document.getElementById(s.id))
+      .filter(Boolean);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+
+        if (visible[0]?.target?.id) setActiveId(visible[0].target.id);
+      },
+      {
+        root: null,
+        threshold: [0.1, 0.25, 0.5],
+        rootMargin: "-25% 0px -60% 0px",
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [sections]);
 
   return (
     <>
@@ -31,9 +64,16 @@ export default function TentangKamiPage() {
                   <li key={s.id}>
                     <a
                       href={`#${s.id}`}
-                      className="text-sm md:text-base text-greenBrand hover:text-greenHover transition-all duration-200 ease-in-out"
+                      aria-current={activeId === s.id ? "true" : undefined}
+                      className="block text-sm md:text-base text-greenBrand hover:text-greenHover transition-all duration-200 ease-in-out"
                     >
-                      {s.label}
+                      <span className="block">{s.label}</span>
+                      {activeId === s.id ? (
+                        <span
+                          className="mt-2 block h-[2px] w-full max-w-[220px] bg-amber-400"
+                          aria-hidden="true"
+                        />
+                      ) : null}
                     </a>
                   </li>
                 ))}
