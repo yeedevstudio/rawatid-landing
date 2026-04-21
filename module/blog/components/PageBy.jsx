@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import BlogAll from "../components/BlogAll";
 import Link from "next/link";
 import Image from "next/image";
-import ButtonBack from "@/common/components/ButtonBack";
 import { AvatarSection } from "@/common/components/Avatar";
+import Breadcrumbs from "@/common/components/Breadcrumbs";
 
 export default function PageBy({ data, post, slug, title, author }) {
   const router = useRouter();
@@ -38,7 +38,13 @@ export default function PageBy({ data, post, slug, title, author }) {
 
   return (
     <ContainerBlog>
-      <ButtonBack />
+      <Breadcrumbs
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Artikel", href: "/blog/semua" },
+          { label: `${title} ${slug ? `- ${slug}` : ""}`.trim(), href: "#" },
+        ]}
+      />
       <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
         {title} : {slug}
       </h1>

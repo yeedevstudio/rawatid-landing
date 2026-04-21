@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import PaginationPage from "@/common/components/PaginationPage";
 import ContainerBlog from "@/common/components/ContainerBlog";
+import Breadcrumbs from "@/common/components/Breadcrumbs";
 
 export default function PageBySearch({ data, pagination, slug }) {
   const router = useRouter();
@@ -33,6 +34,16 @@ export default function PageBySearch({ data, pagination, slug }) {
 
   return (
     <ContainerBlog>
+      <Breadcrumbs
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Artikel", href: "/blog/semua" },
+          {
+            label: `Cari: ${decodeURIComponent(slug)}`,
+            href: `/blog/cari/${slug}`,
+          },
+        ]}
+      />
       <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize  md:gap-4">
         Pencarian Berdasarkan :
         <span className="ml-2 font-semibold break-all">"{decodeURIComponent(slug)}"</span>

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { CardArticleAll } from "@/common/components/CardArticle";
 import { Skeleton } from "@/components/ui/skeleton";
 import ContainerBlog from "@/common/components/ContainerBlog";
-import ButtonBack from "@/common/components/ButtonBack";
 import PaginationPage from "@/common/components/PaginationPage";
+import Breadcrumbs from "@/common/components/Breadcrumbs";
 
 export default function PageByAll({ data, pagination }) {
   const router = useRouter();
@@ -27,7 +27,13 @@ export default function PageByAll({ data, pagination }) {
 
   return (
     <ContainerBlog>
-      <ButtonBack />
+      <Breadcrumbs
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Artikel", href: "/blog/semua" },
+          { label: "Artikel", href: "/blog/semua" },
+        ]}
+      />
       <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
         Artikel Terbaru
       </h1>
