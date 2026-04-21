@@ -11,8 +11,8 @@ import LinkPopuler from "./LinkPopuler";
 import ButtonCopy from "@/common/components/ButtonCopy";
 import LinkArtikel from "@/module/blog/detail/LinkArtikel";
 import RelatedArticle from "./RelatedArticle";
-import ButtonBack from "@/common/components/ButtonBack";
 import { Skeleton } from "@/components/ui/skeleton";
+import Breadcrumbs from "@/common/components/Breadcrumbs";
 
 export default function BlogDetail({
   post,
@@ -367,7 +367,19 @@ export default function BlogDetail({
 
   return (
     <div className="mx-5 md:mx-[4rem] lg:mx-[7rem] my-[2rem]" aos="fade-up">
-      <ButtonBack />
+      <Breadcrumbs
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Artikel", href: "/blog/semua" },
+          {
+            label: post?.category?.name || "Detail",
+            href: post?.category?.slug
+              ? `/blog/kategori/${post.category.slug}`
+              : "/blog/semua",
+          },
+          { label: post?.title || "Detail", href: `/blog/detail/${slug}` },
+        ]}
+      />
       <div className="flex items-center gap-2 md:gap-6">
         <Link
           itemProp="kategori"
