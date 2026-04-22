@@ -1,6 +1,14 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
+const resolveImageSrc = (src) => {
+  if (!src) return "/images/logo.svg";
+  if (typeof src !== "string") return "/images/logo.svg";
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  const base = process.env.NEXT_PUBLIC_BASE_URL || "";
+  return `${base}${src}`;
+};
+
 export const CardArticle = ({
   src,
   alt,
@@ -25,7 +33,7 @@ export const CardArticle = ({
         )}
       >
         <Image
-          src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
+          src={resolveImageSrc(src)}
           alt={alt}
           fill
           style={{ objectFit: "cover", position: "absolute" }}
@@ -69,7 +77,7 @@ export const CardArticleAll = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
+        src={resolveImageSrc(src)}
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}
@@ -112,7 +120,7 @@ export const CardArticleSidebar = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src || "/images/logo.svg"}
+        src={resolveImageSrc(src)}
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}
@@ -168,7 +176,7 @@ export const CardArticlePopuler = ({
       )}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + src}
+        src={resolveImageSrc(src)}
         alt={alt}
         fill
         style={{ objectFit: "cover", position: "absolute" }}

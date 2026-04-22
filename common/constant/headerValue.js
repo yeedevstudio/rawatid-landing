@@ -29,7 +29,7 @@ export const headerValueBlog = [
   },
   {
     title: "Artikel",
-    url: "/blog/semua",
+    url: "/blog",
   },
   {
     title: "Alat Kesehatan",
@@ -88,7 +88,7 @@ export const blogSubnavGroups = [
   },
   {
     groupTitle: "Artikel",
-    groupUrl: "/blog/semua",
+    groupUrl: "/blog",
     matchPrefixes: [
       "/blog",
       "/blog/semua",
@@ -108,7 +108,7 @@ export const blogSubnavGroups = [
       { title: "Bioteknologi", url: "/blog/kategori/bioteknologi" },
       {
         title: "Teknologi Kesehatan",
-        url: "/blog/kategori/teknologi-kesehatan",
+        url: "/blog/kategori/teknologi",
       },
       { title: "Informasi Umum", url: "/blog/kategori/informasi-umum" },
     ],
