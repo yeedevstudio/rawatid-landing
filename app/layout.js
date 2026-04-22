@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import AOSProvider from "@/common/layouts/AosProvider";
 import Header from "@/common/layouts/Header";
 import Footer from "@/common/layouts/Footer";
-import { LoadingSpinner } from "@/common/components/LoadingSpinner";
+import GlobalRouteSkeleton from "@/common/components/GlobalRouteSkeleton";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -139,7 +139,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className={`${poppins.className} antialiased relative`}>
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<GlobalRouteSkeleton />}>
           <Header />
           <AOSProvider>{children}</AOSProvider>
           <Footer />

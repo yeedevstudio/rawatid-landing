@@ -1,18 +1,18 @@
 import React from "react";
 import HeroSection from "./HeroSection";
-import FiturSection from "./FiturSection";
-import AdvertisSection from "./AdvertisSection";
-import ServiceSection from "./ServiceSection";
-import PromotionSection from "./PromotionSection";
+import SupportSection from "./SupportSection";
+import ClinicSolutionSection from "./ClinicSolutionSection";
+import RawatDiriSection from "./RawatDiriSection";
+import LatestArticleSection from "./LatestArticleSection";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <FiturSection />
-      <AdvertisSection />
-      <ServiceSection />
-      <PromotionSection />
+      <SupportSection />
+      <ClinicSolutionSection />
+      <RawatDiriSection />
+      <LatestArticleSection />
     </>
   );
 }

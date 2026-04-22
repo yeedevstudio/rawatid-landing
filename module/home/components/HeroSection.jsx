@@ -8,43 +8,35 @@ import { useRouter } from "next/navigation";
 export default function HeroSection() {
   const router = useRouter();
   return (
-    <section className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mx-5 md:mx-12 ">
+    <section className="my-10 w-full px-5 md:px-12 lg:px-20 xl:px-24 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
       <div
         data-aos="fade-right"
-        className="flex flex-col gap-3 md:gap-6 lg:gap-8 ml-0 md:ml-7"
+        suppressHydrationWarning
+        className="flex flex-col gap-3 md:gap-6 lg:gap-8"
       >
-        <h1 className="text-2xl md:text-4xl font-semibold text-green leading-tight md:leading-relaxed">
-          Digitalisasi Rekam Medis dengan Rawat.ID
-        </h1>
-        <h2 className=" text-lg md:text-2xl font-normal text-green mb-4 lg:mb-2">
-          Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas,
-          faskes jadi lebih untung!
-        </h2>
-        <div className="flex justify-between w-full transition-all duration-300 ease-in-out">
-          <Button
-            aria-label="Registrasi Sekarang"
-            className="bg-green text-white text-sm md:text-lg  hover:bg-greenHover shadow-none w-[60%] h-[2.5rem] md:h-[3rem] rounded-lg"
-            onClick={() => router.push("/register")}
-          >
-            Registrasi Sekarang
+        <h1 className="text-[48px] leading-[1.1] font-semibold text-[#038F7A]">Semua Kebutuhan Kesehatanmu, Dalam Satu Platform</h1>
+        <h2 className="text-[32px] leading-[1.35] font-normal text-[#038F7A] mb-4 lg:mb-2">Dari informasi obat hingga pengingat kesehatan harian, Rawat.ID siap mendampingi kamu.</h2>
+        <div className="flex gap-[16px] w-full pt-10 transition-all duration-300 ease-in-out">
+          <Button aria-label="Mulai Sekarang" className="bg-[#038F7A] text-white text-[28px] font-semibold hover:bg-[#038F7A]/90 shadow-none w-[298px] h-[79px] px-[26px] py-[18px] rounded-[16px]" onClick={() => router.push("/register")}>
+            Mulai Sekarang
           </Button>
           <Button
             aria-label="Lihat Fitur"
-            className="text-green text-sm md:text-lg  border border-green bg-white hover:bg-neutral-100 shadow-none w-[35%] h-[2.5rem] md:h-[3rem] rounded-lg"
+            className="text-[#038F7A] text-[28px] font-semibold border border-[#038F7A] bg-white hover:bg-[#038F7A]/5 shadow-none h-[81px] px-[26px] py-[18px] rounded-[16px]"
             onClick={() => router.push("/fitur")}
           >
             Lihat Fitur
           </Button>
         </div>
       </div>
-      <div data-aos="fade-left" className="flex items-center justify-center lg:justify-end">
-        <Image
-          src={"/images/hero_image.svg"}
-          alt="hero_image"
-          width={900}
-          height={900}
-          className=" w-[20rem] h-[20rem]  md:w-[32rem] md:h-[30rem] lg:w-[39rem] lg:h-[29rem] rounded-tr-[12rem] rounded-bl-[12rem] lg:rounded-tr-[15rem] lg:rounded-bl-[15rem] "
-        />
+      <div
+        data-aos="fade-left"
+        suppressHydrationWarning
+        className="flex items-center justify-center lg:justify-end"
+      >
+        <div className="relative h-[22rem] md:h-[32rem] lg:h-[34rem] xl:h-[38rem] w-[18rem] md:w-[24rem] lg:w-[30rem] xl:w-[34rem] overflow-hidden rounded-tr-[13rem] rounded-bl-[13rem] lg:rounded-tr-[18rem] lg:rounded-bl-[18rem] lg:translate-x-1 xl:translate-x-2">
+          <Image src={"/images/home.svg"} alt="Ilustrasi halaman beranda Rawat.ID" fill sizes="(max-width: 768px) 288px, (max-width: 1024px) 384px, (max-width: 1280px) 480px, 544px" className="object-cover object-[58%_center]" priority />
+        </div>
       </div>
     </section>
   );

@@ -34,7 +34,12 @@ export default async function Page({ params, searchParams }) {
     throw new Error("API URL is not defined in environment variables.");
   }
 
-  const currentPage = parseInt(searchParams?.page) || 1;
+  // Next.js terbaru bisa mengirim `searchParams` sebagai Promise.
+  const resolvedSearchParams =
+    searchParams && typeof searchParams.then === "function"
+      ? await searchParams
+      : searchParams;
+  const currentPage = parseInt(resolvedSearchParams?.page) || 1;
   const pageSize = 9;
 
   try {
