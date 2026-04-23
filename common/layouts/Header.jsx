@@ -21,7 +21,20 @@ export default function Header() {
 
   const activeBlogGroup = blogSubnavGroups?.find((g) => g.matchPrefixes?.some((p) => router.startsWith(p))) || null;
 
-  const activeBlogSubItem = activeBlogGroup?.items?.find((it) => router === it.url || router.startsWith(`${it.url}/`));
+  const matchedSection =
+    activeBlogGroup?.sections?.find((s) =>
+      s.matchPrefixes?.some((p) => router.startsWith(p))
+    ) || null;
+
+  // Jika group pakai sections dan belum ada yang match (mis. user sedang di `/sistem-faskes`),
+  // tampilkan section pertama agar submenu tidak kosong.
+  const activeBlogSection =
+    matchedSection || activeBlogGroup?.sections?.[0] || null;
+
+  const activeSubnavItems =
+    activeBlogSection?.items?.length
+      ? activeBlogSection.items
+      : activeBlogGroup?.items || [];
 
   return (
     <div className="w-full">
@@ -63,11 +76,14 @@ export default function Header() {
                     </Link>
                   ))}
 
-                  {activeBlogGroup?.items?.length ? (
+                  {activeBlogGroup && activeSubnavItems?.length ? (
                     <div className="pt-2 mt-2 border-t border-black/10">
-                      <div className="text-sm font-semibold text-gray-500 mb-3">{activeBlogGroup.groupTitle}</div>
+                      <div className="text-sm font-semibold text-gray-500 mb-3">
+                        {activeBlogGroup.groupTitle}
+                        {activeBlogSection?.sectionTitle ? ` • ${activeBlogSection.sectionTitle}` : ""}
+                      </div>
                       <div className="flex flex-col gap-5">
-                        {activeBlogGroup.items.map((it) => (
+                        {activeSubnavItems.map((it) => (
                           <Link key={it.url} href={it.url} onClick={handleClose}>
                             <div className={router === it.url || router.startsWith(`${it.url}/`) ? "text-green font-semibold" : "text-gray-800 hover:text-green"}>{it.title}</div>
                           </Link>
@@ -89,15 +105,19 @@ export default function Header() {
               <Link href={activeBlogGroup.groupUrl} className="text-gray-800 font-semibold hover:text-green transition-all">
                 {activeBlogGroup.groupTitle}
               </Link>
-              <IconChevronRight
-                className="w-7 h-6 text-gray-500"
-                aria-hidden="true"
-                suppressHydrationWarning
-              />
+              <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
+              {activeBlogSection?.sectionTitle ? (
+                <>
+                  <Link href={activeBlogSection.sectionUrl} className="text-gray-800 font-semibold hover:text-green transition-all">
+                    {activeBlogSection.sectionTitle}
+                  </Link>
+                  <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
+                </>
+              ) : null}
             </div>
 
             <nav className="flex items-stretch gap-8 md:gap-10 overflow-x-auto whitespace-nowrap">
-              {activeBlogGroup.items.map((it) => {
+              {activeSubnavItems.map((it) => {
                 const isActive = router === it.url || router.startsWith(`${it.url}/`);
                 return (
                   <Link key={it.url} href={it.url}>

@@ -64,6 +64,36 @@ export const blogSubnavGroups = [
     ],
   },
   {
+    groupTitle: "Sistem Faskes",
+    groupUrl: "/sistem-faskes",
+    matchPrefixes: ["/sistem-faskes"],
+    sections: [
+      {
+        sectionTitle: "Rekam Medis Elektronik",
+        sectionUrl: "/sistem-faskes/rekam-medis-elektronik",
+        matchPrefixes: ["/sistem-faskes/rekam-medis-elektronik"],
+        items: [
+          {
+            title: "Fitur RME",
+            url: "/sistem-faskes/rekam-medis-elektronik/fitur-rme",
+          },
+          {
+            title: "Registrasi RME",
+            url: "/sistem-faskes/rekam-medis-elektronik/registrasi-rme",
+          },
+          {
+            title: "Uji Coba RME",
+            url: "/sistem-faskes/rekam-medis-elektronik/uji-coba-rme",
+          },
+          {
+            title: "Panduan Penggunaan RME",
+            url: "/sistem-faskes/rekam-medis-elektronik/panduan-penggunaan-rme",
+          },
+        ],
+      },
+    ],
+  },
+  {
     groupTitle: "Alat Kesehatan",
     groupUrl: "/alat-kesehatan/kalkulator-bmi",
     matchPrefixes: [

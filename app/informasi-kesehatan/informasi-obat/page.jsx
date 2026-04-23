@@ -5,32 +5,12 @@ import Link from "next/link";
 import { Search, Pill, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const PAGE_SIZE = 12;
 
 const OBAT = Array.from({ length: 52 }).map((_, i) => {
-  const name =
-    i % 7 === 0
-      ? "Abacavir"
-      : i % 7 === 1
-        ? "Abbotic"
-        : i % 7 === 2
-          ? "Abacavir"
-          : i % 7 === 3
-            ? "Abacavir"
-            : i % 7 === 4
-              ? "Abacavir"
-              : i % 7 === 5
-                ? "Abacavir"
-                : "Abacavir";
+  const name = i % 7 === 0 ? "Abacavir" : i % 7 === 1 ? "Abbotic" : i % 7 === 2 ? "Abacavir" : i % 7 === 3 ? "Abacavir" : i % 7 === 4 ? "Abacavir" : i % 7 === 5 ? "Abacavir" : "Abacavir";
   return {
     id: `obat-${i + 1}`,
     name,
@@ -88,112 +68,97 @@ export default function InformasiObatPage() {
       </div>
 
       <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-
-      <div className="text-center">
-        <h1 className="text-green font-semibold text-lg md:text-xl">
-          Temukan Obat dengan Mudah & Cepat
-        </h1>
-        <p className="text-gray-600 text-sm md:text-base mt-1">
-          Cari berdasarkan nama
-        </p>
-      </div>
-
-      <div className="mt-6 max-w-2xl mx-auto">
-        <div className="flex items-stretch">
-          <div className="w-11 flex items-center justify-center rounded-l-md bg-green text-white border border-green">
-            <Search className="w-4 h-4" />
-          </div>
-          <Input
-            id="Cari nama obat"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setPage(1);
-            }}
-            placeholder="Cari nama obat"
-            className="rounded-l-none border-l-0 h-11"
-          />
+        <div className="text-center">
+          <h1 className="text-green font-semibold text-lg md:text-xl">Temukan Obat dengan Mudah & Cepat</h1>
+          <p className="text-gray-600 text-sm md:text-base mt-1">Cari berdasarkan nama</p>
         </div>
-      </div>
 
-      <section className="mt-10">
-        <div className="flex items-center justify-between">
-          <h2 className="text-gray-800 font-semibold">Daftar Obat</h2>
-          <div className="text-sm text-gray-500">
-            {(safePage - 1) * PAGE_SIZE + 1}-{Math.min(safePage * PAGE_SIZE, filtered.length)}{" "}
-            dari {filtered.length}
+        <div className="mt-6 max-w-2xl mx-auto">
+          <div className="flex items-stretch">
+            <div className="w-11 flex items-center justify-center rounded-l-md bg-green text-white border border-green">
+              <Search className="w-4 h-4" />
+            </div>
+            <Input
+              id="Cari nama obat"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setPage(1);
+              }}
+              placeholder="Cari nama obat"
+              className="rounded-l-none border-l-0 h-11"
+            />
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {pageItems.map((o) => (
-            <div
-              key={o.id}
-              className="rounded-xl border border-black/5 bg-white shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="p-4 flex gap-3">
-                <div className="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
-                  <Pill className="w-5 h-5 text-green" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="font-semibold text-gray-900 truncate">
-                    {o.name}
+        <section className="mt-10">
+          <div className="flex items-center justify-between">
+            <h2 className="text-gray-800 font-semibold">Daftar Obat</h2>
+            <div className="text-sm text-gray-500">
+              {(safePage - 1) * PAGE_SIZE + 1}-{Math.min(safePage * PAGE_SIZE, filtered.length)} dari {filtered.length}
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {pageItems.map((o) => (
+              <div key={o.id} className="rounded-xl border border-black/5 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-4 flex gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
+                    <Pill className="w-5 h-5 text-green" />
                   </div>
-                  <Link
-                    href={`/informasi-kesehatan/informasi-obat/${o.slug}`}
-                    className="inline-flex items-center gap-1 text-green font-semibold text-sm mt-1 hover:text-greenHover transition-colors"
-                  >
-                    Lihat Detail <ChevronRight className="w-4 h-4" />
-                  </Link>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-gray-900 truncate">{o.name}</div>
+                    <Link href={`/informasi-kesehatan/informasi-obat/${o.slug}`} className="inline-flex items-center gap-1 text-green font-semibold text-sm mt-1 hover:text-greenHover transition-colors">
+                      Lihat Detail <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-8">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage((p) => clamp(p - 1, 1, totalPages));
-                  }}
-                />
-              </PaginationItem>
-
-              {paginationNumbers.map((n) => (
-                <PaginationItem key={n}>
-                  <PaginationLink
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
                     href="#"
-                    isActive={n === safePage}
                     onClick={(e) => {
                       e.preventDefault();
-                      setPage(n);
+                      setPage((p) => clamp(p - 1, 1, totalPages));
                     }}
-                  >
-                    {n}
-                  </PaginationLink>
+                  />
                 </PaginationItem>
-              ))}
 
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage((p) => clamp(p + 1, 1, totalPages));
-                  }}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </section>
+                {paginationNumbers.map((n) => (
+                  <PaginationItem key={n}>
+                    <PaginationLink
+                      href="#"
+                      isActive={n === safePage}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPage(n);
+                      }}
+                    >
+                      {n}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage((p) => clamp(p + 1, 1, totalPages));
+                    }}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </section>
       </main>
     </div>
   );
 }
-
