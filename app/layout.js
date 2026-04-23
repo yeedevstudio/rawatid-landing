@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 import { Toaster } from "@/components/ui/sonner";
 import AOSProvider from "@/common/layouts/AosProvider";
@@ -146,6 +147,7 @@ export default function RootLayout({ children }) {
         </Suspense>
 
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
