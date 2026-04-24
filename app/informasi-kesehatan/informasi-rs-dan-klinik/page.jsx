@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import Page505 from "@/common/components/Page505";
 
 export default function InformasiRsDanKlinikPage() {
   return (
@@ -20,13 +21,7 @@ export default function InformasiRsDanKlinikPage() {
       </div>
 
       <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
-          Informasi RS dan Klinik
-        </h1>
-        <p className="mt-2 text-gray-600">
-          Halaman ini siap diisi konten RS & Klinik. Kalau kamu punya struktur
-          data (mis. list RS/Klinik + filter), aku bisa buat UI-nya.
-        </p>
+        <Page505 title="Informasi RS dan Klinik" />
       </main>
     </div>
   );

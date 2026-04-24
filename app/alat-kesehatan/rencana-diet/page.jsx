@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import Page505 from "@/common/components/Page505";
 
 export default function RencanaDietPage() {
   return (
@@ -14,12 +15,7 @@ export default function RencanaDietPage() {
       </div>
 
       <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
-          Rencana Diet
-        </h1>
-        <p className="mt-2 text-gray-600">
-          Halaman ini siap diisi rencana diet.
-        </p>
+        <Page505 title="Rencana Diet" />
       </main>
     </div>
   );
