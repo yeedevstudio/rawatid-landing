@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import Page505 from "@/common/components/Page505";
 
 export default function PersonalHealthRecordPage() {
   return (
@@ -17,12 +18,7 @@ export default function PersonalHealthRecordPage() {
       </div>
 
       <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
-          Personal Health Record
-        </h1>
-        <p className="mt-2 text-gray-600">
-          Halaman ini siap diisi fitur Personal Health Record.
-        </p>
+        <Page505 title="Personal Health Record" />
       </main>
     </div>
   );

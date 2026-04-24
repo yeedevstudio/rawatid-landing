@@ -66,28 +66,34 @@ export const blogSubnavGroups = [
   {
     groupTitle: "Sistem Faskes",
     groupUrl: "/sistem-faskes",
-    matchPrefixes: ["/sistem-faskes"],
+    // Keep the Sistem Faskes subnav visible when users land on
+    // RME-related pages that live outside `/sistem-faskes` (e.g. `/fitur`, `/register`).
+    matchPrefixes: ["/sistem-faskes", "/fitur", "/register"],
     sections: [
       {
         sectionTitle: "Rekam Medis Elektronik",
         sectionUrl: "/sistem-faskes/rekam-medis-elektronik",
-        matchPrefixes: ["/sistem-faskes/rekam-medis-elektronik"],
+        matchPrefixes: [
+          "/sistem-faskes/rekam-medis-elektronik",
+          "/fitur",
+          "/register",
+        ],
         items: [
           {
             title: "Fitur RME",
-            url: "/sistem-faskes/rekam-medis-elektronik/fitur-rme",
+            url: "/fitur",
           },
           {
             title: "Registrasi RME",
-            url: "/sistem-faskes/rekam-medis-elektronik/registrasi-rme",
+            url: "/register",
           },
           {
             title: "Uji Coba RME",
-            url: "/sistem-faskes/rekam-medis-elektronik/uji-coba-rme",
+            url: "https://demo.rawat.id/",
           },
           {
             title: "Panduan Penggunaan RME",
-            url: "/sistem-faskes/rekam-medis-elektronik/panduan-penggunaan-rme",
+            url: "https://panduan.rawat.id/",
           },
         ],
       },
