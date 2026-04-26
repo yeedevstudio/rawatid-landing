@@ -11,6 +11,7 @@ import BlogAll from "./BlogAll";
 import ContainerBlog from "@/common/components/ContainerBlog";
 import BlogCategory from "./BlogCategory";
 import { toast } from "sonner";
+import { startRouteLoading } from "@/common/utils/routeLoading";
 
 export default function BlogPage({ data, categories }) {
   const router = useRouter();
@@ -49,12 +50,14 @@ export default function BlogPage({ data, categories }) {
         style: { color: "green", border: "1px solid green" },
       });
     } else {
+      startRouteLoading();
       router.push(`/blog/cari/${searchQuery}`);
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchQuery.trim() !== "") {
+      startRouteLoading();
       router.push(`/blog/cari/${encodeURIComponent(searchQuery)}`);
     }
     if (e.key === "ArrowRight" && suggestion) {

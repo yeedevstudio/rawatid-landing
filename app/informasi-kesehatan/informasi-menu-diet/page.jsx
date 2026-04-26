@@ -1,10 +1,10 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
-import Page505 from "@/common/components/Page505";
+import MenuDietClient from "./MenuDietClient";
 
 export default function InformasiMenuDietPage() {
   return (
     <div className="w-full">
-      <div className="px-5 md:px-12 pt-6">
+      <div className="px-4 md:px-8 pt-6">
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
@@ -20,8 +20,8 @@ export default function InformasiMenuDietPage() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <Page505 title="Informasi Menu Diet" />
+      <main className="max-w-6xl mx-auto px-4 md:px-6 pb-10 pt-6">
+        <MenuDietClient />
       </main>
     </div>
   );

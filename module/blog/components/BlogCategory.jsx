@@ -34,13 +34,18 @@ export default function BlogCategory({ data, category }) {
 
   return (
     <div className=" my-[3rem] md:my-[6rem]">
-      <Link
-        itemProp="button"
-        href={`/blog/kategori/${category?.slug}`}
-        className="text-lg md:text-lg lg:text-xl text-green font-medium underline capitalize"
-      >
-        <h1>{category?.name}</h1>
-      </Link>
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg md:text-lg lg:text-xl text-green font-medium capitalize">
+          {category?.name}
+        </h2>
+        <Link
+          itemProp="button"
+          href={`/blog/kategori/${category?.slug}`}
+          className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
+        >
+          Lihat Selengkapnya
+        </Link>
+      </div>
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6">
           {data?.map((article, index) => (
@@ -67,17 +72,6 @@ export default function BlogCategory({ data, category }) {
               </div>
             ))}
           </div>
-          {data.length > 6 && (
-            <div className="flex items-center justify-center py-5">
-              <Link
-                itemProp="button"
-                href={`/blog/kategori/${category?.slug}`}
-                className=" text-xs md:text-sm lg:text-sm text-white bg-green hover:bg-green py-2 px-5 rounded-lg transition-all duration-300 ease-in-out"
-              >
-                Lihat semua
-              </Link>
-            </div>
-          )}
         </>
       )}
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 // import components
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/common/components/CardArticle";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import { startRouteLoading } from "@/common/utils/routeLoading";
 
 export default function BlogHighlight({ data }) {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function BlogHighlight({ data }) {
 
   const handleSelected = (index, slug) => {
     setSelected(index);
+    startRouteLoading();
     router.push(`/blog/detail/${slug}`);
   };
 
@@ -48,45 +51,75 @@ export default function BlogHighlight({ data }) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 md:my-[6rem] h-full">
-        <Skeleton className="w-full h-full min-h-[18rem] md:min-h-[25rem] lg:min-h-[15rem] max-h-full rounded-xl" />
-        <div className="grid grid-cols-1 gap-2 md:gap-6">
-          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl " />
-          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
-          <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
+      <>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-sm md:text-lg lg:text-xl text-green font-medium">
+            Artikel pilihan
+          </h2>
+          <Link
+            itemProp="button"
+            href="/blog/semua"
+            className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
+          >
+            Lihat Selengkapnya
+          </Link>
         </div>
-      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 h-full">
+          <Skeleton className="w-full h-full min-h-[18rem] md:min-h-[25rem] lg:min-h-[15rem] max-h-full rounded-xl" />
+          <div className="grid grid-cols-1 gap-2 md:gap-6">
+            <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl " />
+            <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
+            <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
+          </div>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 h-full">
-      <div className="transition-all duration-300 ease-in-out">
-        <CardArticle
-          src={currentArticle?.thumbnail?.formats?.small?.url}
-          alt={currentArticle?.thumbnail?.formats?.small?.url}
-          category={currentArticle?.category?.name}
-          title={currentArticle?.title}
-          index={currentIndex}
-          selected={true}
-          onSelect={() => handleSelected(currentIndex, currentArticle.slug)}
-        />
+    <>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-sm md:text-lg lg:text-xl text-green font-medium">
+          Artikel pilihan
+        </h2>
+        <Link
+          itemProp="button"
+          href="/blog/semua"
+          className="text-sm md:text-lg lg:text-xl text-green font-medium underline"
+        >
+          Lihat Selengkapnya
+        </Link>
       </div>
-      <div className="grid grid-cols-1 gap-2">
-        {blog.map((article, index) => (
-          <div key={index}>
-            <CardArticleSidebar
-               src={article?.thumbnail?.url}
-               alt={article?.thumbnail?.formats?.thumbnail?.url}
-              category={article.category?.name}
-              title={article.title}
-              index={index}
-              selected={selected === index}
-              onSelect={() => handleSelected(index, article.slug)}
-            />
-          </div>
-        ))}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 h-full">
+        <div className="transition-all duration-300 ease-in-out">
+          <CardArticle
+            src={currentArticle?.thumbnail?.formats?.small?.url}
+            alt={currentArticle?.thumbnail?.formats?.small?.url}
+            category={currentArticle?.category?.name}
+            title={currentArticle?.title}
+            index={currentIndex}
+            selected={true}
+            shadow
+            onSelect={() => handleSelected(currentIndex, currentArticle.slug)}
+          />
+        </div>
+        <div className="grid grid-cols-1 gap-2">
+          {blog.map((article, index) => (
+            <div key={index}>
+              <CardArticleSidebar
+                src={article?.thumbnail?.url}
+                alt={article?.thumbnail?.formats?.thumbnail?.url}
+                category={article.category?.name}
+                title={article.title}
+                index={index}
+                selected={selected === index}
+                shadow
+                onSelect={() => handleSelected(index, article.slug)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

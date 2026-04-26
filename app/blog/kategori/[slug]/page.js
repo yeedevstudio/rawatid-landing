@@ -1,6 +1,6 @@
 import Error from "@/app/error";
 import NotFound from "@/app/not-found";
-import PageBy from "@/module/blog/components/PageBy";
+import PageByClientPagination from "@/module/blog/components/PageByClientPagination";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params }) {
@@ -51,37 +51,8 @@ export default async function Page({ params }) {
   }
 
   try {
-    const [postSlugRes, postAllRes] = await Promise.all([
-      fetch(
-        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&filters[category][slug][$eq]=${slug}`,
-        { cache: "no-store" }
-      ),
-      fetch(
-        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`,
-        { cache: "no-store" }
-      ),
-    ]);
-
-    const [postSlug, postAll] = await Promise.all([
-      postSlugRes.json(),
-      postAllRes.json(),
-    ]);
-
-    const dataSlug = postSlug.data || null;
-    const dataAll = postAll.data || [];
-
-    if (!dataSlug) {
-      return <NotFound />;
-    }
-
-    return (
-      <PageBy
-        data={dataSlug}
-        post={dataAll}
-        slug={dataSlug?.[0]?.category?.name}
-        title={"Kategori"}
-      />
-    );
+    // Render client-side pagination supaya request terlihat di Network browser.
+    return <PageByClientPagination categorySlug={slug} />;
   } catch (error) {
     return <Error />;
   }

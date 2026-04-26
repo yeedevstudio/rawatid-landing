@@ -3,7 +3,7 @@
 import { CardArticleSidebar } from "@/common/components/CardArticle";
 import ContainerBlog from "@/common/components/ContainerBlog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import BlogAll from "../components/BlogAll";
@@ -12,11 +12,11 @@ import Image from "next/image";
 import { AvatarSection } from "@/common/components/Avatar";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 
-export default function PageBy({ data, post, slug, title, author }) {
+export default function PageBy({ data, post, slug, title, author, pagination, currentPage }) {
   const router = useRouter();
+  const sp = useSearchParams();
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(true);
-  const [show, setShow] = useState(false);
 
   const handleSelected = (index, slug) => {
     setSelected(index);
@@ -34,7 +34,17 @@ export default function PageBy({ data, post, slug, title, author }) {
     return () => clearTimeout(setTimeLoading);
   }, []);
 
-  const blogFilter = show ? data : data?.slice(0, 6);
+  const blogFilter = data || [];
+
+  const page = Number(currentPage || pagination?.page || sp?.get("page") || 1);
+  const pageCount = Number(pagination?.pageCount || 1);
+
+  const goToPage = (p) => {
+    const next = Math.min(Math.max(1, p), pageCount || 1);
+    const params = new URLSearchParams(sp?.toString() || "");
+    params.set("page", String(next));
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <ContainerBlog>
@@ -101,23 +111,64 @@ export default function PageBy({ data, post, slug, title, author }) {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
-          {blogFilter?.map((article, index) => (
-            <div key={index} className={article.span}>
-              <CardArticleSidebar
-                src={article?.thumbnail?.formats?.small?.url}
-                alt={article?.thumbnail?.formats?.small?.url}
-                category={article.category?.name}
-                title={article.title}
-                height={"h-[12rem] md:h-[14rem] lg:h-[18rem]"}
-                index={index}
-                selected={selected === index}
-                onSelect={() => handleSelected(index, article.slug)}
-                headline={article.headline}
-              />
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
+            {blogFilter?.map((article, index) => (
+              <div key={article?.slug || index} className={article.span}>
+                <CardArticleSidebar
+                  src={article?.thumbnail?.formats?.small?.url}
+                  alt={article?.thumbnail?.formats?.small?.url}
+                  category={article.category?.name}
+                  title={article.title}
+                  height={"h-[12rem] md:h-[14rem] lg:h-[18rem]"}
+                  index={index}
+                  selected={selected === index}
+                  onSelect={() => handleSelected(index, article.slug)}
+                  headline={article.headline}
+                />
+              </div>
+            ))}
+          </div>
+
+          {pageCount > 1 && (
+            <div className="flex items-center justify-center gap-2 pt-2 pb-6">
+              <button
+                type="button"
+                onClick={() => goToPage(page - 1)}
+                disabled={page <= 1}
+                className={`px-3 py-2 rounded-md border text-sm ${page <= 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"}`}
+              >
+                Sebelumnya
+              </button>
+
+              {Array.from({ length: pageCount }).slice(Math.max(0, page - 3), Math.min(pageCount, page + 2)).map((_, i, arr) => {
+                const start = Math.max(1, page - 2);
+                const p = start + i;
+                const active = p === page;
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => goToPage(p)}
+                    className={`w-9 h-9 rounded-md border text-sm ${active ? "bg-green text-white border-green" : "hover:bg-gray-50 text-gray-700"}`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+
+              <button
+                type="button"
+                onClick={() => goToPage(page + 1)}
+                disabled={page >= pageCount}
+                className={`px-3 py-2 rounded-md border text-sm ${page >= pageCount ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"}`}
+              >
+                Berikutnya
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
 
       <BlogAll data={post} />
