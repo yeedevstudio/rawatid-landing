@@ -9,6 +9,7 @@ import AOSProvider from "@/common/layouts/AosProvider";
 import Header from "@/common/layouts/Header";
 import Footer from "@/common/layouts/Footer";
 import GlobalRouteSkeleton from "@/common/components/GlobalRouteSkeleton";
+import RouteClickSpinner from "@/common/components/RouteClickSpinner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -146,6 +147,9 @@ export default function RootLayout({ children }) {
           <Footer />
         </Suspense>
 
+        <Suspense fallback={null}>
+          <RouteClickSpinner />
+        </Suspense>
         <Toaster />
         <Analytics />
       </body>

@@ -367,20 +367,22 @@ export default function BlogDetail({
 
   return (
     <div className="mx-5 md:mx-[4rem] lg:mx-[7rem] my-[2rem]" aos="fade-up">
-      <Breadcrumbs
-        items={[
-          { label: "Beranda", href: "/" },
-          { label: "Artikel", href: "/blog/semua" },
-          {
-            label: post?.category?.name || "Detail",
-            href: post?.category?.slug
-              ? `/blog/kategori/${post.category.slug}`
-              : "/blog/semua",
-          },
-          { label: post?.title || "Detail", href: `/blog/detail/${slug}` },
-        ]}
-      />
-      <div className="flex items-center gap-2 md:gap-6">
+      <div className="mb-3 md:mb-4">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Artikel", href: "/blog/semua" },
+            {
+              label: post?.category?.name || "Detail",
+              href: post?.category?.slug
+                ? `/blog/kategori/${post.category.slug}`
+                : "/blog/semua",
+            },
+            { label: post?.title || "Detail", href: `/blog/detail/${slug}` },
+          ]}
+        />
+      </div>
+      <div className="mt-2 md:mt-3 flex items-center gap-2 md:gap-6">
         <Link
           itemProp="kategori"
           href={`/blog/kategori/${post?.category?.slug}`}

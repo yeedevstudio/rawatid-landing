@@ -6,8 +6,9 @@ import { Search, Pill, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 40;
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function clamp(n, min, max) {
@@ -70,10 +71,19 @@ export default function InformasiObatPage() {
             "";
           const id = row?.id ?? row?._id ?? `${name}-${idx}`;
           const apiSlug = row?.slug ?? row?.Slug ?? null;
+          const ing_code =
+            row?.ing_code ??
+            row?.ingCode ??
+            row?.ingredient_code ??
+            row?.ingredientCode ??
+            row?.code ??
+            row?.Code ??
+            null;
           return {
             id: String(id),
             name: String(name),
             slug: String(apiSlug || toSlug(name) || id),
+            ing_code: ing_code ? String(ing_code) : "",
             raw: row,
           };
         });
@@ -197,7 +207,22 @@ export default function InformasiObatPage() {
           </div>
 
           {isLoading ? (
-            <div className="mt-6 text-sm text-gray-600">Memuat data...</div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border border-black/5 bg-white shadow-sm"
+                >
+                  <div className="p-4 flex gap-3">
+                    <Skeleton className="w-10 h-10 rounded-lg" />
+                    <div className="min-w-0 flex-1">
+                      <Skeleton className="h-5 w-4/5" />
+                      <Skeleton className="h-4 w-24 mt-2" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : error ? (
             <div className="mt-6 text-sm text-red-600">{error}</div>
           ) : null}
@@ -211,7 +236,12 @@ export default function InformasiObatPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold text-gray-900 truncate">{o.name}</div>
-                    <Link href={`/informasi-kesehatan/informasi-obat/${o.slug}`} className="inline-flex items-center gap-1 text-green font-semibold text-sm mt-1 hover:text-greenHover transition-colors">
+                    <Link
+                      href={`/informasi-kesehatan/informasi-obat/${o.slug}${
+                        o.ing_code ? `?ing_code=${encodeURIComponent(o.ing_code)}` : ""
+                      }`}
+                      className="inline-flex items-center gap-1 text-green font-semibold text-sm mt-1 hover:text-greenHover transition-colors"
+                    >
                       Lihat Detail <ChevronRight className="w-4 h-4" />
                     </Link>
                   </div>
