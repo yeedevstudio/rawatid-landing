@@ -6,47 +6,28 @@ export const metadata = {
   title: " Blog Teknologi dan Kesehatan dari Rawat.ID",
   description:
     "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, transformasi layanan medis, serta solusi efektif untuk tenaga kesehatan, fasilitas kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
-  keywords: [
-    "Rawat.ID",
-    "artikel",
-    "beranda",
-    "Kesehatan",
-    "Informasi Umum",
-    "Berita",
-    "Teknologi",
-    "Rekam Medis",
-    "Rawat",
-    "Tips tenaga kesehatan",
-    "Blog Kesehatan",
-    "Inovasi teknologi kesehatan",
-    "blog rawat.id",
-    "blog kesehatan",
-  ],
+  keywords: ["Rawat.ID", "artikel", "beranda", "Kesehatan", "Informasi Umum", "Berita", "Teknologi", "Rekam Medis", "Rawat", "Tips tenaga kesehatan", "Blog Kesehatan", "Inovasi teknologi kesehatan", "blog rawat.id", "blog kesehatan"],
   alternates: {
     canonical: "https://www.rawat.id/blog/semua",
   },
 };
 
 export default async function Page({ params, searchParams }) {
-  const slug = params?.slug || "";
+  const resolvedParams = params && typeof params.then === "function" ? await params : params;
+  const rawSlug = resolvedParams?.slug || "";
+  const slug = typeof rawSlug === "string" ? rawSlug : "";
 
   if (!process.env.API_URL) {
     throw new Error("API URL is not defined in environment variables.");
   }
 
-  // Next.js terbaru bisa mengirim `searchParams` sebagai Promise.
-  const resolvedSearchParams =
-    searchParams && typeof searchParams.then === "function"
-      ? await searchParams
-      : searchParams;
+  const resolvedSearchParams = searchParams && typeof searchParams.then === "function" ? await searchParams : searchParams;
   const currentPage = parseInt(resolvedSearchParams?.page) || 1;
   const pageSize = 9;
 
   try {
-    const res = await fetch(
-      `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&filters[title][$containsi]=${slug}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`,
-      { cache: "no-store" }
-    );
+    const encodedSlug = encodeURIComponent(slug);
+    const res = await fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&filters[title][$containsi]=${encodedSlug}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`, { cache: "no-store" });
 
     if (!res.ok) throw new Error("Failed to fetch data");
 

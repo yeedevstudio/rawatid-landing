@@ -34,17 +34,19 @@ export default function PageBySearch({ data, pagination, slug }) {
 
   return (
     <ContainerBlog>
-      <Breadcrumbs
-        items={[
-          { label: "Beranda", href: "/" },
-          { label: "Artikel", href: "/blog/semua" },
-          {
-            label: `Cari: ${decodeURIComponent(slug)}`,
-            href: `/blog/cari/${slug}`,
-          },
-        ]}
-      />
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize  md:gap-4">
+      <div className="mb-4 md:mb-6">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Artikel", href: "/blog/semua" },
+            {
+              label: `Cari: ${decodeURIComponent(slug)}`,
+              href: `/blog/cari/${slug}`,
+            },
+          ]}
+        />
+      </div>
+      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize md:gap-4">
         Pencarian Berdasarkan :
         <span className="ml-2 font-semibold break-all">"{decodeURIComponent(slug)}"</span>
       </h1>

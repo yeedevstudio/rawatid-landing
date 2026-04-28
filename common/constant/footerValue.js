@@ -2,12 +2,25 @@ export const footerColumns = [
   {
     title: "Navigasi",
     links: [
-      { title: "Informasi Obat", url: "/fitur" },
-      { title: "Informasi RS dan Klinik", url: "/fitur" },
-      { title: "Kalkulator BMI", url: "/fitur" },
-      { title: "Pengingat Minum Obat", url: "/fitur" },
-      { title: "Personal Health Record", url: "/fitur" },
-      { title: "Rencana Diet", url: "/fitur" },
+      { title: "Informasi Obat", url: "/informasi-kesehatan/informasi-obat" },
+      {
+        title: "Informasi Menu Diet",
+        url: "/informasi-kesehatan/informasi-menu-diet",
+      },
+      {
+        title: "Informasi RS dan Klinik",
+        url: "/informasi-kesehatan/informasi-rs-dan-klinik",
+      },
+      { title: "Kalkulator BMI", url: "/alat-kesehatan/kalkulator-bmi" },
+      {
+        title: "Pengingat Minum Obat",
+        url: "/alat-kesehatan/pengingat-minum-obat",
+      },
+      {
+        title: "Personal Health Record",
+        url: "/alat-kesehatan/personal-health-record",
+      },
+      { title: "Rencana Diet", url: "/alat-kesehatan/rencana-diet" },
     ],
   },
   {

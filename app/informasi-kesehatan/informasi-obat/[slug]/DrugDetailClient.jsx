@@ -234,9 +234,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
     if (arr.length) return arr;
 
     // Fallback dari field yang memang ada di API
-    const fallback = [data?.drug_class_name, data?.drug_category_name]
-      .map((v) => String(v || "").trim())
-      .filter(Boolean);
+    const fallback = [data?.drug_class_name, data?.drug_category_name].map((v) => String(v || "").trim()).filter(Boolean);
     return Array.from(new Set(fallback));
   }, [data]);
 
@@ -246,7 +244,8 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
 
   const sideEffects = useMemo(() => {
     const raw = data?.drug_side_effects || data?.drugSideEffects || data?.side_effects || data?.sideEffects || drugs?.[0]?.drug_side_effects || drugs?.[0]?.drugSideEffects || "";
-    return splitTextToBullets(raw);
+    // Selalu render sebagai paragraf biasa (tanpa bullet list).
+    return String(raw || "").trim();
   }, [data, drugs]);
 
   if (!loading && (error || !data)) {
@@ -297,152 +296,152 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <article className="lg:col-span-9">
-                {medicinalUses ? (
-                  <section>
-                    <div className="text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">{medicinalUses}</div>
-                  </section>
-                ) : null}
-
                 <div className={`${medicinalUses ? "mt-10" : ""} space-y-10`}>
-                {brandNames ? (
-                  <div className="text-sm md:text-base text-gray-800">
-                    <span className="font-semibold">Merek dagang {data?.name}:</span> <span className="text-gray-700">{brandNames}</span>
-                  </div>
-                ) : null}
-
-                <section>
-                  <h2 className="text-base md:text-lg font-semibold text-gray-900">Apa itu {data?.name}</h2>
-                  <div className="mt-3 border-t border-gray-200" />
-                  <div className="mt-4 w-full overflow-x-auto">
-                    <table className="w-full text-sm md:text-base">
-                      <tbody>
-                        {[
-                          ["Golongan", data?.drug_class_name || data?.drug_class || data?.class || "-"],
-                          ["Kategori", data?.drug_category_name || data?.drugCategoryName || data?.category || data?.drug_category || "-"],
-                          ["Manfaat", data?.medicinal_uses || data?.benefits || "-"],
-                          ["Dikonsumsi oleh", data?.consumed_by || data?.consumedBy || "-"],
-                          [`${data?.name} untuk Ibu hamil`, data?.pregnancy || data?.pregnancy_category || "-"],
-                          [`${data?.name} untuk Ibu menyusui`, data?.breastfeeding || data?.breastfeeding_category || "-"],
-                          ["Bentuk obat", data?.dosage_form || data?.dosageForm || drugs?.[0]?.form_name || drugs?.[0]?.dosage_form || drugs?.[0]?.form || "-"],
-                        ].map(([k, v]) => (
-                          <tr key={k} className="align-top border-b border-gray-200">
-                            <td className="py-3 pr-6 text-gray-500 w-[260px]">{k}</td>
-                            <td className="py-3 text-gray-800 whitespace-pre-line">{v}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-
-                {warnings?.length ? (
-                  <section>
-                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Peringatan sebelum Menggunakan {data?.name}</h2>
-                    <p className="mt-3 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
-                      {data?.warning_intro || data?.warningIntro || `${data?.name} tidak boleh digunakan sembarangan dan harus sesuai dengan resep dokter. Beberapa hal yang perlu diperhatikan sebelum mengonsumsi obat ini adalah:`}
-                    </p>
-                    <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
-                      {warnings.map((it, idx) => (
-                        <li key={idx} className="leading-relaxed">
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
-
-                {sideEffects?.length ? (
-                  <section>
-                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Efek Samping {data?.name}</h2>
-                    <div className="mt-3 border-t border-gray-200" />
-                    <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
-                      {sideEffects.map((it, idx) => (
-                        <li key={idx} className="leading-relaxed">
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
-
-                {dosageRaw ? (
-                  <section>
-                    <h2 className="text-lg md:text-xl font-semibold text-gray-900">Dosis dan Aturan Pakai {data?.name}</h2>
-                    <div className="mt-3 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
-                      {data?.dosage_intro || data?.dosageIntro || data?.dosage_description || data?.dosageDescription
-                        ? String(data?.dosage_intro || data?.dosageIntro || data?.dosage_description || data?.dosageDescription)
-                        : dosageContent.paragraphs.join("\n\n")}
+                  {brandNames ? (
+                    <div className="text-sm md:text-base text-gray-800">
+                      <span className="font-semibold">Merek dagang {data?.name}:</span> <span className="text-gray-700">{brandNames}</span>
                     </div>
-                    {dosageContent.bullets?.length ? (
-                      <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
-                        {dosageContent.bullets.map((it, idx) => (
-                          <li key={idx} className="leading-relaxed">
-                            {it}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </section>
-                ) : null}
+                  ) : null}
 
-                {drugs?.length ? (
                   <section>
-                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Daftar Produk Obat</h2>
-                    <div className="mt-4 border-t border-gray-200" />
-                    <div className="mt-4 w-full overflow-x-auto">
-                      <table className="min-w-[900px] w-full text-sm md:text-base">
-                        <thead>
-                          <tr className="text-gray-600 border-b border-gray-200">
-                            <th className="text-left font-semibold py-3 pr-4">Nama Produk</th>
-                            <th className="text-left font-semibold py-3 pr-4">Produsen</th>
-                            <th className="text-left font-semibold py-3 pr-4">Zat Aktif</th>
-                            <th className="text-left font-semibold py-3 pr-4">Bentuk Sediaan</th>
-                            <th className="text-left font-semibold py-3 pr-4">Jumlah Kandungan</th>
-                          </tr>
-                        </thead>
+                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Apa itu {data?.name}</h2>
+                    <div className="mt-3 border-t border-gray-200" />
+                    {data?.medicinal_uses || data?.benefits ? (
+                      <div className="mt-4 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
+                        {data?.medicinal_uses || data?.benefits}
+                      </div>
+                    ) : null}
+
+                    <div className="mt-5 w-full overflow-x-auto">
+                      <table className="w-full text-sm md:text-base">
                         <tbody>
-                          {drugs.map((d, idx) => (
-                            <tr key={d?.id || d?._id || idx} className="text-gray-800 border-b border-gray-200 align-top">
-                              <td className="py-5 pr-4 whitespace-nowrap font-medium">{d?.product_name || d?.name || d?.product || "-"}</td>
-                              <td className="py-5 pr-4 font-medium">{d?.manufacturer || d?.producer || d?.company || "-"}</td>
-                              <td className="py-5 pr-4 text-gray-700">{d?.ing_name || d?.active_ingredient || d?.active || data?.name || "-"}</td>
-                              <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{d?.form_name || d?.dosage_form || d?.form || "-"}</td>
-                              <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{formatDrugStrength(d)}</td>
+                          {[
+                            ["Golongan", data?.drug_class_name || data?.drug_class || data?.class || "-"],
+                            ["Kategori", data?.drug_category_name || data?.drugCategoryName || data?.category || data?.drug_category || "-"],
+                            ["Bentuk obat", data?.dosage_form || data?.dosageForm || drugs?.[0]?.form_name || drugs?.[0]?.dosage_form || drugs?.[0]?.form || "-"],
+                          ].map(([k, v]) => (
+                            <tr key={k} className="align-top border-b border-gray-200">
+                              <td className="py-3 pr-6 text-gray-500 w-[260px]">{k}</td>
+                              <td className="py-3 text-gray-800 whitespace-pre-line">{v}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </div>
                   </section>
-                ) : null}
 
-                {tags?.length ? (
-                  <section>
-                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Tags</h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {tags.map((t, idx) => (
-                        <span key={`${t}-${idx}`} className="px-3 py-1 rounded-md border border-gray-200 text-sm text-gray-700 bg-white">
-                          {String(t?.name || t)}
-                        </span>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {data?.referenced ? (
-                  <section>
-                    <h2 className="text-base md:text-lg font-semibold text-gray-900">Referensi</h2>
-                    <div className="mt-3 text-sm md:text-base text-gray-700 italic space-y-1 whitespace-pre-line">
-                      {String(data.referenced)
-                        .split(/\r?\n+/)
-                        .map((s) => s.trim())
-                        .filter(Boolean)
-                        .map((line, idx) => (
-                          <div key={idx}>{line}</div>
+                  {warnings?.length ? (
+                    <section>
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Peringatan sebelum Menggunakan {data?.name}</h2>
+                      <p className="mt-3 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
+                        {data?.warning_intro || data?.warningIntro || `${data?.name} tidak boleh digunakan sembarangan dan harus sesuai dengan resep dokter. Beberapa hal yang perlu diperhatikan sebelum mengonsumsi obat ini adalah:`}
+                      </p>
+                      <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
+                        {warnings.map((it, idx) => (
+                          <li key={idx} className="leading-relaxed">
+                            {it}
+                          </li>
                         ))}
-                    </div>
-                  </section>
-                ) : null}
+                      </ul>
+                    </section>
+                  ) : null}
+
+                  {sideEffects ? (
+                    <section>
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Efek Samping {data?.name}</h2>
+                      <div className="mt-3 border-t border-gray-200" />
+                      <div className="mt-5 text-sm md:text-base text-gray-800 whitespace-pre-line leading-relaxed">
+                        {sideEffects}
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {dosageRaw ? (
+                    <section>
+                      <h2 className="text-lg md:text-xl font-semibold text-gray-900">Dosis dan Aturan Pakai {data?.name}</h2>
+                      <div className="mt-3 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
+                        {data?.dosage_intro || data?.dosageIntro || data?.dosage_description || data?.dosageDescription
+                          ? String(data?.dosage_intro || data?.dosageIntro || data?.dosage_description || data?.dosageDescription)
+                          : dosageContent.paragraphs.join("\n\n")}
+                      </div>
+                      {dosageContent.bullets?.length ? (
+                        <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
+                          {dosageContent.bullets.map((it, idx) => (
+                            <li key={idx} className="leading-relaxed">
+                              {it}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </section>
+                  ) : null}
+
+                  {data?.overdose ? (
+                    <section>
+                      <h2 className="text-lg md:text-xl font-semibold text-gray-900">Overdosis {data?.name}</h2>
+                      <div className="mt-3 border-t border-gray-200" />
+                      <div className="mt-4 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
+                        {String(data.overdose)}
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {drugs?.length ? (
+                    <section>
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Daftar Produk Obat</h2>
+                      <div className="mt-4 border-t border-gray-200" />
+                      <div className="mt-4 w-full overflow-x-auto">
+                        <table className="min-w-[900px] w-full text-sm md:text-base">
+                          <thead>
+                            <tr className="text-gray-600 border-b border-gray-200">
+                              <th className="text-left font-semibold py-3 pr-4">Nama Produk</th>
+                              <th className="text-left font-semibold py-3 pr-4">Zat Aktif</th>
+                              <th className="text-left font-semibold py-3 pr-4">Bentuk Sediaan</th>
+                              <th className="text-left font-semibold py-3 pr-4">Jumlah Kandungan</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {drugs.map((d, idx) => (
+                              <tr key={d?.id || d?._id || idx} className="text-gray-800 border-b border-gray-200 align-top">
+                                <td className="py-5 pr-4 whitespace-nowrap font-medium">{d?.product_name || d?.name || d?.product || "-"}</td>
+                                <td className="py-5 pr-4 text-gray-700">{d?.ing_name || d?.active_ingredient || d?.active || data?.name || "-"}</td>
+                                <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{d?.form_name || d?.dosage_form || d?.form || "-"}</td>
+                                <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{formatDrugStrength(d)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {tags?.length ? (
+                    <section>
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Tags</h2>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {tags.map((t, idx) => (
+                          <span key={`${t}-${idx}`} className="px-3 py-1 rounded-md border border-gray-200 text-sm text-gray-700 bg-white">
+                            {String(t?.name || t)}
+                          </span>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {data?.referenced ? (
+                    <section>
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Referensi</h2>
+                      <div className="mt-3 text-sm md:text-base text-gray-700 italic space-y-1 whitespace-pre-line">
+                        {String(data.referenced)
+                          .split(/\r?\n+/)
+                          .map((s) => s.trim())
+                          .filter(Boolean)
+                          .map((line, idx) => (
+                            <div key={idx}>{line}</div>
+                          ))}
+                      </div>
+                    </section>
+                  ) : null}
                 </div>
               </article>
 
@@ -451,12 +450,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                   <div className="rounded-2xl bg-white p-5 shadow-sm">
                     <div className="text-sm font-semibold text-green">Bagikan artikel</div>
                     <div className="mt-4 flex items-center gap-4">
-                      <button
-                        type="button"
-                        className="text-green hover:opacity-80 transition-opacity"
-                        aria-label="Bagikan ke WhatsApp"
-                        onClick={() => openShare(`https://wa.me/?text=${encodeURIComponent(shareUrl || "")}`)}
-                      >
+                      <button type="button" className="text-green hover:opacity-80 transition-opacity" aria-label="Bagikan ke WhatsApp" onClick={() => openShare(`https://wa.me/?text=${encodeURIComponent(shareUrl || "")}`)}>
                         <IconBrandWhatsapp className="h-8 w-8" />
                       </button>
                       <button

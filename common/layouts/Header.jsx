@@ -17,7 +17,15 @@ export default function Header() {
     setSheetOpen(false);
   };
 
-  const blogNavLinkClassName = (isActive) => (isActive ? "text-sm md:text-lg text-green font-semibold transition-all duration-300 ease-in-out" : "text-sm md:text-lg text-gray-700 hover:text-green transition-all duration-300 ease-in-out");
+  const blogNavLinkClassName = (isActive) =>
+    isActive
+      ? "text-sm md:text-lg text-green font-semibold transition-all duration-300 ease-in-out"
+      : "text-sm md:text-lg text-gray-700 hover:text-green transition-all duration-300 ease-in-out";
+
+  const subNavLinkClassName = (isActive) =>
+    isActive
+      ? "flex items-center text-sm md:text-lg text-green font-semibold border-b-2 border-green px-1 h-[85px]"
+      : "flex items-center text-sm md:text-lg text-gray-800 hover:text-green transition-all px-1 h-[85px] border-b-2 border-transparent";
 
   const activeBlogGroup = blogSubnavGroups?.find((g) => g.matchPrefixes?.some((p) => router.startsWith(p))) || null;
 
@@ -38,7 +46,7 @@ export default function Header() {
 
   return (
     <div className="w-full">
-      <header className="bg-white w-full h-[3.5rem] md:h-[5rem] px-5 md:px-12 flex items-center justify-between border-b border-black/5">
+      <header className="bg-white w-full h-[85px] px-5 md:px-12 flex items-center justify-between border-b border-black/5">
         <Link href="/" title="beranda">
           <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
         </Link>
@@ -99,16 +107,16 @@ export default function Header() {
       </header>
 
       {activeBlogGroup ? (
-        <div className="w-full bg-[#EBF6F9] border-b border-black/5">
-          <div className="px-5 md:px-12 flex items-center gap-6">
+        <div className="w-full bg-[#EBF6F9] border-b border-black/5 h-[85px]">
+          <div className="px-5 md:px-12 flex items-center gap-6 h-full">
             <div className="hidden md:flex items-center gap-3 min-w-[16rem]">
-              <Link href={activeBlogGroup.groupUrl} className="text-gray-800 font-semibold hover:text-green transition-all">
+              <Link href={activeBlogGroup.groupUrl} className="text-sm md:text-lg text-gray-800 font-semibold hover:text-green transition-all">
                 {activeBlogGroup.groupTitle}
               </Link>
               <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
               {activeBlogSection?.sectionTitle ? (
                 <>
-                  <Link href={activeBlogSection.sectionUrl} className="text-gray-800 font-semibold hover:text-green transition-all">
+                  <Link href={activeBlogSection.sectionUrl} className="text-sm md:text-lg text-gray-800 font-semibold hover:text-green transition-all">
                     {activeBlogSection.sectionTitle}
                   </Link>
                   <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
@@ -122,9 +130,7 @@ export default function Header() {
                 return (
                   <Link key={it.url} href={it.url}>
                     <div
-                      className={
-                        isActive ? "flex items-center text-green font-semibold border-b-2 border-green px-1 py-3 md:py-4" : "flex items-center text-gray-800 hover:text-green transition-all px-1 py-3 md:py-4 border-b-2 border-transparent"
-                      }
+                      className={subNavLinkClassName(isActive)}
                     >
                       {it.title}
                     </div>
