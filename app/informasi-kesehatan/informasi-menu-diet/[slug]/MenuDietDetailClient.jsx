@@ -14,6 +14,7 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import Breadcrumbs from "@/common/components/Breadcrumbs";
 
 function toNumber(v) {
   const n = Number(v);
@@ -28,6 +29,11 @@ function fmtGram(v) {
 function fmtMg(v) {
   const n = toNumber(v);
   return n == null ? "-" : `${n}mg`;
+}
+
+function fmtPlain(v) {
+  const n = toNumber(v);
+  return n == null ? "-" : `${n}`;
 }
 
 function normalizeDetail(json) {
@@ -52,6 +58,31 @@ export default function MenuDietDetailClient({ slug }) {
   const [data, setData] = useState(null);
   const [copied, setCopied] = useState(false);
   const [otherMenus, setOtherMenus] = useState([]);
+  const [activeImage, setActiveImage] = useState(0);
+
+  const getMenuImageSrc = (menu, index = 0) => {
+    const imgs = Array.isArray(menu?.images) ? menu.images : [];
+    const item = imgs[index] || imgs[0] || null;
+    const path = item?.file_path;
+    if (!path) return "/images/dummy-nutrion.png";
+    if (typeof path !== "string") return "/images/dummy-nutrion.png";
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    return new URL(path, "https://cm-api.rawat.id").toString();
+  };
+
+  const formatNumberLike = (value) => {
+    if (value === null || value === undefined) return "-";
+    const s = String(value).trim();
+    if (!s) return "-";
+    if (s.includes(".")) {
+      const out = s
+        .replace(/(\.\d*?[1-9])0+$/g, "$1")
+        .replace(/\.0+$/g, "")
+        .replace(/\.$/g, "");
+      return out || "-";
+    }
+    return s;
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -64,6 +95,7 @@ export default function MenuDietDetailClient({ slug }) {
         if (!res.ok) throw new Error(j?.error || "Gagal memuat detail menu");
         if (cancelled) return;
         setData(normalizeDetail(j));
+        setActiveImage(0);
       } catch (e) {
         if (!cancelled) setError(e?.message || "Terjadi kesalahan");
       } finally {
@@ -103,6 +135,8 @@ export default function MenuDietDetailClient({ slug }) {
   const title = data?.menu_name || slug;
   const kcal = toNumber(data?.calorie);
   const portion = toNumber(data?.portion);
+  const images = Array.isArray(data?.images) ? data.images : [];
+  const heroImg = getMenuImageSrc(data, activeImage);
 
   const jenisMakanan = String(data?.menu_type?.name || data?.menu_type || "-");
   const kategori = String(data?.menu_category?.name || data?.menu_category || "-");
@@ -142,11 +176,40 @@ export default function MenuDietDetailClient({ slug }) {
 
   return (
     <div className="space-y-6">
+      <div className="pt-2">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Informasi Kesehatan", href: "/informasi-kesehatan/informasi-obat" },
+            { label: "Informasi Menu Diet", href: "/informasi-kesehatan/informasi-menu-diet" },
+            { label: title, href: `/informasi-kesehatan/informasi-menu-diet/${slug}` },
+          ]}
+        />
+      </div>
       <section className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
         <div className="md:col-span-6">
           <div className="relative w-full overflow-hidden rounded-2xl aspect-[4/3] bg-gray-100">
-            <Image src="/images/dummy-nutrion.png" alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+            <Image src={heroImg} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
           </div>
+          {images.length > 1 ? (
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+              {images.map((img, idx) => {
+                const src = getMenuImageSrc(data, idx);
+                const isActive = idx === activeImage;
+                return (
+                  <button
+                    key={img?.id ?? idx}
+                    type="button"
+                    onClick={() => setActiveImage(idx)}
+                    className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border ${isActive ? "border-green" : "border-gray-200"} bg-gray-100`}
+                    aria-label={`Gambar ${idx + 1}`}
+                  >
+                    <Image src={src} alt={`${title} ${idx + 1}`} fill className="object-cover" sizes="64px" />
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
         </div>
 
         <div className="md:col-span-6">
@@ -165,7 +228,7 @@ export default function MenuDietDetailClient({ slug }) {
           )}
 
           <div className="mt-4 flex items-end gap-2 text-gray-900">
-            <div className="text-4xl md:text-5xl font-semibold leading-none">{kcal ?? data?.calorie ?? "-"}</div>
+            <div className="text-4xl md:text-5xl font-semibold leading-none">{kcal ?? formatNumberLike(data?.calorie)}</div>
             <div className="pb-1 text-lg md:text-xl text-gray-700">kkal/porsi</div>
           </div>
 
@@ -211,16 +274,41 @@ export default function MenuDietDetailClient({ slug }) {
         <h2 className="text-base md:text-lg font-semibold text-green">Informasi Nutrisi</h2>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-10 text-sm md:text-base">
           {[
+            // Makro
+            ["Kalori", `${formatNumberLike(data?.calorie)} kkal`],
+            ["Porsi", portion == null ? "-" : `${portion}g`],
             ["Karbohidrat", fmtGram(data?.total_carbohydrates)],
             ["Protein", fmtGram(data?.protein)],
             ["Total Lemak", fmtGram(data?.total_fat)],
+            ["Lemak Jenuh", fmtGram(data?.saturated_fat)],
+            ["Lemak Trans", fmtGram(data?.trans_fat)],
             ["Total Gula", fmtGram(data?.total_sugar)],
             ["Serat", fmtGram(data?.total_fiber)],
+
+            // Mineral & lain-lain
             ["Kolesterol", fmtMg(data?.cholesterol)],
             ["Sodium", fmtMg(data?.sodium)],
+            ["Kalsium", fmtMg(data?.calcium)],
+            ["Zat Besi", fmtMg(data?.iron)],
+            ["Kalium", fmtMg(data?.potassium)],
+
+            // Vitamin
             ["Vitamin A", fmtMg(data?.vit_a)],
             ["Vitamin C", fmtMg(data?.vit_c)],
-          ].map(([k, v]) => (
+            ["Vitamin B1", fmtMg(data?.vit_b1)],
+            ["Vitamin B2", fmtMg(data?.vit_b2)],
+            ["Vitamin B3", fmtMg(data?.vit_b3)],
+            ["Vitamin B5", fmtMg(data?.vit_b5)],
+            ["Vitamin B6", fmtMg(data?.vit_b6)],
+            ["Vitamin B7", fmtMg(data?.vit_b7)],
+            ["Vitamin B9", fmtMg(data?.vit_b9)],
+            ["Vitamin B12", fmtMg(data?.vit_b12)],
+            ["Vitamin D", fmtMg(data?.vit_d)],
+            ["Vitamin E", fmtMg(data?.vit_e)],
+            ["Vitamin K", fmtMg(data?.vit_k)],
+          ]
+            .filter(([_, v]) => v !== "-" && v !== "- kkal" && v !== "-g" && v !== "-mg")
+            .map(([k, v]) => (
             <div key={k} className="flex items-center gap-3">
               <span className="w-7 h-7 rounded-lg bg-[#BBE0DE] flex items-center justify-center text-[#038F7A] shrink-0">
                 <IconCheck className="w-5 h-5" stroke={3} />
@@ -327,11 +415,11 @@ export default function MenuDietDetailClient({ slug }) {
                   className="w-[150px] rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow transition-shadow"
                 >
                   <div className="relative h-[90px] bg-gray-100">
-                    <Image src="/images/dummy-nutrion.png" alt={m?.menu_name || m.slug} fill className="object-cover" sizes="150px" />
+                    <Image src={getMenuImageSrc(m, 0)} alt={m?.menu_name || m.slug} fill className="object-cover" sizes="150px" />
                   </div>
                   <div className="p-2 text-center">
                     <div className="text-sm font-semibold text-gray-900 truncate">{m?.menu_name || "-"}</div>
-                    <div className="mt-0.5 text-xs text-gray-500">{toNumber(m?.calorie) ?? m?.calorie ?? "-"}kkal</div>
+                    <div className="mt-0.5 text-xs text-gray-500">{formatNumberLike(m?.calorie)} kkal</div>
                   </div>
                 </Link>
               ))}

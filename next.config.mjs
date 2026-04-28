@@ -42,6 +42,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "blog.rawat.id",
       },
+      {
+        protocol: "https",
+        hostname: "cm-api.rawat.id",
+      },
     ],
   },
 };

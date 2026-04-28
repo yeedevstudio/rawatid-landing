@@ -12,6 +12,7 @@ import ContainerBlog from "@/common/components/ContainerBlog";
 import BlogCategory from "./BlogCategory";
 import { toast } from "sonner";
 import { startRouteLoading } from "@/common/utils/routeLoading";
+import { CardArticleAll } from "@/common/components/CardArticle";
 
 export default function BlogPage({ data, categories }) {
   const router = useRouter();
@@ -51,14 +52,17 @@ export default function BlogPage({ data, categories }) {
       });
     } else {
       startRouteLoading();
-      router.push(`/blog/cari/${searchQuery}`);
+      router.push(`/blog/cari/${encodeURIComponent(searchQuery)}`);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && searchQuery.trim() !== "") {
+    const liveValue = e?.currentTarget?.value ?? searchQuery;
+    const liveQuery = typeof liveValue === "string" ? liveValue.trim() : "";
+
+    if (e.key === "Enter" && liveQuery !== "") {
       startRouteLoading();
-      router.push(`/blog/cari/${encodeURIComponent(searchQuery)}`);
+      router.push(`/blog/cari/${encodeURIComponent(liveQuery)}`);
     }
     if (e.key === "ArrowRight" && suggestion) {
       setSearchQuery(searchQuery + suggestion);
@@ -83,6 +87,8 @@ export default function BlogPage({ data, categories }) {
   const hasData = categories.some((category) =>
     data?.some((item) => item?.category?.slug === category.slug)
   );
+
+  const isSearching = searchQuery.trim().length > 0;
 
   return (
     <ContainerBlog>
@@ -109,11 +115,12 @@ export default function BlogPage({ data, categories }) {
           <ul className="absolute w-full bg-white border rounded-md shadow-md z-50 top-12">
             {filteredResults?.slice(0, 5)?.map((article) => (
               <li
-                key={article.id}
+                key={article?.id ?? article?.slug ?? article?.title}
                 className="px-4 py-2 hover:bg-gray-200 cursor-pointer border-b text-xs/8 md:text-sm/8 lg:text-base/8"
-                onClick={() =>
-                  router.push(`/blog/cari/${encodeURIComponent(article.title)}`)
-                }
+                onClick={() => {
+                  startRouteLoading();
+                  router.push(`/blog/detail/${article?.slug}`);
+                }}
               >
                 {getHighlightedText(article.title, searchQuery)}
               </li>
@@ -122,30 +129,68 @@ export default function BlogPage({ data, categories }) {
         )}
       </div>
 
-      <>
-        <BlogHighlight data={data} />
-        <BlogAll data={data} />
-        <div>
-          {hasData &&
-            categories.map((category) => {
-              const filteredData = data?.filter(
-                (item) => item?.category?.slug === category.slug
-              );
+      {isSearching ? (
+        <section className="mx-5 md:mx-20 -mt-10 mb-10">
+          <h2 className="text-sm md:text-lg lg:text-xl text-green font-medium">
+            Hasil pencarian:{" "}
+            <span className="font-semibold break-all">
+              "{searchQuery.trim()}"
+            </span>
+          </h2>
 
-              if (!filteredData || filteredData.length === 0) {
-                return null;
-              }
+          {filteredResults.length === 0 ? (
+            <p className="mt-4 text-sm md:text-base text-neutral-600">
+              Tidak ada artikel yang cocok.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
+              {filteredResults.map((article, index) => (
+                <div key={article?.slug || index} className={article?.span}>
+                  <CardArticleAll
+                    src={article?.thumbnail?.url}
+                    alt={article?.thumbnail?.url}
+                    category={article?.category?.name}
+                    height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
+                    title={article?.title}
+                    index={index}
+                    selected={false}
+                    onSelect={() => {
+                      startRouteLoading();
+                      router.push(`/blog/detail/${article?.slug}`);
+                    }}
+                    headline={article?.headline}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      ) : (
+        <>
+          <BlogHighlight data={data} />
+          <BlogAll data={data} />
+          <div>
+            {hasData &&
+              categories.map((category) => {
+                const filteredData = data?.filter(
+                  (item) => item?.category?.slug === category.slug
+                );
 
-              return (
-                <BlogCategory
-                  key={category.id}
-                  data={filteredData}
-                  category={category}
-                />
-              );
-            })}
-        </div>
-      </>
+                if (!filteredData || filteredData.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <BlogCategory
+                    key={category.id}
+                    data={filteredData}
+                    category={category}
+                  />
+                );
+              })}
+          </div>
+        </>
+      )}
     </ContainerBlog>
   );
 }

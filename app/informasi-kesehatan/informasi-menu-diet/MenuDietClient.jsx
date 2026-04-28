@@ -15,10 +15,41 @@ export default function MenuDietClient() {
   const [meta, setMeta] = useState({ total: 0, perPage: 12, totalPages: 1 });
 
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [menuType, setMenuType] = useState("");
-  const [basicIngredient, setBasicIngredient] = useState("");
+  const [category, setCategory] = useState(""); // legacy (tidak dipakai)
+  const [menuTypeCode, setMenuTypeCode] = useState("");
+  const [menuCatCode, setMenuCatCode] = useState("");
+  const [basicIngredientCode, setBasicIngredientCode] = useState("");
+
+  const [menuTypes, setMenuTypes] = useState([]);
+  const [menuCategories, setMenuCategories] = useState([]);
+  const [basicIngredients, setBasicIngredients] = useState([]);
   const page = Math.max(1, Number.parseInt(sp.get("page") || "1", 10) || 1);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      try {
+        const [tRes, cRes, bRes] = await Promise.all([fetch("/menu-types/public/all", { cache: "no-store" }), fetch("/menu-categories/public/all", { cache: "no-store" }), fetch("/basic-ingredients/public /all", { cache: "no-store" })]);
+
+        const [tJson, cJson, bJson] = await Promise.all([tRes.json().catch(() => null), cRes.json().catch(() => null), bRes.json().catch(() => null)]);
+
+        if (cancelled) return;
+        setMenuTypes(Array.isArray(tJson?.data) ? tJson.data : Array.isArray(tJson) ? tJson : []);
+        setMenuCategories(Array.isArray(cJson?.data) ? cJson.data : Array.isArray(cJson) ? cJson : []);
+        setBasicIngredients(Array.isArray(bJson?.data) ? bJson.data : Array.isArray(bJson) ? bJson : []);
+      } catch {
+        if (!cancelled) {
+          setMenuTypes([]);
+          setMenuCategories([]);
+          setBasicIngredients([]);
+        }
+      }
+    }
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,9 +62,9 @@ export default function MenuDietClient() {
         qs.set("page", String(page));
         qs.set("perPage", String(meta.perPage));
         if (search) qs.set("search", search);
-        if (category) qs.set("category", category);
-        if (menuType) qs.set("menu_type", menuType);
-        if (basicIngredient) qs.set("basic_ingredient", basicIngredient);
+        if (menuTypeCode) qs.set("menu_type_code", menuTypeCode);
+        if (menuCatCode) qs.set("menu_cat_code", menuCatCode);
+        if (basicIngredientCode) qs.set("basic_ingredient_code", basicIngredientCode);
         qs.set("_", String(Date.now()));
 
         const res = await fetch(`/api/menu-nutritions/public?${qs.toString()}`, { cache: "no-store" });
@@ -61,7 +92,7 @@ export default function MenuDietClient() {
     return () => {
       cancelled = true;
     };
-  }, [page, meta.perPage, search, category, menuType, basicIngredient]);
+  }, [page, meta.perPage, search, menuTypeCode, menuCatCode, basicIngredientCode]);
 
   // reset ke page 1 saat filter berubah
   useEffect(() => {
@@ -69,39 +100,51 @@ export default function MenuDietClient() {
     params.set("page", "1");
     router.replace(`?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, category, menuType, basicIngredient]);
+  }, [search, menuTypeCode, menuCatCode, basicIngredientCode]);
 
-  const categories = useMemo(() => {
-    const set = new Set();
-    items.forEach((it) => {
-      const name = it?.menu_category?.name || it?.menu_category || "";
-      if (name) set.add(String(name));
-    });
-    return Array.from(set).sort();
-  }, [items]);
+  const normalizeOptions = (arr) => {
+    const raw = Array.isArray(arr) ? arr : [];
+    return raw
+      .map((it) => ({
+        code: String(it?.code || it?.Code || it?.menu_type_code || it?.menu_cat_code || it?.basic_ingredient_code || it?.id || it?._id || "").trim(),
+        name: String(it?.name || it?.menu_name || it?.title || it?.label || "").trim(),
+      }))
+      .filter((x) => x.code && x.name);
+  };
 
-  const types = useMemo(() => {
-    const set = new Set();
-    items.forEach((it) => {
-      const name = it?.menu_type?.name || it?.menu_type || "";
-      if (name) set.add(String(name));
-    });
-    return Array.from(set).sort();
-  }, [items]);
-
-  const ingredients = useMemo(() => {
-    const set = new Set();
-    items.forEach((it) => {
-      const name = it?.basic_ingredient?.name || it?.basic_ingredient || "";
-      if (name) set.add(String(name));
-    });
-    return Array.from(set).sort();
-  }, [items]);
+  const typeOptions = useMemo(() => normalizeOptions(menuTypes), [menuTypes]);
+  const categoryOptions = useMemo(() => normalizeOptions(menuCategories), [menuCategories]);
+  const ingredientOptions = useMemo(() => normalizeOptions(basicIngredients), [basicIngredients]);
 
   const pages = useMemo(() => {
     const total = Math.max(1, meta.totalPages || 1);
     return Array.from({ length: total }, (_, i) => i + 1);
   }, [meta.totalPages]);
+
+  const getMenuImageSrc = (menu) => {
+    const first = Array.isArray(menu?.images) ? menu.images[0] : null;
+    const path = first?.file_path;
+    if (!path) return "/images/dummy-nutrion.png";
+    if (typeof path !== "string") return "/images/dummy-nutrion.png";
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    // file_path dari API umumnya berbentuk "/uploads/xxx.jpg"
+    return new URL(path, "https://cm-api.rawat.id").toString();
+  };
+
+  const formatNumberLike = (value) => {
+    if (value === null || value === undefined) return "-";
+    const s = String(value).trim();
+    if (!s) return "-";
+    // Hapus trailing 0 di bagian desimal: "214.0000" -> "214", "90.50" -> "90.5"
+    if (s.includes(".")) {
+      const out = s
+        .replace(/(\.\d*?[1-9])0+$/g, "$1")
+        .replace(/\.0+$/g, "")
+        .replace(/\.$/g, "");
+      return out || "-";
+    }
+    return s;
+  };
 
   return (
     <div className="py-10">
@@ -118,31 +161,31 @@ export default function MenuDietClient() {
           </div>
         </div>
         <div className="md:col-span-2">
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
-            <option value="">Pilih Kategori</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
+          <select value={menuTypeCode} onChange={(e) => setMenuTypeCode(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
+            <option value="">Pilih Jenis Makanan</option>
+            {typeOptions.map((t) => (
+              <option key={t.code} value={t.code}>
+                {t.name}
               </option>
             ))}
           </select>
         </div>
         <div className="md:col-span-2">
-          <select value={menuType} onChange={(e) => setMenuType(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
-            <option value="">Pilih Jenis Makanan</option>
-            {types.map((t) => (
-              <option key={t} value={t}>
-                {t}
+          <select value={menuCatCode} onChange={(e) => setMenuCatCode(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
+            <option value="">Pilih Kategori</option>
+            {categoryOptions.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
               </option>
             ))}
           </select>
         </div>
         <div className="md:col-span-3">
-          <select value={basicIngredient} onChange={(e) => setBasicIngredient(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
+          <select value={basicIngredientCode} onChange={(e) => setBasicIngredientCode(e.target.value)} className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
             <option value="">Pilih Bahan Baku</option>
-            {ingredients.map((t) => (
-              <option key={t} value={t}>
-                {t}
+            {ingredientOptions.map((t) => (
+              <option key={t.code} value={t.code}>
+                {t.name}
               </option>
             ))}
           </select>
@@ -156,21 +199,12 @@ export default function MenuDietClient() {
           if (loading) return <div key={idx} className="rounded-xl border border-gray-200 bg-gray-50 aspect-[4/5]" />;
           const slug = it?.slug;
           const name = it?.menu_name || "-";
-          const kcal = it?.calorie ?? "-";
+          const kcal = formatNumberLike(it?.calorie);
+          const imgSrc = getMenuImageSrc(it);
           return (
-            <Link
-              key={slug || idx}
-              href={slug ? `/informasi-kesehatan/informasi-menu-diet/${slug}` : "#"}
-              className="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-sm transition-shadow"
-            >
+            <Link key={slug || idx} href={slug ? `/informasi-kesehatan/informasi-menu-diet/${slug}` : "#"} className="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-sm transition-shadow">
               <div className="relative bg-gray-100 aspect-square">
-                <Image
-                  src="/images/dummy-nutrion.png"
-                  alt={name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover"
-                />
+                <Image src={imgSrc} alt={name} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
               </div>
               <div className="p-3 text-center">
                 <div className="font-semibold text-gray-900 truncate">{name}</div>
@@ -225,4 +259,3 @@ export default function MenuDietClient() {
     </div>
   );
 }
-
