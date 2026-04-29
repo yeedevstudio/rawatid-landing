@@ -16,7 +16,6 @@ const nextConfig = {
   },
   rewrites: async () => {
     return [
-      // Expose CM API endpoints without /api prefix (still same-origin).
       {
         source: "/drug-ingredients/public/:path*",
         destination: "https://cm-api.rawat.id/drug-ingredients/public/:path*",
@@ -28,6 +27,7 @@ const nextConfig = {
     ];
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
