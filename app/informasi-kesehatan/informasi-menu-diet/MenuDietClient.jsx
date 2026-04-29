@@ -29,7 +29,12 @@ export default function MenuDietClient() {
     let cancelled = false;
     async function run() {
       try {
-        const [tRes, cRes, bRes] = await Promise.all([fetch("/menu-types/public/all", { cache: "no-store" }), fetch("/menu-categories/public/all", { cache: "no-store" }), fetch("/basic-ingredients/public /all", { cache: "no-store" })]);
+        // Proxy via Next API routes supaya request dari browser konsisten ke /api
+        const [tRes, cRes, bRes] = await Promise.all([
+          fetch("/api/menu-types/public/all", { cache: "no-store" }),
+          fetch("/api/menu-categories/public/all", { cache: "no-store" }),
+          fetch("/api/basic-ingredients/public/all", { cache: "no-store" }),
+        ]);
 
         const [tJson, cJson, bJson] = await Promise.all([tRes.json().catch(() => null), cRes.json().catch(() => null), bRes.json().catch(() => null)]);
 
