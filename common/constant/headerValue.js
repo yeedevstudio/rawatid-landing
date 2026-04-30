@@ -32,11 +32,11 @@ export const headerValueBlog = [
     url: "/blog",
   },
   {
-    title: "Alat Kesehatan",
+    title: "Alat Kesehatan Digital",
     url: "/alat-kesehatan",
   },
   {
-    title: "Sistem Faskes",
+    title: "Sistem Digital Faskes",
     url: "/sistem-faskes",
   },
 ];
@@ -64,7 +64,7 @@ export const blogSubnavGroups = [
     ],
   },
   {
-    groupTitle: "Sistem Faskes",
+    groupTitle: "Sistem Digital Faskes",
     groupUrl: "/sistem-faskes",
     // Keep the Sistem Faskes subnav visible when users land on
     // RME-related pages that live outside `/sistem-faskes` (e.g. `/fitur`, `/register`).
@@ -100,7 +100,7 @@ export const blogSubnavGroups = [
     ],
   },
   {
-    groupTitle: "Alat Kesehatan",
+    groupTitle: "Alat Kesehatan Digital",
     groupUrl: "/alat-kesehatan/kalkulator-bmi",
     matchPrefixes: [
       "/alat-kesehatan",
