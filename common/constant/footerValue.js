@@ -1,6 +1,6 @@
 export const footerColumns = [
   {
-    title: "Navigasi",
+    title: "Jelajah Informasi kesehatan\nAlat cek kesehatan Digital Mandiri",
     links: [
       { title: "Informasi Obat", url: "/informasi-kesehatan/informasi-obat" },
       {
@@ -24,22 +24,26 @@ export const footerColumns = [
     ],
   },
   {
-    title: "Kategori Blog",
+    title: "Jelajah artikel berdasarkan kategori",
     links: [
       { title: "Kesehatan", url: "/blog/kategori/kesehatan" },
       { title: "Teknologi", url: "/blog/kategori/teknologi" },
-      { title: "Berita", url: "/blog/kategori/berita" },
+      { title: "Tenaga Kesehatan", url: "/blog/kategori/tenaga-kesehatan" },
+      {
+        title: "Fasilitas Kesehatan",
+        url: "/blog/kategori/fasilitas-kesehatan",
+      },
       { title: "Informasi Umum", url: "/blog/kategori/informasi-umum" },
       { title: "Bioteknologi", url: "/blog/kategori/bioteknologi" },
     ],
   },
   {
-    title: "Link Lainnya",
+    title: "Tautan Lainnya",
     links: [
-      { title: "Panduan Pengguna", url: "https://panduan.rawat.id" },
-      { title: "Lihat Fitur", url: "/fitur" },
-      { title: "Registrasi", url: "/register" },
-      { title: "Demo", url: "https://demo.rawat.id" },
+      { title: "Panduan Pengguna RME", url: "https://panduan.rawat.id" },
+      { title: "Lihat Fitur RME", url: "/fitur" },
+      { title: "Registrasi RME", url: "/register" },
+      { title: "Uji Coba RME", url: "https://demo.rawat.id" },
     ],
   },
   {
@@ -47,7 +51,8 @@ export const footerColumns = [
     links: [
       { title: "Instagram", url: "https://www.instagram.com/rawat_indonesia/" },
       { title: "Tiktok", url: "https://www.tiktok.com/@rawat_indonesia" },
-      { title: "X", url: "https://x.com/rawat_id" },
+      { title: "X/Twitter", url: "https://x.com/rawat_id" },
+      { title: "Youtube" },
     ],
   },
 ];

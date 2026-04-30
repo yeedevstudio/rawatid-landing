@@ -13,6 +13,10 @@ export default function Header() {
   const [isSheetOpen, setSheetOpen] = useState(false);
   const router = usePathname();
 
+  const isExternalUrl = (url) =>
+    typeof url === "string" &&
+    (url.startsWith("http://") || url.startsWith("https://"));
+
   const handleClose = () => {
     setSheetOpen(false);
   };
@@ -92,7 +96,13 @@ export default function Header() {
                       </div>
                       <div className="flex flex-col gap-5">
                         {activeSubnavItems.map((it) => (
-                          <Link key={it.url} href={it.url} onClick={handleClose}>
+                          <Link
+                            key={it.url}
+                            href={it.url}
+                            onClick={handleClose}
+                            target={isExternalUrl(it.url) ? "_blank" : undefined}
+                            rel={isExternalUrl(it.url) ? "noopener noreferrer" : undefined}
+                          >
                             <div className={router === it.url || router.startsWith(`${it.url}/`) ? "text-green font-semibold" : "text-gray-800 hover:text-green"}>{it.title}</div>
                           </Link>
                         ))}
@@ -128,7 +138,12 @@ export default function Header() {
               {activeSubnavItems.map((it) => {
                 const isActive = router === it.url || router.startsWith(`${it.url}/`);
                 return (
-                  <Link key={it.url} href={it.url}>
+                  <Link
+                    key={it.url}
+                    href={it.url}
+                    target={isExternalUrl(it.url) ? "_blank" : undefined}
+                    rel={isExternalUrl(it.url) ? "noopener noreferrer" : undefined}
+                  >
                     <div
                       className={subNavLinkClassName(isActive)}
                     >

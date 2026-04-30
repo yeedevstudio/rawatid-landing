@@ -32,33 +32,42 @@ const Footer = () => {
           <div className="footer__links">
             {footerColumns?.map((col) => (
               <div key={col?.title} className="footer__link">
-                <h2 className="text-base md:text-lg font-medium text-white">
+                <h2 className="text-lg md:text-xl font-semibold text-white whitespace-pre-line leading-snug mb-3">
                   {col?.title}
                 </h2>
                 {col?.links.map((item) => (
-                  <Link
-                    passHref
-                    href={item?.url}
-                    className="text-sm md:text-lg font-normal text-white/90 hover:text-white transition-colors"
-                    key={`${col?.title}-${item?.title}`}
-                    itemProp="button"
-                    target={
-                      typeof item?.url === "string" &&
-                      (item.url.startsWith("http://") ||
-                        item.url.startsWith("https://"))
-                        ? "_blank"
-                        : undefined
-                    }
-                    rel={
-                      typeof item?.url === "string" &&
-                      (item.url.startsWith("http://") ||
-                        item.url.startsWith("https://"))
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                  >
-                    <h3>{item?.title}</h3>
-                  </Link>
+                  item?.url ? (
+                    <Link
+                      passHref
+                      href={item?.url}
+                      className="text-sm md:text-lg font-normal text-white/90 hover:text-white transition-colors"
+                      key={`${col?.title}-${item?.title}`}
+                      itemProp="button"
+                      target={
+                        typeof item?.url === "string" &&
+                        (item.url.startsWith("http://") ||
+                          item.url.startsWith("https://"))
+                          ? "_blank"
+                          : undefined
+                      }
+                      rel={
+                        typeof item?.url === "string" &&
+                        (item.url.startsWith("http://") ||
+                          item.url.startsWith("https://"))
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                    >
+                      <h3>{item?.title}</h3>
+                    </Link>
+                  ) : (
+                    <div
+                      className="text-sm md:text-lg font-normal text-white/90 cursor-default"
+                      key={`${col?.title}-${item?.title}`}
+                    >
+                      <h3>{item?.title}</h3>
+                    </div>
+                  )
                 ))}
               </div>
             ))}

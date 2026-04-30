@@ -15,6 +15,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function toNumber(v) {
   const n = Number(v);
@@ -128,7 +129,75 @@ export default function MenuDietDetailClient({ slug }) {
     };
   }, [slug]);
 
-  if (loading) return <div className="text-sm text-gray-500">Memuat...</div>;
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="pt-2">
+          <Skeleton className="h-4 w-80 max-w-full" />
+        </div>
+
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          <div className="md:col-span-6">
+            <Skeleton className="w-full rounded-2xl aspect-[4/3]" />
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-16 w-16 shrink-0 rounded-lg" />
+              ))}
+            </div>
+          </div>
+
+          <div className="md:col-span-6">
+            <Skeleton className="h-9 w-3/4" />
+            <div className="mt-4 flex flex-wrap gap-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="h-8 w-24 rounded-xl" />
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-end gap-3">
+              <Skeleton className="h-14 w-28" />
+              <Skeleton className="h-6 w-28" />
+            </div>
+
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-5 w-40" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 space-y-3">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <Skeleton className="h-8 w-8 rounded-lg" />
+                  <Skeleton className="h-5 w-full" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {Array.from({ length: 2 }).map((_, i) => (
+          <section
+            key={i}
+            className="rounded-2xl bg-white p-5 md:p-6 shadow-[0_0_12.1px_rgba(0,0,0,0.1)]"
+          >
+            <Skeleton className="h-6 w-48" />
+            <div className="mt-4 space-y-3">
+              {Array.from({ length: 6 }).map((__, j) => (
+                <Skeleton key={j} className="h-5 w-full" />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    );
+  }
   if (error) return <div className="text-sm text-red-600">{error}</div>;
   if (!data) return <div className="text-sm text-gray-500">Data tidak ditemukan.</div>;
 
