@@ -14,13 +14,13 @@ function toIso(value) {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
-async function fetchAllDrugIngredientSlugs() {
-  const res = await fetch("https://cm-api.rawat.id/drug-ingredients/public/sitemap", {
+async function fetchAllMenuNutritionSlugs() {
+  const res = await fetch("https://cm-api.rawat.id/menu-nutritions/public/sitemap", {
     cache: "no-store",
   });
 
   if (!res.ok) {
-    throw new Error("Gagal memuat sitemap obat");
+    throw new Error("Gagal memuat sitemap menu diet");
   }
 
   const json = await res.json().catch(() => null);
@@ -37,13 +37,13 @@ async function fetchAllDrugIngredientSlugs() {
 export async function GET() {
   try {
     const baseUrl = "https://www.rawat.id";
-    const items = await fetchAllDrugIngredientSlugs();
+    const items = await fetchAllMenuNutritionSlugs();
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${items
   .map((it) => {
-    const loc = `${baseUrl}/informasi-kesehatan/informasi-obat/${encodeURIComponent(it.slug)}`;
+    const loc = `${baseUrl}/informasi-kesehatan/informasi-menu-diet/${encodeURIComponent(it.slug)}`;
     return `  <url>
     <loc>${escapeXml(loc)}</loc>
     <lastmod>${escapeXml(toIso(it.updatedAt))}</lastmod>

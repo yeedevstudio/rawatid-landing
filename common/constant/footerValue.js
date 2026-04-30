@@ -1,6 +1,6 @@
 export const footerColumns = [
   {
-    title: "Jelajah Informasi kesehatan\nAlat cek kesehatan Digital Mandiri",
+    title: "Jelajah Informasi Kesehatan dan\nAlat Cek Kesehatan Digital Mandiri",
     links: [
       { title: "Informasi Obat", url: "/informasi-kesehatan/informasi-obat" },
       {
@@ -24,7 +24,7 @@ export const footerColumns = [
     ],
   },
   {
-    title: "Jelajah artikel berdasarkan kategori",
+    title: "Jelajah Artikel Berdasarkan Kategori",
     links: [
       { title: "Kesehatan", url: "/blog/kategori/kesehatan" },
       { title: "Teknologi", url: "/blog/kategori/teknologi" },

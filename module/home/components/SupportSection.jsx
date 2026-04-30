@@ -91,7 +91,7 @@ export default function SupportSection() {
           kesehatan.
         </p>
 
-        <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-y-8 gap-x-6 items-start">
+        <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-9 gap-y-8 gap-x-4 lg:gap-x-5 items-start">
           {ITEMS.map((item) => (
             <Link
               key={item.title}

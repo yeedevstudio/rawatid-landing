@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <footer className="flex flex-col bg-green">
       <div>
-        <nav className="flex max-md:flex-col flex-wrap justify-between gap-8 px-5 md:px-12 py-10">
+        <nav className="flex flex-col md:flex-row md:flex-nowrap justify-between gap-8 px-5 md:px-12 py-10">
           <Link
             href="/"
             className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth md:max-w-[260px]"
@@ -29,9 +29,9 @@ const Footer = () => {
             </h2>
           </Link>
 
-          <div className="footer__links">
+          <div className="mt-6 md:mt-0 flex-1 min-w-0 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 lg:gap-16 items-start">
             {footerColumns?.map((col) => (
-              <div key={col?.title} className="footer__link">
+              <div key={col?.title} className="flex flex-col gap-4 text-base min-w-0">
                 <h2 className="text-lg md:text-xl font-semibold text-white whitespace-pre-line leading-snug mb-3">
                   {col?.title}
                 </h2>
