@@ -23,7 +23,7 @@ export default function Authors({ post, author }) {
           Penulis
         </span>
         <Link href={`/blog/penulis/${post?.author?.slug}`}>
-          <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize mt-2">
+          <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold mt-2">
             {post?.author?.name}
           </h2>
         </Link>

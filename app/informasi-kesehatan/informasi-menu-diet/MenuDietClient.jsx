@@ -4,6 +4,18 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
 
 export default function MenuDietClient() {
   const router = useRouter();
@@ -121,10 +133,24 @@ export default function MenuDietClient() {
   const categoryOptions = useMemo(() => normalizeOptions(menuCategories), [menuCategories]);
   const ingredientOptions = useMemo(() => normalizeOptions(basicIngredients), [basicIngredients]);
 
-  const pages = useMemo(() => {
-    const total = Math.max(1, meta.totalPages || 1);
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }, [meta.totalPages]);
+  const totalPages = Math.max(1, Number(meta.totalPages) || 1);
+  const safePage = clamp(page, 1, totalPages);
+
+  const paginationNumbers = useMemo(() => {
+    const maxButtons = 5;
+    if (totalPages <= maxButtons) {
+      return Array.from({ length: totalPages }).map((_, i) => i + 1);
+    }
+    const start = clamp(safePage - 2, 1, totalPages - (maxButtons - 1));
+    return Array.from({ length: maxButtons }).map((_, i) => start + i);
+  }, [safePage, totalPages]);
+
+  const goToPage = (p) => {
+    const next = clamp(p, 1, totalPages);
+    const params = new URLSearchParams(sp.toString());
+    params.set("page", String(next));
+    router.push(`?${params.toString()}`);
+  };
 
   const getMenuImageSrc = (menu) => {
     const first = Array.isArray(menu?.images) ? menu.images[0] : null;
@@ -220,46 +246,54 @@ export default function MenuDietClient() {
         })}
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-3 text-sm text-gray-500">
-        <span>{(meta.total ? `${(page - 1) * meta.perPage + 1}-${Math.min(page * meta.perPage, meta.total)}` : "0") + ` of ${meta.total}`}</span>
-        <button
-          type="button"
-          className="px-2"
-          disabled={page <= 1}
-          onClick={() => {
-            const params = new URLSearchParams(sp.toString());
-            params.set("page", String(Math.max(1, page - 1)));
-            router.push(`?${params.toString()}`);
-          }}
-        >
-          ←
-        </button>
-        {pages.map((p) => (
-          <button
-            key={p}
-            type="button"
-            onClick={() => {
-              const params = new URLSearchParams(sp.toString());
-              params.set("page", String(p));
-              router.push(`?${params.toString()}`);
-            }}
-            className={`w-8 h-8 rounded-md ${p === page ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"}`}
-          >
-            {p}
-          </button>
-        ))}
-        <button
-          type="button"
-          className="px-2"
-          disabled={page >= meta.totalPages}
-          onClick={() => {
-            const params = new URLSearchParams(sp.toString());
-            params.set("page", String(Math.min(meta.totalPages, page + 1)));
-            router.push(`?${params.toString()}`);
-          }}
-        >
-          →
-        </button>
+      <div className="mt-8 space-y-4">
+        <div className="text-center text-sm text-gray-500">
+          {meta.total
+            ? `${(safePage - 1) * meta.perPage + 1}-${Math.min(safePage * meta.perPage, meta.total)} dari ${meta.total}`
+            : "0 data"}
+        </div>
+        <Pagination>
+          <PaginationContent className="flex-wrap justify-center gap-1">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                aria-disabled={safePage <= 1}
+                className={safePage <= 1 ? "pointer-events-none opacity-40" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (safePage > 1) goToPage(safePage - 1);
+                }}
+              />
+            </PaginationItem>
+
+            {paginationNumbers.map((n) => (
+              <PaginationItem key={n}>
+                <PaginationLink
+                  href="#"
+                  isActive={n === safePage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goToPage(n);
+                  }}
+                >
+                  {n}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                aria-disabled={safePage >= totalPages}
+                className={safePage >= totalPages ? "pointer-events-none opacity-40" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (safePage < totalPages) goToPage(safePage + 1);
+                }}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

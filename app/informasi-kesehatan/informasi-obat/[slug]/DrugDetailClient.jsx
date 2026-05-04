@@ -4,17 +4,18 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
-import { IconBrandFacebook, IconBrandLinkedin, IconBrandWhatsapp, IconBrandX } from "@tabler/icons-react";
+import { IconBrandFacebook, IconBrandLinkedin, IconBrandWhatsapp, IconBrandX, IconLink } from "@tabler/icons-react";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import NotFound from "@/app/not-found";
 import { Skeleton } from "@/components/ui/skeleton";
 
-function formatDate(dateString) {
-  if (!dateString) return "";
-  const d = new Date(dateString);
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
-}
+/** Dipakai lagi saat baris peninjauan medis diaktifkan. */
+// function formatDate(dateString) {
+//   if (!dateString) return "";
+//   const d = new Date(dateString);
+//   if (Number.isNaN(d.getTime())) return "";
+//   return d.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
+// }
 
 function splitLinesToItems(value) {
   if (!value) return [];
@@ -115,10 +116,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
   const containerClass = "mx-auto w-full max-w-screen-2xl px-10 sm:px-6 lg:px-8";
   const [copied, setCopied] = useState(false);
 
-  const shareUrl = useMemo(() => {
-    if (typeof window === "undefined") return "";
-    return window.location?.href || "";
-  }, []);
+  const shareUrl = typeof window !== "undefined" ? window.location?.href || "" : "";
 
   const shareTitle = useMemo(() => {
     const name = data?.name || slug || "Rawat.ID";
@@ -206,11 +204,12 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
     };
   }, [slug, ingCodeProp]);
 
-  const reviewedLine = useMemo(() => {
-    const reviewedBy = data?.verifiedBy || "Tim Rawat.ID";
-    const reviewedAt = formatDate(data?.verifiedAt);
-    return reviewedAt ? `Informasi telah ditinjau oleh ${reviewedBy} pada ${reviewedAt}` : `Informasi telah ditinjau oleh ${reviewedBy}`;
-  }, [data]);
+  // Sementara disembunyikan sampai semua obat selesai ditinjau tim konten medis.
+  // const reviewedLine = useMemo(() => {
+  //   const reviewedBy = data?.verifiedBy || "Tim Rawat.ID";
+  //   const reviewedAt = formatDate(data?.verifiedAt);
+  //   return reviewedAt ? `Informasi telah ditinjau oleh ${reviewedBy} pada ${reviewedAt}` : `Informasi telah ditinjau oleh ${reviewedBy}`;
+  // }, [data]);
 
   const brandNames = useMemo(() => {
     return data?.brand_names || data?.brandNames || data?.trade_names || data?.tradeNames || data?.merk_dagang || data?.merk_dagang_obat || "";
@@ -286,7 +285,9 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
           <div className="space-y-10">
             <div>
               <h1 className="mt-8 md:mt-12 mb-4 md:mb-6 text-3xl md:text-5xl font-semibold text-green tracking-tight">{data?.name}</h1>
+              {/* Sementara disembunyikan sampai semua obat selesai ditinjau tim konten medis.
               <div className="mb-8 md:mb-10 text-xs md:text-sm text-gray-500">{reviewedLine}</div>
+              */}
               <div className="text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">{data?.description || ""}</div>
             </div>
 
@@ -450,14 +451,23 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                   <div className="rounded-2xl bg-white p-5 shadow-sm">
                     <div className="text-sm font-semibold text-green">Bagikan artikel</div>
                     <div className="mt-4 flex items-center gap-4">
-                      <button type="button" className="text-green hover:opacity-80 transition-opacity" aria-label="Bagikan ke WhatsApp" onClick={() => openShare(`https://wa.me/?text=${encodeURIComponent(shareUrl || "")}`)}>
+                      <button
+                        type="button"
+                        className="text-green hover:opacity-80 transition-opacity"
+                        aria-label="Bagikan ke WhatsApp"
+                        onClick={() => openShare(`https://wa.me/?text=${encodeURIComponent(shareUrl || "")}`)}
+                      >
                         <IconBrandWhatsapp className="h-8 w-8" />
                       </button>
                       <button
                         type="button"
                         className="text-green hover:opacity-80 transition-opacity"
                         aria-label="Bagikan ke X"
-                        onClick={() => openShare(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl || "")}`)}
+                        onClick={() =>
+                          openShare(
+                            `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl || "")}`
+                          )
+                        }
                       >
                         <IconBrandX className="h-8 w-8" />
                       </button>
@@ -484,7 +494,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                         aria-label="Salin tautan"
                         onClick={handleCopyLink}
                       >
-                        <LinkIcon className="h-4 w-4" />
+                        <IconLink className="h-4 w-4" />
                         <span>{copied ? "Tersalin" : "Salin"}</span>
                       </button>
                     </div>
