@@ -105,7 +105,7 @@ export default async function Page({ params }) {
         post={dataAll}
         title={"Penulis"}
         author={dataAuthor}
-        slug={dataSlug?.[0]?.author?.name}
+        slug={dataAuthor?.name ?? dataSlug?.[0]?.author?.name}
       />
     );
   } catch (error) {

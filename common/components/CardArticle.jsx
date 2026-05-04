@@ -128,6 +128,55 @@ export const CardArticleSidebar = ({
   </div>
 );
 
+/** Kartu artikel mendatar: gambar kiri, judul & tanggal — untuk grid dua kategori di /blog */
+export const CardArticleRow = ({
+  src,
+  alt,
+  category,
+  title,
+  date,
+  onSelect,
+  tagVariant = "outline",
+}) => (
+  <div
+    className={cn(
+      "flex flex-row gap-3 md:gap-4 p-2 md:p-3 rounded-[20px] cursor-pointer bg-white border border-gray-100",
+      "shadow-[0px_0px_12.1px_0px_#0000001A] transition-shadow duration-300"
+    )}
+    onClick={onSelect}
+  >
+    <div className="relative w-[92px] md:w-[112px] shrink-0 h-[72px] md:h-[84px] rounded-xl overflow-hidden">
+      <Image
+        src={resolveImageSrc(src)}
+        alt={alt || ""}
+        fill
+        style={{ objectFit: "cover", position: "absolute" }}
+        sizes="(max-width: 768px) 92px, 112px"
+      />
+    </div>
+    <div className="min-w-0 flex-1 flex flex-col justify-center gap-0.5 py-0.5">
+      <h3
+        className={cn(
+          "p-1 w-fit rounded-md text-[9px] px-3",
+          tagVariant === "outline" ? "text-green bg-white border border-green" : "text-white bg-green"
+        )}
+      >
+        {category}
+      </h3>
+      <h2 className="text-sm md:text-base font-semibold text-gray-900 leading-snug line-clamp-2 tracking-tight">{title}</h2>
+      {date ? (
+        <p className="text-xs text-gray-500 mt-0.5">
+          {new Date(date).toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+        </p>
+      ) : null}
+    </div>
+  </div>
+);
+
 export const CardArticlePopuler = ({ src, alt, category, title, height, width, selected, onSelect, headline }) => (
   <div className={cn("grid grid-cols-2 gap-2 md:gap-6 h-full border p-2 md:p-3 rounded-[20px] cursor-pointer", selected && "border-green")} onClick={onSelect}>
     <div className={cn(height ? height : "h-full ", width ? width : "w-full", "relative rounded-2xl overflow-hidden lg:min-h-[10rem]")}>

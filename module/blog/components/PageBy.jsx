@@ -55,7 +55,7 @@ export default function PageBy({ data, post, slug, title, author, pagination, cu
           { label: `${title} ${slug ? `- ${slug}` : ""}`.trim(), href: "#" },
         ]}
       />
-      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green capitalize">
+      <h1 className="text-lg md:text-xl lg:text-2xl font-medium text-green">
         {title} : {slug}
       </h1>
 
@@ -79,7 +79,7 @@ export default function PageBy({ data, post, slug, title, author, pagination, cu
               Penulis
             </span>
 
-            <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold capitalize py-2 md:py-4">
+            <h2 className=" text-base/8 md:text-xl/8 lg:text-2xl/8 font-semibold py-2 md:py-4">
               {author?.name}
             </h2>
 

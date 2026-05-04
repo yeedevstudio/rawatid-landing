@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { startRouteLoading } from "@/common/utils/routeLoading";
 
-export default function BlogAll({ data }) {
+export default function BlogAll({ data, maxItems }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,7 +32,9 @@ export default function BlogAll({ data }) {
     return () => clearTimeout(setTimeLoading);
   }, []);
 
-  const articles = Array.isArray(data) ? data : [];
+  const raw = Array.isArray(data) ? data : [];
+  const articles =
+    typeof maxItems === "number" && maxItems > 0 ? raw.slice(0, maxItems) : raw;
   const totalPages = Math.max(1, Math.ceil(articles.length / pageSize));
   const safePage = Math.min(currentPage, totalPages - 1);
   const pageStart = safePage * pageSize;

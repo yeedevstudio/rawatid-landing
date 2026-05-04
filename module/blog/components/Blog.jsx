@@ -10,6 +10,8 @@ import BlogHighlight from "./BlogHighlight";
 import BlogAll from "./BlogAll";
 import ContainerBlog from "@/common/components/ContainerBlog";
 import BlogCategory from "./BlogCategory";
+import BlogCategoryFeaturedPair from "./BlogCategoryFeaturedPair";
+import BlogInformasiObatPreview from "./BlogInformasiObatPreview";
 import { toast } from "sonner";
 import { startRouteLoading } from "@/common/utils/routeLoading";
 import { CardArticleAll } from "@/common/components/CardArticle";
@@ -25,9 +27,7 @@ export default function BlogPage({ data, categories }) {
     setSearchQuery(query);
 
     if (query.length > 0) {
-      const results = data?.filter((article) =>
-        article.title.toLowerCase().includes(query.toLowerCase())
-      );
+      const results = data?.filter((article) => article.title.toLowerCase().includes(query.toLowerCase()));
       setFilteredResults(results);
 
       const match = results?.[0];
@@ -80,36 +80,25 @@ export default function BlogPage({ data, categories }) {
         </span>
       ) : (
         part
-      )
+      ),
     );
   };
 
-  const hasData = categories.some((category) =>
-    data?.some((item) => item?.category?.slug === category.slug)
-  );
-
   const isSearching = searchQuery.trim().length > 0;
+
+  const featuredPairSlugs = new Set(["tenaga-kesehatan", "fasilitas-kesehatan"]);
 
   return (
     <ContainerBlog>
       <div className="mx-5 md:mx-20 my-20 relative h-12 ">
-        <Input
-          className="w-full h-12 pl-12 focus:pl-12 active:pl-12"
-          placeholder="Cari Artikel"
-          value={searchQuery}
-          onChange={handleSearch}
-          onKeyDown={handleKeyDown}
-        />
+        <Input className="w-full h-12 pl-12 focus:pl-12 active:pl-12" placeholder="Cari Artikel" value={searchQuery} onChange={handleSearch} onKeyDown={handleKeyDown} />
         {suggestion && (
           <div className="absolute z-10 top-0 left-0 h-12 pl-[48.8px] pt-[1px] flex items-center pointer-events-none text-gray-200 text-sm md:text-lg max-w-xs md:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
             {searchQuery}
             <span>{suggestion}</span>
           </div>
         )}
-        <IconSearch
-          onClick={handlePush}
-          className="h-12 w-10 text-white bg-green hover:bg-greenHover p-2 absolute top-0 left-0 rounded-l-md transition-all duration-300 ease-in-out hover:cursor-pointer"
-        />
+        <IconSearch onClick={handlePush} className="h-12 w-10 text-white bg-green hover:bg-greenHover p-2 absolute top-0 left-0 rounded-l-md transition-all duration-300 ease-in-out hover:cursor-pointer" />
 
         {filteredResults.length > 0 && (
           <ul className="absolute w-full bg-white border rounded-md shadow-md z-50 top-12">
@@ -132,16 +121,11 @@ export default function BlogPage({ data, categories }) {
       {isSearching ? (
         <section className="mx-5 md:mx-20 -mt-10 mb-10">
           <h2 className="text-sm md:text-lg lg:text-xl text-green font-medium">
-            Hasil pencarian:{" "}
-            <span className="font-semibold break-all">
-              "{searchQuery.trim()}"
-            </span>
+            Hasil pencarian: <span className="font-semibold break-all">"{searchQuery.trim()}"</span>
           </h2>
 
           {filteredResults.length === 0 ? (
-            <p className="mt-4 text-sm md:text-base text-neutral-600">
-              Tidak ada artikel yang cocok.
-            </p>
+            <p className="mt-4 text-sm md:text-base text-neutral-600">Tidak ada artikel yang cocok.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 py-6 transition-all duration-150 ease-in-out">
               {filteredResults.map((article, index) => (
@@ -168,27 +152,16 @@ export default function BlogPage({ data, categories }) {
       ) : (
         <>
           <BlogHighlight data={data} />
-          <BlogAll data={data} />
+          <BlogAll data={data} maxItems={9} />
           <div>
-            {hasData &&
-              categories.map((category) => {
-                const filteredData = data?.filter(
-                  (item) => item?.category?.slug === category.slug
-                );
-
-                if (!filteredData || filteredData.length === 0) {
-                  return null;
-                }
-
-                return (
-                  <BlogCategory
-                    key={category.id}
-                    data={filteredData}
-                    category={category}
-                  />
-                );
-              })}
+            {categories?.map((category) =>
+              category?.slug && !featuredPairSlugs.has(category.slug.trim()) ? (
+                <BlogCategory key={category.id ?? category.slug} category={category} />
+              ) : null
+            )}
           </div>
+          <BlogInformasiObatPreview />
+          <BlogCategoryFeaturedPair categories={categories} />
         </>
       )}
     </ContainerBlog>
