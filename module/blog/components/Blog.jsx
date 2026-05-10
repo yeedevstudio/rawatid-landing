@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { IconSearch } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,7 @@ import BlogInformasiObatPreview from "./BlogInformasiObatPreview";
 import { toast } from "sonner";
 import { startRouteLoading } from "@/common/utils/routeLoading";
 import { CardArticleAll } from "@/common/components/CardArticle";
+import InteractiveKontenSection from "@/module/home/components/InteractiveKontenSection";
 
 export default function BlogPage({ data, categories }) {
   const router = useRouter();
@@ -154,11 +155,16 @@ export default function BlogPage({ data, categories }) {
           <BlogHighlight data={data} />
           <BlogAll data={data} maxItems={9} />
           <div>
-            {categories?.map((category) =>
-              category?.slug && !featuredPairSlugs.has(category.slug.trim()) ? (
-                <BlogCategory key={category.id ?? category.slug} category={category} />
-              ) : null
-            )}
+            {categories?.map((category) => {
+              const slug = typeof category?.slug === "string" ? category.slug.trim() : "";
+              if (!slug || featuredPairSlugs.has(slug)) return null;
+              return (
+                <Fragment key={category.id ?? category.slug}>
+                  <BlogCategory category={category} />
+                  {slug === "informasi-umum" ? <InteractiveKontenSection /> : null}
+                </Fragment>
+              );
+            })}
           </div>
           <BlogInformasiObatPreview />
           <BlogCategoryFeaturedPair categories={categories} />

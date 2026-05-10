@@ -35,7 +35,7 @@ export default function HeroSection() {
         className="flex items-center justify-center lg:justify-end"
       >
         <div className="relative h-[22rem] md:h-[32rem] lg:h-[34rem] xl:h-[38rem] w-[18rem] md:w-[24rem] lg:w-[30rem] xl:w-[34rem] overflow-hidden rounded-tr-[13rem] rounded-bl-[13rem] lg:rounded-tr-[18rem] lg:rounded-bl-[18rem] lg:translate-x-1 xl:translate-x-2">
-          <Image src={"/images/home.svg"} alt="Ilustrasi halaman beranda Rawat.ID" fill sizes="(max-width: 768px) 288px, (max-width: 1024px) 384px, (max-width: 1280px) 480px, 544px" className="object-cover object-[58%_center]" priority />
+          <Image src="/image/newbackground.jpg" alt="Ilustrasi halaman beranda Rawat.ID" fill sizes="(max-width: 768px) 288px, (max-width: 1024px) 384px, (max-width: 1280px) 480px, 544px" className="object-cover object-center" priority />
         </div>
       </div>
     </section>
