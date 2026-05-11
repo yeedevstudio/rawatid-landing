@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +16,17 @@ import { toast } from "sonner";
 import { startRouteLoading } from "@/common/utils/routeLoading";
 import { CardArticleAll } from "@/common/components/CardArticle";
 import InteractiveKontenSection from "@/module/home/components/InteractiveKontenSection";
+
+const FEATURED_PAIR_SLUGS = new Set(["tenaga-kesehatan", "fasilitas-kesehatan"]);
+
+const BLOG_SINGLE_CATEGORY_ORDER = ["kesehatan", "informasi-umum", "bioteknologi", "teknologi"];
+
+function BlogCategoryIfPresent({ categories, slug }) {
+  const list = Array.isArray(categories) ? categories : [];
+  const category = list.find((c) => (typeof c?.slug === "string" ? c.slug.trim() : "") === slug);
+  if (!category) return null;
+  return <BlogCategory category={category} />;
+}
 
 export default function BlogPage({ data, categories }) {
   const router = useRouter();
@@ -87,8 +98,6 @@ export default function BlogPage({ data, categories }) {
 
   const isSearching = searchQuery.trim().length > 0;
 
-  const featuredPairSlugs = new Set(["tenaga-kesehatan", "fasilitas-kesehatan"]);
-
   return (
     <ContainerBlog>
       <div className="mx-5 md:mx-20 my-20 relative h-12 ">
@@ -154,20 +163,22 @@ export default function BlogPage({ data, categories }) {
         <>
           <BlogHighlight data={data} />
           <BlogAll data={data} maxItems={9} />
-          <div>
-            {categories?.map((category) => {
-              const slug = typeof category?.slug === "string" ? category.slug.trim() : "";
-              if (!slug || featuredPairSlugs.has(slug)) return null;
-              return (
-                <Fragment key={category.id ?? category.slug}>
-                  <BlogCategory category={category} />
-                  {slug === "informasi-umum" ? <InteractiveKontenSection /> : null}
-                </Fragment>
-              );
-            })}
-          </div>
-          <BlogInformasiObatPreview />
+          <BlogCategoryIfPresent categories={categories} slug="kesehatan" />
+          <InteractiveKontenSection variant="blog" />
+          <BlogCategoryIfPresent categories={categories} slug="informasi-umum" />
           <BlogCategoryFeaturedPair categories={categories} />
+          <BlogCategoryIfPresent categories={categories} slug="bioteknologi" />
+          <BlogInformasiObatPreview />
+          <BlogCategoryIfPresent categories={categories} slug="teknologi" />
+          {(categories || [])
+            .filter((category) => {
+              const slug = typeof category?.slug === "string" ? category.slug.trim() : "";
+              if (!slug || FEATURED_PAIR_SLUGS.has(slug)) return false;
+              return !BLOG_SINGLE_CATEGORY_ORDER.includes(slug);
+            })
+            .map((category) => (
+              <BlogCategory key={category.id ?? category.slug} category={category} />
+            ))}
         </>
       )}
     </ContainerBlog>
