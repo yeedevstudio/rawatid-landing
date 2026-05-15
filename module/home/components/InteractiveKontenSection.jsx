@@ -14,7 +14,11 @@ const SUBTITLE = "Pelajari lebih dalam informasi kesehatan dengan data dan visua
 
 const SOURCES = ["/image/cacar.png", "/image/herpes.png", "/image/hepa.png", "/image/dbdcover.png", "/image/kursi.png", "/image/demam.png"];
 
-const DBD_CARD_SRC = new Set(["/image/cacar.png", "/image/dbdcover.png"]);
+/** Kartu tertentu membuka halaman artikel seperti DBD; lainnya tidak ditautkan */
+const CARD_HREF_BY_SRC = {
+  "/image/cacar.png": "/cacar-air",
+  "/image/dbdcover.png": "/dbd",
+};
 
 function getVisibleCardIndices(scroller, row, thresholdPx = 8) {
   if (!scroller || !row?.children.length) return [0];
@@ -99,9 +103,10 @@ export default function InteractiveKontenSection({ variant = "default" }) {
         <div className={`${SCROLL_EDGE} mt-3 md:mt-4`}>
           <div ref={scrollerRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
             <div className="flex w-max min-w-0">
-              {SOURCES.map((src, i) =>
-                DBD_CARD_SRC.has(src) ? (
-                  <Link key={src} href="/dbd" className={`${CARD_SLOT} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#038F7A]`}>
+              {SOURCES.map((src, i) => {
+                const linkedHref = CARD_HREF_BY_SRC[src];
+                return linkedHref ? (
+                  <Link key={src} href={linkedHref} className={`${CARD_SLOT} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#038F7A]`}>
                     <Image
                       src={src}
                       alt=""
@@ -124,8 +129,8 @@ export default function InteractiveKontenSection({ variant = "default" }) {
                       priority={false}
                     />
                   </div>
-                ),
-              )}
+                );
+              })}
             </div>
           </div>
         </div>
