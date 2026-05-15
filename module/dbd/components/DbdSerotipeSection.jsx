@@ -94,26 +94,26 @@ function FaktaKunciCallout() {
 export default function DbdSerotipeSection() {
   return (
     <section className="w-full bg-white px-5 md:px-12 lg:px-20 xl:px-24 py-12 md:py-16 lg:py-20">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <div data-aos="fade-up" suppressHydrationWarning className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {TOP_CARDS.map((c) => (
           <TopInfoCard key={c.title} {...c} />
         ))}
       </div>
 
-      <div className="mt-14 w-full text-center md:mt-16 lg:mt-20">
+      <div data-aos="fade-up" suppressHydrationWarning className="mt-14 w-full text-center md:mt-16 lg:mt-20">
         <h2 className="text-lg font-semibold text-[#038F7A] md:text-xl">Empat Serotipe Virus Dengue</h2>
         <p className="mt-3 text-[14px] font-normal leading-relaxed text-neutral-600 md:mt-4 md:text-base">
           Inilah yang membuat seseorang bisa menderita DBD lebih dari satu kali seumur hidup.
         </p>
       </div>
 
-      <div className="mt-10 grid grid-cols-2 gap-4 md:mt-12 lg:mt-14 lg:grid-cols-4 lg:gap-6">
+      <div data-aos="fade-up" suppressHydrationWarning className="mt-10 grid grid-cols-2 gap-4 md:mt-12 lg:mt-14 lg:grid-cols-4 lg:gap-6">
         {SERO_CARDS.map((c) => (
           <SerotypeCard key={c.code} {...c} />
         ))}
       </div>
 
-      <p className="mt-10 w-full text-center text-[13px] font-normal leading-relaxed text-neutral-600 md:mt-12 md:text-[15px] md:leading-[1.65]">
+      <p data-aos="fade-up" suppressHydrationWarning className="mt-10 w-full text-center text-[13px] font-normal leading-relaxed text-neutral-600 md:mt-12 md:text-[15px] md:leading-[1.65]">
         Jika seseorang pernah terinfeksi serotipe 1, tubuhnya akan kebal terhadap serotipe tersebut seumur hidup —
         namun tetap rentan terhadap serotipe 2, 3, dan 4. Infeksi kedua justru lebih berisiko menyebabkan DBD yang
         parah.

@@ -39,16 +39,16 @@ function TxCard({ src, title, children }) {
 
 function VaricellaInfoOrange() {
   return (
-    <div className="mt-10 rounded-2xl border border-orange-300/85 bg-[#FFF8F1] px-5 py-5 md:mt-11 md:px-6 md:py-6">
+    <div className="mt-10 rounded-2xl border border-orange-300/85 bg-white px-5 py-5 md:mt-11 md:px-6 md:py-6">
       <div className="flex flex-wrap items-start gap-3 md:gap-4">
         <span
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EA580C] text-white md:h-11 md:w-11"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white md:h-11 md:w-11"
           aria-hidden
         >
           <IconInfoCircle className="h-6 w-6 text-white" stroke={2} />
         </span>
         <div className="min-w-0 flex-1 space-y-3">
-          <p className="text-[15px] font-semibold leading-snug text-[#C2410C] md:text-[16px]">Kapan Penderita Cacar Air Menular?</p>
+          <p className="text-[15px] font-semibold leading-snug text-[#D97706] md:text-[16px]">Kapan Penderita Cacar Air Menular?</p>
           <p className="text-[15px] font-normal leading-[1.65] text-neutral-900 md:text-[16px] md:leading-relaxed">
             Penderita cacar air sudah menular sejak 1-2 hari sebelum ruam muncul, hingga semua gelembung sudah mengering menjadi keropeng (biasanya 5-7 hari setelah ruam pertama muncul).
             Artinya, seseorang bisa tanpa sadar menularkan virus ke orang lain sebelum ia sendiri tahu bahwa ia sedang sakit.
@@ -61,7 +61,7 @@ function VaricellaInfoOrange() {
 
 function HerpesRisikoBox() {
   return (
-    <div className="mt-10 rounded-2xl border border-amber-300/85 bg-[#FFFAF5] px-5 py-5 md:mt-11 md:px-6 md:py-6">
+    <div className="mt-10 rounded-2xl border border-amber-300/85 bg-white px-5 py-5 md:mt-11 md:px-6 md:py-6">
       <div className="flex flex-wrap items-start gap-3 md:gap-4">
         <span
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white md:h-11 md:w-11"

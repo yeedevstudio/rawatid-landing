@@ -6,10 +6,10 @@ export default function DbdApaItuSection() {
       id="apa-itu-dbd"
       className="w-full scroll-mt-24 bg-white px-5 md:px-12 lg:px-20 xl:px-24 pb-14 pt-4 md:pb-20 md:pt-6"
     >
-      <h2 className="mb-6 text-xl font-bold text-[#038F7A] md:mb-8 md:text-2xl">
+      <h2 data-aos="fade-up" suppressHydrationWarning className="mb-6 text-xl font-bold text-[#038F7A] md:mb-8 md:text-2xl">
         Apa Itu Demam Berdarah Dengue (DBD)?
       </h2>
-      <div className="w-full space-y-5 text-left text-[15px] font-normal leading-[1.65] text-neutral-800 md:text-[17px] md:leading-[1.7]">
+      <div data-aos="fade-up" suppressHydrationWarning className="w-full space-y-5 text-left text-[15px] font-normal leading-[1.65] text-neutral-800 md:text-[17px] md:leading-[1.7]">
         <p>
           Demam Berdarah Dengue (DBD) — atau dalam istilah medis disebut Dengue Hemorrhagic Fever (DHF) —
           adalah penyakit infeksi yang disebabkan oleh virus dengue. Virus ini ditularkan ke manusia melalui
