@@ -27,7 +27,7 @@ export default function CacarAirPerbandinganSection() {
           Perbandingan Sekilas
         </h2>
 
-        <div className="overflow-hidden rounded-2xl border border-neutral-200/90 bg-white">
+        <div data-aos="fade-up" suppressHydrationWarning className="overflow-hidden rounded-2xl border border-neutral-200/90 bg-white">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[min(100%,640px)] border-collapse lg:min-w-0">
               <thead>

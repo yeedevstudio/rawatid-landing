@@ -14,9 +14,10 @@ const SUBTITLE = "Pelajari lebih dalam informasi kesehatan dengan data dan visua
 
 const SOURCES = ["/image/cacar.png", "/image/herpes.png", "/image/hepa.png", "/image/dbdcover.png", "/image/kursi.png", "/image/demam.png"];
 
-/** Kartu tertentu membuka halaman artikel seperti DBD; lainnya tidak ditautkan */
+
 const CARD_HREF_BY_SRC = {
   "/image/cacar.png": "/cacar-air",
+  "/image/herpes.png": "/herpes-simplex",
   "/image/dbdcover.png": "/dbd",
 };
 
@@ -41,7 +42,7 @@ function arraysEqualAsSets(a, b) {
   return b.every((x) => s.has(x));
 }
 
-/** `blog`: jarak vertikal lebih rapat untuk /blog; beranda tetap default. */
+
 export default function InteractiveKontenSection({ variant = "default" }) {
   const scrollerRef = useRef(null);
   const [visibleIndices, setVisibleIndices] = useState([0]);

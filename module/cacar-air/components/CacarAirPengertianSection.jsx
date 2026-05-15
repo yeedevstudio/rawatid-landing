@@ -17,7 +17,7 @@ export default function CacarAirPengertianSection() {
           Pengertian dan Definisi
         </h2>
 
-        <div className="grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-2 lg:gap-7 xl:gap-8">
+        <div data-aos="fade-up" suppressHydrationWarning className="grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-2 lg:gap-7 xl:gap-8">
           <article
             className={`rounded-[16px] border border-neutral-200/90 bg-white px-5 py-7 md:px-6 md:py-8 ${CACAR_AIR_CARD_BOX_SHADOW}`}
           >
