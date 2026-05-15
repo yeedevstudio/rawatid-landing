@@ -197,7 +197,7 @@ export default function HerpesGejalaSection() {
           </div>
 
           {/* Callout */}
-          <div className="flex items-start gap-4 rounded-2xl border border-[#F5A623]/40 bg-[#FFF8EC] px-6 py-6 md:px-8 md:py-7">
+          <div className="flex items-start gap-4 rounded-2xl border border-[#F5A623]/40 bg-white px-6 py-6 md:px-8 md:py-7">
             <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#F5A623]/60 bg-white text-[#F5A623]">
               <IconInfoCircle className="h-5 w-5 stroke-[1.5]" aria-hidden />
             </div>

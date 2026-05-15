@@ -63,7 +63,7 @@ function PhaseHeading({ children }) {
 
 function WarningPhnBox() {
   return (
-    <div className="mt-10 rounded-2xl border border-red-300/90 bg-[#FDF5F5] px-5 py-5 md:mt-12 md:px-6 md:py-6">
+    <div className="mt-10 rounded-2xl border border-red-300/90 bg-white px-5 py-5 md:mt-12 md:px-6 md:py-6">
       <div className="flex flex-wrap items-start gap-3 md:gap-4">
         <span
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#DC2626] text-white md:h-11 md:w-11"

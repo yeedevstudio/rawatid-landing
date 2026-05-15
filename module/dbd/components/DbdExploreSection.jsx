@@ -75,8 +75,8 @@ function ExploreCard({ item }) {
 export default function DbdExploreSection() {
   return (
     <section className="w-full bg-white px-5 md:px-12 lg:px-20 xl:px-24 py-12 md:py-16">
-      <h2 className="mb-8 md:mb-10 text-xl font-bold text-[#038F7A] md:text-2xl">Jelajahi Informasi</h2>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-6">
+      <h2 data-aos="fade-up" suppressHydrationWarning className="mb-8 md:mb-10 text-xl font-bold text-[#038F7A] md:text-2xl">Jelajahi Informasi</h2>
+      <div data-aos="fade-up" data-aos-delay="100" suppressHydrationWarning className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-6">
         {ITEMS.map((item) => (
           <ExploreCard key={item.id} item={item} />
         ))}

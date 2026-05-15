@@ -4,7 +4,7 @@ export default function DbdHeroSection() {
   return (
     <section className="w-full px-5 md:px-12 lg:px-20 xl:px-24 py-12 md:py-16 lg:py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div className="flex flex-col gap-4 md:gap-6 text-left">
+        <div data-aos="fade-right" suppressHydrationWarning className="flex flex-col gap-4 md:gap-6 text-left">
           <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[52px] font-bold leading-[1.15] text-[#DB1A1A] tracking-tight">
             <span className="block">Demam Berdarah</span>
             <span className="block">Dengue (DBD)</span>
@@ -17,7 +17,7 @@ export default function DbdHeroSection() {
 
         {/* Gambar kanan: file apa adanya dari Figma, tanpa kelas/ukuran/background */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/image/nyamuk.png" alt="" />
+        <img data-aos="fade-left" suppressHydrationWarning src="/image/nyamuk.png" alt="" />
       </div>
     </section>
   );

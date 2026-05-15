@@ -14,6 +14,14 @@ const nextConfig = {
       },
     ];
   },
+  redirects: async () => {
+    return [
+      { source: "/cacar-air", destination: "/interaktif/cacar-air", permanent: true },
+      { source: "/herpes-simplex", destination: "/interaktif/herpes-simplex", permanent: true },
+      { source: "/dbd", destination: "/interaktif/dbd", permanent: true },
+      { source: "/hepatitis", destination: "/interaktif/hepatitis", permanent: true },
+    ];
+  },
   rewrites: async () => {
     return [
       {
