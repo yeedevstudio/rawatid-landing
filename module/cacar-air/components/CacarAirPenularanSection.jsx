@@ -157,7 +157,7 @@ export default function CacarAirPenularanSection() {
 
   return (
     <section id="cara-penularan" className="scroll-mt-24 bg-white px-5 py-12 md:px-12 md:py-16 lg:px-20 xl:px-24">
-      <div className={CACAR_AIR_CONTENT_INSET}>
+      <div data-aos="fade-up" suppressHydrationWarning className={CACAR_AIR_CONTENT_INSET}>
         <h2 className="mb-6 text-[1.375rem] font-semibold leading-tight tracking-tight text-[#038F7A] md:mb-8 md:text-[1.5rem] lg:text-[1.625rem] xl:text-[1.6875rem]">
           Cara Penularan
         </h2>

@@ -10,6 +10,8 @@ export default function CacarAirKenapaPentingSection() {
       className="scroll-mt-24 bg-white px-5 pb-14 pt-8 md:px-12 md:pt-10 md:pb-20 lg:px-20 lg:pt-12 xl:px-24"
     >
       <div
+        data-aos="fade-up"
+        suppressHydrationWarning
         className={`w-full rounded-2xl border border-neutral-200/90 bg-white py-6 pl-4 pr-4 ${CACAR_AIR_CARD_BOX_SHADOW} sm:py-7 sm:pl-5 sm:pr-5 md:py-8 md:pl-6 md:pr-6 lg:pl-6 lg:pr-6 xl:pl-7 xl:pr-7 ${CACAR_AIR_CONTENT_INSET}`}
       >
         <div className="flex flex-wrap items-start gap-2.5 sm:gap-3 md:gap-3.5">

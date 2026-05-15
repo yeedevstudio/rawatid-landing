@@ -84,7 +84,7 @@ export default function CacarAirExploreSection() {
         <h2 className="mb-7 text-[1.375rem] font-semibold leading-tight tracking-tight text-[#038F7A] md:mb-9 md:text-[1.5rem] lg:mb-10 lg:text-[1.625rem] xl:text-[1.6875rem]">
           Jelajahi Informasi
         </h2>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 xl:gap-7">
+        <div data-aos="fade-up" suppressHydrationWarning className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 xl:gap-7">
           {ITEMS.map((item) => (
             <ExploreCard key={item.id} item={item} />
           ))}
