@@ -20,6 +20,7 @@ const CARD_HREF_BY_SRC = {
   "/image/herpes.png": "/herpes-simplex",
   "/image/dbdcover.png": "/dbd",
   "/image/hepa.png": "/hepatitis",
+  "/image/kursi.png": "/interaktif/poliomielitis",
 };
 
 function getVisibleCardIndices(scroller, row, thresholdPx = 8) {
