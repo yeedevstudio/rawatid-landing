@@ -101,7 +101,7 @@ export default function DbdSerotipeSection() {
       </div>
 
       <div data-aos="fade-up" suppressHydrationWarning className="mt-14 w-full text-center md:mt-16 lg:mt-20">
-        <h2 className="text-lg font-semibold text-[#038F7A] md:text-xl">Empat Serotipe Virus Dengue</h2>
+        <h2 className="text-lg font-semibold text-[#038F7A] md:text-xl">Empat Serotipe Virus <em>Dengue</em></h2>
         <p className="mt-3 text-[14px] font-normal leading-relaxed text-neutral-600 md:mt-4 md:text-base">
           Inilah yang membuat seseorang bisa menderita DBD lebih dari satu kali seumur hidup.
         </p>

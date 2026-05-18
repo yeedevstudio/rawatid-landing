@@ -7,7 +7,7 @@ export default function DbdHeroSection() {
         <div data-aos="fade-right" suppressHydrationWarning className="flex flex-col gap-4 md:gap-6 text-left">
           <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[52px] font-bold leading-[1.15] text-[#DB1A1A] tracking-tight">
             <span className="block">Demam Berdarah</span>
-            <span className="block">Dengue (DBD)</span>
+            <span className="block"><em>Dengue</em> (DBD)</span>
           </h1>
           <p className="text-[16px] sm:text-[18px] md:text-[20px] leading-relaxed text-neutral-600 max-w-xl">
             <span className="block">Panduan Lengkap Berbasis Bukti Ilmiah untuk</span>
