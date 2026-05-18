@@ -20,6 +20,7 @@ const nextConfig = {
       { source: "/herpes-simplex", destination: "/interaktif/herpes-simplex", permanent: true },
       { source: "/dbd", destination: "/interaktif/dbd", permanent: true },
       { source: "/hepatitis", destination: "/interaktif/hepatitis", permanent: true },
+      { source: "/demam-tifoid", destination: "/interaktif/demam-tifoid", permanent: true },
     ];
   },
   rewrites: async () => {

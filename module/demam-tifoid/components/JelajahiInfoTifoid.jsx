@@ -9,34 +9,39 @@ import React from "react";
 
 const ITEMS = [
   {
-    id: "apa-itu-dbd",
-    title: <>Apa Itu Demam Berdarah <em>Dengue</em>?</>,
-    description: <>Penjelasan mengenai definisi Demam Berdarah <em>Dengue</em> (DBD)</>,
+    id: "apa-itu-tifoid",
+    title: <>Apa Itu Demam <em>Tifoid</em>?</>,
+    description: <>Penjelasan mengenai definisi Demam <em>Tifoid</em></>,
     Icon: IconInfoCircle,
+    linked: true,
   },
   {
     id: "penyebab-risiko",
     title: "Penyebab & Faktor Risiko",
-    description: "Kenali penyebab & Resiko yang terjadi pada masing masing penyakit",
+    description: "Kenali penyebab & risiko yang terjadi pada masing masing penyakit",
     Icon: IconHelpCircle,
+    linked: true,
   },
   {
     id: "cara-penularan",
     title: "Cara Penularan",
     description: "Pelajari bagaimana virus menyebar dari satu orang ke orang lain",
     Icon: IconUsers,
+    linked: false,
   },
   {
     id: "tanda-gejala",
     title: "Tanda & Gejala",
     description: "Kenali gejala yang muncul pada masing masing penyakit",
     Icon: IconTemperature,
+    linked: false,
   },
   {
     id: "penanganan",
     title: "Penanganan",
     description: "Pelajari bagaimana virus menyebar dari satu orang ke orang lain",
     Icon: IconMedicalCross,
+    linked: false,
   },
 ];
 
@@ -61,7 +66,7 @@ function ExploreCard({ item }) {
   const className =
     "flex min-h-[280px] min-w-0 md:min-h-[300px] flex-col items-stretch justify-start gap-4 rounded-[16px] bg-white px-4 py-6 md:gap-5 md:px-5 md:py-8 shadow-[0px_0px_12.1px_0px_#0000001A] border border-neutral-200/90";
 
-  if (item.id === "apa-itu-dbd" || item.id === "penyebab-risiko") {
+  if (item.linked) {
     return (
       <a href={`#${item.id}`} className={`${className} cursor-pointer`}>
         {body}
@@ -72,10 +77,12 @@ function ExploreCard({ item }) {
   return <div className={className}>{body}</div>;
 }
 
-export default function DbdExploreSection() {
+export default function JelajahiInfoTifoid() {
   return (
-    <section className="w-full bg-white px-5 md:px-12 lg:px-20 xl:px-24 py-12 md:py-16">
-      <h2 data-aos="fade-up" suppressHydrationWarning className="mb-8 md:mb-10 text-xl font-bold text-[#038F7A] md:text-2xl">Jelajahi Informasi</h2>
+    <section className="w-full bg-white px-5 py-12 md:px-12 md:py-16 lg:px-20 xl:px-24">
+      <h2 data-aos="fade-up" suppressHydrationWarning className="mb-8 text-xl font-bold text-[#038F7A] md:mb-10 md:text-2xl">
+        Jelajahi Informasi
+      </h2>
       <div data-aos="fade-up" data-aos-delay="100" suppressHydrationWarning className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-6">
         {ITEMS.map((item) => (
           <ExploreCard key={item.id} item={item} />
