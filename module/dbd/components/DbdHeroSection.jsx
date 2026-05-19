@@ -10,13 +10,12 @@ export default function DbdHeroSection() {
             <span className="block"><em>Dengue</em> (DBD)</span>
           </h1>
           <p className="text-[16px] sm:text-[18px] md:text-[20px] leading-relaxed text-neutral-600 max-w-xl">
-            <span className="block">Panduan Lengkap Berbasis Bukti Ilmiah untuk</span>
-            <span className="block">Masyarakat Umum</span>
+            <span className="block">Indonesia adalah salah satu negara <em>endemis </em> Demam Berdarah Dengue. Hampir seluruh wilayah Indonesia berisiko, dan wabah besar kerap terjadi setiap tahunnya.</span>
+           
           </p>
         </div>
 
-        {/* Gambar kanan: file apa adanya dari Figma, tanpa kelas/ukuran/background */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+       
         <img data-aos="fade-left" suppressHydrationWarning src="/image/nyamuk.png" alt="" />
       </div>
     </section>
