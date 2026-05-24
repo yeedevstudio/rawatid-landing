@@ -43,10 +43,10 @@ export default function RawatDiriSection() {
       <div className="px-5 md:px-12 lg:px-20 xl:px-24 py-16 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16">
           <div className="text-white">
-            <h2 className="text-[32px] md:text-[40px] leading-[1.2] font-semibold">
+            <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] leading-[1.2] font-semibold">
               Kelola Kesehatan Harian dari Genggamanmu dengan Rawat Diri
             </h2>
-            <p className="mt-3 text-[18px] md:text-[22px] leading-[1.5] text-white/90">
+            <p className="mt-3 text-[14px] sm:text-[16px] md:text-[18px] lg:text-[22px] leading-[1.5] text-white/90">
               Pantau jadwal minum obat dan rencana diet dengan mudah melalui
               aplikasi RawatDiri.
             </p>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const CARD_MAX_WIDTH_PX = 428;
+const CARD_MOBILE_CLASS = "h-auto w-auto max-w-[260px] sm:max-w-[340px] md:max-w-[428px]";
 const CARD_SLOT = "block shrink-0 snap-start";
 
 const GUTTER = "px-5 md:px-12 lg:px-20 xl:px-24";
@@ -115,8 +116,8 @@ export default function InteractiveKontenSection({ variant = "default" }) {
                     alt=""
                     width={CARD_MAX_WIDTH_PX}
                     height={CARD_MAX_WIDTH_PX}
-                    className="h-auto w-auto max-w-[428px]"
-                    sizes={`${CARD_MAX_WIDTH_PX}px`}
+                    className={CARD_MOBILE_CLASS}
+                    sizes="(max-width: 640px) 260px, (max-width: 768px) 340px, 428px"
                     priority={i === 0}
                   />
                 </Link>
@@ -127,8 +128,8 @@ export default function InteractiveKontenSection({ variant = "default" }) {
                     alt=""
                     width={CARD_MAX_WIDTH_PX}
                     height={CARD_MAX_WIDTH_PX}
-                    className="h-auto w-auto max-w-[428px]"
-                    sizes={`${CARD_MAX_WIDTH_PX}px`}
+                    className={CARD_MOBILE_CLASS}
+                    sizes="(max-width: 640px) 260px, (max-width: 768px) 340px, 428px"
                     priority={false}
                   />
                 </div>

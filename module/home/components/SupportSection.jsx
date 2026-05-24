@@ -91,7 +91,7 @@ export default function SupportSection() {
           kesehatan.
         </p>
 
-        <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-9 gap-y-8 gap-x-4 lg:gap-x-5 items-start">
+        <div className="mt-7 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-9 gap-y-8 gap-x-4 lg:gap-x-5 items-start justify-items-center">
           {ITEMS.map((item) => (
             <Link
               key={item.title}
@@ -100,7 +100,7 @@ export default function SupportSection() {
               className="group flex flex-col items-center text-center select-none"
             >
               <CircleIcon src={item.src} alt={item.alt} />
-              <div className="mt-3 text-white text-sm leading-snug whitespace-pre-line">
+              <div className="mt-3 text-white text-xs sm:text-sm leading-snug whitespace-pre-line">
                 {item.title}
               </div>
             </Link>
