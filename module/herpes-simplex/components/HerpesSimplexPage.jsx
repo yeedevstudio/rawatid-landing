@@ -12,6 +12,7 @@ import HerpesPenangananSection from "./HerpesPenangananSection";
 import HerpesKomplikasiSection from "./HerpesKomplikasiSection";
 import HerpesPencegahanSection from "./HerpesPencegahanSection";
 import HerpesClosingSection from "./HerpesClosingSection";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function HerpesSimplexPage() {
   return (
@@ -28,6 +29,7 @@ export default function HerpesSimplexPage() {
       <HerpesKomplikasiSection />
       <HerpesPencegahanSection />
       <HerpesClosingSection />
+      <RelatedInteraktifSection currentSlug="herpes-simplex" />
     </>
   );
 }

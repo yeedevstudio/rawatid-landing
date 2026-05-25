@@ -10,6 +10,7 @@ import CacarAirPenangananSection from "./CacarAirPenangananSection";
 import CacarAirPenularanSection from "./CacarAirPenularanSection";
 import CacarAirPerbandinganSection from "./CacarAirPerbandinganSection";
 import CacarAirPengertianSection from "./CacarAirPengertianSection";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function CacarAirPage() {
   return (
@@ -25,6 +26,7 @@ export default function CacarAirPage() {
       <CacarAirKomplikasiSection />
       <CacarAirPencegahanSection />
       <CacarAirMitosFaktaSection />
+      <RelatedInteraktifSection currentSlug="cacar-air" />
     </>
   );
 }

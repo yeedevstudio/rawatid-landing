@@ -9,6 +9,7 @@ import PenangananTifoid from "./PenangananTifoid";
 import KomplikasiTifoid from "./KomplikasiTifoid";
 import PencegahanTifoid from "./PencegahanTifoid";
 import MitosFaktaTifoid from "./MitosFaktaTifoid";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function DemamTifoidPage() {
   return (
@@ -23,6 +24,7 @@ export default function DemamTifoidPage() {
       <KomplikasiTifoid />
       <PencegahanTifoid />
       <MitosFaktaTifoid />
+      <RelatedInteraktifSection currentSlug="demam-tifoid" />
     </>
   );
 }

@@ -33,9 +33,15 @@ export default function InformasiObatPage() {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    const mq = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   useEffect(() => {
@@ -109,13 +115,14 @@ export default function InformasiObatPage() {
   const safePage = clamp(page, 1, Math.max(1, totalPages));
 
   const paginationNumbers = useMemo(() => {
-    const maxButtons = 5;
+    const maxButtons = isMobile ? 3 : 5;
     if (totalPages <= maxButtons) {
       return Array.from({ length: totalPages }).map((_, i) => i + 1);
     }
-    const start = clamp(safePage - 2, 1, totalPages - (maxButtons - 1));
+    const half = Math.floor(maxButtons / 2);
+    const start = clamp(safePage - half, 1, totalPages - (maxButtons - 1));
     return Array.from({ length: maxButtons }).map((_, i) => start + i);
-  }, [safePage, totalPages]);
+  }, [safePage, totalPages, isMobile]);
 
   return (
     <div className="w-full">
@@ -250,12 +257,20 @@ export default function InformasiObatPage() {
             ))}
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col items-center gap-2">
+            <p className="text-xs text-gray-500 sm:hidden">
+              Halaman {safePage} dari {totalPages}
+            </p>
             <Pagination>
-              <PaginationContent>
+              <PaginationContent className="gap-0.5 sm:gap-1">
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"
+                    className={`h-9 px-2 sm:px-3 transition-all duration-300 ease-in-out ${
+                      safePage <= 1
+                        ? "opacity-50 pointer-events-none"
+                        : "hover:bg-green hover:text-white"
+                    }`}
                     onClick={(e) => {
                       e.preventDefault();
                       setPage((p) => clamp(p - 1, 1, totalPages));
@@ -268,6 +283,9 @@ export default function InformasiObatPage() {
                     <PaginationLink
                       href="#"
                       isActive={n === safePage}
+                      className={`h-9 w-9 transition-all duration-300 ease-in-out hover:bg-green hover:text-white ${
+                        n === safePage ? "bg-green text-white border-green" : ""
+                      }`}
                       onClick={(e) => {
                         e.preventDefault();
                         setPage(n);
@@ -281,6 +299,11 @@ export default function InformasiObatPage() {
                 <PaginationItem>
                   <PaginationNext
                     href="#"
+                    className={`h-9 px-2 sm:px-3 transition-all duration-300 ease-in-out ${
+                      safePage >= totalPages
+                        ? "opacity-50 pointer-events-none"
+                        : "hover:bg-green hover:text-white"
+                    }`}
                     onClick={(e) => {
                       e.preventDefault();
                       setPage((p) => clamp(p + 1, 1, totalPages));

@@ -391,8 +391,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                     <section>
                       <h2 className="text-base md:text-lg font-semibold text-gray-900">Daftar Produk Obat</h2>
                       <div className="mt-4 border-t border-gray-200" />
-                      <div className="mt-4 w-full overflow-x-auto">
-                        <table className="min-w-[900px] w-full text-sm md:text-base">
+
+                      {/* Desktop: tabel */}
+                      <div className="mt-4 hidden sm:block w-full overflow-x-auto">
+                        <table className="w-full text-sm md:text-base">
                           <thead>
                             <tr className="text-gray-600 border-b border-gray-200">
                               <th className="text-left font-semibold py-3 pr-4">Nama Produk</th>
@@ -404,7 +406,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                           <tbody>
                             {drugs.map((d, idx) => (
                               <tr key={d?.id || d?._id || idx} className="text-gray-800 border-b border-gray-200 align-top">
-                                <td className="py-5 pr-4 whitespace-nowrap font-medium">{d?.product_name || d?.name || d?.product || "-"}</td>
+                                <td className="py-5 pr-4 font-medium">{d?.product_name || d?.name || d?.product || "-"}</td>
                                 <td className="py-5 pr-4 text-gray-700">{d?.ing_name || d?.active_ingredient || d?.active || data?.name || "-"}</td>
                                 <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{d?.form_name || d?.dosage_form || d?.form || "-"}</td>
                                 <td className="py-5 pr-4 text-gray-700 whitespace-pre-line">{formatDrugStrength(d)}</td>
@@ -412,6 +414,35 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                             ))}
                           </tbody>
                         </table>
+                      </div>
+
+                      {/* Mobile: card stack */}
+                      <div className="mt-4 sm:hidden flex flex-col gap-3">
+                        {drugs.map((d, idx) => (
+                          <div
+                            key={d?.id || d?._id || idx}
+                            className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm space-y-3"
+                          >
+                            <p className="font-semibold text-gray-900 text-sm leading-snug">
+                              {d?.product_name || d?.name || d?.product || "-"}
+                            </p>
+                            <div className="border-t border-gray-100" />
+                            <div className="grid grid-cols-2 gap-y-2 gap-x-3 text-sm">
+                              <span className="text-gray-500">Zat Aktif</span>
+                              <span className="text-gray-800 text-right">
+                                {d?.ing_name || d?.active_ingredient || d?.active || data?.name || "-"}
+                              </span>
+                              <span className="text-gray-500">Bentuk Sediaan</span>
+                              <span className="text-gray-800 text-right whitespace-pre-line">
+                                {d?.form_name || d?.dosage_form || d?.form || "-"}
+                              </span>
+                              <span className="text-gray-500">Jumlah Kandungan</span>
+                              <span className="text-gray-800 text-right whitespace-pre-line">
+                                {formatDrugStrength(d)}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </section>
                   ) : null}

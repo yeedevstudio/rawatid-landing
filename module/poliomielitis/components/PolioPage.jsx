@@ -10,6 +10,7 @@ import KomplikasiPolio from "./KomplikasiPolio";
 import KomplikasiJangkaPanjang from "./KomplikasiJangkaPanjang";
 import PencegahanPolio from "./PencegahanPolio";
 import MitosFaktaPolio from "./MitosFaktaPolio";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function PolioPage() {
   return (
@@ -26,6 +27,7 @@ export default function PolioPage() {
       <KomplikasiJangkaPanjang />
       <PencegahanPolio />
       <MitosFaktaPolio />
+      <RelatedInteraktifSection currentSlug="poliomielitis" />
     </>
   );
 }

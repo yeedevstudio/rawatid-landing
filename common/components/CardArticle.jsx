@@ -116,8 +116,7 @@ export const CardArticleSidebar = ({
     </div>
     <div>
       <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-1 md:my-1 text-white bg-green">{category}</h3>
-      <h2 className="text-lg md:text-xl lg:text-xl font-medium tracking-wider py-1 md:py-2 hidden lg:block">{title.split(" ").slice(0, 8).join(" ")}</h2>
-      <h2 className="text-base md:text-xl lg:text-xl font-medium tracking-wider py-1 md:py-2 block lg:hidden">{title.split(" ").slice(0, 3).join(" ")}...</h2>
+      <h2 className="text-base md:text-lg lg:text-xl font-medium tracking-wider py-1 md:py-2 leading-snug">{title}</h2>
       {headline && (
         <p className="text-xs md:text-sm lg:text-base mt-2 lg:mt-2 font-light text-neutral90 tracking-wider text-justify">
           <span className="block md:hidden">{headline.split(" ").slice(0, 16).join(" ")}...</span>
