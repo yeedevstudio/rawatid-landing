@@ -9,6 +9,7 @@ import DbdPenangananSection from "./DbdPenangananSection";
 import DbdPencegahanSection from "./DbdPencegahanSection";
 import DbdPenyebabRisikoSection from "./DbdPenyebabRisikoSection";
 import DbdSerotipeSection from "./DbdSerotipeSection";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function DbdPage() {
   return (
@@ -23,6 +24,7 @@ export default function DbdPage() {
       <DbdKomplikasiSection />
       <DbdPencegahanSection />
       <DbdMitosFaktaSection />
+      <RelatedInteraktifSection currentSlug="dbd" />
     </>
   );
 }

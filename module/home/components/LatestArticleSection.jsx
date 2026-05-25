@@ -4,7 +4,7 @@ import { CardArticleAll } from "@/common/components/CardArticle";
 async function getLatestArticles() {
   if (!process.env.API_URL) return [];
 
-  const res = await fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=3`, { cache: "no-store" });
+  const res = await fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=6`, { cache: "no-store" });
 
   if (!res.ok) return [];
   const postData = await res.json();

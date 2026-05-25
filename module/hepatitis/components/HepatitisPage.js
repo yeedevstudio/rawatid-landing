@@ -9,6 +9,7 @@ import HepatitisGejalaSection from "./HepatitisGejalaSection";
 import HepatitisKomplikasiSection from "./HepatitisKomplikasiSection";
 import HepatitisPencegahanSection from "./HepatitisPencegahanSection";
 import HepatitisClosingSection from "./HepatitisClosingSection";
+import RelatedInteraktifSection from "@/common/components/RelatedInteraktifSection";
 
 export default function HepatitisPage() {
   return (
@@ -22,6 +23,7 @@ export default function HepatitisPage() {
       <HepatitisKomplikasiSection />
       <HepatitisPencegahanSection />
       <HepatitisClosingSection />
+      <RelatedInteraktifSection currentSlug="hepatitis" />
     </>
   );
 }
