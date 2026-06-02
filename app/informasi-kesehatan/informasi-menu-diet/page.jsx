@@ -1,6 +1,13 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import MenuDietClient from "./MenuDietClient";
 
+export const metadata = {
+  title: "Temukan Berbagai Referensi Menu Sehat untuk Dietmu",
+  alternates: {
+    canonical: "https://www.rawat.id/informasi-kesehatan/informasi-menu-diet",
+  },
+};
+
 export default function InformasiMenuDietPage() {
   return (
     <div className="w-full">
