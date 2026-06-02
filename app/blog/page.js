@@ -46,7 +46,7 @@ async function fetchAllPostsForHome(apiUrl) {
 }
 
 export const metadata = {
-  title: " Blog Teknologi dan Kesehatan dari Rawat.ID",
+  title: "Temukan Berbagai Artikel, Tips dan Informasi untuk Kesehatanmu",
   description: "Blog Rawat.ID menghadirkan panduan dan artikel tentang digitalisasi kesehatan, solusi efektif untuk tenaga kesehatan, berita seputaran kesehatan, informasi umum dan Teknologi.",
   keywords: ["Rawat.ID", "artikel", "beranda", "Kesehatan", "Informasi Umum", "Berita", "Teknologi", "Rekam Medis", "Rawat", "Tips tenaga kesehatan", "Blog Kesehatan", "Inovasi teknologi kesehatan", "blog rawat.id", "blog kesehatan"],
   alternates: {

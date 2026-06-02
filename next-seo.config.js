@@ -1,10 +1,11 @@
 const canonicalUrl = "https://rawat.id";
-const metaImage =
-  "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png";
-const metaDescription =
-  "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!";
+
+const metaImage = "https://res.cloudinary.com/ddugt5n5v/image/upload/v1737400229/RawatID02_q8ouek.png";
+
+const metaDescription = "Memberikan solusi dan berbagai informasi kesehatan terbaik untuk merawat kesehatanmu";
+
 const metaKeywords =
-  "Rawat.Id, faskes, Sistem Informasi Manajemen Kesehatan, Kesehatan, Rekam Medis, Rawat";
+  "Rawat ID, Informasi Kesehatan, Informasi Penyakit, Gejala Penyakit, Diagnosis Penyakit, Penanganan Penyakit, Pengobatan Penyakit, Informasi Obat, Manfaat Obat, Kandungan Obat, Efek Samping Obat, Interaksi Obat, Tips Hidup Sehat, Menu Diet, Menu Sehat, Kalkulator Kesehatan, Hidup Sehat, Mencegah Penyakit, Kesehatan Mental, Tips Kesehatan, Tips Penyakit, Informasi Rumah Sakit, Informasi Klinik, Informasi Tenaga Kesehatan, Informasi Fasilitas Kesehatan, Direktori Kesehatan, Kesehatan Masyarakat, Tips Menjaga Kesehatan, Tips Mencegah Penyakit";
 
 const defaultSEOConfig = {
   defaultTitle: "Rawat ID",
