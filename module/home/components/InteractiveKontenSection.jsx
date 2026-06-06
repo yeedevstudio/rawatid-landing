@@ -101,8 +101,8 @@ export default function InteractiveKontenSection({ variant = "default" }) {
 
   const inner = (
     <>
-      <h2 className="text-left text-2xl font-semibold leading-tight text-[#038F7A] md:text-3xl lg:text-[2rem]">Interaktif Konten</h2>
-      <p className="mt-1.5 max-w-3xl text-left text-base font-normal leading-snug text-[#038F7A]/85 md:mt-2 md:text-lg lg:text-xl">{SUBTITLE}</p>
+      <h2 className="text-center lg:text-left text-2xl font-semibold leading-tight text-[#038F7A] md:text-3xl lg:text-[2rem]">Interaktif Konten</h2>
+      <p className="mt-1.5 max-w-3xl text-center lg:text-left text-base font-normal leading-snug text-[#038F7A]/85 md:mt-2 md:text-lg lg:text-xl">{SUBTITLE}</p>
 
       <div className={`${isBlog ? "" : SCROLL_EDGE} mt-3 md:mt-4`}>
         <div ref={scrollerRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">

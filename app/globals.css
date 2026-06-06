@@ -87,6 +87,7 @@ html {
 /* NOTE: Removed drug-detail-flat forced reset.
    It prevented us from matching Figma/table borders on drug detail pages. */
 
+
 .footer {
   @apply flex flex-col text-black  mt-5 border-t border-gray-100;
 }

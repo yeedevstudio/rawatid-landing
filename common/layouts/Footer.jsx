@@ -27,7 +27,7 @@ const Footer = () => {
                 className="object-contain bg-white p-1 rounded-full"
               />
               <h2 className="text-base md:text-lg text-white">
-                Mendukung Digitalisasi Rekam Medis Anda
+                Memberikan solusi dan informasi terbaik untuk merawat kesehatanmu
               </h2>
             </Link>
 

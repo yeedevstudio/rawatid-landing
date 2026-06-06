@@ -41,34 +41,23 @@ export default function RawatDiriSection() {
       className="w-full bg-[#038F7A]"
     >
       <div className="px-5 md:px-12 lg:px-20 xl:px-24 py-16 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16">
-          <div className="text-white">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-16">
+          {/* Kiri: teks + badge (desktop) — satu group agar centered dengan gambar */}
+          <div className="text-white text-center lg:text-left">
             <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] leading-[1.2] font-semibold">
-              Kelola Kesehatan Harian dari Genggamanmu dengan Rawat Diri
+              Kelola Kesehatan dengan RawatDiri
             </h2>
             <p className="mt-3 text-[14px] sm:text-[16px] md:text-[18px] lg:text-[22px] leading-[1.5] text-white/90">
-              Pantau jadwal minum obat dan rencana diet dengan mudah melalui
-              aplikasi RawatDiri.
+              Susun rencana diet, pantau jadwal minum obat hingga catat riwayat kesehatan dengan lebih mudah menggunakan RawatDiri
             </p>
-
-            <div className="mt-6 flex gap-3 flex-wrap">
-              <StoreBadge
-                src="/images/Apple.png"
-                alt="App Store"
-                eyebrow="Download on the"
-                title="App Store"
-                logoClassName="w-[24px] h-[24px]"
-              />
-              <StoreBadge
-                src="/images/Playstore.png"
-                alt="Google Play"
-                eyebrow="GET IT ON"
-                title="Google Play"
-                logoClassName="w-[26px] h-[26px]"
-              />
+            {/* Badge desktop — hanya tampil di lg ke atas */}
+            <div className="hidden lg:flex mt-6 gap-3 flex-wrap">
+              <StoreBadge src="/images/Apple.png" alt="App Store" eyebrow="Download on the" title="App Store" logoClassName="w-[24px] h-[24px]" />
+              <StoreBadge src="/images/Playstore.png" alt="Google Play" eyebrow="GET IT ON" title="Google Play" logoClassName="w-[26px] h-[26px]" />
             </div>
           </div>
 
+          {/* Kanan: gambar */}
           <div className="flex items-center justify-center lg:justify-end">
             <Image
               src="/images/phone.png"
@@ -78,6 +67,12 @@ export default function RawatDiriSection() {
               className="w-full max-w-[520px] h-auto"
               priority={false}
             />
+          </div>
+
+          {/* Badge mobile — hanya tampil di bawah lg, setelah gambar */}
+          <div className="flex lg:hidden gap-3 flex-wrap justify-center">
+            <StoreBadge src="/images/Apple.png" alt="App Store" eyebrow="Download on the" title="App Store" logoClassName="w-[24px] h-[24px]" />
+            <StoreBadge src="/images/Playstore.png" alt="Google Play" eyebrow="GET IT ON" title="Google Play" logoClassName="w-[26px] h-[26px]" />
           </div>
         </div>
       </div>
