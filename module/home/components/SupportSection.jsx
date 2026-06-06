@@ -61,18 +61,6 @@ const ITEMS = [
     alt: "Referensi Menu Diet",
     href: "/informasi-kesehatan/informasi-menu-diet",
   },
-  {
-    title: "Tenaga\nKesehatan",
-    src: "/images/heart.png",
-    alt: "Tenaga Kesehatan",
-    href: "/blog/kategori/tenaga-kesehatan",
-  },
-  {
-    title: "Fasilitas\nKesehatan",
-    src: "/images/gedung.png",
-    alt: "Fasilitas Kesehatan",
-    href: "/blog/kategori/fasilitas-kesehatan",
-  },
 ];
 
 export default function SupportSection() {
@@ -83,21 +71,20 @@ export default function SupportSection() {
       className="w-full bg-[#038F7A]"
     >
       <div className="px-5 md:px-12 lg:px-20 xl:px-24 py-10 md:py-12">
-        <h2 className="text-white text-xl md:text-2xl font-semibold">
+        <h2 className="text-white text-xl md:text-2xl font-semibold text-center lg:text-left">
           Dukungan untuk Berbagai Kebutuhan Kesehatan
         </h2>
-        <p className="text-white/90 text-sm md:text-base mt-1">
-          Akses berbagai fitur untuk membantu Anda memahami obat dan memantau
-          kesehatan.
+        <p className="text-white/90 text-sm md:text-base mt-1 text-center lg:text-left">
+          Akses alat pemantau kesehatan dan temukan berbagai informasi kesehatan terkini
         </p>
 
-        <div className="mt-7 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-9 gap-y-8 gap-x-4 lg:gap-x-5 items-start justify-items-center">
-          {ITEMS.map((item) => (
+        <div className="mt-7 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-y-8 gap-x-4 lg:gap-x-5 items-start justify-items-center">
+          {ITEMS.map((item, index) => (
             <Link
               key={item.title}
               href={item.href}
               aria-label={item.alt}
-              className="group flex flex-col items-center text-center select-none"
+              className={`group flex flex-col items-center text-center select-none${index === ITEMS.length - 1 && ITEMS.length % 3 === 1 ? " col-start-2 lg:col-start-auto" : ""}`}
             >
               <CircleIcon src={item.src} alt={item.alt} />
               <div className="mt-3 text-white text-xs sm:text-sm leading-snug whitespace-pre-line">

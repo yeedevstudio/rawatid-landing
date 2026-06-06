@@ -3,15 +3,66 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { blogSubnavGroups, headerValueBlog } from "../constant/headerValue";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { IconChevronRight, IconMenu2 } from "@tabler/icons-react";
+import { IconChevronRight, IconMenu2, IconHome, IconHeartPlus, IconNews, IconDeviceDesktopAnalytics, IconBuildingCommunity, IconBriefcase, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
+
+const mobileNavItems = [
+  { title: "Beranda", url: "/", icon: IconHome },
+  {
+    title: "Informasi Kesehatan",
+    icon: IconHeartPlus,
+    matchPrefixes: ["/informasi-kesehatan"],
+    items: [
+      { title: "Informasi Obat", url: "/informasi-kesehatan/informasi-obat" },
+      { title: "Informasi Menu Diet", url: "/informasi-kesehatan/informasi-menu-diet" },
+      { title: "Informasi RS dan Klinik", url: "/informasi-kesehatan/informasi-rs-dan-klinik" },
+    ],
+  },
+  {
+    title: "Artikel",
+    icon: IconNews,
+    matchPrefixes: ["/blog"],
+    items: [
+      { title: "Kesehatan", url: "/blog/kategori/kesehatan" },
+      { title: "Bioteknologi", url: "/blog/kategori/bioteknologi" },
+      { title: "Teknologi Kesehatan", url: "/blog/kategori/teknologi" },
+      { title: "Informasi Umum", url: "/blog/kategori/informasi-umum" },
+    ],
+  },
+  { title: "Interaktif", url: "/interaktif", icon: IconDeviceDesktopAnalytics },
+  { title: "Sistem Faskes", url: "/sistem-faskes", icon: IconBuildingCommunity },
+  {
+    title: "Alat Kesehatan",
+    icon: IconBriefcase,
+    matchPrefixes: ["/alat-kesehatan"],
+    items: [
+      { title: "Kalkulator BMI", url: "/alat-kesehatan/kalkulator-bmi" },
+      { title: "Pengingat Minum Obat", url: "/alat-kesehatan/pengingat-minum-obat" },
+      { title: "Rencana Diet", url: "/alat-kesehatan/rencana-diet" },
+      { title: "Personal Health Record", url: "/alat-kesehatan/personal-health-record" },
+    ],
+  },
+];
 
 export default function Header() {
   const [isSheetOpen, setSheetOpen] = useState(false);
   const router = usePathname();
+
+  const getAutoExpandedGroup = (pathname) => {
+    const matched = mobileNavItems.find(
+      (item) => item.items && item.matchPrefixes?.some((p) => pathname.startsWith(p))
+    );
+    return matched?.title || null;
+  };
+
+  const [expandedGroup, setExpandedGroup] = useState(() => getAutoExpandedGroup(router));
+
+  useEffect(() => {
+    setExpandedGroup(getAutoExpandedGroup(router));
+  }, [router]);
 
   const isExternalUrl = (url) =>
     typeof url === "string" &&
@@ -80,35 +131,61 @@ export default function Header() {
                 <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
                 <SheetTitle className="text-green text-xl">Rawat.ID</SheetTitle>
               </Link>
-              <nav className="px-4 mt-10">
-                <ul className="flex flex-col gap-8">
-                  {headerValueBlog?.map((item, index) => (
-                    <Link itemProp="button" href={item.url} key={index} onClick={handleClose}>
-                      <h2 className="text-base text-gray-800 hover:text-green transition-all duration-300 ease-in-out">{item.title}</h2>
-                    </Link>
-                  ))}
+              <nav className="mt-8">
+                <ul className="flex flex-col">
+                  {mobileNavItems.map((item) => {
+                    const Icon = item.icon;
+                    const isExpanded = expandedGroup === item.title;
 
-                  {activeBlogGroup && activeSubnavItems?.length ? (
-                    <div className="pt-2 mt-2 border-t border-black/10">
-                      <div className="text-sm font-semibold text-gray-500 mb-3">
-                        {activeBlogGroup.groupTitle}
-                        {activeBlogSection?.sectionTitle ? ` • ${activeBlogSection.sectionTitle}` : ""}
-                      </div>
-                      <div className="flex flex-col gap-5">
-                        {activeSubnavItems.map((it) => (
-                          <Link
-                            key={it.url}
-                            href={it.url}
-                            onClick={handleClose}
-                            target={isExternalUrl(it.url) ? "_blank" : undefined}
-                            rel={isExternalUrl(it.url) ? "noopener noreferrer" : undefined}
+                    if (item.items) {
+                      return (
+                        <li key={item.title}>
+                          <button
+                            onClick={() => setExpandedGroup(isExpanded ? null : item.title)}
+                            className={`w-full flex items-center justify-between px-4 py-4 text-base font-medium transition-colors ${isExpanded ? "bg-[#EBF6F9] text-green" : "text-gray-800 hover:text-green"}`}
                           >
-                            <div className={router === it.url || router.startsWith(`${it.url}/`) ? "text-green font-semibold" : "text-gray-800 hover:text-green"}>{it.title}</div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : null}
+                            <span className="flex items-center gap-3">
+                              <Icon size={22} className={isExpanded ? "text-green" : "text-gray-500"} />
+                              {item.title}
+                            </span>
+                            {isExpanded ? <IconChevronUp size={18} className="text-green" /> : <IconChevronDown size={18} className="text-gray-400" />}
+                          </button>
+                          {isExpanded && (
+                            <ul className="bg-[#EBF6F9] pb-2">
+                              {item.items.map((sub) => {
+                                const isActive = router === sub.url || router.startsWith(`${sub.url}/`);
+                                return (
+                                  <li key={sub.url}>
+                                    <Link
+                                      href={sub.url}
+                                      onClick={handleClose}
+                                      className={`flex items-center pl-[52px] pr-4 py-3 text-base transition-colors ${isActive ? "text-green font-semibold border-l-[3px] border-green" : "text-gray-700 hover:text-green border-l-[3px] border-transparent"}`}
+                                    >
+                                      {sub.title}
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          )}
+                        </li>
+                      );
+                    }
+
+                    const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
+                    return (
+                      <li key={item.title}>
+                        <Link
+                          href={item.url}
+                          onClick={handleClose}
+                          className={`flex items-center gap-3 px-4 py-4 text-base font-medium transition-colors ${isActive ? "text-green font-semibold" : "text-gray-800 hover:text-green"}`}
+                        >
+                          <Icon size={22} className={isActive ? "text-green" : "text-gray-500"} />
+                          {item.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </SheetContent>
@@ -117,7 +194,7 @@ export default function Header() {
       </header>
 
       {activeBlogGroup ? (
-        <div className="w-full bg-[#EBF6F9] border-b border-black/5 h-[85px]">
+        <div className="hidden lg:block w-full bg-[#EBF6F9] border-b border-black/5 h-[85px]">
           <div className="px-5 md:px-12 flex items-center gap-6 h-full">
             <div className="hidden md:flex items-center gap-3 min-w-[16rem]">
               <Link href={activeBlogGroup.groupUrl} className="text-sm md:text-lg text-gray-800 font-semibold hover:text-green transition-all">
