@@ -65,7 +65,7 @@ export default function BlogHighlight({ data }) {
           </Link>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 h-full">
-          <Skeleton className="w-full h-full min-h-[18rem] md:min-h-[25rem] lg:min-h-[15rem] max-h-full rounded-xl" />
+          <Skeleton className="hidden md:block w-full h-full min-h-[18rem] md:min-h-[25rem] lg:min-h-[15rem] max-h-full rounded-xl" />
           <div className="grid grid-cols-1 gap-2 md:gap-6">
             <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl " />
             <Skeleton className="w-full h-[16rem] md:h-[15.5rem] lg:h-[9rem] rounded-xl" />
@@ -91,7 +91,7 @@ export default function BlogHighlight({ data }) {
         </Link>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4 h-full">
-        <div className="transition-all duration-300 ease-in-out">
+        <div className="hidden md:block transition-all duration-300 ease-in-out">
           <CardArticle
             src={currentArticle?.thumbnail?.formats?.small?.url}
             alt={currentArticle?.thumbnail?.formats?.small?.url}

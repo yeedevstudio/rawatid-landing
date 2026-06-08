@@ -215,11 +215,16 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
     return data?.brand_names || data?.brandNames || data?.trade_names || data?.tradeNames || data?.merk_dagang || data?.merk_dagang_obat || "";
   }, [data]);
 
-  const warnings = useMemo(() => {
-    const warningsRaw =
-      data?.warnings || data?.warning || data?.precautions || data?.drug_precautions || data?.warning_before_using || data?.warningBeforeUsing || data?.drug_contraindications || data?.drugContraindications || data?.contraindications || "";
-    return splitTextToBullets(warningsRaw);
+  const warningsRaw = useMemo(() => {
+    return data?.warnings || data?.warning || data?.precautions || data?.drug_precautions || data?.warning_before_using || data?.warningBeforeUsing || data?.drug_contraindications || data?.drugContraindications || data?.contraindications || "";
   }, [data]);
+
+  const warningsIsHtml = useMemo(() => /<[a-z][\s\S]*>/i.test(warningsRaw), [warningsRaw]);
+
+  const warnings = useMemo(() => {
+    if (!warningsRaw || warningsIsHtml) return [];
+    return splitTextToBullets(warningsRaw);
+  }, [warningsRaw, warningsIsHtml]);
 
   const dosageRaw = useMemo(() => {
     return data?.dosage || data?.dose || data?.how_to_use || data?.drug_dosage || data?.dosage_and_rules || data?.dosageAndRules || "";
@@ -288,7 +293,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
               {/* Sementara disembunyikan sampai semua obat selesai ditinjau tim konten medis.
               <div className="mb-8 md:mb-10 text-xs md:text-sm text-gray-500">{reviewedLine}</div>
               */}
-              <div className="text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">{data?.description || ""}</div>
+              <div
+                className="text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_em]:italic [&_strong]:font-semibold [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1"
+                dangerouslySetInnerHTML={{ __html: data?.description || "" }}
+              />
             </div>
 
             <div className="relative w-full overflow-hidden rounded-2xl bg-gray-50 aspect-[16/9]">
@@ -308,9 +316,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                     <h2 className="text-base md:text-lg font-semibold text-gray-900">Apa itu {data?.name}</h2>
                     <div className="mt-3 border-t border-gray-200" />
                     {data?.medicinal_uses || data?.benefits ? (
-                      <div className="mt-4 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
-                        {data?.medicinal_uses || data?.benefits}
-                      </div>
+                      <div
+                        className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_em]:italic [&_strong]:font-semibold [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1"
+                        dangerouslySetInnerHTML={{ __html: data?.medicinal_uses || data?.benefits }}
+                      />
                     ) : null}
 
                     <div className="mt-5 w-full overflow-x-auto">
@@ -331,19 +340,28 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                     </div>
                   </section>
 
-                  {warnings?.length ? (
+                  {warningsRaw ? (
                     <section>
                       <h2 className="text-base md:text-lg font-semibold text-gray-900">Peringatan sebelum Menggunakan {data?.name}</h2>
-                      <p className="mt-3 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
-                        {data?.warning_intro || data?.warningIntro || `${data?.name} tidak boleh digunakan sembarangan dan harus sesuai dengan resep dokter. Beberapa hal yang perlu diperhatikan sebelum mengonsumsi obat ini adalah:`}
-                      </p>
-                      <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
-                        {warnings.map((it, idx) => (
-                          <li key={idx} className="leading-relaxed">
-                            {it}
-                          </li>
-                        ))}
-                      </ul>
+                      {warningsIsHtml ? (
+                        <div
+                          className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_em]:italic [&_strong]:font-semibold [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1"
+                          dangerouslySetInnerHTML={{ __html: warningsRaw }}
+                        />
+                      ) : (
+                        <>
+                          <p className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed">
+                            {data?.warning_intro || data?.warningIntro || `${data?.name} tidak boleh digunakan sembarangan dan harus sesuai dengan resep dokter. Beberapa hal yang perlu diperhatikan sebelum mengonsumsi obat ini adalah:`}
+                          </p>
+                          <ul className="mt-5 list-disc pl-6 space-y-3 text-sm md:text-base text-gray-800 marker:text-gray-900">
+                            {warnings.map((it, idx) => (
+                              <li key={idx} className="leading-relaxed">
+                                {it}
+                              </li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
                     </section>
                   ) : null}
 
@@ -351,9 +369,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                     <section>
                       <h2 className="text-base md:text-lg font-semibold text-gray-900">Efek Samping {data?.name}</h2>
                       <div className="mt-3 border-t border-gray-200" />
-                      <div className="mt-5 text-sm md:text-base text-gray-800 whitespace-pre-line leading-relaxed">
-                        {sideEffects}
-                      </div>
+                      <div
+                        className="mt-5 text-sm md:text-base text-gray-800 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_em]:italic [&_strong]:font-semibold [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1"
+                        dangerouslySetInnerHTML={{ __html: sideEffects }}
+                      />
                     </section>
                   ) : null}
 
@@ -381,9 +400,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                     <section>
                       <h2 className="text-lg md:text-xl font-semibold text-gray-900">Overdosis {data?.name}</h2>
                       <div className="mt-3 border-t border-gray-200" />
-                      <div className="mt-4 text-sm md:text-base text-gray-700 whitespace-pre-line leading-relaxed">
-                        {String(data.overdose)}
-                      </div>
+                      <div
+                        className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_em]:italic [&_strong]:font-semibold [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1"
+                        dangerouslySetInnerHTML={{ __html: String(data.overdose) }}
+                      />
                     </section>
                   ) : null}
 
@@ -463,15 +483,10 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
                   {data?.referenced ? (
                     <section>
                       <h2 className="text-base md:text-lg font-semibold text-gray-900">Referensi</h2>
-                      <div className="mt-3 text-sm md:text-base text-gray-700 italic space-y-1 whitespace-pre-line">
-                        {String(data.referenced)
-                          .split(/\r?\n+/)
-                          .map((s) => s.trim())
-                          .filter(Boolean)
-                          .map((line, idx) => (
-                            <div key={idx}>{line}</div>
-                          ))}
-                      </div>
+                      <div
+                        className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:pl-1 [&_li]:mb-1 [&_a]:text-green [&_a]:underline [&_a]:break-all"
+                        dangerouslySetInnerHTML={{ __html: String(data.referenced) }}
+                      />
                     </section>
                   ) : null}
                 </div>

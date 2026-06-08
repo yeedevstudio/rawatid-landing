@@ -126,26 +126,7 @@ export const blogSubnavGroups = [
       },
     ],
   },
-  {
-    groupTitle: "Interaktif",
-    groupUrl: "/interaktif",
-    matchPrefixes: [
-      "/interaktif",
-      "/cacar-air",
-      "/dbd",
-      "/herpes-simplex",
-      "/hepatitis",
-      "/demam-tifoid",
-    ],
-    items: [
-      { title: "Cacar Air vs Cacar Ular", url: "/interaktif/cacar-air" },
-      { title: "Demam Berdarah Dengue (DBD)", url: "/interaktif/dbd" },
-      { title: "Herpes Simplex", url: "/interaktif/herpes-simplex" },
-      { title: "Hepatitis A", url: "/interaktif/hepatitis" },
-      { title: "Poliomielitis", url: "/interaktif/poliomielitis" },
-      { title: "Tipes (Demam Tifoid)", url: "/interaktif/demam-tifoid" },
-    ],
-  },
+
   {
     groupTitle: "Artikel",
     groupUrl: "/blog",
