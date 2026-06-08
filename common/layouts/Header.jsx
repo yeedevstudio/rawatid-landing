@@ -21,17 +21,7 @@ const mobileNavItems = [
       { title: "Informasi RS dan Klinik", url: "/informasi-kesehatan/informasi-rs-dan-klinik" },
     ],
   },
-  {
-    title: "Artikel",
-    icon: IconNews,
-    matchPrefixes: ["/blog"],
-    items: [
-      { title: "Kesehatan", url: "/blog/kategori/kesehatan" },
-      { title: "Bioteknologi", url: "/blog/kategori/bioteknologi" },
-      { title: "Teknologi Kesehatan", url: "/blog/kategori/teknologi" },
-      { title: "Informasi Umum", url: "/blog/kategori/informasi-umum" },
-    ],
-  },
+  { title: "Artikel", url: "/blog", icon: IconNews },
   { title: "Interaktif", url: "/interaktif", icon: IconDeviceDesktopAnalytics },
   { title: "Sistem Faskes", url: "/sistem-faskes", icon: IconBuildingCommunity },
   {
@@ -142,7 +132,7 @@ export default function Header() {
                         <li key={item.title}>
                           <button
                             onClick={() => setExpandedGroup(isExpanded ? null : item.title)}
-                            className={`w-full flex items-center justify-between px-4 py-4 text-base font-medium transition-colors ${isExpanded ? "bg-[#EBF6F9] text-green" : "text-gray-800 hover:text-green"}`}
+                            className={`w-full flex items-center justify-between px-4 py-4 text-base font-medium text-left transition-colors ${isExpanded ? "bg-[#EBF6F9] text-green" : "text-gray-800 hover:text-green"}`}
                           >
                             <span className="flex items-center gap-3">
                               <Icon size={22} className={isExpanded ? "text-green" : "text-gray-500"} />
