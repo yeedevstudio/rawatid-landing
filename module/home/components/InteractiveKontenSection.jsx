@@ -13,17 +13,84 @@ const SCROLL_EDGE = "-mx-5 md:-mx-12 lg:-mx-20 xl:-mx-24 pl-5 md:pl-12 lg:pl-20 
 
 const SUBTITLE = "Pelajari lebih dalam informasi kesehatan dengan data dan visual";
 
-const SOURCES = ["/image/cacar.png", "/image/herpes.png", "/image/hepa.png", "/image/dbdcover.png", "/image/kursi.png", "/image/demam.png"];
+const IMAGE_CARDS = [
+  { src: "/image/cacar.png",    href: "/cacar-air" },
+  { src: "/image/herpes.png",   href: "/herpes-simplex" },
+  { src: "/image/hepa.png",     href: "/hepatitis" },
+  { src: "/image/dbdcover.png", href: "/dbd" },
+  { src: "/image/kursi.png",    href: "/interaktif/poliomielitis" },
+  { src: "/image/demam.png",    href: "/demam-tifoid" },
+];
 
+const COMPOSITE_CARDS = [
+  {
+    id: "flu-burung",
+    src: "/image/fluburung.svg",
+    href: "/interaktif/flu-burung",
+    title: "Flu Burung",
+    subtitle: "Penyakit yang disebabkan oleh virus influenza dari unggas",
+    cardBg: "#C8E9E6",
+    gradFrom: "transparent",
+    gradTo: "#3A9992",
+  },
+  {
+    id: "cacar-monyet",
+    src: "/image/cacarmonyet.svg",
+    href: "/interaktif/cacar-monyet",
+    title: "Cacar Monyet",
+    subtitle: "Infeksi virus zoonotik yang dapat menular antar manusia",
+    cardBg: "#C8E9E6",
+    gradFrom: "transparent",
+    gradTo: "#3A9992",
+  },
+];
 
-const CARD_HREF_BY_SRC = {
-  "/image/cacar.png": "/cacar-air",
-  "/image/herpes.png": "/herpes-simplex",
-  "/image/dbdcover.png": "/dbd",
-  "/image/hepa.png": "/hepatitis",
-  "/image/kursi.png": "/interaktif/poliomielitis",
-  "/image/demam.png": "/demam-tifoid",
-};
+// Full-bleed card: illustration fills entire card, gradient overlay + text at bottom
+function CompositeCard({ card }) {
+  const inner = (
+    <div
+      className="relative overflow-hidden rounded-[1.4rem] select-none w-[235px] sm:w-[305px] md:w-[395px]"
+      style={{ aspectRatio: "415 / 546", background: card.cardBg }}
+    >
+      {/* Full bleed illustration */}
+      <Image
+        src={card.src}
+        alt={card.title}
+        fill
+        className="object-cover"
+        sizes="(max-width: 640px) 260px, (max-width: 768px) 340px, 428px"
+      />
+
+      {/* Gradient overlay from transparent → solid, same style as PNG cards */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-[42%] flex flex-col justify-end px-[8%] pb-[7%] pt-[10%]"
+        style={{
+          background: `linear-gradient(to bottom, transparent 0%, ${card.gradTo}CC 40%, ${card.gradTo} 100%)`,
+        }}
+      >
+        <h3 className="text-white font-bold leading-tight text-xl sm:text-2xl md:text-[1.65rem]">{card.title}</h3>
+        <p className="mt-2 text-white/85 leading-snug text-xs sm:text-sm md:text-[0.9rem]">{card.subtitle}</p>
+      </div>
+    </div>
+  );
+
+  return card.href ? (
+    <Link
+      href={card.href}
+      className={`${CARD_SLOT} self-center mx-3 md:mx-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#038F7A]`}
+    >
+      {inner}
+    </Link>
+  ) : (
+    <div className={`${CARD_SLOT} self-center mx-3 md:mx-4`}>{inner}</div>
+  );
+}
+
+// All cards in order: existing image cards first, then composite
+const ALL_CARDS = [
+  ...IMAGE_CARDS.map((c) => ({ type: "image", ...c })),
+  ...COMPOSITE_CARDS.map((c) => ({ type: "composite", ...c })),
+];
 
 function getVisibleCardIndices(scroller, row, thresholdPx = 8) {
   if (!scroller || !row?.children.length) return [0];
@@ -107,12 +174,14 @@ export default function InteractiveKontenSection({ variant = "default" }) {
       <div className={`${isBlog ? "" : SCROLL_EDGE} mt-3 md:mt-4`}>
         <div ref={scrollerRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
           <div className="flex w-max min-w-0">
-            {SOURCES.map((src, i) => {
-              const linkedHref = CARD_HREF_BY_SRC[src];
-              return linkedHref ? (
-                <Link key={src} href={linkedHref} className={`${CARD_SLOT} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#038F7A]`}>
+            {ALL_CARDS.map((card, i) => {
+              if (card.type === "composite") {
+                return <CompositeCard key={card.id} card={card} />;
+              }
+              return card.href ? (
+                <Link key={card.src} href={card.href} className={`${CARD_SLOT} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#038F7A]`}>
                   <Image
-                    src={src}
+                    src={card.src}
                     alt=""
                     width={CARD_MAX_WIDTH_PX}
                     height={CARD_MAX_WIDTH_PX}
@@ -122,9 +191,9 @@ export default function InteractiveKontenSection({ variant = "default" }) {
                   />
                 </Link>
               ) : (
-                <div key={src} className={CARD_SLOT}>
+                <div key={card.src} className={CARD_SLOT}>
                   <Image
-                    src={src}
+                    src={card.src}
                     alt=""
                     width={CARD_MAX_WIDTH_PX}
                     height={CARD_MAX_WIDTH_PX}
@@ -141,12 +210,12 @@ export default function InteractiveKontenSection({ variant = "default" }) {
 
       <div className="mt-3 flex justify-center md:mt-4">
         <div role="group" aria-label="Indikator kartu interaktif" className="flex h-11 w-full max-w-md items-stretch overflow-hidden rounded-none border border-neutral-300 bg-white sm:h-12 md:max-w-lg">
-          {SOURCES.map((_, i) => (
+          {ALL_CARDS.map((_, i) => (
             <button
               key={i}
               type="button"
               aria-current={primaryVisible === i ? "true" : undefined}
-              aria-label={`Kartu ke-${i + 1} dari ${SOURCES.length}${visibleIndices.includes(i) ? " (terlihat)" : ""}`}
+              aria-label={`Kartu ke-${i + 1} dari ${ALL_CARDS.length}${visibleIndices.includes(i) ? " (terlihat)" : ""}`}
               onClick={() => scrollToIndex(i)}
               className="relative z-10 flex min-h-[44px] min-w-0 flex-1 items-center justify-center border-r border-neutral-300 px-1 last:border-r-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#038F7A] focus-visible:ring-offset-2"
             >

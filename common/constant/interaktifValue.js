@@ -44,4 +44,20 @@ export const INTERAKTIF_CONTENTS = [
       "Penyakit infeksi yang sering kita dengar namun sering disalahpahami penyebabnya",
     image: "/image/tifoidpage.png",
   },
+  {
+    slug: "flu-burung",
+    url: "/interaktif/flu-burung",
+    title: "Flu Burung (Avian Influenza)",
+    description:
+      "Penyakit yang disebabkan oleh virus influenza dari unggas dengan tingkat kematian yang tinggi",
+    image: "/image/fluburung.svg",
+  },
+  {
+    slug: "cacar-monyet",
+    url: "/interaktif/cacar-monyet",
+    title: "Cacar Monyet (Mpox)",
+    description:
+      "Penyakit infeksi virus yang ditandai bintik merah dan lepuhan di seluruh tubuh disertai demam",
+    image: "/image/cacarmonyet.svg",
+  },
 ];
