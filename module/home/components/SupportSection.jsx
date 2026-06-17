@@ -66,6 +66,7 @@ const ITEMS = [
 export default function SupportSection() {
   return (
     <section
+      id="dukungan-kesehatan"
       data-aos="fade-up"
       suppressHydrationWarning
       className="w-full bg-[#038F7A]"
