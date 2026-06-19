@@ -244,9 +244,7 @@ export default function InformasiObatPage() {
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold text-gray-900 truncate">{o.name}</div>
                     <Link
-                      href={`/informasi-kesehatan/informasi-obat/${o.slug}${
-                        o.ing_code ? `?ing_code=${encodeURIComponent(o.ing_code)}` : ""
-                      }`}
+                      href={`/informasi-kesehatan/informasi-obat/${o.slug}`}
                       className="inline-flex items-center gap-1 text-green font-semibold text-sm mt-1 hover:text-greenHover transition-colors"
                     >
                       Lihat Detail <ChevronRight className="w-4 h-4" />
