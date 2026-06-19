@@ -107,7 +107,7 @@ function normalizeData(json) {
   return json?.data || json;
 }
 
-export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
+export default function DrugDetailClient({ slug }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [data, setData] = useState(null);
@@ -156,8 +156,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
         const detail = normalizeData(jsonDetail);
         if (!detail) throw new Error("Detail obat tidak ditemukan");
 
-        const ingCodeFromData = detail?.ing_code ?? detail?.ingCode ?? detail?.ingredient_code ?? detail?.ingredientCode ?? detail?.code ?? detail?.Code ?? "";
-        const ingCodeForFetch = String(ingCodeProp || ingCodeFromData || "").trim();
+        const ingCodeForFetch = String(detail?.ing_code ?? detail?.ingCode ?? detail?.ingredient_code ?? detail?.ingredientCode ?? detail?.code ?? detail?.Code ?? "").trim();
 
         const drugsPromise = ingCodeForFetch
           ? fetch(`/drugs/public?ing_code=${encodeURIComponent(ingCodeForFetch)}`, { cache: "no-store" }).then(async (r) => {
@@ -202,7 +201,7 @@ export default function DrugDetailClient({ slug, ing_code: ingCodeProp }) {
     return () => {
       cancelled = true;
     };
-  }, [slug, ingCodeProp]);
+  }, [slug]);
 
   // Sementara disembunyikan sampai semua obat selesai ditinjau tim konten medis.
   // const reviewedLine = useMemo(() => {
