@@ -12,6 +12,8 @@ import {
   IconRefresh,
   IconBookmark,
 } from "@tabler/icons-react";
+import DatePicker from "@/common/components/DatePicker";
+import { format } from "date-fns";
 
 const CATEGORIES = [
   {
@@ -133,19 +135,19 @@ function InputField({ label, icon: Icon, placeholder, unit, value, onChange, err
     <div>
       <p className="text-sm md:text-base font-medium text-neutral-90 mb-2">{label}</p>
       <div
-        className={`flex items-center rounded-lg border bg-white overflow-hidden ${
+        className={`flex items-center h-12 rounded-lg border bg-white overflow-hidden ${
           error ? "border-red-500" : "border-gray-200"
         }`}
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-green shrink-0">
-          <Icon size={22} color="white" />
+        <div className="flex items-center justify-center w-12 h-full bg-green shrink-0">
+          <Icon size={16} color="white" />
         </div>
         <input
           type="number"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="flex-1 px-4 py-3 text-sm outline-none bg-transparent placeholder:text-gray-400"
+          className="flex-1 h-full px-4 text-sm outline-none bg-transparent placeholder:text-gray-400"
         />
         <span className="pr-4 text-sm text-gray-400 shrink-0">{unit}</span>
       </div>
@@ -156,7 +158,7 @@ function InputField({ label, icon: Icon, placeholder, unit, value, onChange, err
 
 function BmiForm({ onResult }) {
   const [sex, setSex] = useState(null);
-  const [usia, setUsia] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(null);
   const [tinggiBadan, setTinggiBadan] = useState("");
   const [beratBadan, setBeratBadan] = useState("");
   const [errors, setErrors] = useState({});
@@ -165,7 +167,7 @@ function BmiForm({ onResult }) {
   const validate = () => {
     const newErrors = {};
     if (!sex) newErrors.sex = "Pilih jenis kelamin";
-    if (!usia || Number(usia) <= 0) newErrors.usia = "Masukkan usia yang valid";
+    if (!dateOfBirth) newErrors.dateOfBirth = "Tanggal lahir wajib diisi";
     if (!tinggiBadan || Number(tinggiBadan) <= 0)
       newErrors.tinggiBadan = "Masukkan tinggi badan yang valid";
     if (!beratBadan || Number(beratBadan) <= 0)
@@ -174,11 +176,19 @@ function BmiForm({ onResult }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const getErrorMessage = (json) => {
+    if (json?.message) return json.message;
+    if (Array.isArray(json?.errors) && json.errors.length > 0) {
+      return json.errors.map((e) => e.message ?? e).join(", ");
+    }
+    if (typeof json?.errors === "object" && json.errors !== null) {
+      return Object.values(json.errors).flat().join(", ");
+    }
+    return "Gagal menghitung BMI. Silakan coba lagi.";
+  };
+
   const handleSubmit = async () => {
     if (!validate()) return;
-
-    const birthYear = new Date().getFullYear() - parseInt(usia);
-    const dateOfBirth = `${birthYear}-01-01`;
 
     setLoading(true);
     try {
@@ -189,22 +199,28 @@ function BmiForm({ onResult }) {
           weight: parseFloat(beratBadan),
           height: parseFloat(tinggiBadan),
           sex,
-          dateOfBirth,
+          dateOfBirth: format(dateOfBirth, "yyyy-MM-dd"),
         }),
       });
 
       const json = await res.json();
 
       if (!res.ok) {
-        toast.error(json.message || "Gagal menghitung BMI. Silakan coba lagi.");
+        toast.error(getErrorMessage(json));
         return;
       }
 
+      if (!json.data) {
+        toast.error("Respons tidak valid dari server.");
+        return;
+      }
+
+      toast.success(json.message || "BMI berhasil dihitung!");
       const resultData = { ...json.data, sex };
       localStorage.setItem("bmi_result", JSON.stringify(resultData));
       onResult(resultData);
     } catch {
-      toast.error("Terjadi kesalahan jaringan.");
+      toast.error("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
     } finally {
       setLoading(false);
     }
@@ -259,18 +275,22 @@ function BmiForm({ onResult }) {
         </div>
 
         <div className="flex flex-col gap-5">
-          <InputField
-            label="Usia"
-            icon={IconUser}
-            placeholder="Contoh: 25"
-            unit="thn"
-            value={usia}
-            onChange={(e) => {
-              setUsia(e.target.value);
-              if (errors.usia) setErrors((prev) => ({ ...prev, usia: "" }));
-            }}
-            error={errors.usia}
-          />
+          <div>
+            <p className="text-sm md:text-base font-medium text-neutral-90 mb-2">Tanggal Lahir</p>
+            <DatePicker
+              value={dateOfBirth}
+              onChange={(date) => {
+                setDateOfBirth(date);
+                if (errors.dateOfBirth) setErrors((prev) => ({ ...prev, dateOfBirth: "" }));
+              }}
+              maxDate={new Date()}
+              minDate={new Date(1940, 0, 1)}
+              error={errors.dateOfBirth}
+            />
+            {errors.dateOfBirth && (
+              <p className="text-red-500 text-xs mt-1">{errors.dateOfBirth}</p>
+            )}
+          </div>
           <InputField
             label="Tinggi Badan"
             icon={IconRuler}

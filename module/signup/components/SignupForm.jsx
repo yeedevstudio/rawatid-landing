@@ -55,6 +55,15 @@ function PasswordField({ label, placeholder, value, onChange, error }) {
   );
 }
 
+const getErrorMessage = (json) => {
+  if (json?.message) return json.message;
+  if (Array.isArray(json?.errors) && json.errors.length > 0)
+    return json.errors.map((e) => e.message ?? e).join(", ");
+  if (typeof json?.errors === "object" && json.errors !== null)
+    return Object.values(json.errors).flat().join(", ");
+  return "Registrasi gagal. Silakan coba lagi.";
+};
+
 export default function SignupForm() {
   const router = useRouter();
   const [values, setValues] = useState({
@@ -138,7 +147,7 @@ export default function SignupForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.message || "Registrasi gagal. Silakan coba lagi.");
+        toast.error(getErrorMessage(data));
         return;
       }
 

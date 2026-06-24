@@ -31,6 +31,15 @@ function InputField({ label, type, placeholder, value, onChange, error, suffix }
   );
 }
 
+const getErrorMessage = (json) => {
+  if (json?.message) return json.message;
+  if (Array.isArray(json?.errors) && json.errors.length > 0)
+    return json.errors.map((e) => e.message ?? e).join(", ");
+  if (typeof json?.errors === "object" && json.errors !== null)
+    return Object.values(json.errors).flat().join(", ");
+  return "Login gagal. Periksa kembali email dan password Anda.";
+};
+
 export default function SigninForm() {
   const router = useRouter();
   const [values, setValues] = useState({ username: "", password: "" });
@@ -70,7 +79,7 @@ export default function SigninForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.message || "Login gagal. Periksa kembali email dan password Anda.");
+        toast.error(getErrorMessage(data));
         return;
       }
 
