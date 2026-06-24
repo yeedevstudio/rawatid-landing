@@ -1,5 +1,11 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
-import Page505 from "@/common/components/Page505";
+import KalkulatorBmiForm from "@/module/kalkulator-bmi";
+
+export const metadata = {
+  title: "Kalkulator BMI - Hitung Indeks Massa Tubuh Anda | Rawat.id",
+  description:
+    "Hitung Indeks Massa Tubuh (BMI) Anda secara mudah dan cepat. Ketahui apakah berat badan Anda ideal berdasarkan tinggi dan berat badan.",
+};
 
 export default function KalkulatorBmiPage() {
   return (
@@ -14,10 +20,9 @@ export default function KalkulatorBmiPage() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <Page505 title="Kalkulator BMI" />
+      <main className="max-w-full mx-32 px-5 md:px-12 pb-16 pt-8">
+        <KalkulatorBmiForm />
       </main>
     </div>
   );
 }
-
