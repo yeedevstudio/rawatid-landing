@@ -252,13 +252,13 @@ function BmiForm({ onResult }) {
                   setSex(value);
                   if (errors.sex) setErrors((prev) => ({ ...prev, sex: "" }));
                 }}
-                className={`flex flex-col items-center justify-center gap-2 py-6 rounded-xl border-2 transition-all ${
+                className={`flex flex-col items-center justify-center gap-2 py-4 md:py-6 rounded-xl border-2 transition-all ${
                   sex === value
                     ? "border-green bg-green/5"
                     : "border-gray-200 hover:border-green/40"
                 }`}
               >
-                <Icon size={32} className={sex === value ? "text-green" : "text-gray-400"} />
+                <Icon size={28} className={sex === value ? "text-green" : "text-gray-400"} />
                 <span
                   className={`text-sm md:text-base font-medium ${
                     sex === value ? "text-green" : "text-gray-500"
@@ -372,7 +372,7 @@ function BmiResult({ data, onReset }) {
                 </span>
 
                 {/* Body image */}
-                <div className="relative w-full h-64 md:h-80 mb-4">
+                <div className="relative w-full h-48 md:h-64 mb-4">
                   <Image
                     src={imageSrc}
                     alt={cat.label}
@@ -430,11 +430,23 @@ function BmiResult({ data, onReset }) {
           </div>
         </div>
 
-        <div className="flex mt-5">
+        <div className="hidden md:flex mt-5">
           {CATEGORIES.map((cat) => (
             <div key={cat.key} className="flex-1 text-center">
               <span className={`text-xs font-medium ${cat.badgeText}`}>{cat.range}</span>
             </div>
+          ))}
+        </div>
+        <div className="flex md:hidden mt-4 gap-2 flex-wrap justify-center">
+          {CATEGORIES.map((cat) => (
+            <span
+              key={cat.key}
+              className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                cat.key === activeCategory.key ? `${cat.badgeBg} ${cat.badgeText}` : "bg-gray-100 text-gray-400"
+              }`}
+            >
+              {cat.label}: {cat.range}
+            </span>
           ))}
         </div>
       </div>
@@ -454,17 +466,17 @@ function BmiResult({ data, onReset }) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-center gap-4 mt-8">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
         <button
           onClick={onReset}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-green text-green font-semibold text-sm hover:bg-green/5 transition-colors"
+          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl border-2 border-green text-green font-semibold text-sm hover:bg-green/5 transition-colors"
         >
           <IconRefresh size={18} />
           Cek Ulang
         </button>
         <button
           onClick={() => toast.success("Hasil BMI berhasil disimpan!")}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green text-white font-semibold text-sm hover:bg-greenHover transition-colors"
+          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-green text-white font-semibold text-sm hover:bg-greenHover transition-colors"
         >
           <IconBookmark size={18} />
           Simpan Hasil
