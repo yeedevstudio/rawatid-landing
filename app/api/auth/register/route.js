@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const res = await fetch(`${process.env.CM_API_URL}/auth/register`, {
+    const res = await fetch(`http://dev.cm-api.rawat.id/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

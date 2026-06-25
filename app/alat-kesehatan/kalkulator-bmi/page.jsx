@@ -20,7 +20,7 @@ export default function KalkulatorBmiPage() {
         />
       </div>
 
-      <main className="max-w-full mx-32 px-5 md:px-12 pb-16 pt-8">
+      <main className="w-full px-4 sm:px-8 md:px-16 lg:px-32 pb-16 pt-8">
         <KalkulatorBmiForm />
       </main>
     </div>

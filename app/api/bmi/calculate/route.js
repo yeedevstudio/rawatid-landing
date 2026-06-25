@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const res = await fetch(`${process.env.CM_API_URL}/bmi/calculate`, {
+    const res = await fetch(`http://dev.cm-api.rawat.id/bmi/calculate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
