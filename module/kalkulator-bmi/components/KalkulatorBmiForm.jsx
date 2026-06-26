@@ -216,7 +216,12 @@ function BmiForm({ onResult }) {
       }
 
       toast.success(json.message || "BMI berhasil dihitung!");
-      const resultData = { ...json.data, sex };
+      const resultData = {
+        ...json.data,
+        sex,
+        weight: parseFloat(beratBadan),
+        height: parseFloat(tinggiBadan),
+      };
       localStorage.setItem("bmi_result", JSON.stringify(resultData));
       onResult(resultData);
     } catch {
@@ -330,9 +335,40 @@ function BmiForm({ onResult }) {
 }
 
 function BmiResult({ data, onReset }) {
-  const { bmi, sex } = data;
+  const { bmi, sex, weight, height, percentile, category } = data;
   const activeCategory = getCategoryByBmi(bmi);
   const isGirl = sex === 2;
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch("/api/bmi/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bmi: parseFloat(Number(bmi).toFixed(2)),
+          percentile: parseFloat(percentile) || 0,
+          category: category ?? activeCategory.label,
+          weight: parseFloat(weight) || 0,
+          height: parseFloat(height) || 0,
+        }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        toast.error(json.message || "Gagal menyimpan hasil BMI.");
+        return;
+      }
+
+      toast.success(json.message || "Hasil BMI berhasil disimpan!");
+    } catch {
+      toast.error("Terjadi kesalahan jaringan.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -475,11 +511,12 @@ function BmiResult({ data, onReset }) {
           Cek Ulang
         </button>
         <button
-          onClick={() => toast.success("Hasil BMI berhasil disimpan!")}
-          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-green text-white font-semibold text-sm hover:bg-greenHover transition-colors"
+          onClick={handleSave}
+          disabled={saving}
+          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-green text-white font-semibold text-sm hover:bg-greenHover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <IconBookmark size={18} />
-          Simpan Hasil
+          {saving ? "Menyimpan..." : "Simpan Hasil"}
         </button>
       </div>
     </div>
