@@ -83,6 +83,11 @@ export default function SigninForm() {
         return;
       }
 
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
       router.push("/succes-signin");
     } catch {
       toast.error("Terjadi kesalahan jaringan.");

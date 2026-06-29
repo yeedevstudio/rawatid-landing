@@ -3,9 +3,13 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const body = await req.json();
+    const authorization = req.headers.get("authorization");
     const res = await fetch(`http://dev.cm-api.rawat.id/bmi/history`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(authorization ? { Authorization: authorization } : {}),
+      },
       body: JSON.stringify(body),
     });
 

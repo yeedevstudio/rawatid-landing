@@ -96,7 +96,8 @@
 }
 
 .select {
-  font-size: 0.875rem;
+  /* 16px on mobile prevents iOS Safari auto-zoom on focus; shrink on larger screens */
+  font-size: 16px;
   font-weight: 600;
   color: #111827;
   border: none;
@@ -109,6 +110,11 @@
 }
 .select:focus {
   color: #038F7A;
+}
+@media (min-width: 768px) {
+  .select {
+    font-size: 0.875rem;
+  }
 }
 
 /* Weekday labels */

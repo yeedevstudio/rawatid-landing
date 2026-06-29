@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   IconGenderMale,
@@ -144,12 +145,13 @@ function InputField({ label, icon: Icon, placeholder, unit, value, onChange, err
         </div>
         <input
           type="number"
+          inputMode="decimal"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="flex-1 h-full px-4 text-sm outline-none bg-transparent placeholder:text-gray-400"
+          className="flex-1 min-w-0 h-full px-4 text-base md:text-sm outline-none bg-transparent placeholder:text-gray-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
-        <span className="pr-4 text-sm text-gray-400 shrink-0">{unit}</span>
+        <span className="pl-1 pr-4 text-sm text-gray-400 shrink-0">{unit}</span>
       </div>
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
@@ -339,13 +341,38 @@ function BmiResult({ data, onReset }) {
   const activeCategory = getCategoryByBmi(bmi);
   const isGirl = sex === 2;
   const [saving, setSaving] = useState(false);
+  const router = useRouter();
+  const scrollRef = useRef(null);
+  const activeCardRef = useRef(null);
+
+  // On mobile, center the user's active category card on load.
+  useEffect(() => {
+    const container = scrollRef.current;
+    const card = activeCardRef.current;
+    if (!container || !card) return;
+    if (window.innerWidth >= 768) return;
+    const left = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+    container.scrollTo({ left, behavior: "auto" });
+  }, []);
 
   const handleSave = async () => {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    if (!token) {
+      toast.info("Silakan masuk terlebih dahulu untuk menyimpan hasil.");
+      router.push("/signin");
+      return;
+    }
+
     setSaving(true);
     try {
       const res = await fetch("/api/bmi/history", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           bmi: parseFloat(Number(bmi).toFixed(2)),
           percentile: parseFloat(percentile) || 0,
@@ -356,6 +383,17 @@ function BmiResult({ data, onReset }) {
       });
 
       const json = await res.json();
+
+      const isAuthError =
+        res.status === 401 ||
+        /token/i.test(json?.message || "");
+
+      if (isAuthError) {
+        localStorage.removeItem("token");
+        toast.error("Sesi Anda telah berakhir. Silakan masuk kembali.");
+        router.push("/signin");
+        return;
+      }
 
       if (!res.ok) {
         toast.error(json.message || "Gagal menyimpan hasil BMI.");
@@ -381,8 +419,11 @@ function BmiResult({ data, onReset }) {
       </div>
 
       {/* Category Cards */}
-      <div className="overflow-x-auto pb-2 scrollbar-hide">
-        <div className="flex gap-3 min-w-max md:min-w-0 md:grid md:grid-cols-5 md:gap-4">
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:snap-none"
+      >
+        <div className="flex gap-3 md:grid md:grid-cols-5 md:gap-4">
           {CATEGORIES.map((cat) => {
             const isActive = cat.key === activeCategory.key;
             const imageSrc = isGirl ? cat.girlImage : cat.manImage;
@@ -390,7 +431,8 @@ function BmiResult({ data, onReset }) {
             return (
               <div
                 key={cat.key}
-                className={`flex flex-col items-center rounded-2xl border-2 pt-4 pb-4 px-3 w-52 md:w-auto transition-all shadow-sm ${
+                ref={isActive ? activeCardRef : null}
+                className={`flex flex-col items-center rounded-2xl border-2 pt-4 pb-4 px-3 w-full shrink-0 snap-center md:w-auto md:shrink transition-all shadow-sm ${
                   isActive
                     ? `${cat.activeBorder} bg-white`
                     : "border-gray-200 bg-white opacity-75"
