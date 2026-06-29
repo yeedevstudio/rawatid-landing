@@ -108,7 +108,7 @@ export default function DatePicker({ value, onChange, error, maxDate, minDate, p
         <div className="flex items-center justify-center w-12 h-full bg-green shrink-0">
           <IconCalendar size={18} color="white" />
         </div>
-        <span className={`flex-1 px-4 text-sm ${value ? "text-gray-700" : "text-gray-400"}`}>
+        <span className={`flex-1 px-4 text-base md:text-sm ${value ? "text-gray-700" : "text-gray-400"}`}>
           {formatDisplay(value) ?? placeholder}
         </span>
       </button>
