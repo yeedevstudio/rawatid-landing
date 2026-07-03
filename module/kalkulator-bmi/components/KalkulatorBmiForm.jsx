@@ -12,6 +12,9 @@ import {
   IconWeight,
   IconRefresh,
   IconBookmark,
+  IconShieldExclamation,
+  IconHelpCircle,
+  IconChevronDown,
 } from "@tabler/icons-react";
 import DatePicker from "@/common/components/DatePicker";
 import { format } from "date-fns";
@@ -332,7 +335,363 @@ function BmiForm({ onResult }) {
           </button>
         </div>
       </div>
+
+      <DisclaimerSection />
+      <FaqSection />
     </div>
+  );
+}
+
+const FAQ_ITEMS = [
+  {
+    question: "Apa itu BMI atau IMT?",
+    answer: (
+      <>
+        <p className="mb-4">
+          <em>Body Mass Index (BMI)</em> atau yang juga dikenal dengan Indeks Massa Tubuh (IMT)
+          adalah nilai ukur untuk mengevaluasi status gizi dengan menggunakan perbandingan antara
+          berat badan dan tinggi badan.
+        </p>
+        <p className="mb-4">
+          Nilai BMI digunakan untuk mengevaluasi apakah berat badan seseorang sudah ideal atau belum
+          dan sebagai alat skrining awal untuk mengetahui risiko seseorang terhadap suatu penyakit.
+        </p>
+        <p className="mb-4">
+          Nilai BMI yang tinggi menandakan bahwa seseorang memiliki berat badan di atas angka ideal,
+          bisa jadi overweight atau obesitas. Sedangkan BMI yang rendah menandakan seseorang memiliki
+          berat badan di bawah angka ideal, bisa jadi karena kekurangan gizi atau memiliki kondisi
+          medis tertentu.
+        </p>
+        <p>
+          Meskipun begitu, perhitungan BMI atau IMT ini hanya bisa digunakan sebagai skrining awal.
+          Untuk mengetahui status gizi dan risiko penyakit yang valid, Kamu tetap harus melakukan
+          konsultasi dan pemeriksaan lebih lanjut dengan dokter dan ahli gizi di fasilitas kesehatan.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "Beberapa Kondisi yang Perlu Diperhatikan Ketika Melakukan Tes BMI",
+    answer: (
+      <>
+        <p className="mb-4">
+          Meskipun <em>Body Mass Index (BMI)</em> atau Indeks Massa Tubuh (IMT) adalah metode praktis
+          berstandar <em>World Health Organization (WHO)</em> untuk skrining awal status gizi, metode
+          ini memiliki beberapa pengecualian:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-4">
+          <li>
+            Tidak membedakan lemak dan otot, BMI tidak bisa membedakan mana berat dari lemak dan mana
+            berat dari otot. Seorang atlet bisa saja memiliki BMI di atas normal karena ototnya yang
+            besar, namun hal ini sama sekali bukan masalah kesehatan.
+          </li>
+          <li>
+            Bias untuk usia lanjut, seiring bertambahnya usia, massa otot cenderung menyusut dan
+            digantikan oleh lemak. Seseorang bisa saja memiliki BMI normal, padahal kadar lemak di
+            tubuhnya tinggi sehingga berisiko buruk bagi kesehatan.
+          </li>
+          <li>
+            Bias pada wanita yang sedang hamil, kenaikan berat badan alami selama masa kehamilan akan
+            mendongkrak angka BMI. Oleh karena itu, wanita hamil disarankan menggunakan berat badannya
+            sebelum hamil untuk perhitungan yang akurat.
+          </li>
+        </ul>
+        <p>
+          Terlepas dari keterbatasan di atas, BMI tetap merupakan alat ukur yang paling mudah, cepat,
+          dan diakui secara global untuk menilai risiko kesehatan dan berat badan seseorang secara
+          umum.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "Bagaimana Rawat ID Menghitung BMI Kamu?",
+    answer: (
+      <>
+        <p className="mb-4">
+          Rawat ID menghitung <em>Body Mass Index (BMI)</em> atau Indeks Massa Tubuh (IMT) Kamu dengan
+          rumus dasar yang membandingkan berat badan (dalam kilogram) dengan tinggi badan (dalam meter
+          persegi).
+        </p>
+        <p className="mb-4">
+          Agar hasil yang didapatkan akurat dan terpercaya, seluruh sistem perhitungan kami mengacu
+          secara ketat pada standar resmi yang ditetapkan oleh{" "}
+          <em>World Health Organization (WHO)</em>. Karena komposisi dan perkembangan tubuh manusia
+          berbeda-beda pada setiap fase kehidupan, Rawat ID menyesuaikan pengukuran BMI ke dalam tiga
+          kelompok usia standar WHO:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-4">
+          <li>
+            <strong className="font-semibold">Usia 0–5 Tahun</strong>, pada masa emas pertumbuhan ini,
+            pengukuran BMI digunakan bersama grafik pertumbuhan khusus untuk memantau status gizi
+            secara presisi, guna mencegah stunting, gizi buruk, maupun risiko kelebihan berat badan
+            dini.
+          </li>
+          <li>
+            <strong className="font-semibold">Usia 5–19 Tahun</strong>, karena anak-anak dan remaja
+            masih dalam masa pertumbuhan dan pubertas, nilai BMI pada rentang usia ini tidak bisa
+            disamaratakan. Rawat ID memproses hasilnya dengan mempertimbangkan faktor umur dan jenis
+            kelamin berdasarkan kurva pertumbuhan WHO.
+          </li>
+          <li>
+            <strong className="font-semibold">Usia di Atas 19 Tahun</strong>, untuk orang dewasa yang
+            masa pertumbuhannya sudah berhenti, Rawat ID menggunakan metode perhitungan persentase BMI
+            standar dengan ambang batas (kategori kurus, normal, overweight, atau obesitas) yang
+            berlaku secara umum.
+          </li>
+        </ul>
+        <p>
+          Dengan sistem yang terkalibrasi berdasarkan kelompok usia ini, diharapkan perhitungan nilai
+          BMI Kamu menjadi lebih relevan, akurat, dan sesuai dengan standar kesehatan global.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "Mengapa Saya Harus Mengukur BMI?",
+    answer: (
+      <>
+        <p className="mb-4">
+          Mengetahui <em>Body Mass Index (BMI)</em> adalah langkah awal yang krusial untuk memantau
+          rasio lemak tubuh terhadap tinggi badan. Menjaga BMI pada rentang yang sehat secara umum akan
+          mengarah pada kualitas hidup yang lebih baik, sehat, dan bahagia.
+        </p>
+        <p className="mb-4">
+          Selain itu, data BMI juga sangat berguna bagi Kamu dan tenaga kesehatan sebagai bahan
+          pertimbangan dalam mengambil keputusan terkait perawatan tubuh Kamu.
+        </p>
+        <p className="mb-4">
+          Angka BMI yang tinggi sering kali menjadi indikator awal atau peringatan terhadap peluang
+          munculnya penyakit serius. Beberapa masalah kesehatan yang berkaitan erat dengan BMI tinggi.
+        </p>
+        <p className="mb-4">
+          Meski sangat berguna, penting untuk dipahami bahwa BMI hanyalah{" "}
+          <strong className="font-semibold">alat skrining awal</strong>, bukan tolok ukur diagnosis
+          pasti untuk menentukan tingkat kegemukan atau status kesehatan seseorang.
+        </p>
+        <p className="mb-4">
+          Jika hasil BMI Kamu menunjukkan angka yang tinggi, hal tersebut tidak selalu langsung
+          diartikan sebagai kondisi medis yang gawat.
+        </p>
+        <p>
+          Namun, untuk memastikan apakah ada risiko kesehatan yang nyata, Kamu tetap sangat disarankan
+          untuk melakukan pemeriksaan dan penilaian lebih lanjut secara langsung dengan dokter atau
+          tenaga kesehatan profesional.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "Bagaimana Jika Seseorang Kekurangan Berat Badan?",
+    answer: (
+      <>
+        <p className="mb-4">
+          Menurut <em>World Health Organization (WHO)</em>, seseorang dikategorikan kekurangan berat
+          badan (underweight) jika hasil Body Mass Index (BMI) mereka berada di bawah 18.5.
+        </p>
+        <p className="mb-4">
+          Kondisi ini bisa jadi merupakan indikator medis bahwa tubuh mungkin tidak mendapatkan kalori
+          atau nutrisi yang cukup untuk berfungsi secara optimal.
+        </p>
+        <p className="mb-4">
+          Berada di bawah berat badan normal dalam jangka waktu yang lama dapat memicu berbagai
+          komplikasi kesehatan, antara lain:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-4">
+          <li>
+            Sistem kekebalan tubuh melemah, sehingga tubuh kesulitan melawan infeksi, lebih mudah sakit,
+            dan butuh waktu lebih lama untuk sembuh.
+          </li>
+          <li>
+            Kekurangan nutrisi, seperti kurangnya asupan vitamin dan mineral penting yang bisa
+            menyebabkan anemia atau rambut rontok.
+          </li>
+          <li>
+            Memiliki risiko osteoporosis, karena tulang membutuhkan berat badan dan nutrisi yang cukup
+            untuk menjaga kepadatannya. Kekurangan berat badan meningkatkan risiko tulang rapuh dan
+            patah tulang di kemudian hari.
+          </li>
+          <li>
+            Memiliki gangguan kesuburan, pada wanita, underweight dapat menyebabkan siklus menstruasi
+            tidak teratur atau berhenti yang bisa berdampak pada tingkat kesuburan.
+          </li>
+        </ul>
+        <p>
+          Jika dari skrining awal BMI menunjukkan kamu kekurangan berat badan, konsultasikan kondisi
+          kesehatanmu ke dokter dan ahli gizi di fasilitas kesehatan terdekat untuk mendapatkan
+          pemeriksaan lebih lanjut.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "Bagaimana Jika Seseorang Kelebihan Berat Badan?",
+    answer: (
+      <>
+        <p className="mb-4">
+          Menurut <em>World Health Organization (WHO)</em>, seseorang dikategorikan kelebihan berat
+          badan (overweight) jika hasil Body Mass Index (BMI) mereka berada di kisaran 25.0 hingga
+          29.9. Jika angka BMI mencapai 30.0 atau lebih, kondisi tersebut sudah masuk ke dalam kategori
+          obesitas.
+        </p>
+        <p className="mb-4">
+          Berada di atas batas berat badan normal menunjukkan adanya penumpukan lemak berlebih yang
+          dapat mengganggu kesehatan.
+        </p>
+        <p className="mb-4">
+          Kelebihan berat badan yang dibiarkan terus-menerus dapat meningkatkan risiko berbagai
+          penyakit kronis, di antaranya:
+        </p>
+        <ul className="list-disc pl-5 space-y-3">
+          <li>
+            Risiko terkena penyakit kardiovaskular yang disebabkan oleh kerja jantung meningkat,
+            sehingga risiko hipertensi atau darah tinggi, penyakit jantung koroner, dan stroke menjadi
+            lebih tinggi.
+          </li>
+          <li>
+            Risiko terkena diabetes tipe 2, karena lemak tubuh yang berlebih, terutama di area perut,
+            dapat menyebabkan sel tubuh menjadi kebal terhadap insulin atau terjadi resistensi insulin
+            sehingga kadar gula darah melonjak.
+          </li>
+          <li>
+            Risiko terjadinya gangguan muskuloskeletal, karena berat badan berlebih memberikan tekanan
+            berlebih pada persendian seperti lutut dan pinggul yang sangat berisiko memicu osteoarthritis
+            atau pengapuran sendi.
+          </li>
+          <li>
+            Risiko terjadinya gangguan pernapasan seperti sleep apnea atau gangguan di mana pernapasan
+            sering berhenti sejenak saat tidur. Hal ini sangat umum terjadi pada orang yang memiliki
+            berat badan berlebih.
+          </li>
+          <li>
+            Risiko terjadinya kanker tertentu, WHO mencatat bahwa kelebihan berat badan dan obesitas
+            berkaitan erat dengan peningkatan risiko beberapa jenis kanker, seperti kanker payudara,
+            usus besar, ginjal, dan hati.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+];
+
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <section className="max-w-2xl mx-auto mt-10">
+      <h2 className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[20px] font-medium leading-[1.4] tracking-normal text-neutral-90 mb-6">
+        <IconHelpCircle size={26} className="text-neutral-90" />
+        Pertanyaan yang sering ditanyakan (FAQ)
+      </h2>
+
+      <div className="flex flex-col gap-4">
+        {FAQ_ITEMS.map((item, index) => {
+          const isOpen = openIndex === index;
+          return (
+            <div
+              key={index}
+              className={`rounded-2xl border overflow-hidden transition-colors ${
+                isOpen ? "bg-[#EBF6F9] border-[#D8EDEE]" : "bg-white border-gray-200"
+              }`}
+            >
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between gap-4 text-left px-5 md:px-6 py-5"
+              >
+                <h2 className="text-base md:text-lg font-semibold text-green">
+                  {item.question}
+                </h2>
+                <IconChevronDown
+                  size={22}
+                  className={`shrink-0 text-green transition-transform duration-300 ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {isOpen && (
+                <div className="px-5 md:px-6 pb-5 -mt-1 text-sm md:text-base text-gray-700 leading-relaxed">
+                  {item.answer}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function DisclaimerSection() {
+  const ageGroups = [
+    "Usia 0-5 tahun (Balita)",
+    "Usia 5-19 tahun (Anak dan Remaja)",
+    "Usia di atas 19 tahun (Dewasa)",
+  ];
+
+  return (
+    <section
+      className="max-w-2xl mx-auto mt-6 rounded-2xl p-6 md:p-8 text-[#8A3A3E]"
+      style={{ backgroundColor: "#F2DFE3" }}
+    >
+      <span
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white text-sm md:text-base font-semibold"
+        style={{ backgroundColor: "#EBA5A7" }}
+      >
+        <IconShieldExclamation size={20} />
+        Disclaimer &amp; Informasi Pengukuran
+      </span>
+
+      <div className="mt-6">
+        <h2 className="text-lg md:text-xl font-bold text-[#7A2E33] mb-3">
+          Bukan Pengganti Diagnosis Medis
+        </h2>
+        <p className="text-sm md:text-base leading-relaxed mb-4">
+          Kalkulator BMI Rawat ID dirancang sebagai alat skrining awal mandiri untuk memberikan
+          gambaran umum mengenai status gizi dan risiko kesehatan.
+        </p>
+        <p className="text-sm md:text-base leading-relaxed">
+          Alat ini <strong className="font-bold text-[#7A2E33]">bukanlah diagnosis medis</strong> dan
+          tidak dapat menggantikan saran, diagnosis, atau perawatan dari profesional medis. Kami sangat
+          menyarankan Anda untuk berkonsultasi lebih lanjut dengan dokter atau ahli gizi guna memastikan
+          kondisi kesehatan dan status gizi Anda secara akurat.
+        </p>
+      </div>
+
+      <hr className="my-6 border-t border-[#E0B5B8]" />
+
+      <div>
+        <h2 className="text-lg md:text-xl font-bold text-[#7A2E33] mb-3">
+          Standar Pengukuran Internasional (WHO)
+        </h2>
+        <p className="text-sm md:text-base leading-relaxed mb-4">
+          Perhitungan BMI atau Indeks Massa Tubuh (IMT) di Rawat ID dilakukan dengan membandingkan
+          rasio berat dan tinggi badan. Seluruh sistem perhitungan kami mengacu secara ketat pada
+          standar resmi <em>World Health Organization (WHO)</em>.
+        </p>
+        <p className="text-sm md:text-base leading-relaxed mb-4">
+          Untuk menjamin tingkat akurasi yang relevan dengan tahap perkembangan tubuh, Rawat ID telah
+          menerapkan penyesuaian metode pengukuran WHO ke dalam tiga kelompok usia, yaitu:
+        </p>
+
+        <div className="flex flex-col gap-3 mb-4">
+          {ageGroups.map((label) => (
+            <div
+              key={label}
+              className="px-4 py-3 rounded-xl text-sm md:text-base font-medium text-[#7A2E33]"
+              style={{ backgroundColor: "#E3AEB1" }}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+
+        <p className="text-sm md:text-base leading-relaxed">
+          Dengan sistem yang terkalibrasi berdasarkan kelompok usia ini, diharapkan perhitungan nilai
+          BMI kamu menjadi lebih relevan, akurat, dan sesuai dengan standar kesehatan global.
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -401,6 +760,7 @@ function BmiResult({ data, onReset }) {
       }
 
       toast.success(json.message || "Hasil BMI berhasil disimpan!");
+      router.push("/riwayat-bmi");
     } catch {
       toast.error("Terjadi kesalahan jaringan.");
     } finally {
