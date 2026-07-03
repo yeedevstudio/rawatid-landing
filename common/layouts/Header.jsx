@@ -8,6 +8,7 @@ import { blogSubnavGroups, headerValueBlog } from "../constant/headerValue";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { IconChevronRight, IconMenu2, IconHome, IconHeartPlus, IconNews, IconDeviceDesktopAnalytics, IconBuildingCommunity, IconBriefcase, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
+import UserMenu from "./UserMenu";
 
 const mobileNavItems = [
   { title: "Beranda", url: "/", icon: IconHome },
@@ -49,9 +50,34 @@ export default function Header() {
   };
 
   const [expandedGroup, setExpandedGroup] = useState(() => getAutoExpandedGroup(router));
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     setExpandedGroup(getAutoExpandedGroup(router));
+  }, [router]);
+
+  const readUser = () => {
+    if (typeof window === "undefined") return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUser(null);
+      return;
+    }
+    try {
+      const raw = localStorage.getItem("user");
+      setUser(raw ? JSON.parse(raw) : {});
+    } catch {
+      setUser({});
+    }
+  };
+
+  // Refresh auth state on mount, on route change (e.g. after login redirect),
+  // and when localStorage is updated in another tab.
+  useEffect(() => {
+    readUser();
+    window.addEventListener("storage", readUser);
+    return () => window.removeEventListener("storage", readUser);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const isExternalUrl = (url) =>
@@ -107,6 +133,15 @@ export default function Header() {
               );
             })}
           </div>
+          {user ? (
+            <UserMenu user={user} onLogout={() => setUser(null)} />
+          ) : (
+            <Link href="/signin">
+              <Button className="bg-green hover:bg-green/90 text-white text-base font-semibold px-6 py-6 rounded-lg">
+                Masuk
+              </Button>
+            </Link>
+          )}
         </nav>
 
         <div className="flex lg:hidden">
