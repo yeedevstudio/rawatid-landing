@@ -1,9 +1,9 @@
 export default function manifest() {
   return {
     short_name: "Rawat.ID",
-    name: "Rawat.ID - Rekam Medis Elektronik Lengkap untuk Rumah Sakit dan Klinik",
+    name: "Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
     description:
-      "Digitalisasi Rekam Medis dengan Rawat.ID, Pekerjaan nakes jadi lebih mudah, pelayanan jadi lebih berkualitas, faskes jadi lebih untung!",
+      "Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
     keywords: [
       "Rawat.Id",
       "faskes",
