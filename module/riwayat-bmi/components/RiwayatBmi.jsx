@@ -2,20 +2,21 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { format, subMonths, isAfter, isToday } from "date-fns";
+import { format, isToday } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { IconRefresh, IconTrendingUp, IconTrendingDown, IconMinus } from "@tabler/icons-react";
 
+// period keys map 1:1 to the API's ?period= values.
 const PERIODS = [
-  { key: "all", label: "Semua", months: null },
-  { key: "3m", label: "3 Bulan", months: 3 },
-  { key: "6m", label: "6 Bulan", months: 6 },
-  { key: "1y", label: "1 Tahun", months: 12 },
+  { key: "all", label: "Semua" },
+  { key: "3m", label: "3 Bulan" },
+  { key: "6m", label: "6 Bulan" },
+  { key: "1y", label: "1 Tahun" },
 ];
 
 const PAGE_SIZE = 5;
 
-// Colors per BMI category label (best-effort match to the calculator).
+// The API returns English category labels; map them to Indonesian + colors.
 const CATEGORY_COLORS = {
   kurus: { light: "bg-blue-100 text-blue-600", solid: "bg-blue-500 text-white" },
   normal: { light: "bg-green-100 text-green", solid: "bg-green text-white" },
@@ -24,30 +25,6 @@ const CATEGORY_COLORS = {
   "obesitas ii": { light: "bg-red-100 text-red-700", solid: "bg-red-600 text-white" },
 };
 
-const categoryColor = (label, solid) => {
-  const key = String(label || "").trim().toLowerCase();
-  const c = CATEGORY_COLORS[key] || { light: "bg-gray-100 text-gray-600", solid: "bg-gray-500 text-white" };
-  return solid ? c.solid : c.light;
-};
-
-// Best-effort extraction of the records array from unknown API response shapes.
-const extractRecords = (json) => {
-  if (Array.isArray(json)) return json;
-  const candidates = [
-    json?.data?.rows,
-    json?.data?.items,
-    json?.data?.data,
-    json?.data,
-    json?.rows,
-    json?.items,
-    json?.result,
-    json?.results,
-  ];
-  return candidates.find((c) => Array.isArray(c)) || [];
-};
-
-// The API returns English category labels; map them to the calculator's
-// Indonesian labels + color scheme.
 const CATEGORY_MAP = {
   underweight: "Kurus",
   "healthy weight": "Normal",
@@ -67,6 +44,28 @@ const displayCategory = (label) => {
   return CATEGORY_MAP[key] || label || "-";
 };
 
+const categoryColor = (label, solid) => {
+  const key = String(label || "").trim().toLowerCase();
+  const mapped = (CATEGORY_MAP[key] || label || "").toLowerCase();
+  const c = CATEGORY_COLORS[mapped] || { light: "bg-gray-100 text-gray-600", solid: "bg-gray-500 text-white" };
+  return solid ? c.solid : c.light;
+};
+
+const extractRecords = (json) => {
+  if (Array.isArray(json)) return json;
+  const candidates = [
+    json?.data?.rows,
+    json?.data?.items,
+    json?.data?.data,
+    json?.data,
+    json?.rows,
+    json?.items,
+    json?.result,
+    json?.results,
+  ];
+  return candidates.find((c) => Array.isArray(c)) || [];
+};
+
 const num = (...vals) => {
   for (const v of vals) {
     const n = Number(v);
@@ -76,7 +75,7 @@ const num = (...vals) => {
 };
 
 const normalize = (r) => {
-  const rawDate = r.created_at || r.createdAt || r.date || r.measured_at || r.measuredAt || r.updated_at || r.updatedAt;
+  const rawDate = r.createdAt || r.created_at || r.date || r.measured_at || r.updatedAt;
   const parsed = rawDate ? new Date(rawDate) : null;
   return {
     date: parsed && !Number.isNaN(parsed.getTime()) ? parsed : null,
@@ -84,6 +83,9 @@ const normalize = (r) => {
     height: num(r.height, r.tb, r.tinggi),
     bmi: num(r.bmi),
     category: displayCategory(r.category || r.kategori || r.category_label),
+    trend: r.trend
+      ? { change: num(r.trend.change) ?? 0, direction: r.trend.direction || "stable" }
+      : null,
   };
 };
 
@@ -94,6 +96,7 @@ export default function RiwayatBmi() {
   const [error, setError] = useState("");
   const [period, setPeriod] = useState("all");
   const [page, setPage] = useState(1);
+  const [dataVersion, setDataVersion] = useState(0);
 
   useEffect(() => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -103,9 +106,12 @@ export default function RiwayatBmi() {
     }
 
     let active = true;
+    setLoading(true);
+    setError("");
     (async () => {
       try {
-        const res = await fetch("/api/bmi/history", {
+        const res = await fetch(`/api/bmi/history?period=${period}`, {
+          cache: "no-store",
           headers: { Authorization: `Bearer ${token}` },
         });
         const json = await res.json();
@@ -123,6 +129,7 @@ export default function RiwayatBmi() {
           .filter((r) => r.date && r.bmi !== null)
           .sort((a, b) => b.date - a.date); // newest first
         setRecords(list);
+        setDataVersion((v) => v + 1); // replay chart animation on fresh data
       } catch (e) {
         if (active) setError(e.message || "Terjadi kesalahan.");
       } finally {
@@ -133,57 +140,62 @@ export default function RiwayatBmi() {
     return () => {
       active = false;
     };
-  }, [router]);
-
-  // Apply period filter.
-  const filtered = useMemo(() => {
-    const cfg = PERIODS.find((p) => p.key === period);
-    if (!cfg?.months) return records;
-    const cutoff = subMonths(new Date(), cfg.months);
-    return records.filter((r) => isAfter(r.date, cutoff));
-  }, [records, period]);
-
-  // Attach chronological trend (BMI delta vs the previous-in-time record).
-  const withTrend = useMemo(() => {
-    const asc = [...filtered].sort((a, b) => a.date - b.date);
-    const deltaByTime = new Map();
-    asc.forEach((r, i) => {
-      deltaByTime.set(r, i === 0 ? null : Number((r.bmi - asc[i - 1].bmi).toFixed(1)));
-    });
-    return filtered.map((r) => ({ ...r, delta: deltaByTime.get(r) }));
-  }, [filtered]);
+  }, [router, period]);
 
   useEffect(() => setPage(1), [period]);
 
-  const totalPages = Math.max(1, Math.ceil(withTrend.length / PAGE_SIZE));
+  // Only blank the page on the very first load; on filter changes we keep the
+  // previous data visible (dimmed) so sections don't disappear.
+  const isInitial = loading && records.length === 0;
+  const refreshing = loading && records.length > 0;
+
+  const totalPages = Math.max(1, Math.ceil(records.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * PAGE_SIZE;
-  const pageRows = withTrend.slice(start, start + PAGE_SIZE);
+  const pageRows = records.slice(start, start + PAGE_SIZE);
 
-  // Chart: latest BMI per month, last 6 months present in the filtered set.
+  // Line-chart points in chronological order (oldest → newest).
   const chart = useMemo(() => {
-    const byMonth = new Map();
-    [...withTrend]
-      .sort((a, b) => a.date - b.date)
-      .forEach((r) => {
-        const key = format(r.date, "yyyy-MM");
-        byMonth.set(key, { date: r.date, bmi: r.bmi }); // keep latest of the month
-      });
-    const months = Array.from(byMonth.values()).slice(-6);
-    if (months.length === 0) return [];
-    const values = months.map((m) => m.bmi);
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    return months.map((m, i) => {
-      const ratio = max === min ? 0.5 : (m.bmi - min) / (max - min);
-      return {
-        label: format(m.date, "MMM", { locale: idLocale }),
-        bmi: m.bmi,
-        height: 40 + ratio * 60, // percentage of chart area
-        shade: i / Math.max(1, months.length - 1),
-      };
-    });
-  }, [withTrend]);
+    const asc = [...records].sort((a, b) => a.date - b.date);
+    if (asc.length === 0) return null;
+
+    const values = asc.map((r) => r.bmi);
+    const dataMin = Math.min(...values);
+    const dataMax = Math.max(...values);
+    const yMin = Math.floor(dataMin - 0.3);
+    const yMax = Math.ceil(dataMax + 0.3);
+    const span = yMax - yMin || 1;
+
+    const gridlines = [];
+    for (let g = yMin; g <= yMax; g += 1) gridlines.push(g);
+
+    // left inset clears the y-axis label gutter; right inset keeps the last
+    // point's value label from overflowing the card.
+    const insetLeft = 12;
+    const insetRight = 5;
+    const usableX = 100 - insetLeft - insetRight;
+    const xPct = (i) => (asc.length === 1 ? 50 : insetLeft + (i * usableX) / (asc.length - 1));
+    // map bmi to a % from the top; keep 15% headroom top & bottom for labels
+    const yPct = (bmi) => 15 + ((yMax - bmi) / span) * 70;
+
+    const maxIndex = values.indexOf(dataMax);
+    const newestIndex = asc.length - 1;
+
+    const points = asc.map((r, i) => ({
+      x: xPct(i),
+      y: yPct(r.bmi),
+      bmi: r.bmi,
+      label: format(r.date, "d MMM", { locale: idLocale }),
+      isMax: i === maxIndex,
+      isNewest: i === newestIndex,
+    }));
+
+    return {
+      points,
+      gridlines: gridlines.map((g) => ({ value: g, y: yPct(g) })),
+      polyline: points.map((p) => `${p.x},${p.y}`).join(" "),
+    };
+  }, [records]);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-10">
@@ -208,34 +220,92 @@ export default function RiwayatBmi() {
         })}
       </div>
 
-      {loading ? (
+      {isInitial ? (
         <div className="py-24 text-center text-gray-400">Memuat riwayat...</div>
-      ) : error ? (
+      ) : error && records.length === 0 ? (
         <div className="py-24 text-center text-red-500">{error}</div>
-      ) : withTrend.length === 0 ? (
+      ) : records.length === 0 ? (
         <div className="rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] bg-white py-20 text-center text-gray-400">
           Belum ada riwayat BMI untuk periode ini.
         </div>
       ) : (
-        <>
-          {/* Chart */}
+        <div className={`transition-opacity duration-300 ${refreshing ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
+          {/* Line chart */}
           <div className="rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] bg-white p-6 mb-6">
-            <div className="flex items-end justify-between gap-3 sm:gap-6 h-56">
-              {chart.map((c, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center justify-end h-full">
+            <div key={dataVersion} className="relative w-full h-72">
+              {/* gridlines + y-axis labels (labels kept inside a fixed left gutter) */}
+              {chart?.gridlines.map((g) => (
+                <div key={g.value}>
+                  <span
+                    className="absolute left-0 w-9 -translate-y-1/2 pr-2 text-right text-sm text-gray-500"
+                    style={{ top: `${g.y}%` }}
+                  >
+                    {g.value}
+                  </span>
                   <div
-                    className="w-full rounded-2xl"
-                    style={{
-                      height: `${c.height}%`,
-                      backgroundColor: "#038F7A",
-                      opacity: 0.2 + c.shade * 0.8,
-                    }}
-                    title={`BMI ${c.bmi.toFixed(2)}`}
+                    className="absolute right-0 border-t border-dashed border-gray-200"
+                    style={{ top: `${g.y}%`, left: "2.75rem" }}
                   />
-                  <span className="mt-3 text-sm text-gray-500">{c.label}</span>
                 </div>
               ))}
+
+              {/* connecting line */}
+              <svg
+                className="absolute inset-0 w-full h-full overflow-visible"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+              >
+                <polyline
+                  className="bmi-line"
+                  points={chart?.polyline}
+                  fill="none"
+                  stroke="#038F7A"
+                  strokeWidth="2.5"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+
+              {/* dots + value labels */}
+              {chart?.points.map((p, i) => {
+                const color = p.isMax ? "#EF4444" : "#038F7A";
+                const labelColor = p.isMax ? "text-red-500" : p.isNewest ? "text-green" : "text-gray-700";
+                const delay = `${0.25 + i * 0.08}s`;
+                return (
+                  <div key={i}>
+                    <span
+                      className={`bmi-fade absolute -translate-x-1/2 text-sm font-semibold ${labelColor}`}
+                      style={{
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        transform: "translate(-50%, -190%)",
+                        animationDelay: delay,
+                      }}
+                    >
+                      {p.bmi.toFixed(2)}
+                    </span>
+                    <span
+                      className="bmi-point absolute w-3 h-3 rounded-full border-2 border-white"
+                      style={{
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        backgroundColor: color,
+                        transform: "translate(-50%, -50%)",
+                        animationDelay: delay,
+                      }}
+                    />
+                    <span
+                      className="bmi-fade absolute -translate-x-1/2 text-sm text-gray-600 whitespace-nowrap"
+                      style={{ left: `${p.x}%`, top: "100%", transform: "translate(-50%, 8px)", animationDelay: delay }}
+                    >
+                      {p.label}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
+            <div className="h-8" />
           </div>
 
           {/* Table */}
@@ -256,10 +326,7 @@ export default function RiwayatBmi() {
                   {pageRows.map((r, i) => {
                     const isNew = isToday(r.date);
                     return (
-                      <tr
-                        key={i}
-                        className={`border-t border-gray-100 ${isNew ? "bg-greenImage/40" : ""}`}
-                      >
+                      <tr key={i} className={`border-t border-gray-100 ${isNew ? "bg-greenImage/40" : ""}`}>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-gray-800">
@@ -286,7 +353,7 @@ export default function RiwayatBmi() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <TrendCell delta={r.delta} />
+                          <TrendCell trend={r.trend} />
                         </td>
                       </tr>
                     );
@@ -299,14 +366,10 @@ export default function RiwayatBmi() {
           {/* Pagination */}
           <div className="flex flex-wrap items-center justify-end gap-2 mt-4 text-sm">
             <span className="text-gray-500 mr-2">
-              {withTrend.length === 0 ? 0 : start + 1}–{Math.min(start + PAGE_SIZE, withTrend.length)} dari{" "}
-              {withTrend.length}
+              {records.length === 0 ? 0 : start + 1}–{Math.min(start + PAGE_SIZE, records.length)} dari{" "}
+              {records.length}
             </span>
-            <PageBtn
-              disabled={currentPage === 1}
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              aria-label="Sebelumnya"
-            >
+            <PageBtn disabled={currentPage === 1} onClick={() => setPage((p) => Math.max(1, p - 1))} aria-label="Sebelumnya">
               ‹
             </PageBtn>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
@@ -322,7 +385,7 @@ export default function RiwayatBmi() {
               ›
             </PageBtn>
           </div>
-        </>
+        </div>
       )}
 
       <button
@@ -336,11 +399,8 @@ export default function RiwayatBmi() {
   );
 }
 
-function TrendCell({ delta }) {
-  if (delta === null || delta === undefined) {
-    return <span className="flex items-center justify-center text-gray-400">—</span>;
-  }
-  if (delta === 0) {
+function TrendCell({ trend }) {
+  if (!trend || trend.direction === "stable") {
     return (
       <span className="flex items-center justify-center gap-1 text-gray-500">
         <IconMinus size={16} /> ±0
@@ -348,11 +408,12 @@ function TrendCell({ delta }) {
     );
   }
   // BMI going down is a positive (green) trend; going up is red.
-  const down = delta < 0;
+  const down = trend.direction === "down";
+  const value = Number(trend.change);
   return (
     <span className={`flex items-center justify-center gap-1 font-medium ${down ? "text-green" : "text-red-500"}`}>
       {down ? <IconTrendingDown size={16} /> : <IconTrendingUp size={16} />}
-      {delta > 0 ? `+${delta}` : delta}
+      {value > 0 ? `+${value}` : value}
     </span>
   );
 }
@@ -363,9 +424,7 @@ function PageBtn({ children, active, disabled, onClick, ...rest }) {
       onClick={onClick}
       disabled={disabled}
       className={`min-w-9 h-9 px-3 rounded-lg border text-sm font-medium transition-colors ${
-        active
-          ? "bg-green text-white border-green"
-          : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+        active ? "bg-green text-white border-green" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
       } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
       {...rest}
     >
