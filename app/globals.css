@@ -116,3 +116,60 @@ html {
 .footer__copyrights-link {
   @apply flex-1 flex sm:justify-end justify-center max-sm:mt-4 gap-10;
 }
+
+/* BMI history chart animations */
+@keyframes bmiLineIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bmiPointIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes bmiFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bmi-line {
+  animation: bmiLineIn 0.6s ease-out both;
+}
+
+.bmi-fade-up {
+  animation: bmiFadeUp 0.5s ease-out both;
+}
+
+@keyframes bmiFadeOnly {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bmi-fade {
+  animation: bmiFadeOnly 0.6s ease-out both;
+}
+
+.bmi-point {
+  animation: bmiPointIn 0.5s ease-out both;
+}

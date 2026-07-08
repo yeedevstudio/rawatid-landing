@@ -6,6 +6,7 @@ export async function GET(req) {
     const { search } = new URL(req.url);
     const res = await fetch(`http://dev.cm-api.rawat.id/bmi/history${search}`, {
       method: "GET",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
         ...(authorization ? { Authorization: authorization } : {}),
