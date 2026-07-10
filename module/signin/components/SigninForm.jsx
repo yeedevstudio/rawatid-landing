@@ -85,6 +85,7 @@ export default function SigninForm() {
 
       if (data?.token) {
         localStorage.setItem("token", data.token);
+        if (data.refreshToken) localStorage.setItem("refreshToken", data.refreshToken);
         if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
       }
 

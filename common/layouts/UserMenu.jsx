@@ -42,6 +42,7 @@ export default function UserMenu({ user, onLogout }) {
   const handleLogout = () => {
     setOpen(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem("user");
     onLogout?.();
     router.push("/");

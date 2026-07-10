@@ -18,6 +18,7 @@ import {
 } from "@tabler/icons-react";
 import DatePicker from "@/common/components/DatePicker";
 import { format } from "date-fns";
+import { authFetch, clearSession } from "@/common/utils/auth";
 
 const CATEGORIES = [
   {
@@ -726,12 +727,9 @@ function BmiResult({ data, onReset }) {
 
     setSaving(true);
     try {
-      const res = await fetch("/api/bmi/history", {
+      const res = await authFetch("/api/bmi/history", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           bmi: parseFloat(Number(bmi).toFixed(2)),
           percentile: parseFloat(percentile) || 0,
@@ -748,7 +746,7 @@ function BmiResult({ data, onReset }) {
         /token/i.test(json?.message || "");
 
       if (isAuthError) {
-        localStorage.removeItem("token");
+        clearSession();
         toast.error("Sesi Anda telah berakhir. Silakan masuk kembali.");
         router.push("/signin");
         return;

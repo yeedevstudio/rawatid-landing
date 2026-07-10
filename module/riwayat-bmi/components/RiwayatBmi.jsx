@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { format, isToday } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { IconRefresh, IconTrendingUp, IconTrendingDown, IconMinus } from "@tabler/icons-react";
+import { authFetch, clearSession } from "@/common/utils/auth";
 
 // period keys map 1:1 to the API's ?period= values.
 const PERIODS = [
@@ -110,14 +111,13 @@ export default function RiwayatBmi() {
     setError("");
     (async () => {
       try {
-        const res = await fetch(`/api/bmi/history?period=${period}`, {
+        const res = await authFetch(`/api/bmi/history?period=${period}`, {
           cache: "no-store",
-          headers: { Authorization: `Bearer ${token}` },
         });
         const json = await res.json();
 
         if (res.status === 401 || /token/i.test(json?.message || "")) {
-          localStorage.removeItem("token");
+          clearSession();
           router.replace("/signin");
           return;
         }
