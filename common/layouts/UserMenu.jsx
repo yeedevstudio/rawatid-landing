@@ -74,7 +74,7 @@ export default function UserMenu({ user, onLogout }) {
 
           <div className="flex flex-col py-1">
             <Link
-              href="/riwayat-bmi"
+              href="/alat-kesehatan/kalkulator-bmi/riwayat-bmi"
               onClick={() => setOpen(false)}
               className="flex items-center gap-3 px-5 py-3 text-green font-semibold hover:bg-gray-50 transition-colors"
             >

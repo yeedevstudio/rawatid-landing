@@ -87,6 +87,15 @@ export default function SigninForm() {
         localStorage.setItem("token", data.token);
         if (data.refreshToken) localStorage.setItem("refreshToken", data.refreshToken);
         if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Guest flow: if the user calculated a BMI result before logging in and
+        // pressed "Simpan", show the success screen with BMI-specific wording;
+        // its button takes them back to the cached result page to save it.
+        if (localStorage.getItem("bmi_pending_login")) {
+          localStorage.removeItem("bmi_pending_login");
+          router.push("/succes-signin?from=bmi");
+          return;
+        }
       }
 
       router.push("/succes-signin");

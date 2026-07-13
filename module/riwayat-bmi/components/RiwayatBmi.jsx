@@ -90,9 +90,59 @@ const normalize = (r) => {
   };
 };
 
+// Pull the chart points array out of the /bmi/history/chart response,
+// tolerating a few likely shapes.
+const extractChartPoints = (json) => {
+  // Chart.js-style shape: { chart: { labels: [...], datasets: { bmi: [...] } } }
+  const chart = json?.data?.chart ?? json?.chart;
+  if (chart && Array.isArray(chart.labels)) {
+    const bmiArr =
+      chart.datasets?.bmi ?? chart.datasets?.values ?? chart.bmi ?? chart.values ?? chart.data;
+    if (Array.isArray(bmiArr)) {
+      return chart.labels.map((label, i) => ({ label, bmi: bmiArr[i] }));
+    }
+  }
+
+  const arrays = [
+    json?.data?.chart,
+    json?.data?.points,
+    json?.data?.rows,
+    json?.data?.data,
+    json?.data,
+    json?.chart,
+    json?.points,
+    json?.data?.items,
+    json,
+  ];
+  const arr = arrays.find(Array.isArray);
+  if (arr) return arr;
+
+  // { labels: [...], values/data/bmi: [...] } shape.
+  const d = json?.data ?? json ?? {};
+  const vals = d.values ?? d.data ?? d.bmi;
+  if (Array.isArray(d.labels) && Array.isArray(vals)) {
+    return d.labels.map((label, i) => ({ label, bmi: vals[i] }));
+  }
+  return [];
+};
+
+const normalizeChartPoint = (p) => {
+  if (p == null) return { bmi: null, date: null, label: "" };
+  const bmi = num(p.bmi, p.value, p.avg, p.average, p.y);
+  const rawDate = p.date || p.createdAt || p.day || p.month || p.period || p.x;
+  const parsed = rawDate ? new Date(rawDate) : null;
+  const date = parsed && !Number.isNaN(parsed.getTime()) ? parsed : null;
+  const label =
+    p.label ||
+    p.month ||
+    (date ? format(date, "d MMM", { locale: idLocale }) : rawDate ? String(rawDate) : "");
+  return { bmi, date, label };
+};
+
 export default function RiwayatBmi() {
   const router = useRouter();
   const [records, setRecords] = useState([]);
+  const [chartPoints, setChartPoints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [period, setPeriod] = useState("all");
@@ -111,20 +161,41 @@ export default function RiwayatBmi() {
     setError("");
     (async () => {
       try {
-        const res = await authFetch(`/api/bmi/history?period=${period}`, {
-          cache: "no-store",
-        });
-        const json = await res.json();
+        // The API paginates server-side; fetch every page for this period so
+        // the chart, trend, and pagination all operate on the full dataset.
+        let all = [];
+        let page = 1;
+        let totalPages = 1;
+        do {
+          const res = await authFetch(
+            `/api/bmi/history?period=${period}&page=${page}`,
+            { cache: "no-store" }
+          );
+          const json = await res.json();
 
-        if (res.status === 401 || /token/i.test(json?.message || "")) {
-          clearSession();
-          router.replace("/signin");
-          return;
-        }
-        if (!res.ok) throw new Error(json?.message || "Gagal memuat riwayat.");
+          if (res.status === 401 || /token/i.test(json?.message || "")) {
+            clearSession();
+            router.replace("/signin");
+            return;
+          }
+          if (!res.ok) throw new Error(json?.message || "Gagal memuat riwayat.");
+
+          all = all.concat(extractRecords(json));
+          totalPages = Number(json?.data?.totalPages) || 1;
+          page += 1;
+        } while (page <= totalPages && page <= 50); // safety cap
 
         if (!active) return;
-        const list = extractRecords(json)
+        // Dedupe by id in case the pagination param name differs and a page
+        // repeats, then normalize + sort newest-first.
+        const seen = new Set();
+        const list = all
+          .filter((r) => {
+            const key = r?.id ?? JSON.stringify(r);
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          })
           .map(normalize)
           .filter((r) => r.date && r.bmi !== null)
           .sort((a, b) => b.date - a.date); // newest first
@@ -142,6 +213,34 @@ export default function RiwayatBmi() {
     };
   }, [router, period]);
 
+  // Chart data comes from a dedicated endpoint (aggregated per period).
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const res = await authFetch(`/api/bmi/history/chart?period=${period}`, {
+          cache: "no-store",
+        });
+        if (!res.ok) {
+          if (active) setChartPoints([]);
+          return;
+        }
+        const json = await res.json();
+        const pts = extractChartPoints(json)
+          .map(normalizeChartPoint)
+          .filter((p) => p.bmi != null);
+        if (!active) return;
+        setChartPoints(pts);
+        setDataVersion((v) => v + 1); // replay chart animation on fresh data
+      } catch {
+        if (active) setChartPoints([]);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [period]);
+
   useEffect(() => setPage(1), [period]);
 
   // Only blank the page on the very first load; on filter changes we keep the
@@ -154,12 +253,36 @@ export default function RiwayatBmi() {
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageRows = records.slice(start, start + PAGE_SIZE);
 
-  // Line-chart points in chronological order (oldest → newest).
-  const chart = useMemo(() => {
-    const asc = [...records].sort((a, b) => a.date - b.date);
-    if (asc.length === 0) return null;
+  // Trend = change in BMI vs the previous (chronologically earlier) record.
+  // records are newest-first, so the earlier record is the next index.
+  const trendByIndex = useMemo(
+    () =>
+      records.map((r, i) =>
+        i < records.length - 1 ? Number((r.bmi - records[i + 1].bmi).toFixed(2)) : null
+      ),
+    [records]
+  );
 
-    const values = asc.map((r) => r.bmi);
+  // Line-chart points in chronological order (oldest → newest).
+  // Source: the dedicated chart endpoint; falls back to the table records if
+  // that endpoint returns nothing usable.
+  const chart = useMemo(() => {
+    let pts = chartPoints;
+    if (!pts || pts.length === 0) {
+      pts = [...records]
+        .sort((a, b) => a.date - b.date)
+        .map((r) => ({
+          bmi: r.bmi,
+          date: r.date,
+          label: format(r.date, "d MMM", { locale: idLocale }),
+        }));
+    }
+    if (pts.length === 0) return null;
+
+    // Keep chronological order when the points carry dates.
+    const asc = pts.every((p) => p.date) ? [...pts].sort((a, b) => a.date - b.date) : pts;
+
+    const values = asc.map((p) => p.bmi);
     const dataMin = Math.min(...values);
     const dataMax = Math.max(...values);
     const yMin = Math.floor(dataMin - 0.3);
@@ -169,10 +292,10 @@ export default function RiwayatBmi() {
     const gridlines = [];
     for (let g = yMin; g <= yMax; g += 1) gridlines.push(g);
 
-    // left inset clears the y-axis label gutter; right inset keeps the last
-    // point's value label from overflowing the card.
-    const insetLeft = 12;
-    const insetRight = 5;
+    // small insets keep the first/last point's labels from touching the edges
+    // (the y-axis lives in its own fixed column outside the plot now).
+    const insetLeft = 5;
+    const insetRight = 6;
     const usableX = 100 - insetLeft - insetRight;
     const xPct = (i) => (asc.length === 1 ? 50 : insetLeft + (i * usableX) / (asc.length - 1));
     // map bmi to a % from the top; keep 15% headroom top & bottom for labels
@@ -181,11 +304,11 @@ export default function RiwayatBmi() {
     const maxIndex = values.indexOf(dataMax);
     const newestIndex = asc.length - 1;
 
-    const points = asc.map((r, i) => ({
+    const points = asc.map((p, i) => ({
       x: xPct(i),
-      y: yPct(r.bmi),
-      bmi: r.bmi,
-      label: format(r.date, "d MMM", { locale: idLocale }),
+      y: yPct(p.bmi),
+      bmi: p.bmi,
+      label: p.label || (p.date ? format(p.date, "d MMM", { locale: idLocale }) : ""),
       isMax: i === maxIndex,
       isNewest: i === newestIndex,
     }));
@@ -195,7 +318,7 @@ export default function RiwayatBmi() {
       gridlines: gridlines.map((g) => ({ value: g, y: yPct(g) })),
       polyline: points.map((p) => `${p.x},${p.y}`).join(" "),
     };
-  }, [records]);
+  }, [chartPoints, records]);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-10">
@@ -232,94 +355,122 @@ export default function RiwayatBmi() {
         <div className={`transition-opacity duration-300 ${refreshing ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
           {/* Line chart */}
           <div className="rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] bg-white p-6 mb-6">
-            <div key={dataVersion} className="relative w-full h-72">
-              {/* gridlines + y-axis labels (labels kept inside a fixed left gutter) */}
-              {chart?.gridlines.map((g) => (
-                <div key={g.value}>
+            <div key={dataVersion} className="flex">
+              {/* Y-axis stays fixed while the plot scrolls horizontally */}
+              <div className="relative w-8 h-72 shrink-0">
+                {chart?.gridlines.map((g) => (
                   <span
-                    className="absolute left-0 w-9 -translate-y-1/2 pr-2 text-right text-sm text-gray-500"
+                    key={g.value}
+                    className="absolute right-1 -translate-y-1/2 text-sm text-gray-500"
                     style={{ top: `${g.y}%` }}
                   >
                     {g.value}
                   </span>
-                  <div
-                    className="absolute right-0 border-t border-dashed border-gray-200"
-                    style={{ top: `${g.y}%`, left: "2.75rem" }}
-                  />
-                </div>
-              ))}
+                ))}
+              </div>
 
-              {/* connecting line */}
-              <svg
-                className="absolute inset-0 w-full h-full overflow-visible"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
-                <polyline
-                  className="bmi-line"
-                  points={chart?.polyline}
-                  fill="none"
-                  stroke="#038F7A"
-                  strokeWidth="2.5"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
+              {/* Scrollable plot: width grows with the number of points so they
+                  keep a constant spacing instead of getting cramped. */}
+              <div className="flex-1 overflow-x-auto pb-2">
+                <div
+                  className="relative min-w-full"
+                  style={{ width: `max(100%, ${(chart?.points.length || 1) * 120}px)` }}
+                >
+                  {/* plot area */}
+                  <div className="relative h-72">
+                    {/* dashed gridlines */}
+                    {chart?.gridlines.map((g) => (
+                      <div
+                        key={g.value}
+                        className="absolute left-0 right-0 border-t border-dashed border-gray-200"
+                        style={{ top: `${g.y}%` }}
+                      />
+                    ))}
 
-              {/* dots + value labels */}
-              {chart?.points.map((p, i) => {
-                const color = p.isMax ? "#EF4444" : "#038F7A";
-                const labelColor = p.isMax ? "text-red-500" : p.isNewest ? "text-green" : "text-gray-700";
-                const delay = `${0.25 + i * 0.08}s`;
-                return (
-                  <div key={i}>
-                    <span
-                      className={`bmi-fade absolute -translate-x-1/2 text-sm font-semibold ${labelColor}`}
-                      style={{
-                        left: `${p.x}%`,
-                        top: `${p.y}%`,
-                        transform: "translate(-50%, -190%)",
-                        animationDelay: delay,
-                      }}
+                    {/* connecting line */}
+                    <svg
+                      className="absolute inset-0 w-full h-full overflow-visible"
+                      viewBox="0 0 100 100"
+                      preserveAspectRatio="none"
                     >
-                      {p.bmi.toFixed(2)}
-                    </span>
-                    <span
-                      className="bmi-point absolute w-3 h-3 rounded-full border-2 border-white"
-                      style={{
-                        left: `${p.x}%`,
-                        top: `${p.y}%`,
-                        backgroundColor: color,
-                        transform: "translate(-50%, -50%)",
-                        animationDelay: delay,
-                      }}
-                    />
-                    <span
-                      className="bmi-fade absolute -translate-x-1/2 text-sm text-gray-600 whitespace-nowrap"
-                      style={{ left: `${p.x}%`, top: "100%", transform: "translate(-50%, 8px)", animationDelay: delay }}
-                    >
-                      {p.label}
-                    </span>
+                      <polyline
+                        className="bmi-line"
+                        points={chart?.polyline}
+                        fill="none"
+                        stroke="#038F7A"
+                        strokeWidth="2.5"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+
+                    {/* dots + value labels */}
+                    {chart?.points.map((p, i) => {
+                      const color = p.isMax ? "#EF4444" : "#038F7A";
+                      const labelColor = p.isMax
+                        ? "text-red-500"
+                        : p.isNewest
+                        ? "text-green"
+                        : "text-gray-700";
+                      const delay = `${0.25 + i * 0.08}s`;
+                      return (
+                        <div key={i}>
+                          <span
+                            className={`bmi-fade absolute -translate-x-1/2 whitespace-nowrap text-sm font-semibold ${labelColor}`}
+                            style={{
+                              left: `${p.x}%`,
+                              top: `${p.y}%`,
+                              transform: "translate(-50%, -190%)",
+                              animationDelay: delay,
+                            }}
+                          >
+                            BMI {p.bmi.toFixed(2)}
+                          </span>
+                          <span
+                            className="bmi-point absolute w-3 h-3 rounded-full border-2 border-white"
+                            style={{
+                              left: `${p.x}%`,
+                              top: `${p.y}%`,
+                              backgroundColor: color,
+                              transform: "translate(-50%, -50%)",
+                              animationDelay: delay,
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
+
+                  {/* x-axis date labels in their own row */}
+                  <div className="relative h-6 mt-3">
+                    {chart?.points.map((p, i) => (
+                      <span
+                        key={i}
+                        className="bmi-fade absolute -translate-x-1/2 whitespace-nowrap text-sm text-gray-600"
+                        style={{ left: `${p.x}%`, animationDelay: `${0.25 + i * 0.08}s` }}
+                      >
+                        {p.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="h-8" />
           </div>
 
           {/* Table */}
-          <div className="rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] bg-white overflow-hidden">
+          <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left">
                 <thead>
-                  <tr className="bg-gray-100 text-gray-600 text-sm">
+                  <tr className="text-gray-600 text-sm" style={{ backgroundColor: "#EDEDED" }}>
                     <th className="px-6 py-4 font-semibold">Tanggal</th>
                     <th className="px-6 py-4 font-semibold">BB (kg)</th>
                     <th className="px-6 py-4 font-semibold">TB (cm)</th>
                     <th className="px-6 py-4 font-semibold">BMI</th>
                     <th className="px-6 py-4 font-semibold">Kategori</th>
-                    <th className="px-6 py-4 font-semibold text-center">Tren</th>
+                    <th className="px-6 py-4 font-semibold text-center">Perubahan Nilai BMI</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -353,7 +504,7 @@ export default function RiwayatBmi() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <TrendCell trend={r.trend} />
+                          <TrendCell delta={trendByIndex[start + i]} />
                         </td>
                       </tr>
                     );
@@ -389,7 +540,12 @@ export default function RiwayatBmi() {
       )}
 
       <button
-        onClick={() => router.push("/alat-kesehatan/kalkulator-bmi")}
+        onClick={() => {
+          // Clear any cached result so the calculator opens on the form,
+          // not the previous result view.
+          if (typeof window !== "undefined") localStorage.removeItem("bmi_result");
+          router.push("/alat-kesehatan/kalkulator-bmi");
+        }}
         className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] text-green font-semibold hover:bg-gray-50 transition-colors"
       >
         <IconRefresh size={20} />
@@ -399,8 +555,12 @@ export default function RiwayatBmi() {
   );
 }
 
-function TrendCell({ trend }) {
-  if (!trend || trend.direction === "stable") {
+function TrendCell({ delta }) {
+  // No previous record to compare against.
+  if (delta === null || delta === undefined) {
+    return <span className="flex items-center justify-center text-gray-400">—</span>;
+  }
+  if (delta === 0) {
     return (
       <span className="flex items-center justify-center gap-1 text-gray-500">
         <IconMinus size={16} /> ±0
@@ -408,12 +568,11 @@ function TrendCell({ trend }) {
     );
   }
   // BMI going down is a positive (green) trend; going up is red.
-  const down = trend.direction === "down";
-  const value = Number(trend.change);
+  const down = delta < 0;
   return (
     <span className={`flex items-center justify-center gap-1 font-medium ${down ? "text-green" : "text-red-500"}`}>
       {down ? <IconTrendingDown size={16} /> : <IconTrendingUp size={16} />}
-      {value > 0 ? `+${value}` : value}
+      {delta > 0 ? `+${delta}` : delta}
     </span>
   );
 }

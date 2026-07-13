@@ -90,8 +90,8 @@ export default function Header() {
 
   const blogNavLinkClassName = (isActive) =>
     isActive
-      ? "text-sm md:text-lg text-green font-semibold transition-all duration-300 ease-in-out"
-      : "text-sm md:text-lg text-gray-700 hover:text-green transition-all duration-300 ease-in-out";
+      ? "whitespace-nowrap text-sm md:text-lg text-green font-semibold transition-all duration-300 ease-in-out"
+      : "whitespace-nowrap text-sm md:text-lg text-gray-700 hover:text-green transition-all duration-300 ease-in-out";
 
   const subNavLinkClassName = (isActive) =>
     isActive
@@ -122,8 +122,8 @@ export default function Header() {
           <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-16">
-          <div className="flex gap-16">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-16">
+          <div className="flex gap-6 xl:gap-16">
             {headerValueBlog?.map((item, index) => {
               const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
               return (
