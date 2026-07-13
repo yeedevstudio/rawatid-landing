@@ -76,6 +76,7 @@ export default function PerbaruiAkun() {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -201,37 +202,17 @@ export default function PerbaruiAkun() {
     }
   };
 
-  const validate = () => {
+  // --- Profile (PUT /users/:id) ---
+  const handleSubmit = async () => {
+    if (!userId || !token) return;
     if (!form.name.trim()) {
       toast.error("Nama lengkap wajib diisi.");
-      return false;
+      return;
     }
     if (!form.email.trim()) {
       toast.error("Email wajib diisi.");
-      return false;
+      return;
     }
-    const wantsPasswordChange =
-      pwd.oldPassword || pwd.newPassword || pwd.confirmPassword;
-    if (wantsPasswordChange) {
-      if (!pwd.oldPassword) {
-        toast.error("Password lama wajib diisi.");
-        return false;
-      }
-      if (!pwd.newPassword || pwd.newPassword.length < 6) {
-        toast.error("Password baru minimal 6 karakter.");
-        return false;
-      }
-      if (pwd.newPassword !== pwd.confirmPassword) {
-        toast.error("Konfirmasi password baru tidak cocok.");
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const handleSubmit = async () => {
-    if (!userId || !token) return;
-    if (!validate()) return;
 
     setSaving(true);
     try {
@@ -260,24 +241,6 @@ export default function PerbaruiAkun() {
         return;
       }
 
-      // Optional password change via separate endpoint.
-      if (pwd.newPassword) {
-        const pres = await authFetch(`/api/users/${userId}/password`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            oldPassword: pwd.oldPassword,
-            newPassword: pwd.newPassword,
-          }),
-        });
-        const pjson = await pres.json();
-        if (!pres.ok) {
-          toast.error(pjson?.message || "Profil tersimpan, tetapi password gagal diperbarui.");
-          return;
-        }
-        setPwd({ oldPassword: "", newPassword: "", confirmPassword: "" });
-      }
-
       // Keep the cached user in sync so the header greeting updates.
       try {
         const raw = localStorage.getItem("user");
@@ -295,6 +258,47 @@ export default function PerbaruiAkun() {
       toast.error("Terjadi kesalahan jaringan.");
     } finally {
       setSaving(false);
+    }
+  };
+
+  // --- Password (PATCH /users/:id/password) ---
+  const handleChangePassword = async () => {
+    if (!userId || !token) return;
+
+    if (!pwd.oldPassword) {
+      toast.error("Password lama wajib diisi.");
+      return;
+    }
+    if (!pwd.newPassword || pwd.newPassword.length < 6) {
+      toast.error("Password baru minimal 6 karakter.");
+      return;
+    }
+    if (pwd.newPassword !== pwd.confirmPassword) {
+      toast.error("Konfirmasi password baru tidak cocok.");
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await authFetch(`/api/users/${userId}/password`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          oldPassword: pwd.oldPassword,
+          newPassword: pwd.newPassword,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        toast.error(json?.message || "Gagal memperbarui password.");
+        return;
+      }
+      setPwd({ oldPassword: "", newPassword: "", confirmPassword: "" });
+      toast.success(json?.message || "Password berhasil diperbarui!");
+    } catch {
+      toast.error("Terjadi kesalahan jaringan.");
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -359,7 +363,7 @@ export default function PerbaruiAkun() {
               Perbarui Akun
             </span>
             <Link
-              href="/riwayat-bmi"
+              href="/alat-kesehatan/kalkulator-bmi/riwayat-bmi"
               className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
             >
               <IconHistory size={22} />
@@ -504,10 +508,33 @@ export default function PerbaruiAkun() {
 
               <hr className="border-gray-200" />
 
+              {/* Actions — profile only */}
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => router.push("/")}
+                  className="px-6 py-3 rounded-xl border border-green text-green font-semibold hover:bg-green/5 transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-3 rounded-xl bg-green text-white font-semibold hover:bg-greenHover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {saving ? "Menyimpan..." : "Simpan Perubahan"}
+                </button>
+              </div>
+
+              <hr className="border-gray-200" />
+
               {/* Ubah password */}
               <section>
                 <h2 className="text-xl font-bold text-gray-800">Ubah password</h2>
-                <p className="text-sm text-gray-500 mb-5">Aktifkan untuk mengganti password akun.</p>
+                <p className="text-sm text-gray-500 mb-5">
+                  Isi ketiga kolom lalu tekan &quot;Ubah Password&quot; untuk mengganti password akun.
+                </p>
                 <div className="flex flex-col gap-5">
                   <Field label="Password lama">
                     <PasswordInput
@@ -536,27 +563,20 @@ export default function PerbaruiAkun() {
                       </p>
                     )}
                   </Field>
+
+                  {/* Password change has its own endpoint, so its own button. */}
+                  <div className="flex justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={handleChangePassword}
+                      disabled={changingPassword || confirmMismatch}
+                      className="px-6 py-3 rounded-xl bg-green text-white font-semibold hover:bg-greenHover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {changingPassword ? "Memperbarui..." : "Ubah Password"}
+                    </button>
+                  </div>
                 </div>
               </section>
-
-              {/* Actions */}
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => router.push("/")}
-                  className="px-6 py-3 rounded-xl border border-green text-green font-semibold hover:bg-green/5 transition-colors"
-                >
-                  Batal
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={saving || confirmMismatch}
-                  className="px-6 py-3 rounded-xl bg-green text-white font-semibold hover:bg-greenHover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {saving ? "Menyimpan..." : "Simpan Perubahan"}
-                </button>
-              </div>
             </div>
           )}
         </div>

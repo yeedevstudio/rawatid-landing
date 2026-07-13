@@ -5,7 +5,14 @@ export const metadata = {
   title: "Berhasil Masuk | Rawat.id",
 };
 
-export default function SuccesSigninPage() {
+export default async function SuccesSigninPage({ searchParams }) {
+  const params = await searchParams;
+  // ?from=bmi → user arrived here through the "Simpan Hasil BMI" flow.
+  const fromBmi = params?.from === "bmi";
+
+  const buttonLabel = fromBmi ? "Lihat Riwayat Pemeriksaan BMI" : "Lihat Profil Akun";
+  const buttonHref = fromBmi ? "/alat-kesehatan/kalkulator-bmi" : "/perbarui-akun";
+
   return (
     <div className="min-h-[calc(100vh-85px)] flex items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] p-10 md:p-12">
@@ -31,9 +38,8 @@ export default function SuccesSigninPage() {
 
         {/* Description */}
         <p className="text-center text-gray-600 text-sm leading-relaxed mb-6">
-          Hasil BMI kamu telah{" "}
-          <span className="text-green font-semibold">tersimpan otomatis</span>{" "}
-          ke akun Rawat.ID.
+          Kamu berhasil masuk ke{" "}
+          <span className="text-green font-semibold">Rawat.ID</span>.
         </p>
 
         {/* Divider */}
@@ -49,10 +55,10 @@ export default function SuccesSigninPage() {
 
         {/* Button */}
         <Link
-          href="/"
+          href={buttonHref}
           className="block w-full text-center py-3 rounded-lg bg-green text-white font-semibold text-sm hover:bg-greenHover transition-colors"
         >
-          Lihat Dashboard
+          {buttonLabel}
         </Link>
       </div>
     </div>

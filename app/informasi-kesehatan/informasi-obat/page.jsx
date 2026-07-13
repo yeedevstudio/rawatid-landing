@@ -144,8 +144,8 @@ export default function InformasiObatPage() {
 
       <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
         <div className="text-center">
-          <h1 className="text-green font-semibold text-lg md:text-xl">Temukan Obat dengan Mudah & Cepat</h1>
-          <p className="text-gray-600 text-sm md:text-base mt-1">Cari berdasarkan nama</p>
+          <h1 className="text-green font-semibold text-lg md:text-xl">Direktori Obat Lengkap: Informasi Manfaat, Dosis &amp; Efek Samping</h1>
+          <p className="text-gray-600 text-sm md:text-base mt-1">Cari obat berdasarkan nama untuk menemukan manfaat, aturan pakai, dosis anjuran, kontraindikasi hingga risiko overdosis</p>
         </div>
 
         <div className="mt-6 max-w-2xl mx-auto">

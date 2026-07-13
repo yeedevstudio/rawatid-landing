@@ -2,7 +2,7 @@ import Breadcrumbs from "@/common/components/Breadcrumbs";
 import KalkulatorBmiForm from "@/module/kalkulator-bmi";
 
 export const metadata = {
-  title: "Kalkulator BMI - Hitung Indeks Massa Tubuh Anda | Rawat.id",
+  title: "Kalkulator BMI - Hitung BMI dan Berat Badan Online dengan Akurat",
   description:
     "Hitung Indeks Massa Tubuh (BMI) Anda secara mudah dan cepat. Ketahui apakah berat badan Anda ideal berdasarkan tinggi dan berat badan.",
 };

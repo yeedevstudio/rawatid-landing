@@ -15,7 +15,7 @@ export default function RiwayatBmiPage() {
             { label: "Beranda", href: "/" },
             { label: "Alat Kesehatan", href: "/alat-kesehatan/kalkulator-bmi" },
             { label: "Kalkulator BMI", href: "/alat-kesehatan/kalkulator-bmi" },
-            { label: "Riwayat", href: "/riwayat-bmi" },
+            { label: "Riwayat", href: "/alat-kesehatan/kalkulator-bmi/riwayat-bmi" },
           ]}
         />
       </div>

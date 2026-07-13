@@ -18,7 +18,15 @@ import {
 } from "@tabler/icons-react";
 import DatePicker from "@/common/components/DatePicker";
 import { format } from "date-fns";
-import { authFetch, clearSession } from "@/common/utils/auth";
+import { authFetch, clearSession, getToken, getUser } from "@/common/utils/auth";
+
+// Map various gender representations to the calculator's 1 (male) / 2 (female).
+const toSex = (g) => {
+  const v = String(g ?? "").trim().toLowerCase();
+  if (["1", "male", "laki-laki", "l", "pria"].includes(v)) return 1;
+  if (["2", "female", "perempuan", "p", "wanita"].includes(v)) return 2;
+  return null;
+};
 
 const CATEGORIES = [
   {
@@ -162,13 +170,33 @@ function InputField({ label, icon: Icon, placeholder, unit, value, onChange, err
   );
 }
 
-function BmiForm({ onResult }) {
+function BmiForm({ onResult, profile }) {
   const [sex, setSex] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [tinggiBadan, setTinggiBadan] = useState("");
   const [beratBadan, setBeratBadan] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  // Auto-fill from the logged-in user's profile (fetched once by the parent so
+  // it's still available after "Cek Ulang" remounts this form). Only fills
+  // fields the user hasn't already set, and only when present on the profile.
+  useEffect(() => {
+    if (!profile) return;
+
+    const mappedSex = toSex(profile.gender);
+    if (mappedSex) setSex((prev) => prev ?? mappedSex);
+
+    if (profile.birthDate) {
+      const d = new Date(profile.birthDate);
+      if (!Number.isNaN(d.getTime())) setDateOfBirth((prev) => prev ?? d);
+    }
+
+    if (profile.height != null && profile.height !== "")
+      setTinggiBadan((prev) => prev || String(profile.height));
+    if (profile.weight != null && profile.weight !== "")
+      setBeratBadan((prev) => prev || String(profile.weight));
+  }, [profile]);
 
   const validate = () => {
     const newErrors = {};
@@ -406,7 +434,7 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    question: "Bagaimana Rawat ID Menghitung BMI Kamu?",
+    question: "Bagaimana Rawat ID Menghitung BMI Saya?",
     answer: (
       <>
         <p className="mb-4">
@@ -449,7 +477,7 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    question: "Mengapa Saya Harus Mengukur BMI?",
+    question: "Mengapa Saya Harus Mengukur dan Mengetahui BMI?",
     answer: (
       <>
         <p className="mb-4">
@@ -483,7 +511,7 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    question: "Bagaimana Jika Seseorang Kekurangan Berat Badan?",
+    question: "Bagaimana Jika Saya Kekurangan Berat Badan?",
     answer: (
       <>
         <p className="mb-4">
@@ -526,7 +554,7 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    question: "Bagaimana Jika Seseorang Kelebihan Berat Badan?",
+    question: "Bagaimana Jika Saya Kelebihan Berat Badan?",
     answer: (
       <>
         <p className="mb-4">
@@ -720,7 +748,11 @@ function BmiResult({ data, onReset }) {
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     if (!token) {
-      toast.info("Silakan masuk terlebih dahulu untuk menyimpan hasil.");
+      // Guest: the calculated result is already cached in localStorage. Flag
+      // that we should return to this result page after login so the user can
+      // save it themselves in one click.
+      localStorage.setItem("bmi_pending_login", "1");
+      toast.info("Silakan masuk atau daftar untuk menyimpan hasil BMI kamu.");
       router.push("/signin");
       return;
     }
@@ -758,7 +790,7 @@ function BmiResult({ data, onReset }) {
       }
 
       toast.success(json.message || "Hasil BMI berhasil disimpan!");
-      router.push("/riwayat-bmi");
+      router.push("/alat-kesehatan/kalkulator-bmi/riwayat-bmi");
     } catch {
       toast.error("Terjadi kesalahan jaringan.");
     } finally {
@@ -925,6 +957,7 @@ function BmiResult({ data, onReset }) {
 
 export default function KalkulatorBmiForm() {
   const [result, setResult] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("bmi_result");
@@ -937,6 +970,30 @@ export default function KalkulatorBmiForm() {
     }
   }, []);
 
+  // Fetch the logged-in user's profile once. Kept here (not in BmiForm) so the
+  // auto-fill data survives switching between the form and the result view.
+  useEffect(() => {
+    const token = getToken();
+    const userId = getUser()?.id;
+    if (!token || !userId) return;
+
+    let active = true;
+    (async () => {
+      try {
+        const res = await authFetch(`/api/users/${userId}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const json = await res.json();
+        if (active) setProfile(json?.data ?? json?.user ?? json ?? {});
+      } catch {
+        /* silent: auto-fill is best-effort */
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const handleReset = () => {
     localStorage.removeItem("bmi_result");
     setResult(null);
@@ -946,5 +1003,5 @@ export default function KalkulatorBmiForm() {
     return <BmiResult data={result} onReset={handleReset} />;
   }
 
-  return <BmiForm onResult={setResult} />;
+  return <BmiForm onResult={setResult} profile={profile} />;
 }
