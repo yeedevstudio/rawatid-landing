@@ -288,7 +288,7 @@ export default function DrugDetailClient({ slug }) {
         ) : (
           <div className="space-y-10">
             <div>
-              <h1 className="mt-8 md:mt-12 mb-4 md:mb-6 text-3xl md:text-5xl font-semibold text-green tracking-tight">{data?.name}</h1>
+              <h1 className="mt-8 md:mt-12 mb-4 md:mb-6 text-3xl md:text-5xl font-semibold text-green tracking-tight">{data?.name ? `${data.name} - Manfaat, Cara Penggunaan, Dosis dan Efek Samping` : ""}</h1>
               {/* Sementara disembunyikan sampai semua obat selesai ditinjau tim konten medis.
               <div className="mb-8 md:mb-10 text-xs md:text-sm text-gray-500">{reviewedLine}</div>
               */}

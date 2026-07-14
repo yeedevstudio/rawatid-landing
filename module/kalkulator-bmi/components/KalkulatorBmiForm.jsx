@@ -268,10 +268,10 @@ function BmiForm({ onResult, profile }) {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-green">Kalkulator BMI</h1>
-        <p className="text-green mt-1 text-sm md:text-base">
-          Hitung Indeks massa tubuh Anda
-        </p>
+        <h1 className="text-2xl md:text-3xl font-bold text-green">Kalkulator BMI (Body Mass Index) Online Akurat</h1>
+        <h2 className="text-green mt-1 text-sm md:text-base font-normal">
+          Hitung Indeks Massa Tubuh (IMT) atau BMI (Body Mass Index) Kamu dengan akurat untuk mengetahui status gizi dan apakah berat badan Kamu sudah ideal.
+        </h2>
       </div>
 
       <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-6 md:p-8 max-w-2xl mx-auto">
