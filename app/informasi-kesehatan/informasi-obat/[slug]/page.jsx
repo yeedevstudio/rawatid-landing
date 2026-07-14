@@ -7,14 +7,14 @@ export async function generateMetadata({ params }) {
     const json = await res.json().catch(() => null);
     const name = json?.data?.name || json?.name || slug;
     return {
-      title: `Manfaat, Cara Penggunaan, Dosis Obat dan Efek Samping dari Obat ${name}`,
+      title: `${name} - Manfaat, Cara Penggunaan, Dosis dan Efek Samping`,
       alternates: {
         canonical: `https://www.rawat.id/informasi-kesehatan/informasi-obat/${slug}`,
       },
     };
   } catch {
     return {
-      title: `Manfaat, Cara Penggunaan, Dosis Obat dan Efek Samping dari Obat ${slug}`,
+      title: `${slug} - Manfaat, Cara Penggunaan, Dosis dan Efek Samping`,
     };
   }
 }
