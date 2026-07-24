@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { CM_API_BASE } from "@/common/constant/api";
 
 export async function GET(req) {
   try {
     const authorization = req.headers.get("authorization");
     const { search } = new URL(req.url);
-    const res = await fetch(`http://dev.cm-api.rawat.id/bmi/history/chart${search}`, {
+    const res = await fetch(`${CM_API_BASE}/bmi/history/chart${search}`, {
       method: "GET",
       cache: "no-store",
       headers: {

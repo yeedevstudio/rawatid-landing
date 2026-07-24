@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const BASE = "http://dev.cm-api.rawat.id";
+import { CM_API_BASE as BASE } from "@/common/constant/api";
 
 export async function POST(req, { params }) {
   try {

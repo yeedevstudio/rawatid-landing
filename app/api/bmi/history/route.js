@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { CM_API_BASE } from "@/common/constant/api";
 
 export async function GET(req) {
   try {
     const authorization = req.headers.get("authorization");
     const { search } = new URL(req.url);
-    const res = await fetch(`http://dev.cm-api.rawat.id/bmi/history${search}`, {
+    const res = await fetch(`${CM_API_BASE}/bmi/history${search}`, {
       method: "GET",
       cache: "no-store",
       headers: {
@@ -32,7 +33,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const authorization = req.headers.get("authorization");
-    const res = await fetch(`http://dev.cm-api.rawat.id/bmi/history`, {
+    const res = await fetch(`${CM_API_BASE}/bmi/history`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
