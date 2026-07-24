@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import { CM_API_BASE } from "@/common/constant/api";
 
 export async function POST(req) {
   try {
     const body = await req.json();
-    const res = await fetch(`http://dev.cm-api.rawat.id/auth/refresh-token`, {
+    const res = await fetch(`${CM_API_BASE}/auth/refresh-token`, {
       method: "POST",
       cache: "no-store",
       headers: { "Content-Type": "application/json" },
