@@ -4,7 +4,49 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { IconEye, IconEyeOff, IconCircleCheck, IconCircle } from "@tabler/icons-react";
+
+const PASSWORD_RULES = [
+  { key: "length", label: "Minimal 8 karakter", test: (p) => p.length >= 8 },
+  {
+    key: "case",
+    label: "Mengandung huruf besar dan huruf kecil",
+    test: (p) => /[a-z]/.test(p) && /[A-Z]/.test(p),
+  },
+  {
+    key: "numsym",
+    label: "Mengandung angka atau simbol",
+    test: (p) => /[0-9]/.test(p) || /[^A-Za-z0-9]/.test(p),
+  },
+];
+
+const isPasswordValid = (p) => PASSWORD_RULES.every((r) => r.test(p));
+
+function PasswordRequirements({ value }) {
+  return (
+    <div className="rounded-lg bg-gray-50 border border-gray-100 p-3">
+      <p className="text-xs font-semibold text-gray-700 mb-2">Syarat Kata Sandi:</p>
+      <ul className="flex flex-col gap-1.5">
+        {PASSWORD_RULES.map((r) => {
+          const ok = r.test(value);
+          return (
+            <li
+              key={r.key}
+              className={`flex items-center gap-2 text-xs ${ok ? "text-green" : "text-gray-500"}`}
+            >
+              {ok ? (
+                <IconCircleCheck size={15} className="shrink-0" />
+              ) : (
+                <IconCircle size={15} className="shrink-0 text-gray-300" />
+              )}
+              {r.label}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 function InputField({ label, type, placeholder, value, onChange, error, suffix }) {
   return (
@@ -112,7 +154,8 @@ export default function SignupForm() {
     if (!values.name.trim()) newErrors.name = "Nama lengkap wajib diisi";
     if (!values.email.trim()) newErrors.email = "Email atau username wajib diisi";
     if (!values.password) newErrors.password = "Password wajib diisi";
-    else if (values.password.length < 8) newErrors.password = "Password minimal 8 karakter";
+    else if (!isPasswordValid(values.password))
+      newErrors.password = "Kata sandi belum memenuhi syarat di bawah";
     if (!values.confirmPassword) newErrors.confirmPassword = "Konfirmasi password wajib diisi";
     else if (values.password !== values.confirmPassword)
       newErrors.confirmPassword = "Password tidak cocok";
@@ -192,6 +235,8 @@ export default function SignupForm() {
         onChange={handleChange("password")}
         error={errors.password}
       />
+
+      <PasswordRequirements value={values.password} />
 
       <PasswordField
         label="Konfirmasi Password"

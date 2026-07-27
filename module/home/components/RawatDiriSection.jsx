@@ -3,33 +3,16 @@
 import React from "react";
 import Image from "next/image";
 
-function StoreBadge({
-  src,
-  alt,
-  eyebrow,
-  title,
-  logoClassName = "w-[24px] h-[24px]",
-}) {
+function MulaiButton({ className = "" }) {
   return (
-    <div className="h-[44px] px-3 bg-white border-2 border-black rounded-[10px] flex items-center gap-3">
-      <div className="relative shrink-0">
-        <Image
-          src={src}
-          alt={alt}
-          width={28}
-          height={28}
-          className={`object-contain ${logoClassName}`}
-        />
-      </div>
-      <div className="leading-none">
-        <div className="text-[10px] font-medium text-black tracking-wide">
-          {eyebrow}
-        </div>
-        <div className="text-[16px] font-semibold text-black -mt-[2px]">
-          {title}
-        </div>
-      </div>
-    </div>
+    <a
+      href="https://diri.rawat.id"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center justify-center h-[48px] px-7 rounded-[10px] bg-white text-[#038F7A] font-semibold text-[16px] hover:bg-white/90 transition-colors ${className}`}
+    >
+      Mulai Rawat Kesehatan Sekarang
+    </a>
   );
 }
 
@@ -42,7 +25,7 @@ export default function RawatDiriSection() {
     >
       <div className="px-5 md:px-12 lg:px-20 xl:px-24 py-16 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-16">
-          {/* Kiri: teks + badge (desktop) — satu group agar centered dengan gambar */}
+          {/* Kiri: teks + tombol (desktop) */}
           <div className="text-white text-center lg:text-left">
             <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] leading-[1.2] font-semibold">
               Kelola Kesehatan dengan RawatDiri
@@ -50,10 +33,9 @@ export default function RawatDiriSection() {
             <p className="mt-3 text-[14px] sm:text-[16px] md:text-[18px] lg:text-[22px] leading-[1.5] text-white/90">
               Susun rencana diet, pantau jadwal minum obat hingga catat riwayat kesehatan dengan lebih mudah menggunakan RawatDiri
             </p>
-            {/* Badge desktop — hanya tampil di lg ke atas */}
-            <div className="hidden lg:flex mt-6 gap-3 flex-wrap">
-              <StoreBadge src="/images/Apple.png" alt="App Store" eyebrow="Download on the" title="App Store" logoClassName="w-[24px] h-[24px]" />
-              <StoreBadge src="/images/Playstore.png" alt="Google Play" eyebrow="GET IT ON" title="Google Play" logoClassName="w-[26px] h-[26px]" />
+            {/* Tombol desktop — hanya tampil di lg ke atas */}
+            <div className="hidden lg:flex mt-6">
+              <MulaiButton />
             </div>
           </div>
 
@@ -69,14 +51,12 @@ export default function RawatDiriSection() {
             />
           </div>
 
-          {/* Badge mobile — hanya tampil di bawah lg, setelah gambar */}
-          <div className="flex lg:hidden gap-3 flex-wrap justify-center">
-            <StoreBadge src="/images/Apple.png" alt="App Store" eyebrow="Download on the" title="App Store" logoClassName="w-[24px] h-[24px]" />
-            <StoreBadge src="/images/Playstore.png" alt="Google Play" eyebrow="GET IT ON" title="Google Play" logoClassName="w-[26px] h-[26px]" />
+          {/* Tombol mobile — hanya tampil di bawah lg, setelah gambar */}
+          <div className="flex lg:hidden justify-center">
+            <MulaiButton />
           </div>
         </div>
       </div>
     </section>
   );
 }
-
