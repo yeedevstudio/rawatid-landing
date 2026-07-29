@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
-import Page505 from "@/common/components/Page505";
+import FacilitiesClient from "./FacilitiesClient";
 
 export default function InformasiRsDanKlinikPage() {
   return (
@@ -20,8 +20,8 @@ export default function InformasiRsDanKlinikPage() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <Page505 title="Informasi RS dan Klinik" />
+      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-16 pt-6">
+        <FacilitiesClient />
       </main>
     </div>
   );
