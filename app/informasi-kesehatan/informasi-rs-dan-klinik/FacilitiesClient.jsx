@@ -185,14 +185,12 @@ export default function FacilitiesClient() {
                 className="rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)] bg-white p-4 md:p-5 flex flex-col sm:flex-row gap-4 md:gap-6 hover:shadow-[0_6px_28px_rgba(0,0,0,0.10)] transition-shadow"
               >
                 <div className="relative w-full sm:w-48 h-40 sm:h-32 shrink-0 rounded-xl overflow-hidden bg-gray-100">
-                  {f.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={f.image} alt={f.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-300">
-                      <IconBuildingHospital size={40} />
-                    </div>
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={f.image || "/dummy/hospital.png"}
+                    alt={f.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">{f.name}</h2>

@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  IconBrain,
-  IconStethoscope,
   IconChevronDown,
   IconWheelchair,
   IconPill,
@@ -101,7 +99,7 @@ export default function FacilityDetailClient({ id }) {
     };
   }, [id]);
 
-  const name = data?.name || "Fasilitas Kesehatan";
+  const name = (data?.name || "").trim() || "Fasilitas Kesehatan";
 
   if (loading) {
     return <div className="py-24 text-center text-gray-400">Memuat detail fasilitas...</div>;
@@ -112,7 +110,7 @@ export default function FacilityDetailClient({ id }) {
 
   return (
     <div className="w-full">
-      <div className="max-w-6xl mx-auto px-5 md:px-12 pt-6">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-6">
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
@@ -124,11 +122,13 @@ export default function FacilityDetailClient({ id }) {
       </div>
 
       {/* Hero */}
-      <div className="relative w-full h-[300px] md:h-[440px] mt-4 overflow-hidden bg-gradient-to-br from-green/80 to-green">
-        {data?.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={data.image} alt={name} className="absolute inset-0 w-full h-full object-cover" />
-        )}
+      <div className="relative w-full h-[300px] md:h-[440px] mt-8 md:mt-10 overflow-hidden bg-gradient-to-br from-green/80 to-green">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={data?.image || "/dummy/hospital.png"}
+          alt={name}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-black/25" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 text-white">
           <p className="tracking-[0.2em] text-sm md:text-base font-semibold">SELAMAT DATANG DI</p>
@@ -136,7 +136,7 @@ export default function FacilityDetailClient({ id }) {
         </div>
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 py-10 flex flex-col gap-12">
+      <main className="max-w-[1400px] mx-auto px-4 md:px-8 py-10 flex flex-col gap-12">
         {/* Tentang */}
         <section>
           <SectionTitle>Tentang Rumah Sakit &amp; Klinik {name}</SectionTitle>
@@ -153,13 +153,24 @@ export default function FacilityDetailClient({ id }) {
             {SERVICES.map((s, i) => (
               <div
                 key={i}
-                className="rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white p-6 flex flex-col justify-between min-h-[180px] relative overflow-hidden"
+                className="relative rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white p-6 min-h-[210px] overflow-hidden"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-greenImage text-green">
-                  <IconBrain size={30} />
+                {/* right illustration */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/dummy/layanan.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-[85%] w-1/2 object-contain object-right"
+                />
+                {/* brain icon */}
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-greenImage">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/dummy/otak.png" alt="" aria-hidden="true" className="w-9 h-9 object-contain" />
                 </div>
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-gray-800">{s.title}</h3>
+                {/* text */}
+                <div className="relative mt-14 max-w-[62%]">
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-800">{s.title}</h3>
                   <p className="text-sm text-gray-500 mt-1">{s.desc}</p>
                 </div>
               </div>
@@ -181,13 +192,16 @@ export default function FacilityDetailClient({ id }) {
               <IconChevronDown size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {DOCTORS.map((d, i) => (
-              <div key={i} className="rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white p-5">
+              <div key={i} className="w-full max-w-[380px] mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white p-5">
                 <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                  <div className="h-16 w-16 rounded-full bg-greenImage flex items-center justify-center text-green shrink-0">
-                    <IconStethoscope size={28} />
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/dummy/dokter.png"
+                    alt={d.name}
+                    className="h-24 w-24 rounded-full object-cover shrink-0"
+                  />
                   <div className="min-w-0">
                     <p className="font-semibold text-gray-800 text-sm">{d.name}</p>
                     <p className="text-xs text-gray-500">{d.facility}</p>
@@ -216,10 +230,17 @@ export default function FacilityDetailClient({ id }) {
         {/* Promo Terbaru */}
         <section>
           <SectionTitle>Promo Terbaru</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PROMOS.map((p, i) => (
-              <div key={i} className="rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white overflow-hidden flex flex-col">
-                <div className="h-44 bg-gray-100" />
+              <div key={i} className="w-full max-w-[380px] mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] bg-white overflow-hidden flex flex-col">
+                <div className="p-3 pb-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/dummy/promo.png"
+                    alt={p.title}
+                    className="h-44 w-full object-cover rounded-xl"
+                  />
+                </div>
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-lg font-semibold text-gray-800">{p.title}</h3>
                   <p className="text-sm text-gray-500 mt-1 mb-4">{p.date}</p>
