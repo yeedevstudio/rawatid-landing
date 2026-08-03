@@ -5,11 +5,13 @@ import Link from "next/link";
 import {
   IconSearch,
   IconBuildingHospital,
+  IconCategory,
   IconUsers,
   IconMapPin,
   IconChevronLeft,
   IconChevronRight,
 } from "@tabler/icons-react";
+import { DUMMY_TYPE, DUMMY_CATEGORY, DUMMY_OWNERSHIP, dummyOf } from "@/common/constant/facility";
 
 const PAGE_SIZE = 10;
 
@@ -33,6 +35,7 @@ const normalize = (r) => {
   const districtName = nameOf(r.district, r.districtName);
   const villageName = nameOf(r.village, r.villageName);
   const street = str(r.addressCode || r.address);
+  const seed = Number(r.id) || 0;
 
   const addressParts = [street, villageName, districtName && `Kec. ${districtName}`, cityName, provinceName]
     .map(str)
@@ -42,9 +45,15 @@ const normalize = (r) => {
     id: r.id ?? r.code ?? r.slug,
     name: str(r.name),
     slug: str(r.slug),
-    type: nameOf(r.facilityType, r.type, r.facilityTypeName),
-    ownership: nameOf(r.facilityOwnership, r.ownership, r.facilityOwnershipName),
-    category: nameOf(r.facilityCategory, r.category, r.facilityCategoryName),
+    type:
+      nameOf(r.facilityType, r.type, r.facilityTypeName) ||
+      dummyOf(DUMMY_TYPE, r.facilityTypeId, seed),
+    ownership:
+      nameOf(r.facilityOwnership, r.ownership, r.facilityOwnershipName) ||
+      dummyOf(DUMMY_OWNERSHIP, r.facilityOwnershipId, seed),
+    category:
+      nameOf(r.facilityCategory, r.category, r.facilityCategoryName) ||
+      dummyOf(DUMMY_CATEGORY, r.facilityCategoryId, seed),
     province: provinceName,
     city: cityName,
     district: districtName,
@@ -59,14 +68,18 @@ const FILTERS = [
   { key: "district", label: "Kecamatan" },
   { key: "type", label: "Tipe Faskes" },
   { key: "category", label: "Jenis Faskes" },
+  { key: "ownership", label: "Kepemilikan Fasilitas Kesehatan" },
 ];
 
-function InfoRow({ icon: Icon, children }) {
+function InfoRow({ icon: Icon, label, children }) {
   if (!children) return null;
   return (
     <div className="flex items-start gap-2 text-gray-600">
       <Icon size={20} className="text-green shrink-0 mt-0.5" />
-      <span className="text-sm md:text-base">{children}</span>
+      <span className="text-sm md:text-base">
+        {label && <span className="text-gray-400">{label}: </span>}
+        {children}
+      </span>
     </div>
   );
 }
@@ -150,7 +163,7 @@ export default function FacilitiesClient() {
       </div>
 
       {/* Filters */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
         {FILTERS.map((f) => (
           <select
             key={f.key}
@@ -195,8 +208,15 @@ export default function FacilitiesClient() {
                 <div className="flex-1 min-w-0">
                   <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">{f.name}</h2>
                   <div className="flex flex-col gap-1.5">
-                    <InfoRow icon={IconBuildingHospital}>{f.type}</InfoRow>
-                    <InfoRow icon={IconUsers}>{f.ownership}</InfoRow>
+                    <InfoRow icon={IconBuildingHospital} label="Tipe Fasilitas Kesehatan">
+                      {f.type}
+                    </InfoRow>
+                    <InfoRow icon={IconCategory} label="Jenis Fasilitas Kesehatan">
+                      {f.category}
+                    </InfoRow>
+                    <InfoRow icon={IconUsers} label="Kepemilikan Fasilitas Kesehatan">
+                      {f.ownership}
+                    </InfoRow>
                     <InfoRow icon={IconMapPin}>{f.address}</InfoRow>
                   </div>
                 </div>
