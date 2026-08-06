@@ -2,6 +2,7 @@ import Error from "@/app/error";
 import NotFound from "@/app/not-found";
 import PageByClientPagination from "@/module/blog/components/PageByClientPagination";
 import { redirect } from "next/navigation";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 export async function generateMetadata({ params }) {
   const { slug = "" } = await params;
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }) {
   try {
     const postSlugRes = await fetch(
       `${process.env.API_URL}/categories?populate=*&filters[slug][$eq]=${slug}`,
-      { cache: "no-store" }
+      { next: { revalidate: BLOG_REVALIDATE } }
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;

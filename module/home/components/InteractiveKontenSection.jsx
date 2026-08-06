@@ -14,7 +14,7 @@ const SCROLL_EDGE = "-mx-5 md:-mx-12 lg:-mx-20 xl:-mx-24 pl-5 md:pl-12 lg:pl-20 
 const SUBTITLE = "Pelajari lebih dalam informasi kesehatan dengan data dan visual";
 
 const IMAGE_CARDS = [
-  { src: "/image/cacar.png",    href: "/cacar-air" },
+  { src: "/image/cacar.webp",    href: "/cacar-air" },
   { src: "/image/herpes.png",   href: "/herpes-simplex" },
   { src: "/image/hepa.png",     href: "/hepatitis" },
   { src: "/image/dbdcover.png", href: "/dbd" },
@@ -25,7 +25,7 @@ const IMAGE_CARDS = [
 const COMPOSITE_CARDS = [
   {
     id: "flu-burung",
-    src: "/image/fluburung.svg",
+    src: "/image/fluburung.webp",
     href: "/interaktif/flu-burung",
     title: "Flu Burung",
     subtitle: "Penyakit yang disebabkan oleh virus influenza dari unggas",
@@ -35,7 +35,7 @@ const COMPOSITE_CARDS = [
   },
   {
     id: "cacar-monyet",
-    src: "/image/cacarmonyet.svg",
+    src: "/image/cacarmonyet.webp",
     href: "/interaktif/cacar-monyet",
     title: "Cacar Monyet",
     subtitle: "Infeksi virus zoonotik yang dapat menular antar manusia",

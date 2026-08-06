@@ -95,7 +95,7 @@ export default function ApaItuTifoid() {
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/image/usus.png"
+            src="/image/usus.webp"
             alt=""
             className="h-auto w-full max-w-[260px] shrink-0 self-center object-contain md:max-w-[300px] lg:max-w-[340px]"
           />

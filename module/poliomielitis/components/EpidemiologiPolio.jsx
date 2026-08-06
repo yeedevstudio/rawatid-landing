@@ -50,7 +50,7 @@ export default function EpidemiologiPolio() {
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/image/lindung.png"
+            src="/image/lindung.webp"
             alt=""
             className="h-80 w-auto shrink-0 self-center object-contain sm:h-96 md:h-[28rem]"
           />

@@ -24,7 +24,9 @@ const RUMAH_ITEMS = [
 
 const RS_ITEMS = [
   {
-    img: "/image/inpus.png",
+    // TODO: ganti dengan ilustrasi infus yang sebenarnya. /image/inpus.png
+    // tidak pernah ada di repo, jadi gambar ini rusak sejak awal.
+    img: "/image/jarum.png",
     alt: "Infus",
     title: "Cairan Infus (IV Fluid)",
     desc: "Dokter akan menghitung jenis dan kecepatan cairan berdasarkan kondisi pasien. Ini kunci utama penanganan fase kritis.",

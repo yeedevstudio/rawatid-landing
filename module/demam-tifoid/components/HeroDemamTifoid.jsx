@@ -19,7 +19,7 @@ export default function HeroDemamTifoid() {
         <img
           data-aos="fade-left"
           suppressHydrationWarning
-          src="/image/tifoid.png"
+          src="/image/tifoid.webp"
           alt="Ilustrasi Demam Tifoid"
           className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
         />

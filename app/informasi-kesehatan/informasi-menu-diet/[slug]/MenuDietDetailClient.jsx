@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   IconBrandFacebook,
@@ -53,12 +53,15 @@ function splitToList(value) {
     .map((x) => x.replace(/^[-•*]\s*/, ""));
 }
 
-export default function MenuDietDetailClient({ slug }) {
-  const [loading, setLoading] = useState(true);
+export default function MenuDietDetailClient({ slug, initialData = null }) {
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState("");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(initialData?.detail ?? null);
   const [copied, setCopied] = useState(false);
-  const [otherMenus, setOtherMenus] = useState([]);
+  const [otherMenus, setOtherMenus] = useState(initialData?.otherMenus ?? []);
+
+  // Server sudah mengirim detail + menu lainnya.
+  const skipInitialFetch = useRef(Boolean(initialData));
   const [activeImage, setActiveImage] = useState(0);
 
   const getMenuImageSrc = (menu, index = 0) => {
@@ -86,6 +89,11 @@ export default function MenuDietDetailClient({ slug }) {
   };
 
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     let cancelled = false;
     async function run() {
       try {
@@ -110,6 +118,8 @@ export default function MenuDietDetailClient({ slug }) {
   }, [slug]);
 
   useEffect(() => {
+    if (initialData) return;
+
     let cancelled = false;
     async function run() {
       try {

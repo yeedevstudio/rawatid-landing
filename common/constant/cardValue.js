@@ -9,7 +9,7 @@ export const CardValue = [
   },
   {
     link: "/fitur#card_2",
-    images: "/images/card_2.svg",
+    images: "/images/card_2.webp",
     altImage: "Card Rekam Medis",
     title: "Rekam Medis Elektronik",
     description:
@@ -17,7 +17,7 @@ export const CardValue = [
   },
   {
     link: "/fitur#card_3",
-    images: "/images/card_3.svg",
+    images: "/images/card_3.webp",
     altImage: "Card Stok Obat",
     title: "Kontrol Stok Obat dan Resep Elektronik",
     description:

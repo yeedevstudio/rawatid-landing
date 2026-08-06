@@ -20,7 +20,7 @@ export default function HeroFluBurung() {
         <img
           data-aos="fade-left"
           suppressHydrationWarning
-          src="/image/fluburung.svg"
+          src="/image/fluburung.webp"
           alt="Ilustrasi Flu Burung"
           className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
         />

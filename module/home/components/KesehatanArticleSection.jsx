@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CardArticleAll } from "@/common/components/CardArticle";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 const CATEGORY_SLUG = "kesehatan";
 
@@ -7,15 +9,14 @@ async function getKesehatanArticles() {
   if (!process.env.API_URL) return [];
 
   const qs = new URLSearchParams({
-    populate: "*",
     sort: "updatedAt:desc",
     "pagination[page]": "1",
     "pagination[pageSize]": "3",
     "filters[category][slug][$eq]": CATEGORY_SLUG,
   });
 
-  const res = await fetch(`${process.env.API_URL}/posts?${qs.toString()}`, {
-    cache: "no-store",
+  const res = await fetch(`${process.env.API_URL}/posts?${POST_LIST_QUERY}&${qs.toString()}`, {
+    next: { revalidate: BLOG_REVALIDATE },
   });
 
   if (!res.ok) return [];

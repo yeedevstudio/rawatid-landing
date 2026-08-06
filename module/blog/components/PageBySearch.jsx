@@ -12,7 +12,7 @@ export default function PageBySearch({ data, pagination, slug }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!data);
 
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
@@ -21,16 +21,13 @@ export default function PageBySearch({ data, pagination, slug }) {
     router.push(`/blog/detail/${slug}`);
   };
 
+  // Dulu di sini ada setTimeout 2 detik yang menahan skeleton walaupun `data`
+  // sudah tersedia sebagai prop dari server — murni penundaan buatan, dan
+  // membuat konten tidak ikut ter-render di HTML. Sekarang loading langsung
+  // mengikuti ada/tidaknya data.
   useEffect(() => {
-    const setTimeLoading = setTimeout(() => {
-      if (data) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-    }, 2000);
-    return () => clearTimeout(setTimeLoading);
-  }, []);
+    setLoading(!data);
+  }, [data]);
 
   return (
     <ContainerBlog>

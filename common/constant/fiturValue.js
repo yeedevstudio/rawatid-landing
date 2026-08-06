@@ -34,7 +34,7 @@ export const fiturValue = [
   {
     id: "card_2",
     title: "Rekam Medis Elektronik",
-    image: "/images/card_2.svg",
+    image: "/images/card_2.webp",
     list: [
       {
         title: "Rekam Medis Digital",
@@ -66,7 +66,7 @@ export const fiturValue = [
   {
     id: "card_3",
     title: "Kontrol Stok Obat dan Resep Elektronik",
-    image: "/images/card_3.svg",
+    image: "/images/card_3.webp",
     list: [
       {
         title: "Pencatatan Pengeluaran Obat",

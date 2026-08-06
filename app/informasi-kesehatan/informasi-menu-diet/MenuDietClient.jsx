@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   Pagination,
@@ -17,14 +17,36 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-export default function MenuDietClient() {
+export default function MenuDietClient({ initialData = null }) {
   const router = useRouter();
-  const sp = useSearchParams();
 
-  const [loading, setLoading] = useState(true);
+  // Dulu halaman aktif dibaca lewat useSearchParams(). Hook itu memaksa Suspense
+  // bailout saat render statis, jadi HTML yang sampai ke HP cuma skeleton —
+  // konten baru muncul setelah JS jalan. Sekarang page disimpan sebagai state
+  // biasa dan URL cukup disinkronkan satu arah, sehingga halaman ini benar-benar
+  // ter-render di server.
+  const [page, setPage] = useState(1);
+
+  const syncUrl = (nextPage) => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", String(nextPage));
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
+
+  // Hormati ?page= kalau user membuka/berbagi tautan langsung.
+  useEffect(() => {
+    const fromUrl = Number.parseInt(
+      new URLSearchParams(window.location.search).get("page") || "1",
+      10
+    );
+    if (fromUrl > 1) setPage(fromUrl);
+  }, []);
+
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState("");
-  const [items, setItems] = useState([]);
-  const [meta, setMeta] = useState({ total: 0, perPage: 12, totalPages: 1 });
+  const [items, setItems] = useState(initialData?.items ?? []);
+  const [meta, setMeta] = useState(initialData?.meta ?? { total: 0, perPage: 12, totalPages: 1 });
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState(""); // legacy (tidak dipakai)
@@ -32,12 +54,16 @@ export default function MenuDietClient() {
   const [menuCatCode, setMenuCatCode] = useState("");
   const [basicIngredientCode, setBasicIngredientCode] = useState("");
 
-  const [menuTypes, setMenuTypes] = useState([]);
-  const [menuCategories, setMenuCategories] = useState([]);
-  const [basicIngredients, setBasicIngredients] = useState([]);
-  const page = Math.max(1, Number.parseInt(sp.get("page") || "1", 10) || 1);
+  const [menuTypes, setMenuTypes] = useState(initialData?.menuTypes ?? []);
+  const [menuCategories, setMenuCategories] = useState(initialData?.menuCategories ?? []);
+  const [basicIngredients, setBasicIngredients] = useState(initialData?.basicIngredients ?? []);
+
+  // Server sudah mengirim daftar awal + semua opsi filter.
+  const skipInitialFetch = useRef(Boolean(initialData));
 
   useEffect(() => {
+    if (initialData) return;
+
     let cancelled = false;
     async function run() {
       try {
@@ -69,6 +95,11 @@ export default function MenuDietClient() {
   }, []);
 
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     let cancelled = false;
     async function run() {
       try {
@@ -113,9 +144,8 @@ export default function MenuDietClient() {
 
   // reset ke page 1 saat filter berubah
   useEffect(() => {
-    const params = new URLSearchParams(sp.toString());
-    params.set("page", "1");
-    router.replace(`?${params.toString()}`);
+    setPage(1);
+    syncUrl(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, menuTypeCode, menuCatCode, basicIngredientCode]);
 
@@ -147,9 +177,8 @@ export default function MenuDietClient() {
 
   const goToPage = (p) => {
     const next = clamp(p, 1, totalPages);
-    const params = new URLSearchParams(sp.toString());
-    params.set("page", String(next));
-    router.push(`?${params.toString()}`);
+    setPage(next);
+    syncUrl(next);
   };
 
   const getMenuImageSrc = (menu) => {

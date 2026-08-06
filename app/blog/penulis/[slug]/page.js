@@ -1,6 +1,8 @@
 import Error from "@/app/error";
 import NotFound from "@/app/not-found";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
 import PageBy from "@/module/blog/components/PageBy";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 export async function generateMetadata({ params }) {
   const { slug = "" } = await params;
@@ -13,7 +15,7 @@ export async function generateMetadata({ params }) {
     const postSlugRes = await fetch(
       `${process.env.API_URL}/authors?populate=*&filters[slug][$eq]=${slug}`,
       {
-        cache: "no-store",
+        next: { revalidate: BLOG_REVALIDATE },
       }
     );
     const postSlug = await postSlugRes.json();
@@ -72,16 +74,16 @@ export default async function Page({ params }) {
   try {
     const [postSlugRes, postAllRes, authorAllRes] = await Promise.all([
       fetch(
-        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&filters[author][slug][$eq]=${slug}`,
-        { cache: "no-store" }
+        `${process.env.API_URL}/posts?${POST_LIST_QUERY}&sort=updatedAt:desc&filters[author][slug][$eq]=${slug}`,
+        { next: { revalidate: BLOG_REVALIDATE } }
       ),
       fetch(
-        `${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`,
-        { cache: "no-store" }
+        `${process.env.API_URL}/posts?${POST_LIST_QUERY}&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=10`,
+        { next: { revalidate: BLOG_REVALIDATE } }
       ),
       fetch(
         `${process.env.API_URL}/authors?populate=*&filters[slug][$eq]=${slug}`,
-        { cache: "no-store" }
+        { next: { revalidate: BLOG_REVALIDATE } }
       ),
     ]);
 

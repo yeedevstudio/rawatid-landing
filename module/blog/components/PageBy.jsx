@@ -16,23 +16,20 @@ export default function PageBy({ data, post, slug, title, author, pagination, cu
   const router = useRouter();
   const sp = useSearchParams();
   const [selected, setSelected] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!data);
 
   const handleSelected = (index, slug) => {
     setSelected(index);
     router.push(`/blog/detail/${slug}`);
   };
 
+  // Dulu di sini ada setTimeout 2 detik yang menahan skeleton walaupun `data`
+  // sudah tersedia sebagai prop dari server — murni penundaan buatan, dan
+  // membuat konten tidak ikut ter-render di HTML. Sekarang loading langsung
+  // mengikuti ada/tidaknya data.
   useEffect(() => {
-    const setTimeLoading = setTimeout(() => {
-      if (data) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-    }, 2000);
-    return () => clearTimeout(setTimeLoading);
-  }, []);
+    setLoading(!data);
+  }, [data]);
 
   const blogFilter = data || [];
 

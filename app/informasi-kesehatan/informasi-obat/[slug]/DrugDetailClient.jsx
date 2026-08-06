@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
@@ -107,12 +107,16 @@ function normalizeData(json) {
   return json?.data || json;
 }
 
-export default function DrugDetailClient({ slug }) {
-  const [loading, setLoading] = useState(true);
+export default function DrugDetailClient({ slug, initialData = null }) {
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState("");
-  const [data, setData] = useState(null);
-  const [drugs, setDrugs] = useState([]);
-  const [related, setRelated] = useState([]);
+  const [data, setData] = useState(initialData?.detail ?? null);
+  const [drugs, setDrugs] = useState(initialData?.drugs ?? []);
+  const [related, setRelated] = useState(initialData?.related ?? []);
+
+  // Server sudah menyiapkan detail + drugs + related, jadi jangan ulangi
+  // rantai fetch-nya saat mount.
+  const skipInitialFetch = useRef(Boolean(initialData));
   const containerClass = "mx-auto w-full max-w-screen-2xl px-10 sm:px-6 lg:px-8";
   const [copied, setCopied] = useState(false);
 
@@ -140,6 +144,11 @@ export default function DrugDetailClient({ slug }) {
   };
 
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     let cancelled = false;
 
     async function run() {
@@ -299,7 +308,7 @@ export default function DrugDetailClient({ slug }) {
             </div>
 
             <div className="relative w-full overflow-hidden rounded-2xl bg-gray-50 aspect-[16/9]">
-              <Image src="/images/drugs.svg" alt="Ilustrasi obat" fill priority={false} className="object-cover" />
+              <Image src="/images/drugs.webp" alt="Ilustrasi obat" fill priority={false} className="object-cover" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

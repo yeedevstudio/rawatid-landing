@@ -12,25 +12,23 @@ import { startRouteLoading } from "@/common/utils/routeLoading";
 
 export default function BlogAll({ data, maxItems }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!data);
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 3;
 
-  const handleSelected = (index, slug) => {
+  // Navigasi kini ditangani <Link> di dalam kartu (lihat CardArticle.jsx),
+  // jadi di sini cukup memunculkan indikator loading.
+  const handleSelected = () => {
     startRouteLoading();
-    router.push(`/blog/detail/${slug}`);
   };
 
+  // Dulu di sini ada setTimeout 2 detik yang menahan skeleton walaupun `data`
+  // sudah tersedia sebagai prop dari server — murni penundaan buatan, dan
+  // membuat konten tidak ikut ter-render di HTML. Sekarang loading langsung
+  // mengikuti ada/tidaknya data.
   useEffect(() => {
-    const setTimeLoading = setTimeout(() => {
-      if (data) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-    }, 2000);
-    return () => clearTimeout(setTimeLoading);
-  }, []);
+    setLoading(!data);
+  }, [data]);
 
   const raw = Array.isArray(data) ? data : [];
   const articles =
@@ -99,7 +97,8 @@ export default function BlogAll({ data, maxItems }) {
                       height={"h-[18rem] md:h-[20rem] lg:h-[18rem]"}
                       minHeightClassName="min-h-[400px]"
                       tagVariant="outline"
-                      onSelect={() => handleSelected(index, article.slug)}
+                      href={`/blog/detail/${article.slug}`}
+                      onSelect={handleSelected}
                     />
                   </div>
                 ))}

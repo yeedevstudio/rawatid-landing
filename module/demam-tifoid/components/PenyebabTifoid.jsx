@@ -10,7 +10,7 @@ const JALUR_CARDS = [
     text: "Ini adalah jalur penularan terbesar di daerah dengan sanitasi buruk. Sumur atau sumber air yang terkontaminasi limbah dapat menginfeksi ribuan orang sekaligus",
   },
   {
-    image: "/image/makanan.png",
+    image: "/image/makanan.webp",
     title: "Makanan yang terkontaminasi",
     text: <>Makanan yang dipersiapkan oleh penderita demam <em>tifoid</em> yang tidak mencuci tangan dengan benar, atau makanan yang disiram/dicuci dengan air yang terkontaminasi</>,
   },
@@ -25,7 +25,7 @@ const JALUR_CARDS = [
     text: "Makanan dan minuman dari pedagang dengan higenitas yang tidak terjamin dan sering terjangkau lalat",
   },
   {
-    image: "/image/ikan.png",
+    image: "/image/ikan.webp",
     title: <><em>Seafood</em> dan kerang-kerangaan</>,
     text: <><em>Seafood</em> dari perairan yang terkontaminasi limbah manusia</>,
   },

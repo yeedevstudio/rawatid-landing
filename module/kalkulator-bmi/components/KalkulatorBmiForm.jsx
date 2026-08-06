@@ -42,8 +42,8 @@ const CATEGORIES = [
     barColor: "#3b82f6",
     circleBg: "bg-blue-50",
     description: "Berat badan Anda berada di bawah kisaran normal",
-    manImage: "/image/kurusman.svg",
-    girlImage: "/image/kurusgirl.svg",
+    manImage: "/image/kurusman.webp",
+    girlImage: "/image/kurusgirl.webp",
     tips: [
       "Tingkatkan asupan kalori dengan makanan bergizi seperti kacang-kacangan, alpukat, dan daging tanpa lemak.",
       "Makan lebih sering dengan porsi kecil, minimal 5–6 kali sehari untuk membantu menambah berat badan.",
@@ -63,8 +63,8 @@ const CATEGORIES = [
     barColor: "#22c55e",
     circleBg: "bg-green-50",
     description: "Berat badan Anda ideal dan berada dalam kisaran normal.",
-    manImage: "/image/normalman.svg",
-    girlImage: "/image/normalgirl.svg",
+    manImage: "/image/normalman.webp",
+    girlImage: "/image/normalgirl.webp",
     tips: [
       "Konsumsi makanan bergizi seimbang, perbanyak sayur dan buah.",
       "Lakukan aktivitas fisik minimal 30 menit setiap hari seperti jalan kaki, bersepeda, atau olahraga ringan.",
@@ -85,8 +85,8 @@ const CATEGORIES = [
     circleBg: "bg-orange-50",
     description:
       "Berat badan Anda lebih tinggi dari kisaran normal. Jaga pola hidup sehat agar tetap bugar.",
-    manImage: "/image/overman.svg",
-    girlImage: "/image/overgirl.svg",
+    manImage: "/image/overman.webp",
+    girlImage: "/image/overgirl.webp",
     tips: [
       "Kurangi konsumsi makanan tinggi gula, garam, dan lemak jenuh seperti makanan cepat saji.",
       "Tambah aktivitas fisik menjadi minimal 45 menit per hari dengan olahraga sedang.",
@@ -107,8 +107,8 @@ const CATEGORIES = [
     circleBg: "bg-red-50",
     description:
       "Berat badan Anda tergolong obesitas tingkat I. Disarankan untuk mulai menjaga pola makan dan aktivitas fisik.",
-    manImage: "/image/obeman.svg",
-    girlImage: "/image/obegirl.svg",
+    manImage: "/image/obeman.webp",
+    girlImage: "/image/obegirl.webp",
     tips: [
       "Konsultasikan dengan dokter atau ahli gizi untuk mendapatkan program diet yang tepat dan aman.",
       "Lakukan olahraga rutin minimal 60 menit per hari dengan intensitas sedang.",
@@ -129,8 +129,8 @@ const CATEGORIES = [
     circleBg: "bg-red-50",
     description:
       "Berat badan Anda tergolong obesitas tingkat II. Segera konsultasikan dengan tenaga kesehatan.",
-    manImage: "/image/obe2man.svg",
-    girlImage: "/image/obe2girl.svg",
+    manImage: "/image/obe2man.webp",
+    girlImage: "/image/obe2girl.webp",
     tips: [
       "Segera konsultasikan kondisi Anda ke dokter untuk evaluasi risiko kesehatan lebih lanjut.",
       "Ikuti program penurunan berat badan terstruktur di bawah pengawasan tenaga medis.",

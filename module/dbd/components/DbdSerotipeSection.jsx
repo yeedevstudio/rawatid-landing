@@ -21,10 +21,10 @@ const TOP_CARDS = [
 ];
 
 const SERO_CARDS = [
-  { image: "/image/den1.png", code: "DENV-1", label: "Tipe 1" },
-  { image: "/image/den2.png", code: "DENV-2", label: "Tipe 2" },
-  { image: "/image/den3.png", code: "DENV-3", label: "Tipe 3" },
-  { image: "/image/den4.png", code: "DENV-4", label: "Tipe 4" },
+  { image: "/image/den1.webp", code: "DENV-1", label: "Tipe 1" },
+  { image: "/image/den2.webp", code: "DENV-2", label: "Tipe 2" },
+  { image: "/image/den3.webp", code: "DENV-3", label: "Tipe 3" },
+  { image: "/image/den4.webp", code: "DENV-4", label: "Tipe 4" },
 ];
 
 const cardBase =

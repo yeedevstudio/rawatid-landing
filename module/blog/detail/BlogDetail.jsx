@@ -348,7 +348,9 @@ export default function BlogDetail({
       usedSlugs.add(selectedCategory?.slug);
       renderedElements.push(
         <div
-          key={`postCategory-end-${Date.now()}`}
+          // Dulu Date.now(): key berubah tiap render, jadi React membuang dan
+          // membangun ulang node ini terus-menerus. Slug sudah unik & stabil.
+          key={`postCategory-end-${selectedCategory?.slug || "x"}`}
           className="w-full py-3 px-5 my-5 rounded-lg bg-green text-white"
         >
           <h3 className="text-sm md:text-base lg:text-base">

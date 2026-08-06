@@ -17,7 +17,7 @@ export default function CacarAirHeroSection() {
         </div>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img data-aos="fade-left" suppressHydrationWarning src="/image/cacarair.png" alt="Ilustrasi cacar air dan cacar ular" className="h-auto w-full max-w-lg justify-self-center lg:max-w-none" />
+        <img data-aos="fade-left" suppressHydrationWarning src="/image/cacarair.webp" alt="Ilustrasi cacar air dan cacar ular" className="h-auto w-full max-w-lg justify-self-center lg:max-w-none" />
       </div>
     </section>
   );

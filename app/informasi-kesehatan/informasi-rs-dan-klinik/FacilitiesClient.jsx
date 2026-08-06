@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   IconSearch,
@@ -11,63 +11,14 @@ import {
   IconChevronLeft,
   IconChevronRight,
 } from "@tabler/icons-react";
-import { DUMMY_TYPE, DUMMY_CATEGORY, DUMMY_OWNERSHIP, dummyOf } from "@/common/constant/facility";
 
 const PAGE_SIZE = 10;
-
-const str = (v) => (v == null ? "" : String(v)).trim();
-
-// Read a nested name defensively (obj.name / plain string / label).
-const nameOf = (...cands) => {
-  for (const c of cands) {
-    if (!c) continue;
-    if (typeof c === "string" && c.trim()) return c.trim();
-    if (typeof c === "object" && (c.name || c.label)) return str(c.name || c.label);
-  }
-  return "";
-};
-
-// The API only guarantees IDs; if prod joins in relations/labels/images we use
-// them, otherwise we fall back gracefully.
-const normalize = (r) => {
-  const provinceName = nameOf(r.province, r.provinceName);
-  const cityName = nameOf(r.city, r.cityName);
-  const districtName = nameOf(r.district, r.districtName);
-  const villageName = nameOf(r.village, r.villageName);
-  const street = str(r.addressCode || r.address);
-  const seed = Number(r.id) || 0;
-
-  const addressParts = [street, villageName, districtName && `Kec. ${districtName}`, cityName, provinceName]
-    .map(str)
-    .filter(Boolean);
-
-  return {
-    id: r.id ?? r.code ?? r.slug,
-    name: str(r.name),
-    slug: str(r.slug),
-    type:
-      nameOf(r.facilityType, r.type, r.facilityTypeName) ||
-      dummyOf(DUMMY_TYPE, r.facilityTypeId, seed),
-    ownership:
-      nameOf(r.facilityOwnership, r.ownership, r.facilityOwnershipName) ||
-      dummyOf(DUMMY_OWNERSHIP, r.facilityOwnershipId, seed),
-    category:
-      nameOf(r.facilityCategory, r.category, r.facilityCategoryName) ||
-      dummyOf(DUMMY_CATEGORY, r.facilityCategoryId, seed),
-    province: provinceName,
-    city: cityName,
-    district: districtName,
-    address: addressParts.join(", "),
-    image: str(r.image || r.imageUrl || r.photo || r.thumbnail || r.logo),
-  };
-};
 
 const FILTERS = [
   { key: "province", label: "Provinsi" },
   { key: "city", label: "Kab/Kota" },
-  { key: "district", label: "Kecamatan" },
-  { key: "type", label: "Tipe Faskes" },
-  { key: "category", label: "Jenis Faskes" },
+  { key: "type", label: "Tipe Fasilitas Kesehatan" },
+  { key: "category", label: "Jenis Fasilitas Kesehatan" },
   { key: "ownership", label: "Kepemilikan Fasilitas Kesehatan" },
 ];
 
@@ -84,60 +35,85 @@ function InfoRow({ icon: Icon, label, children }) {
   );
 }
 
-export default function FacilitiesClient() {
-  const [facilities, setFacilities] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function FacilitiesClient({ initialData = null, options = null }) {
+  const [rows, setRows] = useState(initialData?.data ?? []);
+  const [total, setTotal] = useState(initialData?.total ?? 0);
+  const [totalPages, setTotalPages] = useState(initialData?.totalPages ?? 1);
+  const [page, setPage] = useState(initialData?.page ?? 1);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const [queryInput, setQueryInput] = useState("");
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState({});
-  const [page, setPage] = useState(1);
+
+  // Halaman pertama sudah dirender server — jangan fetch ulang saat mount.
+  const skipInitialFetch = useRef(Boolean(initialData));
+
+  // Mengetik tidak boleh memicu satu request per huruf.
+  useEffect(() => {
+    const t = setTimeout(() => setQuery(queryInput), 350);
+    return () => clearTimeout(t);
+  }, [queryInput]);
+
+  const load = useCallback(async (signal) => {
+    setLoading(true);
+    setError("");
+    try {
+      const params = new URLSearchParams({
+        page: String(page),
+        perPage: String(PAGE_SIZE),
+        search: query,
+      });
+      for (const { key } of FILTERS) if (filters[key]) params.set(key, filters[key]);
+
+      const res = await fetch(`/api/health-facilities/public/list?${params}`, { signal });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.message || "Gagal memuat data fasilitas.");
+
+      setRows(json.data || []);
+      setTotal(json.total || 0);
+      setTotalPages(json.totalPages || 1);
+    } catch (e) {
+      if (e?.name !== "AbortError") setError(e?.message || "Terjadi kesalahan.");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, query, filters]);
 
   useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        const res = await fetch("/api/health-facilities/public/all", { cache: "no-store" });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Gagal memuat data fasilitas.");
-        const rows = Array.isArray(json?.data) ? json.data : Array.isArray(json) ? json : [];
-        if (active) setFacilities(rows.map(normalize).filter((f) => f.name));
-      } catch (e) {
-        if (active) setError(e.message || "Terjadi kesalahan.");
-      } finally {
-        if (active) setLoading(false);
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+    const controller = new AbortController();
+    load(controller.signal);
+    return () => controller.abort();
+  }, [load]);
 
-  // Build dropdown options from the distinct values present in the data.
-  const options = useMemo(() => {
-    const acc = Object.fromEntries(FILTERS.map((f) => [f.key, new Set()]));
-    facilities.forEach((f) => FILTERS.forEach(({ key }) => f[key] && acc[key].add(f[key])));
-    return Object.fromEntries(FILTERS.map((f) => [f.key, [...acc[f.key]].sort()]));
-  }, [facilities]);
+  // Pilihan Kab/Kota mengikuti Provinsi yang sedang dipilih.
+  const cityOptions = useMemo(() => {
+    if (!options) return [];
+    const p = filters.province;
+    if (p && options.citiesByProvince?.[p]) return options.citiesByProvince[p];
+    return options.city || [];
+  }, [options, filters.province]);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return facilities.filter((f) => {
-      if (q && !f.name.toLowerCase().includes(q)) return false;
-      return FILTERS.every(({ key }) => !filters[key] || f[key] === filters[key]);
-    });
-  }, [facilities, query, filters]);
-
-  useEffect(() => setPage(1), [query, filters]);
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const currentPage = Math.min(page, totalPages);
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const pageRows = filtered.slice(start, start + PAGE_SIZE);
+  const optionsFor = (key) => (key === "city" ? cityOptions : options?.[key] || []);
 
   const setFilter = (key) => (e) => {
     const value = e.target.value;
-    setFilters((prev) => ({ ...prev, [key]: value }));
+    setPage(1);
+    setFilters((prev) => {
+      const next = { ...prev, [key]: value };
+      if (!value) delete next[key];
+      // Ganti provinsi -> kota lama bisa jadi tidak relevan lagi.
+      if (key === "province") delete next.city;
+      return next;
+    });
   };
+
+  const start = (page - 1) * PAGE_SIZE;
 
   return (
     <div className="w-full">
@@ -155,8 +131,11 @@ export default function FacilitiesClient() {
           <IconSearch size={20} />
         </div>
         <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={queryInput}
+          onChange={(e) => {
+            setQueryInput(e.target.value);
+            setPage(1);
+          }}
           placeholder="Cari nama rumah sakit atau klinik"
           className="flex-1 px-4 py-3 text-sm md:text-base outline-none"
         />
@@ -172,7 +151,7 @@ export default function FacilitiesClient() {
             className="px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 outline-none focus:border-green bg-white"
           >
             <option value="">{f.label}</option>
-            {options[f.key].map((opt) => (
+            {optionsFor(f.key).map((opt) => (
               <option key={opt} value={opt}>
                 {opt}
               </option>
@@ -182,16 +161,16 @@ export default function FacilitiesClient() {
       </div>
 
       {/* List */}
-      {loading ? (
-        <div className="py-24 text-center text-gray-400">Memuat fasilitas...</div>
-      ) : error ? (
+      {error ? (
         <div className="py-24 text-center text-red-500">{error}</div>
-      ) : filtered.length === 0 ? (
-        <div className="py-20 text-center text-gray-400">Tidak ada fasilitas yang cocok.</div>
+      ) : rows.length === 0 ? (
+        <div className="py-20 text-center text-gray-400">
+          {loading ? "Memuat fasilitas..." : "Tidak ada fasilitas yang cocok."}
+        </div>
       ) : (
         <>
-          <div className="flex flex-col gap-5">
-            {pageRows.map((f) => (
+          <div className={`flex flex-col gap-5 transition-opacity ${loading ? "opacity-50" : ""}`}>
+            {rows.map((f) => (
               <Link
                 key={f.id}
                 href={`/informasi-kesehatan/informasi-rs-dan-klinik/${f.id}`}
@@ -200,8 +179,9 @@ export default function FacilitiesClient() {
                 <div className="relative w-full sm:w-48 h-40 sm:h-32 shrink-0 rounded-xl overflow-hidden bg-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={f.image || "/dummy/hospital.png"}
+                    src={f.image || "/dummy/hospital.webp"}
                     alt={f.name}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -227,28 +207,22 @@ export default function FacilitiesClient() {
           {/* Pagination */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-8 text-sm">
             <span className="text-gray-500 mr-3">
-              {start + 1}-{Math.min(start + PAGE_SIZE, filtered.length)} of {filtered.length}
+              {start + 1}-{Math.min(start + PAGE_SIZE, total)} of {total}
             </span>
             <PageBtn
-              disabled={currentPage === 1}
+              disabled={page === 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               aria-label="Sebelumnya"
             >
               <IconChevronLeft size={16} />
             </PageBtn>
-            {buildPageList(currentPage, totalPages).map((p, i) =>
-              p === "..." ? (
-                <span key={`e${i}`} className="px-2 text-gray-400">
-                  …
-                </span>
-              ) : (
-                <PageBtn key={p} active={p === currentPage} onClick={() => setPage(p)}>
-                  {p}
-                </PageBtn>
-              )
-            )}
+            {buildPageList(page, totalPages).map((p) => (
+              <PageBtn key={p} active={p === page} onClick={() => setPage(p)}>
+                {p}
+              </PageBtn>
+            ))}
             <PageBtn
-              disabled={currentPage === totalPages}
+              disabled={page === totalPages}
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               aria-label="Berikutnya"
             >
@@ -265,7 +239,7 @@ export default function FacilitiesClient() {
 function buildPageList(current, total) {
   if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
   let start = Math.max(1, current - 2);
-  let end = Math.min(total, start + 4);
+  const end = Math.min(total, start + 4);
   start = Math.max(1, end - 4);
   const pages = [];
   for (let i = start; i <= end; i++) pages.push(i);

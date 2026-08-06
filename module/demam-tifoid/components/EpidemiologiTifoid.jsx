@@ -28,7 +28,7 @@ export default function EpidemiologiTifoid() {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/image/bumiulat.png"
+          src="/image/bumiulat.webp"
           alt=""
           className="mx-auto mt-8 h-auto w-full max-w-xl object-contain md:mt-10 md:max-w-2xl"
         />
@@ -74,7 +74,7 @@ export default function EpidemiologiTifoid() {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/image/bumiorang.png"
+          src="/image/bumiorang.webp"
           alt=""
           className="mx-auto mt-6 h-auto w-full max-w-xl object-contain md:mt-8 md:max-w-2xl"
         />

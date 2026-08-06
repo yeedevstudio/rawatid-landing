@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SITEMAP_REVALIDATE } from "@/common/constant/revalidate";
 
 function escapeXml(value) {
   return String(value || "")
@@ -32,7 +33,7 @@ async function fetchAllBlogPosts() {
   do {
     const res = await fetch(
       `${process.env.API_URL}/posts?fields[0]=slug&fields[1]=updatedAt&sort=updatedAt:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
-      { cache: "no-store" }
+      { next: { revalidate: SITEMAP_REVALIDATE } }
     );
 
     if (!res.ok) {

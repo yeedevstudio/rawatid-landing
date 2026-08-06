@@ -20,7 +20,7 @@ export default function HeroCacarMonyet() {
         <img
           data-aos="fade-left"
           suppressHydrationWarning
-          src="/image/cacarmonyet.svg"
+          src="/image/cacarmonyet.webp"
           alt="Ilustrasi Cacar Monyet"
           className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
         />

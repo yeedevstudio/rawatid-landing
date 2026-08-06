@@ -1,6 +1,8 @@
 import Error from "@/app/error";
 import NotFound from "@/app/not-found";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
 import PageBySearch from "@/module/blog/components/PageBySearch";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 export const metadata = {
   title: " Blog Teknologi dan Kesehatan dari Rawat.ID",
@@ -27,7 +29,7 @@ export default async function Page({ params, searchParams }) {
 
   try {
     const encodedSlug = encodeURIComponent(slug);
-    const res = await fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&filters[title][$containsi]=${encodedSlug}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`, { cache: "no-store" });
+    const res = await fetch(`${process.env.API_URL}/posts?${POST_LIST_QUERY}&sort=updatedAt:desc&filters[title][$containsi]=${encodedSlug}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`, { next: { revalidate: BLOG_REVALIDATE } });
 
     if (!res.ok) throw new Error("Failed to fetch data");
 
