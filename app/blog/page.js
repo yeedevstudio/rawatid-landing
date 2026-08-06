@@ -1,5 +1,7 @@
 import BlogPage from "@/module/blog";
 import Error from "../error";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 function normalizeCategory(entry) {
   if (!entry) return null;
@@ -13,9 +15,9 @@ function normalizeCategory(entry) {
 
 async function fetchAllPostsForHome(apiUrl) {
   const pageSize = 100;
-  const qsBase = `populate=*&sort=updatedAt:desc&pagination[pageSize]=${pageSize}`;
+  const qsBase = `${POST_LIST_QUERY}&sort=updatedAt:desc&pagination[pageSize]=${pageSize}`;
   const firstRes = await fetch(`${apiUrl}/posts?${qsBase}&pagination[page]=1`, {
-    cache: "no-store",
+    next: { revalidate: BLOG_REVALIDATE },
   });
   const firstJson = await firstRes.json();
   if (!firstRes.ok) {
@@ -33,7 +35,7 @@ async function fetchAllPostsForHome(apiUrl) {
     Array.from({ length: pageCount - 1 }, (_, idx) => {
       const page = idx + 2;
       return fetch(`${apiUrl}/posts?${qsBase}&pagination[page]=${page}`, {
-        cache: "no-store",
+        next: { revalidate: BLOG_REVALIDATE },
       }).then((res) => res.json());
     }),
   );
@@ -60,7 +62,7 @@ export default async function Page() {
   }
 
   try {
-    const [categoriesJson, dataSlug] = await Promise.all([fetch(`${process.env.API_URL}/categories`, { cache: "no-store" }).then((r) => r.json()), fetchAllPostsForHome(process.env.API_URL)]);
+    const [categoriesJson, dataSlug] = await Promise.all([fetch(`${process.env.API_URL}/categories`, { next: { revalidate: BLOG_REVALIDATE } }).then((r) => r.json()), fetchAllPostsForHome(process.env.API_URL)]);
 
     const dataCategories = (categoriesJson.data || []).map(normalizeCategory).filter(Boolean);
 

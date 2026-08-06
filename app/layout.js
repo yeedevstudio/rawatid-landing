@@ -91,6 +91,10 @@ export const metadata = {
 // Scripts Configuration
 // ============================================================================
 
+// Semua script pihak ketiga dipindah ke lazyOnload: dieksekusi setelah window
+// load, jadi tidak ikut berebut CPU dengan hydration. Di HP kelas bawah itu
+// selisih yang terasa. GA sebelumnya afterInteractive — tidak ada yang hilang
+// dari pemindahan ini karena page_view tetap terkirim, hanya sedikit lebih lambat.
 const scripts = {
   hotjar: {
     id: "hotjar",
@@ -98,7 +102,7 @@ const scripts = {
   },
   googleAnalytics: {
     id: "google-analytics",
-    strategy: "afterInteractive",
+    strategy: "lazyOnload",
   },
   googleAdsense: {
     id: "google-adsense",

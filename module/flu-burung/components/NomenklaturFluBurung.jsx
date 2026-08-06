@@ -35,7 +35,7 @@ const KLASIFIKASI_CARDS = [
     text: "subtipe sangat ganas yang menyebabkan penyakit berat dan kematian massal pada unggas. H5N1 dan H5N8 termasuk dalam kategori ini. Wabah HPAI wajib dilaporkan ke OIE (Organisasi Kesehatan Hewan Dunia).",
   },
   {
-    image: "/image/chiken.svg",
+    image: "/image/chiken.webp",
     title: "Low Pathogenic Avian Influenza (LPAI)",
     text: "subtipe dengan patogenisitas rendah yang menyebabkan penyakit ringan atau tanpa gejala pada unggas, namun tetap berpotensi menginfeksi manusia. Beberapa LPAI dapat bermutasi menjadi HPAI.",
   },

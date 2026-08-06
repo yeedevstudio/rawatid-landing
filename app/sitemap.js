@@ -1,14 +1,15 @@
+import { SITEMAP_REVALIDATE } from "@/common/constant/revalidate";
 export default async function sitemap() {
   try {
     const [postsRes, categoriesRes, authorsRes] = await Promise.all([
       fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
-        cache: "no-store",
+        next: { revalidate: SITEMAP_REVALIDATE },
       }),
       fetch(`${process.env.API_URL}/categories`, {
-        cache: "no-store",
+        next: { revalidate: SITEMAP_REVALIDATE },
       }),
       fetch(`${process.env.API_URL}/authors?populate=*&sort=updatedAt:desc`, {
-        cache: "no-store",
+        next: { revalidate: SITEMAP_REVALIDATE },
       }),
     ]);
 

@@ -58,7 +58,7 @@ export default function ApaItuCacarMonyet() {
               <h3 className="text-[15px] font-bold text-neutral-900 md:text-base">Reservoir Utama</h3>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/image/reservoir.svg"
+                src="/image/reservoir.webp"
                 alt="Peta Reservoir Utama Mpox"
                 className="mt-4 h-auto w-full object-contain"
               />

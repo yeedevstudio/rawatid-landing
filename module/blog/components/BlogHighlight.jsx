@@ -16,16 +16,16 @@ export default function BlogHighlight({ data }) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!data);
   const [show, setShow] = useState(false);
 
   const blogFilter = data.filter((blog) => blog.featured === true);
   const blog = show ? blogFilter : blogFilter?.slice(0, 3);
 
-  const handleSelected = (index, slug) => {
+  // Navigasi ditangani <Link> di dalam kartu; di sini cukup state UI + loader.
+  const handleSelected = (index) => {
     setSelected(index);
     startRouteLoading();
-    router.push(`/blog/detail/${slug}`);
   };
 
   useEffect(() => {
@@ -36,16 +36,13 @@ export default function BlogHighlight({ data }) {
     return () => clearInterval(interval);
   }, [blogFilter.length]);
 
+  // Dulu di sini ada setTimeout 2 detik yang menahan skeleton walaupun `data`
+  // sudah tersedia sebagai prop dari server — murni penundaan buatan, dan
+  // membuat konten tidak ikut ter-render di HTML. Sekarang loading langsung
+  // mengikuti ada/tidaknya data.
   useEffect(() => {
-    const setTimeLoading = setTimeout(() => {
-      if (data) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-    }, 2000);
-    return () => clearTimeout(setTimeLoading);
-  }, []);
+    setLoading(!data);
+  }, [data]);
 
   const currentArticle = blogFilter[currentIndex];
 
@@ -100,7 +97,8 @@ export default function BlogHighlight({ data }) {
             index={currentIndex}
             selected={true}
             shadow
-            onSelect={() => handleSelected(currentIndex, currentArticle.slug)}
+            href={`/blog/detail/${currentArticle?.slug}`}
+            onSelect={() => handleSelected(currentIndex)}
           />
         </div>
         <div className="grid grid-cols-1 gap-2">
@@ -114,7 +112,8 @@ export default function BlogHighlight({ data }) {
                 index={index}
                 selected={selected === index}
                 shadow
-                onSelect={() => handleSelected(index, article.slug)}
+                href={`/blog/detail/${article?.slug}`}
+                onSelect={() => handleSelected(index)}
               />
             </div>
           ))}

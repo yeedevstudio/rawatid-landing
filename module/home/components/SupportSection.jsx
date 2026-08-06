@@ -39,7 +39,7 @@ const ITEMS = [
   },
   {
     title: "Pengingat\nMinum Obat",
-    src: "/images/jam.png",
+    src: "/images/jam.webp",
     alt: "Pengingat Minum Obat",
     href: "/alat-kesehatan/pengingat-minum-obat",
   },
@@ -51,7 +51,7 @@ const ITEMS = [
   },
   {
     title: "Rencana Diet",
-    src: "/images/note.png",
+    src: "/images/note.webp",
     alt: "Rencana Diet",
     href: "/alat-kesehatan/rencana-diet",
   },

@@ -1,5 +1,20 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+
+// Kartu artikel dulu cuma <div onClick={router.push}>, sehingga halaman /blog
+// tidak punya satu pun <a href> ke artikel — mesin pencari tidak bisa
+// merayapinya. Sekarang kalau `href` diberikan, kartunya dibungkus <Link> asli
+// (tetap bisa dibuka di tab baru, dan terlihat oleh crawler). `onSelect` tetap
+// dipakai untuk memicu indikator loading, bukan lagi untuk navigasi.
+const MaybeLink = ({ href, children, ...rest }) =>
+  href ? (
+    <Link href={href} className="block h-full" {...rest}>
+      {children}
+    </Link>
+  ) : (
+    children
+  );
 
 const resolveImageSrc = (src) => {
   if (!src) return "/images/logo.svg";
@@ -16,9 +31,11 @@ export const CardArticle = ({
   title,
   selected,
   onSelect,
+  href,
   shadow = false,
 }) => {
   return (
+    <MaybeLink href={href}>
     <div
       className={cn(
         "h-full flex flex-col justify-between p-2 md:p-2 rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out",
@@ -37,6 +54,7 @@ export const CardArticle = ({
         <h2 className="text-lg md:text-xl lg:text-xl font-medium tracking-wider py-2">{title}</h2>
       </div>
     </div>
+    </MaybeLink>
   );
 };
 
@@ -48,10 +66,12 @@ export const CardArticleAll = ({
   width,
   height,
   onSelect,
+  href,
   tagVariant = "filled",
   date,
   minHeightClassName = "",
 }) => (
+  <MaybeLink href={href}>
   <div
     className={cn(
       "h-full bg-white p-2 md:p-2 rounded-[20px] cursor-pointer shadow-[0_4px_14px_rgba(0,0,0,0.08)] transform-gpu transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_18px_rgba(0,0,0,0.10)] flex flex-col",
@@ -87,6 +107,7 @@ export const CardArticleAll = ({
       )}
     </div>
   </div>
+  </MaybeLink>
 );
 
 export const CardArticleSidebar = ({
@@ -98,9 +119,11 @@ export const CardArticleSidebar = ({
   width,
   selected,
   onSelect,
+  href,
   headline,
   shadow = false,
 }) => (
+  <MaybeLink href={href}>
   <div
     className={cn(
       "grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 h-full p-2 md:p-2 rounded-[20px] cursor-pointer transition-shadow duration-300",
@@ -125,6 +148,7 @@ export const CardArticleSidebar = ({
       )}
     </div>
   </div>
+  </MaybeLink>
 );
 
 /** Kartu artikel mendatar: gambar kiri, judul & tanggal — untuk grid dua kategori di /blog */

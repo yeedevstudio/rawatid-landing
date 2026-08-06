@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { CardArticleAll } from "@/common/components/CardArticle";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 async function getLatestArticles() {
   if (!process.env.API_URL) return [];
 
-  const res = await fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=6`, { cache: "no-store" });
+  const res = await fetch(`${process.env.API_URL}/posts?${POST_LIST_QUERY}&sort=updatedAt:desc&pagination[page]=1&pagination[pageSize]=6`, { next: { revalidate: BLOG_REVALIDATE } });
 
   if (!res.ok) return [];
   const postData = await res.json();

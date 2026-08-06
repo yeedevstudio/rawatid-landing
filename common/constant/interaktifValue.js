@@ -4,21 +4,21 @@ export const INTERAKTIF_CONTENTS = [
     url: "/interaktif/cacar-air",
     title: "Cacar Air vs Cacar Ular",
     description: "Dua penyakit dari satu virus yang sama, kenali perbedaannya!",
-    image: "/image/cacarairpage.png",
+    image: "/image/cacarairpage.webp",
   },
   {
     slug: "dbd",
     url: "/interaktif/dbd",
     title: "Demam Berdarah Dengue (DBD)",
     description: "Penyakit endemis Indonesia yang kerap menjadi wabah setiap tahunnya",
-    image: "/image/dbdpage.png",
+    image: "/image/dbdpage.webp",
   },
   {
     slug: "herpes-simplex",
     url: "/interaktif/herpes-simplex",
     title: "Herpes Simplex",
     description: "Penyakit yang virusnya tidak bisa disembuhkan total, namun jarang disadari!",
-    image: "/image/herpespage.png",
+    image: "/image/herpespage.webp",
   },
   {
     slug: "hepatitis",
@@ -26,7 +26,7 @@ export const INTERAKTIF_CONTENTS = [
     title: "Hepatitis A",
     description:
       "Penyakit yang mudah menyebar karena virusnya bisa bertahan hidup lama di luar tubuh manusia",
-    image: "/image/hepapage.png",
+    image: "/image/hepapage.webp",
   },
   {
     slug: "poliomielitis",
@@ -34,7 +34,7 @@ export const INTERAKTIF_CONTENTS = [
     title: "Poliomielitis",
     description:
       "Apa yang bisa kita pelajari dari virus yang pernah menjadi mimpi buruk kesehatan dunia?",
-    image: "/image/poliopage.png",
+    image: "/image/poliopage.webp",
   },
   {
     slug: "demam-tifoid",
@@ -42,7 +42,7 @@ export const INTERAKTIF_CONTENTS = [
     title: "Tipes (Demam Tifoid)",
     description:
       "Penyakit infeksi yang sering kita dengar namun sering disalahpahami penyebabnya",
-    image: "/image/tifoidpage.png",
+    image: "/image/tifoidpage.webp",
   },
   {
     slug: "flu-burung",
@@ -50,7 +50,7 @@ export const INTERAKTIF_CONTENTS = [
     title: "Flu Burung (Avian Influenza)",
     description:
       "Penyakit yang disebabkan oleh virus influenza dari unggas dengan tingkat kematian yang tinggi",
-    image: "/image/fluburung.svg",
+    image: "/image/fluburung.webp",
   },
   {
     slug: "cacar-monyet",
@@ -58,6 +58,6 @@ export const INTERAKTIF_CONTENTS = [
     title: "Cacar Monyet (Mpox)",
     description:
       "Penyakit infeksi virus yang ditandai bintik merah dan lepuhan di seluruh tubuh disertai demam",
-    image: "/image/cacarmonyet.svg",
+    image: "/image/cacarmonyet.webp",
   },
 ];

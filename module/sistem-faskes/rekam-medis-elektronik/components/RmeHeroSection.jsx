@@ -49,7 +49,7 @@ export default function RmeHeroSection() {
           className="flex items-center justify-center lg:justify-end"
         >
           <Image
-            src={"/images/berandafaskes.png"}
+            src={"/images/berandafaskes.webp"}
             alt="Ilustrasi Rekam Medis Elektronik Rawat.ID"
             width={900}
             height={900}

@@ -2,12 +2,12 @@ import React from "react";
 
 const KARAKTERISTIK_CARDS = [
   {
-    image: "/image/rus.svg",
+    image: "/image/rus.webp",
     title: "Disebabkan oleh Influenza Tipe A",
     text: "Virus ini tergolong dalam famili Orthomyxoviridae.",
   },
   {
-    image: "/image/chiken.svg",
+    image: "/image/chiken.webp",
     title: "Menginfeksi unggas liar dan unggas domestik",
     text: "Terutama burung dan unggas seperti ayam, itik, bebek. kalkun dan lainnya.",
   },
@@ -35,7 +35,7 @@ const BAHAYA_CARDS = [
     text: "Virus H5N1 menjadi salah satu ancaman pandemi paling serius yang terus dipantau WHO dan para ahli epidemiologi global.",
   },
   {
-    image: "/image/realrus.svg",
+    image: "/image/realrus.webp",
     title: "Virus Terus Berevolusi",
     text: "Lebih dari dua dekade, virus ini masih terus bermutasi, menyebar ke berbagai belahan dunia, dan menginfeksi manusia.",
   },

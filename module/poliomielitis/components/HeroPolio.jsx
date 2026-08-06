@@ -18,7 +18,7 @@ export default function HeroPolio() {
            <img
              data-aos="fade-left"
              suppressHydrationWarning
-             src="/image/poliomielitis.png"
+             src="/image/poliomielitis.webp"
              alt="Ilustrasi Poliomielitis"
              className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
            />

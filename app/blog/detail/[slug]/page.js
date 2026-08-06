@@ -1,6 +1,8 @@
 import Error from "@/app/error";
 import NotFound from "@/app/not-found";
 import BlogDetail from "@/module/blog/detail/BlogDetail";
+import { POST_LIST_QUERY } from "@/common/constant/blogQuery";
+import { BLOG_REVALIDATE } from "@/common/constant/revalidate";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -12,7 +14,7 @@ export async function generateMetadata({ params }) {
   try {
     const postSlugRes = await fetch(
       `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`,
-      { cache: "no-store" }
+      { next: { revalidate: BLOG_REVALIDATE } }
     );
     const postSlug = await postSlugRes.json();
     const dataSlug = postSlug.data?.[0] || null;
@@ -87,14 +89,18 @@ export default async function Page({ params }) {
       await Promise.all([
         fetch(
           `${process.env.API_URL}/posts?filters[slug][$eq]=${slug}&populate=*`,
-          { cache: "no-store" }
+          { next: { revalidate: BLOG_REVALIDATE } }
         ),
-        fetch(`${process.env.API_URL}/posts?populate=*&sort=updatedAt:desc`, {
-          cache: "no-store",
-        }),
-        fetch(`${process.env.API_URL}/categories`, { cache: "no-store" }),
+        // Hanya dipakai LinkPopuler, yang menyaring featured === true lalu
+        // ambil 4. Sebelumnya ini menarik SEMUA post lengkap dengan body
+        // artikelnya (326 KB) cuma untuk 4 judul.
+        fetch(
+          `${process.env.API_URL}/posts?${POST_LIST_QUERY}&filters[featured][$eq]=true&sort=updatedAt:desc&pagination[pageSize]=4`,
+          { next: { revalidate: BLOG_REVALIDATE } }
+        ),
+        fetch(`${process.env.API_URL}/categories`, { next: { revalidate: BLOG_REVALIDATE } }),
         fetch(`${process.env.API_URL}/authors?populate=*`, {
-          cache: "no-store",
+          next: { revalidate: BLOG_REVALIDATE },
         }),
       ]);
 
@@ -121,8 +127,11 @@ export default async function Page({ params }) {
     let dataPostCategory = [];
 
     if (dataSlug?.category?.id) {
+      // RelatedArticle ambil 6, sisanya dipakai sebagai selingan "Baca Juga"
+      // di dalam badan artikel — 12 sudah lebih dari cukup.
       const postByCategoryRes = await fetch(
-        `${process.env.API_URL}/posts?filters[category][id][$eq]=${dataSlug?.category?.id}&populate=*`
+        `${process.env.API_URL}/posts?${POST_LIST_QUERY}&filters[category][id][$eq]=${dataSlug?.category?.id}&sort=updatedAt:desc&pagination[pageSize]=12`,
+        { next: { revalidate: BLOG_REVALIDATE } }
       );
       const dataPostByCategories = await postByCategoryRes.json();
       dataPostCategory = dataPostByCategories.data || [];

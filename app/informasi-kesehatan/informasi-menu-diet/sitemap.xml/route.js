@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SITEMAP_REVALIDATE } from "@/common/constant/revalidate";
 
 function escapeXml(value) {
   return String(value || "")
@@ -16,7 +17,7 @@ function toIso(value) {
 
 async function fetchAllMenuNutritionSlugs() {
   const res = await fetch("https://cm-api.rawat.id/menu-nutritions/public/sitemap", {
-    cache: "no-store",
+    next: { revalidate: SITEMAP_REVALIDATE },
   });
 
   if (!res.ok) {

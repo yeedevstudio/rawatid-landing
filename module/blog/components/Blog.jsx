@@ -148,10 +148,8 @@ export default function BlogPage({ data, categories }) {
                     title={article?.title}
                     index={index}
                     selected={false}
-                    onSelect={() => {
-                      startRouteLoading();
-                      router.push(`/blog/detail/${article?.slug}`);
-                    }}
+                    href={`/blog/detail/${article?.slug}`}
+                    onSelect={startRouteLoading}
                     headline={article?.headline}
                   />
                 </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { DUMMY_TYPE, DUMMY_CATEGORY, DUMMY_OWNERSHIP, dummyOf } from "@/common/constant/facility";
 
@@ -69,12 +69,20 @@ function InfoValue({ label, value }) {
   return <span>{value}</span>;
 }
 
-export default function FacilityDetailClient({ id }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function FacilityDetailClient({ id, initialData = null }) {
+  const [data, setData] = useState(initialData);
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState("");
 
+  // Server sudah menyiapkan datanya.
+  const skipInitialFetch = useRef(Boolean(initialData));
+
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     let active = true;
     (async () => {
       try {
@@ -120,7 +128,7 @@ export default function FacilityDetailClient({ id }) {
       <div className="relative w-full h-[300px] md:h-[440px] mt-8 md:mt-10 overflow-hidden bg-gradient-to-br from-green/80 to-green">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data?.image || "/dummy/hospital.png"}
+          src={data?.image || "/dummy/hospital.webp"}
           alt={name}
           className="absolute inset-0 w-full h-full object-cover"
         />
