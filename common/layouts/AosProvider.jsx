@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import "aos/dist/aos.css";
+import "./aos-minimal.css";
 
 // aos.css memberi `opacity: 0` ke setiap elemen [data-aos^="fade"]. Artinya
 // konten ber-data-aos TIDAK TERLIHAT sampai AOS.init() dijalankan.

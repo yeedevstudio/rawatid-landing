@@ -1,5 +1,5 @@
-"use client";
-
+// Tidak ada hook maupun event handler di sini, jadi tidak perlu "use client".
+// Sebagai server component, markup-nya tidak ikut dikirim sebagai JS ke browser.
 import React from "react";
 import Image from "next/image";
 

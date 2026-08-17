@@ -1,12 +1,9 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ClinicSolutionSection() {
-  const router = useRouter();
 
   return (
     <section
@@ -42,16 +39,16 @@ export default function ClinicSolutionSection() {
           <Button
             aria-label="Mulai Sekarang"
             className="bg-white text-[#038F7A] text-[15px] sm:text-[18px] md:text-[20px] lg:text-[24px] font-semibold border-0 shadow-none w-full lg:w-auto h-[48px] md:h-[58px] lg:h-[62px] px-4 md:px-[18px] py-2 md:py-[12px] rounded-[12px] md:rounded-[16px] hover:bg-white/90"
-            onClick={() => router.push("/register")}
+            asChild
           >
-            Mulai Sekarang
+            <Link href="/register">Mulai Sekarang</Link>
           </Button>
           <Button
             aria-label="Lihat Fitur"
             className="bg-transparent text-white text-[15px] sm:text-[18px] md:text-[20px] lg:text-[24px] font-semibold border border-white shadow-none w-full lg:w-auto h-[48px] md:h-[58px] lg:h-[62px] px-4 md:px-[18px] py-2 md:py-[12px] rounded-[12px] md:rounded-[16px] hover:bg-white/10"
-            onClick={() => router.push("/fitur")}
+            asChild
           >
-            Lihat Fitur
+            <Link href="/fitur">Lihat Fitur</Link>
           </Button>
         </div>
       </div>

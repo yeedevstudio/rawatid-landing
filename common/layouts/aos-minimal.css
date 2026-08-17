@@ -1,0 +1,72 @@
+/*
+ * Pengganti aos/dist/aos.css.
+ *
+ * aos.css bawaan berisi 237 aturan (25.932 byte = 21% dari seluruh CSS
+ * aplikasi) untuk puluhan jenis animasi, padahal proyek ini hanya memakai
+ * empat: fade-up, fade-left, fade-right, dan zoom-in. Karena CSS bersifat
+ * render-blocking, sisanya murni menunda paint pertama tanpa memberi apa pun.
+ *
+ * Aturan di bawah disalin apa adanya dari aos.css untuk keempat jenis itu,
+ * ditambah kelas .aos-animate yang ditambahkan AOS saat elemen masuk viewport.
+ * Perilaku visualnya identik.
+ *
+ * Kalau nanti menambah jenis animasi baru (mis. flip-left, slide-up), tambahkan
+ * aturannya di sini juga — kalau tidak, elemennya akan tersangkut di opacity 0.
+ */
+
+[data-aos] {
+  pointer-events: none;
+}
+[data-aos].aos-animate {
+  pointer-events: auto;
+}
+
+body[data-aos-duration="600"] [data-aos],
+[data-aos][data-aos][data-aos-duration="600"] {
+  transition-duration: 600ms;
+}
+
+[data-aos] {
+  transition-property: opacity, transform;
+  transition-timing-function: ease;
+  transition-duration: 600ms;
+}
+
+[data-aos^="fade"][data-aos^="fade"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos^="fade"][data-aos^="fade"].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+[data-aos="fade-up"] {
+  transform: translate3d(0, 100px, 0);
+}
+[data-aos="fade-right"] {
+  transform: translate3d(-100px, 0, 0);
+}
+[data-aos="fade-left"] {
+  transform: translate3d(100px, 0, 0);
+}
+
+[data-aos^="zoom"][data-aos^="zoom"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos^="zoom"][data-aos^="zoom"].aos-animate {
+  opacity: 1;
+  transform: translateZ(0) scale(1);
+}
+[data-aos="zoom-in"] {
+  transform: scale(0.6);
+}
+
+/* Hormati preferensi pengguna yang mematikan animasi. */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

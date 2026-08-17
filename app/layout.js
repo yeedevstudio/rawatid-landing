@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { Poppins } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -10,6 +9,7 @@ import Header from "@/common/layouts/Header";
 import Footer from "@/common/layouts/Footer";
 import GlobalRouteSkeleton from "@/common/components/GlobalRouteSkeleton";
 import RouteClickSpinner from "@/common/components/RouteClickSpinner";
+import DeferredThirdParty from "@/common/components/DeferredThirdParty";
 
 // Bobot 300 dihapus: hanya dipakai 4 kali dan sudah dialihkan ke font-normal.
 // Setiap bobot = satu berkas woff2 (~8 KB) yang diunduh BERSAMAAN dengan gambar
@@ -95,83 +95,15 @@ export const metadata = {
   },
 };
 
-// ============================================================================
-// Scripts Configuration
-// ============================================================================
-
-// Semua script pihak ketiga dipindah ke lazyOnload: dieksekusi setelah window
-// load, jadi tidak ikut berebut CPU dengan hydration. Di HP kelas bawah itu
-// selisih yang terasa. GA sebelumnya afterInteractive — tidak ada yang hilang
-// dari pemindahan ini karena page_view tetap terkirim, hanya sedikit lebih lambat.
-const scripts = {
-  hotjar: {
-    id: "hotjar",
-    strategy: "lazyOnload",
-  },
-  googleAnalytics: {
-    id: "google-analytics",
-    strategy: "lazyOnload",
-  },
-  googleAdsense: {
-    id: "google-adsense",
-    strategy: "lazyOnload",
-  },
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Hotjar Analytics */}
-        <Script
-          id={scripts.hotjar.id}
-          strategy={scripts.hotjar.strategy}
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:${process.env.NEXT_PUBLIC_HOTJAR_ID},hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-            `,
-          }}
-        />
-
-        {/* Google Analytics */}
-        <Script
-          strategy={scripts.googleAnalytics.strategy}
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
-        />
-        <Script
-          id={scripts.googleAnalytics.id}
-          strategy={scripts.googleAnalytics.strategy}
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_TRACKING_ID}', { 
-                page_path: window.location.pathname,
-              });
-            `,
-          }}
-        />
-
-        {/* Google AdSense */}
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-9201441298846648"
-        />
-        <Script
-          id={scripts.googleAdsense.id}
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9201441298846648"
-          crossOrigin="anonymous"
-          strategy={scripts.googleAdsense.strategy}
-        />
+        {/* Verifikasi kepemilikan AdSense — hanya meta tag, tidak ada biaya render. */}
+        <meta name="google-adsense-account" content="ca-pub-9201441298846648" />
+        {/* Thumbnail artikel diambil dari domain lain; handshake DNS+TLS-nya
+            dihangatkan lebih awal agar tidak menambah antrean saat gambar dimuat. */}
+        <link rel="preconnect" href="https://blog.rawat.id" crossOrigin="anonymous" />
       </head>
 
       <body className={`${poppins.className} antialiased relative`}>
@@ -186,6 +118,11 @@ export default function RootLayout({ children }) {
         </Suspense>
         <Toaster />
         <Analytics />
+        <DeferredThirdParty
+          gaId={process.env.NEXT_PUBLIC_GA_TRACKING_ID}
+          hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID}
+          adsenseClient="ca-pub-9201441298846648"
+        />
       </body>
     </html>
   );

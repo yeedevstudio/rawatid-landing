@@ -1,6 +1,6 @@
 import JelajahiButton from "./JelajahiButton";
 const HERO_SRCSET =
-  "/image/newbackground-576.webp 576w, /image/newbackground-768.webp 768w, /image/newbackground-1088.webp 1088w";
+  "/image/newbackground-432.webp 432w, /image/newbackground-576.webp 576w, /image/newbackground-768.webp 768w, /image/newbackground-1088.webp 1088w";
 const HERO_SIZES =
   "(max-width: 640px) 288px, (max-width: 768px) 336px, (max-width: 1024px) 384px, (max-width: 1280px) 480px, 544px";
 
@@ -13,7 +13,7 @@ export default function HeroSection() {
       <link
         rel="preload"
         as="image"
-        href="/image/newbackground-768.webp"
+        href="/image/newbackground-576.webp"
         imageSrcSet={HERO_SRCSET}
         imageSizes={HERO_SIZES}
         fetchPriority="high"
@@ -34,7 +34,7 @@ export default function HeroSection() {
               (mobile 39 KB, bukan 107 KB). */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/image/newbackground-768.webp"
+            src="/image/newbackground-576.webp"
             srcSet={HERO_SRCSET}
             sizes={HERO_SIZES}
             alt="Ilustrasi halaman beranda Rawat.ID"
