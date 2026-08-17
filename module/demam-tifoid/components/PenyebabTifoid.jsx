@@ -15,12 +15,12 @@ const JALUR_CARDS = [
     text: <>Makanan yang dipersiapkan oleh penderita demam <em>tifoid</em> yang tidak mencuci tangan dengan benar, atau makanan yang disiram/dicuci dengan air yang terkontaminasi</>,
   },
   {
-    image: "/image/sayur.png",
+    image: "/image/sayur.webp",
     title: "Sayuran dan buah mentah",
     text: "Sayuran dan buah mentah yang ditanam dengan pupuk tinja atau disiram air limbah",
   },
   {
-    image: "/image/sate.png",
+    image: "/image/sate.webp",
     title: "Makanan dan minuman dari pedagang kaki lima",
     text: "Makanan dan minuman dari pedagang dengan higenitas yang tidak terjamin dan sering terjangkau lalat",
   },
@@ -30,7 +30,7 @@ const JALUR_CARDS = [
     text: <><em>Seafood</em> dari perairan yang terkontaminasi limbah manusia</>,
   },
   {
-    image: "/image/esbatu.png",
+    image: "/image/esbatu.webp",
     title: "Es batu dari air tidak bersih",
     text: "Minuman es yang dibuat dari air yang tidak dimasak merupakan sumber penularan yang sering diabaikan",
   },

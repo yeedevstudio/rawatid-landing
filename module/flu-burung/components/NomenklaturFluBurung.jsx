@@ -30,7 +30,7 @@ const SUBTIPE_LIST = [
 
 const KLASIFIKASI_CARDS = [
   {
-    image: "/image/hpai.svg",
+    image: "/image/hpai.webp",
     title: "Highly Pathogenic Avian Influenza (HPAI)",
     text: "subtipe sangat ganas yang menyebabkan penyakit berat dan kematian massal pada unggas. H5N1 dan H5N8 termasuk dalam kategori ini. Wabah HPAI wajib dilaporkan ke OIE (Organisasi Kesehatan Hewan Dunia).",
   },

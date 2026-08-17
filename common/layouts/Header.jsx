@@ -153,7 +153,7 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="left">
               <Link title="Rawat.ID" href="/" onClick={handleClose} className={"flex items-center gap-1 px-1 mt-7"}>
-                <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
+                <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={false} quality={90} />
                 <SheetTitle className="text-green text-xl">Rawat.ID</SheetTitle>
               </Link>
               <nav className="mt-8">

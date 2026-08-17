@@ -49,7 +49,7 @@ export default function FiturPage() {
             >
               <div>
                 <Image
-                  src={"/images/image_small.svg"}
+                  src={"/images/image_small.webp"}
                   alt="image_small"
                   width={150}
                   height={150}

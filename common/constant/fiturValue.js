@@ -2,7 +2,7 @@ export const fiturValue = [
   {
     id: "card_1",
     title: "Registrasi Pasien Elektronik Secara Mandiri dengan Mesin Anjungan",
-    image: "/images/card_1.svg",
+    image: "/images/card_1.webp",
     list: [
       {
         title: "Registrasi Pasien Terintegrasi",
@@ -98,7 +98,7 @@ export const fiturValue = [
   {
     id: "card_4",
     title: "Dashboard Eksekutif",
-    image: "/images/card_4.svg",
+    image: "/images/card_4.webp",
     list: [
       {
         title: "Monitoring Pelayanan Pasien",
@@ -130,7 +130,7 @@ export const fiturValue = [
   {
     id: "card_5",
     title: "Terintegrasi BPJS Kesehatan dan KEMENKES",
-    image: "/images/card_5.svg",
+    image: "/images/card_5.webp",
     list: [
       {
         title: "Kemudahan Klaim Asuransi",

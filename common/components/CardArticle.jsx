@@ -17,8 +17,8 @@ const MaybeLink = ({ href, children, ...rest }) =>
   );
 
 const resolveImageSrc = (src) => {
-  if (!src) return "/images/logo.svg";
-  if (typeof src !== "string") return "/images/logo.svg";
+  if (!src) return "/images/logo.webp";
+  if (typeof src !== "string") return "/images/logo.webp";
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
   const base = process.env.NEXT_PUBLIC_BASE_URL || "";
   return `${base}${src}`;

@@ -1,17 +1,17 @@
 import React from "react";
 const SUMMARY_CARDS = [
   {
-    image: "/image/tanda1.svg",
+    image: "/image/tanda1.webp",
     title: "Gejala bervariasi",
     desc: "Dari tanpa gejala hingga berat",
   },
   {
-    image: "/image/tanda2.svg",
+    image: "/image/tanda2.webp",
     title: "Dipengaruhi oleh",
     desc: "Subtipe virus, dosis paparan & imunitas",
   },
   {
-    image: "/image/tanda3.svg",
+    image: "/image/tanda3.webp",
     title: "Waspada dini",
     desc: "Kenali gejala untuk penanganan cepat",
   },
@@ -19,37 +19,37 @@ const SUMMARY_CARDS = [
 
 const GEJALA_AWAL = [
   {
-    image: "/image/gejalaawal1.svg",
+    image: "/image/gejalaawal1.webp",
     title: "Demam tinggi mendadak",
     text: "Suhu tubuh umumnya di atas 38°C, sering kali mencapai 39–41°C. Demam adalah gejala yang hampir selalu ada pada infeksi H5N1.",
   },
   {
-    image: "/image/gejalaawal2.svg",
+    image: "/image/gejalaawal2.webp",
     title: "Menggigil dan nyeri otot hebat (mialgia)",
     text: "Nyeri otot pada flu burung sering lebih berat dibanding flu biasa.",
   },
   {
-    image: "/image/gejalaawal3.svg",
+    image: "/image/gejalaawal3.webp",
     title: "Sakit kepala berat",
     text: "Nyeri kepala yang intens, sering disertai rasa tidak nyaman di belakang mata.",
   },
   {
-    image: "/image/gejalaawal4.svg",
+    image: "/image/gejalaawal4.webp",
     title: "Batuk kering",
     text: "Biasanya muncul bersamaan atau segera setelah demam.",
   },
   {
-    image: "/image/gejalaawal5.svg",
+    image: "/image/gejalaawal5.webp",
     title: "Nyeri tenggorokan",
     text: "Rasa perih atau gatal di tenggorokan.",
   },
   {
-    image: "/image/gejalaawal6.svg",
+    image: "/image/gejalaawal6.webp",
     title: "Lemas dan kelelahan ekstrim",
     text: "Badan terasa sangat lemah dan tidak bertenaga.",
   },
   {
-    image: "/image/gejalaawal7.svg",
+    image: "/image/gejalaawal7.webp",
     title: "Gejala saluran cerna",
     text: "Pada H5N1, diare, mual, muntah, dan nyeri perut lebih sering terjadi dibanding flu biasa, ditemukan pada sekitar 30–70% kasus.",
   },
@@ -118,7 +118,7 @@ export default function GejalafluBurung() {
             </p>
             <div className="flex items-start gap-3 rounded-xl bg-[#EBF6F9] px-4 py-3 shadow-[0px_0px_12.1px_0px_#0000001A] md:px-5 md:py-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/image/calender.svg.svg" alt="" className="mt-0.5 h-6 w-6 shrink-0 object-contain text-[#038F7A]" />
+              <img src="/image/calender.svg.webp" alt="" className="mt-0.5 h-6 w-6 shrink-0 object-contain text-[#038F7A]" />
               <div>
                 <p className="text-[13px] font-semibold text-[#038F7A] md:text-[14px]">
                   Masa inkubasi yang lebih panjang dari flu biasa yang hanya 1–4 hari.
@@ -137,7 +137,7 @@ export default function GejalafluBurung() {
               <div className="flex items-end gap-3">
                 <p className="text-[42px] font-bold leading-none text-[#038F7A] md:text-[48px]">5 hari</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/image/calender.svg.svg" alt="" className="mb-1 h-14 w-14 object-contain md:h-16 md:w-16" />
+                <img src="/image/calender.svg.webp" alt="" className="mb-1 h-14 w-14 object-contain md:h-16 md:w-16" />
               </div>
               <p className="text-[13px] text-neutral-500 md:text-[14px]">Rentang 2–8 hari</p>
             </div>

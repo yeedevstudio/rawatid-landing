@@ -2,12 +2,12 @@ import React from "react";
 
 const KLADE_CARDS = [
   {
-    image: "/image/klade1.svg",
+    image: "/image/klade1.webp",
     title: "Klade I (Congo Basin Clade)",
     text: "tersebar di Afrika Tengah, terutama Republik Demokratik Kongo. Klade ini lebih virulen dengan tingkat kematian yang lebih tinggi (1–10%). Sub-varian Clade IB yang muncul sejak 2023 memiliki kemampuan penularan antar manusia yang lebih efisien dan menjadi dasar deklarasi darurat WHO pada 2024.",
   },
   {
-    image: "/image/klade2.svg",
+    image: "/image/klade2.webp",
     title: "Klade II (West African Clade)",
     text: "tersebar di Afrika Barat dan menjadi penyebab wabah global 2022. Klade IIB adalah sub-varian yang bertanggung jawab atas wabah tersebut. Tingkat kematian lebih rendah (0,1–0,3%) dibanding Klade I.",
   },

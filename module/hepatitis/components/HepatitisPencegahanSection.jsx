@@ -76,7 +76,7 @@ export default function HepatitisPencegahanSection() {
           {/* Vaksinasi Card */}
           <div className="flex items-start gap-5 rounded-2xl border border-neutral-200/90 bg-white px-5 py-6 md:gap-6 md:px-7 md:py-7">
             <img
-              src="/image/suntik.png"
+              src="/image/suntik.webp"
               alt="Ilustrasi vaksinasi"
               className="h-36 w-36 shrink-0 object-contain md:h-44 md:w-44"
             />
@@ -141,7 +141,7 @@ export default function HepatitisPencegahanSection() {
           {/* Keamanan Makanan dan Air Card — image on left */}
           <div className="flex flex-col gap-5 rounded-2xl border border-neutral-200/90 bg-white px-5 py-6 sm:flex-row sm:items-start md:gap-6 md:px-7 md:py-7">
             <div className="flex justify-center sm:justify-start">
-              <CircleImg src="/image/jagamakan.png" alt="Ilustrasi keamanan makanan dan air" />
+              <CircleImg src="/image/jagamakan.webp" alt="Ilustrasi keamanan makanan dan air" />
             </div>
             <div className="min-w-0 flex-1 space-y-3">
               <h3 className="text-[15px] font-semibold leading-snug text-[#038F7A] md:text-[16px] lg:text-[17px]">

@@ -3,35 +3,35 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const SUPORTIF_CARDS = [
   {
-    image: "/image/berikan1.svg",
+    image: "/image/berikan1.webp",
     text: "Berikan oksigenasi dan ventilasi mekanik untuk mengatasi ARDS dan kegagalan napas. Banyak penderita H5N1 berat memerlukan ventilator.",
   },
   {
-    image: "/image/berikan2.svg",
+    image: "/image/berikan2.webp",
     text: "Berikan terapi cairan intravena untuk menjaga keseimbangan hemodinamik dan perfusi organ.",
   },
   {
-    image: "/image/berikan3.svg",
+    image: "/image/berikan3.webp",
     text: "Berikan terapi oksigen aliran tinggi (HFNC), teknik pemberian oksigen non-invasif yang menjadi pilihan sebelum intubasi.",
   },
   {
-    image: "/image/berikan4.svg",
+    image: "/image/berikan4.webp",
     text: "Berikan manajemen gagal ginjal atau hemodialisis jika diperlukan.",
   },
   {
-    image: "/image/berikan5.svg",
+    image: "/image/berikan5.webp",
     text: "Berikan ECMO (Extracorporeal Membrane Oxygenation). Pada kasus ARDS yang tidak respons dengan ventilator, ECMO dapat menyelamatkan nyawa dengan mengambil alih fungsi paru-paru sementara.",
   },
 ];
 
 const VAKSINASI_CARDS = [
   {
-    image: "/image/berikan6.svg",
+    image: "/image/berikan6.webp",
     title: "Vaksin influenza musiman",
     text: "meskipun tidak melindungi dari flu burung, vaksin influenza musiman direkomendasikan untuk peternak unggas dan petugas kesehatan untuk mencegah infeksi campuran yang bisa memfasilitasi reassortment gen.",
   },
   {
-    image: "/image/berikan7.svg",
+    image: "/image/berikan7.webp",
     title: "Vaksinasi unggas",
     text: "vaksinasi massal unggas dengan vaksin H5N1 dilakukan di banyak negara, termasuk Indonesia, sebagai strategi utama pengendalian di sumber.",
   },
@@ -39,17 +39,17 @@ const VAKSINASI_CARDS = [
 
 const ISOLASI_CARDS = [
   {
-    image: "/image/penanganan1.svg",
+    image: "/image/penanganan1.webp",
     title: "Isolasi di ruang bertekanan negatif",
     text: "jika tersedia, untuk mencegah penyebaran virus ke udara ruangan umum.",
   },
   {
-    image: "/image/penanganan2.svg",
+    image: "/image/penanganan2.webp",
     title: "Gunakan APD lengkap untuk tenaga kesehatan",
     text: "seperti masker N95 atau lebih, pelindung mata (goggle/face shield), sarung tangan, gaun pelindung, dan sepatu pelindung.",
   },
   {
-    image: "/image/penanganan3.svg",
+    image: "/image/penanganan3.webp",
     title: "Batasi pengunjung",
     text: "kontak penderita diminimalkan dan pengunjung diwajibkan menggunakan APD.",
   },
@@ -57,17 +57,17 @@ const ISOLASI_CARDS = [
 
 const OSELTAMIVIR_CARDS = [
   {
-    image: "/image/penanganan4.svg",
+    image: "/image/penanganan4.webp",
     title: "Dosis standar untuk Flu Burung (lebih tinggi dari flu biasa)",
     text: "adalah 75–150 mg dua kali sehari selama minimal 10 hari (atau lebih lama pada kasus berat).",
   },
   {
-    image: "/image/penanganan5.svg",
+    image: "/image/penanganan5.webp",
     title: "Lebih efektif jika diberikan dalam 48 jam pertama gejala",
     text: "namun tetap diberikan meskipun sudah lebih dari 48 jam pada kasus Flu Burung, karena replikasi virus yang berlangsung lebih lama.",
   },
   {
-    image: "/image/penanganan6.svg",
+    image: "/image/penanganan6.webp",
     title: "Profilaksis pasca-paparan",
     text: "75 mg sekali sehari selama 10 hari dapat diberikan pada kontak erat penderita yang terpapar tanpa APD.",
   },
@@ -166,7 +166,7 @@ export default function PenangananFluBurung() {
         {/* Zanamivir */}
         <div className="mt-4 flex items-start gap-3 rounded-[14px] bg-white p-4 shadow-[0px_0px_12.1px_0px_#0000001A] md:gap-4 md:p-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/image/penanganan7.svg" alt="" className="h-14 w-14 shrink-0 object-contain md:h-16 md:w-16" />
+          <img src="/image/penanganan7.webp" alt="" className="h-14 w-14 shrink-0 object-contain md:h-16 md:w-16" />
           <div className="flex flex-col gap-1.5">
             <h4 className="text-[14px] font-semibold leading-snug text-[#038F7A] md:text-[15px]">
               Zanamivir (Relenza) Sebagai Alternatif

@@ -3,27 +3,27 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const PERBURUKAN_CARDS = [
   {
-    image: "/image/perburukan1.svg",
+    image: "/image/perburukan1.webp",
     title: "Sesak napas progresif",
     text: "kesulitan bernapas yang semakin berat, tanda bahaya utama.",
   },
   {
-    image: "/image/perburukan2.svg",
+    image: "/image/perburukan2.webp",
     title: "Pneumonia virus",
     text: "peradangan paru-paru yang berkembang pada mayoritas kasus H5N1 yang dirawat di rumah sakit. Rontgen dada menunjukkan infiltrat bilateral yang cepat berkembang.",
   },
   {
-    image: "/image/perburukan3.svg",
+    image: "/image/perburukan3.webp",
     title: "Hipoksemia",
     text: "kadar oksigen dalam darah menurun drastis, menyebabkan bibir dan kuku membiru (sianosis).",
   },
   {
-    image: "/image/perburukan4.svg",
+    image: "/image/perburukan4.webp",
     title: "Batuk berdarah (hemoptisis)",
     text: "batuk mengeluarkan darah atau dahak berwarna merah, tanda kerusakan jaringan paru yang serius.",
   },
   {
-    image: "/image/perburukan5.svg",
+    image: "/image/perburukan5.webp",
     title: "Penurunan kesadaran",
     text: "dalam kasus berat, penderita menjadi bingung, tidak responsif.",
   },
@@ -31,22 +31,22 @@ const PERBURUKAN_CARDS = [
 
 const KOMPLIKASI_CARDS = [
   {
-    image: "/image/komplikasi1.svg",
+    image: "/image/komplikasi1.webp",
     title: "ARDS (Acute Respiratory Distress Syndrome)",
     text: "kegagalan pernapasan berat akibat kerusakan masif jaringan paru. Memerlukan ventilator. Terjadi pada mayoritas kasus H5N1 yang dirawat ICU.",
   },
   {
-    image: "/image/komplikasi2.svg",
+    image: "/image/komplikasi2.webp",
     title: "Ensefalitis virus",
     text: "peradangan otak menyebabkan kejang, penurunan kesadaran. Lebih sering pada anak.",
   },
   {
-    image: "/image/komplikasi3.svg",
+    image: "/image/komplikasi3.webp",
     title: "Miokarditis",
     text: "peradangan otot jantung yang dapat menyebabkan gagal jantung akut.",
   },
   {
-    image: "/image/komplikasi4.svg",
+    image: "/image/komplikasi4.webp",
     title: "Gagal ginjal akut",
     text: "kerusakan ginjal akibat badai sitokin dan hipoksia sistemik.",
   },

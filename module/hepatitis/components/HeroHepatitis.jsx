@@ -22,7 +22,7 @@ export default function HeroHepatitis() {
         <img
           data-aos="fade-left"
           suppressHydrationWarning
-          src="/image/hepahero.png"
+          src="/image/hepahero.webp"
           alt="Ilustrasi Hepatitis A"
           className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
         />

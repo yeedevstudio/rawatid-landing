@@ -58,17 +58,17 @@ const GEJALA_KHAS_CARDS = [
     text: "Demam naik bertahap setiap hari selama minggu pertama, hari pertama 37,5°C, hari kedua 38°C, dan seterusnya hingga 39–40°C, berbeda dari flu yang demamnya langsung tinggi.",
   },
   {
-    image: "/image/lambung.png",
+    image: "/image/lambung.webp",
     title: <><em>Bradikardi</em> relatif (<em>Faget's sign</em>)</>,
     text: <>Denyut nadi yang lambat tidak sesuai dengan tingginya suhu tubuh, pada suhu 40°C, denyut nadi seharusnya cepat, namun pada Demam <em>Tifoid</em> sering normal atau bahkan lambat. Ini tanda yang cukup khas.</>,
   },
   {
-    image: "/image/sel.png",
+    image: "/image/sel.webp",
     title: <><em>Rose spots</em></>,
     text: "Bintik-bintik merah muda kecil yang muncul di perut dan dada pada minggu kedua, sangat khas untuk demam tifoid meskipun tidak selalu mudah terlihat.",
   },
   {
-    image: "/image/bioflim.png",
+    image: "/image/bioflim.webp",
     title: <>Lidah berlapis (<em>coated tongue</em>)</>,
     text: "Lidah tampak kotor berselaput putih kecoklatan di tengah dengan tepi merah, tanda khas yang sering ditemukan saat pemeriksaan fisik.",
   },

@@ -21,7 +21,7 @@ const GOLD_STANDARD = [
 
 const PENUNJANG_MODERN = [
   {
-    img: "/image/impus.png",
+    img: "/image/impus.webp",
     title: <>Tes serologi berbasis <em>antigen</em> (<em>Typhidot, Test-it Typhoid</em>, dll.)</>,
     desc: "Lebih cepat dari kultur, dengan sensitivitas lebih baik dari Widal, namun tetap memiliki keterbatasan. Harus diinterpretasikan bersama gambaran klinis",
   },
@@ -216,9 +216,9 @@ export default function PenangananTifoid() {
         </p>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {[
-            { img: "/image/sayur.png", title: "Yang dianjurkan", desc: "makanan lunak, mudah dicerna, cukup kalori dan protein seperti nasi tim, bubur, telur rebus/kukus, sup, daging cincang, sayur yang dimasak lunak" },
-            { img: "/image/pedas.png", title: "Yang perlu dihindari sementara", desc: "Makanan berserat tinggi (sayur mentah, buah berserabut) dan makanan tinggi lemak yang bisa memperberat kerja saluran cerna selama masa akut" },
-            { img: "/image/panas.png", title: "Tidak perlu hindari makanan panas", desc: <>Konsep makanan panas dalam konteks pantangan pada penderita Demam <em>Tifoid</em> tidak memiliki dasar ilmiah</> },
+            { img: "/image/sayur.webp", title: "Yang dianjurkan", desc: "makanan lunak, mudah dicerna, cukup kalori dan protein seperti nasi tim, bubur, telur rebus/kukus, sup, daging cincang, sayur yang dimasak lunak" },
+            { img: "/image/pedas.webp", title: "Yang perlu dihindari sementara", desc: "Makanan berserat tinggi (sayur mentah, buah berserabut) dan makanan tinggi lemak yang bisa memperberat kerja saluran cerna selama masa akut" },
+            { img: "/image/panas.webp", title: "Tidak perlu hindari makanan panas", desc: <>Konsep makanan panas dalam konteks pantangan pada penderita Demam <em>Tifoid</em> tidak memiliki dasar ilmiah</> },
             { img: "/image/aqua.png", title: "Hidrasi cukup", desc: "Minum banyak cairan seperti air putih, oralit, jus buah tanpa ampas, sup untuk mencegah dehidrasi akibat demam" },
           ].map((item, i) => (
             <TreatmentCard key={i} {...item} />
@@ -229,9 +229,9 @@ export default function PenangananTifoid() {
         <h4 className="mt-8 text-[15px] font-semibold text-[#038F7A] md:text-base">Penanganan Demam</h4>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
           {[
-            { img: "/image/pilbanyak.png", title: "Parasetamol", desc: <>Parasetamol pilihan utama untuk penurun panas. Hindari obat NSAID (<em>ibuprofen, aspirin</em>) karena meningkatkan risiko perdarahan saluran cerna</> },
+            { img: "/image/pilbanyak.webp", title: "Parasetamol", desc: <>Parasetamol pilihan utama untuk penurun panas. Hindari obat NSAID (<em>ibuprofen, aspirin</em>) karena meningkatkan risiko perdarahan saluran cerna</> },
             { img: "/image/kompres.png", title: "Kompres hangat", desc: "Kompres hangat di dahi atau ketiak untuk membantu menurunkan suhu tubuh" },
-            { img: "/image/tensiturun.png", title: "Pakaian tipis dan ruangan sejuk", desc: "Gunakan pakaian tipis untuk membantu tubuh melepas panas lebih efektif" },
+            { img: "/image/tensiturun.webp", title: "Pakaian tipis dan ruangan sejuk", desc: "Gunakan pakaian tipis untuk membantu tubuh melepas panas lebih efektif" },
           ].map((item, i) => (
             <TreatmentCard key={i} {...item} />
           ))}

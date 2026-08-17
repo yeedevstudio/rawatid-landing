@@ -97,7 +97,7 @@ export default function HerpesPencegahanSection() {
               Pencegahan Penularan Seksual (HSV-2 dan HSV-1 Genital)
             </h3>
             <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-10">
-              <PlainImage src="/image/heartsave.png" alt="pencegahan seksual" />
+              <PlainImage src="/image/heartsave.webp" alt="pencegahan seksual" />
               <BulletList items={SEKSUAL_ITEMS} />
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function HerpesPencegahanSection() {
               <div className="min-w-0 flex-1">
                 <BulletList items={ORAL_ITEMS} />
               </div>
-              <PlainImage src="/image/lipssave.png" alt="pencegahan herpes oral" />
+              <PlainImage src="/image/lipssave.webp" alt="pencegahan herpes oral" />
             </div>
           </div>
 
@@ -121,7 +121,7 @@ export default function HerpesPencegahanSection() {
               Pencegahan Herpes Neonatal
             </h3>
             <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-10">
-              <PlainImage src="/image/mother.png" alt="pencegahan herpes neonatal" />
+              <PlainImage src="/image/mother.webp" alt="pencegahan herpes neonatal" />
               <BulletList items={NEONATAL_ITEMS} />
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function HerpesPencegahanSection() {
               <div className="min-w-0 flex-1">
                 <BulletList items={KEKAMBUHAN_ITEMS} />
               </div>
-              <PlainImage src="/image/refresh.png" alt="mencegah kekambuhan" />
+              <PlainImage src="/image/refresh.webp" alt="mencegah kekambuhan" />
             </div>
           </div>
         </div>

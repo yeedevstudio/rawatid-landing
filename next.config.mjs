@@ -12,6 +12,19 @@ const nextConfig = {
           },
         ],
       },
+      {
+        // Aset di public/ sebelumnya hanya di-cache 4 jam (max-age=14400), yang
+        // dilaporkan PageSpeed sebagai "Use efficient cache lifetimes". Aman
+        // dipanjangkan karena Vercel menambahkan query ?dpl=<deployment-id> ke
+        // setiap URL aset, jadi tiap deploy otomatis menghasilkan URL baru.
+        source: "/:dir(image|images|dummy)/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ];
   },
   redirects: async () => {

@@ -5,7 +5,7 @@ import { HEPATITIS_CONTENT_INSET } from "@/module/hepatitis/hepatitisLayoutClass
 
 const JALUR_ITEMS = [
   {
-    img: "/image/eat.png",
+    img: "/image/eat.webp",
     alt: "Makanan terkontaminasi",
     title: "Makanan yang terkontaminasi",
     desc: "Ini adalah cara penularan paling umum. Ketika seseorang yang terinfeksi tidak mencuci tangan setelah ke toilet lalu menyiapkan atau menyentuh makanan, virus bisa berpindah ke makanan tersebut. Makanan yang paling sering terlibat adalah makanan mentah atau setengah matang seperti kerang, tiram, sayuran mentah, dan buah-buahan yang disiram air yang terkontaminasi.",

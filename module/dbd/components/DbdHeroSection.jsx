@@ -16,7 +16,7 @@ export default function DbdHeroSection() {
         </div>
 
        
-        <img data-aos="fade-left" suppressHydrationWarning src="/image/nyamuk.png" alt="" />
+        <img data-aos="fade-left" suppressHydrationWarning src="/image/nyamuk.webp" alt="" />
       </div>
     </section>
   );

@@ -12,12 +12,12 @@ const KARAKTERISTIK_CARDS = [
     text: "Terutama burung dan unggas seperti ayam, itik, bebek. kalkun dan lainnya.",
   },
   {
-    image: "/image/trepeople.svg",
+    image: "/image/trepeople.webp",
     title: "Dapat menular ke manusia",
     text: "Dalam kondisi tertentu, virus dapat berpindah dari unggas ke manusia.",
   },
   {
-    image: "/image/infected.svg",
+    image: "/image/infected.webp",
     title: "Termasuk famili Orthomyxoviridae",
     text: "Memiliki kemampuan menginfeksi berbagai spesies hewan dan mamalia.",
   },
@@ -25,12 +25,12 @@ const KARAKTERISTIK_CARDS = [
 
 const BAHAYA_CARDS = [
   {
-    image: "/image/tengkorak.svg",
+    image: "/image/tengkorak.webp",
     title: "Tingkat Kematian Tinggi",
     text: "Angka kematian (CFR) Flu Burung H5N1 pada manusia mencapai sekitar 60%, jauh lebih tinggi dari flu musiman biasa (CFR < 0,1%).",
   },
   {
-    image: "/image/pandemi.svg",
+    image: "/image/pandemi.webp",
     title: "Ancaman Pandemi",
     text: "Virus H5N1 menjadi salah satu ancaman pandemi paling serius yang terus dipantau WHO dan para ahli epidemiologi global.",
   },

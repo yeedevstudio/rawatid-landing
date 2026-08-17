@@ -15,11 +15,11 @@ const SUBTITLE = "Pelajari lebih dalam informasi kesehatan dengan data dan visua
 
 const IMAGE_CARDS = [
   { src: "/image/cacar.webp",    href: "/cacar-air" },
-  { src: "/image/herpes.png",   href: "/herpes-simplex" },
-  { src: "/image/hepa.png",     href: "/hepatitis" },
-  { src: "/image/dbdcover.png", href: "/dbd" },
-  { src: "/image/kursi.png",    href: "/interaktif/poliomielitis" },
-  { src: "/image/demam.png",    href: "/demam-tifoid" },
+  { src: "/image/herpes.webp",   href: "/herpes-simplex" },
+  { src: "/image/hepa.webp",     href: "/hepatitis" },
+  { src: "/image/dbdcover.webp", href: "/dbd" },
+  { src: "/image/kursi.webp",    href: "/interaktif/poliomielitis" },
+  { src: "/image/demam.webp",    href: "/demam-tifoid" },
 ];
 
 const COMPOSITE_CARDS = [
@@ -187,7 +187,10 @@ export default function InteractiveKontenSection({ variant = "default" }) {
                     height={CARD_MAX_WIDTH_PX}
                     className={CARD_MOBILE_CLASS}
                     sizes="(max-width: 640px) 260px, (max-width: 768px) 340px, 428px"
-                    priority={i === 0}
+                    // Bagian ini di bawah lipatan; preload di sini justru
+                    // berebut bandwidth dengan gambar hero (elemen LCP).
+                    priority={false}
+                    loading="lazy"
                   />
                 </Link>
               ) : (

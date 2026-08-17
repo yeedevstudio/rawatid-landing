@@ -1,7 +1,7 @@
 export const CardValue = [
   {
     link: "/fitur#card_1",
-    images: "/images/card_1.svg",
+    images: "/images/card_1.webp",
     altImage: "Card Register",
     title: "Registrasi Pasien Elektronik dan Mandiri",
     description:
@@ -25,7 +25,7 @@ export const CardValue = [
   },
   {
     link: "/fitur#card_4",
-    images: "/images/card_4.svg",
+    images: "/images/card_4.webp",
     altImage: "Card Dashboard",
     title: "Dashboard Eksekutif",
     description:
@@ -33,7 +33,7 @@ export const CardValue = [
   },
   {
     link: "/fitur#card_5",
-    images: "/images/card_5.svg",
+    images: "/images/card_5.webp",
     altImage: "Card Asuransi",
     title: "Terintegrasi BPJS Kesehatan dan Kemenkes",
     description:
