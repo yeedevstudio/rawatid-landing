@@ -21,19 +21,19 @@ function CircleIcon({ src, alt }) {
 const ITEMS = [
   {
     title: "Informasi Obat",
-    src: "/images/obat.png",
+    src: "/images/obat.webp",
     alt: "Informasi Obat",
     href: "/informasi-kesehatan/informasi-obat",
   },
   {
     title: "Informasi RS\ndan Klinik",
-    src: "/images/gedung.png",
+    src: "/images/gedung.webp",
     alt: "Informasi RS dan Klinik",
     href: "/informasi-kesehatan/informasi-rs-dan-klinik",
   },
   {
     title: "Kalkulator BMI",
-    src: "/images/timbangan.png",
+    src: "/images/timbangan.webp",
     alt: "Kalkulator BMI",
     href: "/alat-kesehatan/kalkulator-bmi",
   },
@@ -45,7 +45,7 @@ const ITEMS = [
   },
   {
     title: "Personal\nHealth Record",
-    src: "/images/heart.png",
+    src: "/images/heart.webp",
     alt: "Personal Health Record",
     href: "/alat-kesehatan/personal-health-record",
   },
@@ -57,7 +57,7 @@ const ITEMS = [
   },
   {
     title: "Referensi Menu\nDiet",
-    src: "/images/reference.png",
+    src: "/images/reference.webp",
     alt: "Referensi Menu Diet",
     href: "/informasi-kesehatan/informasi-menu-diet",
   },

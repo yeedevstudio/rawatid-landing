@@ -28,7 +28,7 @@ export default function ClinicSolutionSection() {
         {/* Gambar — tengah di mobile, kiri di desktop */}
         <div className="flex items-center justify-center lg:justify-start lg:order-1">
           <Image
-            src="/images/mac.svg"
+            src="/images/mac.webp"
             alt="Ilustrasi laptop dashboard Rawat.ID"
             width={560}
             height={420}

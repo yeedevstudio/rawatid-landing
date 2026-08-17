@@ -3,17 +3,17 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const ANTIVIRUS_CARDS = [
   {
-    image: "/image/spesifik1.svg",
+    image: "/image/spesifik1.webp",
     title: "Tecovirimat (TPOXX/ST-246)",
     text: "obat antivirus yang disetujui FDA untuk pengobatan cacar dan telah mendapat otorisasi penggunaan darurat untuk Mpox. Mekanisme kerja: menghambat protein VP37 yang diperlukan untuk pembentukan virus ekstraseluler. Tersedia dalam bentuk oral dan intravena. WHO merekomendasikan penggunaannya untuk kasus berat, immunocompromised, anak-anak, dan ibu hamil.",
   },
   {
-    image: "/image/spesifik2.svg",
+    image: "/image/spesifik2.webp",
     title: "Cidofovir dan Brincidofovir",
     text: "antivirus yang juga aktif melawan virus pox, digunakan sebagai pilihan alternatif atau tambahan untuk kasus yang sangat berat. Memiliki efek samping yang lebih signifikan dibanding Tecovirimat.",
   },
   {
-    image: "/image/spesifik3.svg",
+    image: "/image/spesifik3.webp",
     title: "Vaccinia Immune Globulin (VIG)",
     text: "imunoglobulin dari orang yang telah divaksinasi, dapat digunakan sebagai tambahan pengobatan untuk kasus sangat berat atau pada penderita dengan imunodefisiensi berat.",
   },
@@ -21,27 +21,27 @@ const ANTIVIRUS_CARDS = [
 
 const SUPORTIF_CARDS = [
   {
-    image: "/image/suportif1.svg",
+    image: "/image/suportif1.webp",
     text: "Istirahat cukup dan pemenuhan kebutuhan cairan dengan minum air yang cukup dan konsumsi makanan bergizi.",
   },
   {
-    image: "/image/suportif2.svg",
+    image: "/image/suportif2.webp",
     text: "Jaga lesi tetap bersih dan kering. Cuci dengan air sabun lembut atau antiseptik ringan. Hindari memecahkan lepuhan, karena dapat meningkatkan risiko infeksi bakteri sekunder dan memperlambat penyembuhan.",
   },
   {
-    image: "/image/suportif3.svg",
+    image: "/image/suportif3.webp",
     text: "Dokter biasanya akan memberikan parasetamol atau ibuprofen sesuai dosis untuk meredakan demam dan nyeri. Kompres dingin untuk lesi yang sangat nyeri.",
   },
   {
-    image: "/image/suportif4.svg",
+    image: "/image/suportif4.webp",
     text: "Kumur dengan air garam hangat atau antiseptik mulut untuk lesi di rongga mulut. Makan makanan lunak jika nyeri menyulitkan makan.",
   },
   {
-    image: "/image/suportif5.svg",
+    image: "/image/suportif5.webp",
     text: "Tetes mata salin steril untuk lesi okular. Segera rujuk ke dokter mata jika ada keterlibatan mata yang signifikan.",
   },
   {
-    image: "/image/suportif6.svg",
+    image: "/image/suportif6.webp",
     text: "Penderita harus diisolasi di rumah atau fasilitas kesehatan hingga semua lesi sembuh sempurna untuk mencegah penularan.",
   },
 ];
@@ -123,12 +123,12 @@ export default function PenangananCacarMonyet() {
         <div className="mt-5 flex flex-col gap-4 md:gap-5">
           {[
             {
-              image: "/image/vaksin1.svg",
+              image: "/image/vaksin1.webp",
               title: "Vaksin MVA-BN (JYNNEOS/Imvamune/Imvanex)",
               text: "vaksin generasi ketiga yang disetujui FDA dan EMA untuk pencegahan Mpox dan Cacar. Vaksin hidup yang dilemahkan, tidak bereplikasi, aman untuk immunocompromised. Diberikan dalam 2 dosis dengan jarak 4 minggu. Memberikan perlindungan sekitar 85% terhadap Mpox.",
             },
             {
-              image: "/image/vaksin2.svg",
+              image: "/image/vaksin2.webp",
               title: "Vaksin ACAM2000",
               text: "vaksin cacar generasi kedua yang juga aktif terhadap Mpox. Lebih reaktogenik atau menimbulkan efek samping lebih banyak dibanding MVA-BN, tidak direkomendasikan untuk immunocompromised.",
             },

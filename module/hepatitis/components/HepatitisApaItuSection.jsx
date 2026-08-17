@@ -49,7 +49,7 @@ export default function HepatitisApaItuSection() {
             <img
               data-aos="fade-left"
               suppressHydrationWarning
-              src="/image/organ.png"
+              src="/image/organ.webp"
               alt="Ilustrasi organ hati dan fungsinya"
               className="h-auto w-full object-contain"
             />

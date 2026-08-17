@@ -9,17 +9,17 @@ const BAKTERI_CARDS = [
     text: "Bakteri ini bisa bertahan di air selama berminggu-minggu dan di makanan selama beberapa hari pada suhu ruang",
   },
   {
-    image: "/image/lambung.png",
+    image: "/image/lambung.webp",
     title: "Resistensi terhadap asam lambung",
     text: "Sebagian bakteri mampu melewati asam lambung dan mencapai usus halus",
   },
   {
-    image: "/image/sel.png",
+    image: "/image/sel.webp",
     title: "Kemampuan hidup di dalam sel imun",
     text: <>S. Typhi bisa hidup dan berkembang biak di dalam <em>makrofag</em> (sel kekebalan tubuh) sehingga sulit dibasmi oleh sistem imun</>,
   },
   {
-    image: "/image/bioflim.png",
+    image: "/image/bioflim.webp",
     title: <> Pembentukan <em>biofilm</em></>,
     text: <>Bisa membentuk <em>biofilm</em> di kandung empedu pada <em>carrier</em> kronis, membuatnya sangat sulit diberantas</>,
   },
@@ -112,7 +112,7 @@ export default function ApaItuTifoid() {
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex gap-4 md:gap-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/image/tifus.png" alt="" className="h-24 w-24 shrink-0 object-contain md:h-28 md:w-28" />
+              <img src="/image/tifus.webp" alt="" className="h-24 w-24 shrink-0 object-contain md:h-28 md:w-28" />
               <div>
                 <h4 className="text-[13px] font-bold text-neutral-900 md:text-[14px]">
                   <em>Tifus Murin / Epidemic Typhus</em>
@@ -125,7 +125,7 @@ export default function ApaItuTifoid() {
             </div>
             <div className="flex gap-4 border-neutral-200/90 sm:border-l sm:pl-4 md:gap-5 md:pl-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/image/tifoidvirus.png" alt="" className="h-24 w-24 shrink-0 object-contain md:h-28 md:w-28" />
+              <img src="/image/tifoidvirus.webp" alt="" className="h-24 w-24 shrink-0 object-contain md:h-28 md:w-28" />
               <div>
                 <h4 className="text-[13px] font-bold text-neutral-900 md:text-[14px]">
                   Demam <em>Tifoid</em> (<em>Typhoid Fever</em>)

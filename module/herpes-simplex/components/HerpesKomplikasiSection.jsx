@@ -122,7 +122,7 @@ export default function HerpesKomplikasiSection() {
               <div className="min-w-0 flex-1">
                 <BulletList items={MATA_ITEMS} />
               </div>
-              <CircleImage src="/image/eye.png" alt="komplikasi mata" />
+              <CircleImage src="/image/eye.webp" alt="komplikasi mata" />
             </div>
           </div>
 
@@ -132,7 +132,7 @@ export default function HerpesKomplikasiSection() {
               Komplikasi pada Bayi (Herpes Neonatal)
             </h3>
             <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:gap-10">
-              <CircleImage src="/image/baby.png" alt="herpes neonatal" />
+              <CircleImage src="/image/baby.webp" alt="herpes neonatal" />
               <div className="min-w-0 flex-1 space-y-3">
                 <p className="text-[14px] font-normal leading-relaxed text-neutral-700 md:text-[15px]">
                   Ini adalah komplikasi paling ditakuti. Bayi yang terinfeksi HSV saat lahir bisa
@@ -152,7 +152,7 @@ export default function HerpesKomplikasiSection() {
               <div className="min-w-0 flex-1">
                 <BulletList items={LAINNYA_ITEMS} />
               </div>
-              <CircleImage src="/image/pompajantung.png" alt="komplikasi lainnya" />
+              <CircleImage src="/image/pompajantung.webp" alt="komplikasi lainnya" />
             </div>
           </div>
         </div>

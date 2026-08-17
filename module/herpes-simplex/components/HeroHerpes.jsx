@@ -20,7 +20,7 @@ export default function HeroHerpes() {
         <img
           data-aos="fade-left"
           suppressHydrationWarning
-          src="/image/herpesHero.png"
+          src="/image/herpesHero.webp"
           alt="Ilustrasi Herpes Simplex"
           className="h-auto w-full max-w-lg justify-self-center lg:max-w-none"
         />

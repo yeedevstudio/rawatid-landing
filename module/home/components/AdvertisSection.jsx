@@ -5,7 +5,7 @@ export default function AdvertisSection() {
   return (
     <section data-aos="zoom-in" className="my-20 bg-green60 w-full py-20 flex flex-col md:flex-row items-center gap-[1rem] px-5 md:px-12">
       <Image
-        src={"/images/laptop.svg"}
+        src={"/images/laptop.webp"}
         alt="laptop_image"
         width={400}
         height={400}

@@ -3,12 +3,12 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const RUAM_TOP = [
   {
-    image: "/image/ruam1.svg",
+    image: "/image/ruam1.webp",
     title: "Pola penyebaran",
     text: "ruam biasanya dimulai dari wajah, kemudian menyebar secara sentrifugal ke batang tubuh, lengan, kaki, telapak tangan, dan telapak kaki. Pada wabah 2022, ruam sering muncul pertama kali di area genital atau mulut sebelum menyebar ke tempat lain.",
   },
   {
-    image: "/image/ruam2.svg",
+    image: "/image/ruam2.webp",
     title: "Evolusi lesi dalam tahapan berurutan (semua lesi berkembang bersama secara sinkron)",
     text: "Makula (bercak datar kemerahan) → Papula (tonjolan padat) → Vesikel (gelembung berisi cairan bening) → Pustula (gelembung berisi nanah kekuningan) → Krusta (keropeng yang mengering) → Sembuh. Seluruh proses ini berlangsung 2–4 minggu.",
   },
@@ -16,17 +16,17 @@ const RUAM_TOP = [
 
 const RUAM_BOTTOM = [
   {
-    image: "/image/ruam3.svg",
+    image: "/image/ruam3.webp",
     title: "Karakteristik lesi",
     text: "lesi Cacar Monyet biasanya dalam (deep-seated), keras saat disentuh, dan terasa nyeri, berbeda dari Cacar Air yang biasanya dangkal dan gatal. Ukuran lesi bervariasi dari beberapa milimeter hingga lebih dari 1 cm.",
   },
   {
-    image: "/image/ruam4.svg",
+    image: "/image/ruam4.webp",
     title: "Jumlah lesi",
     text: "bervariasi sangat luas, dari hanya beberapa lesi (bahkan 1–2 lesi pada beberapa kasus wabah 2022) hingga ribuan lesi yang menyebar ke seluruh tubuh.",
   },
   {
-    image: "/image/ruam5.svg",
+    image: "/image/ruam5.webp",
     title: "Lokasi khas",
     text: "yaitu telapak tangan dan telapak kaki adalah lokasi yang sangat khas untuk Cacar Monyet, ini tidak umum pada Cacar Air. Lesi di mulut, mata, dan alat kelamin juga sering ditemukan.",
   },
@@ -34,22 +34,22 @@ const RUAM_BOTTOM = [
 
 const FASE_CARDS = [
   {
-    image: "/image/fase1.svg",
+    image: "/image/fase1.webp",
     title: "Demam tinggi",
     text: "(38–40°C) yang muncul tiba-tiba",
   },
   {
-    image: "/image/fase2.svg",
+    image: "/image/fase2.webp",
     title: "Sakit kepala hebat",
     text: "",
   },
   {
-    image: "/image/fase3.svg",
+    image: "/image/fase3.webp",
     title: "Nyeri otot (mialgia)",
     text: "Nyeri otot (mialgia) dan nyeri punggung yang mencolok",
   },
   {
-    image: "/image/fase4.svg",
+    image: "/image/fase4.webp",
     title: "Kelelahan ekstrim",
     text: "",
   },
@@ -74,7 +74,7 @@ export default function GejalaCacarMonyet() {
           <div className="w-full shrink-0 rounded-2xl bg-white p-5 shadow-[0px_0px_12.1px_0px_#0000001A] sm:w-[287px] md:p-6">
             <div className="flex items-center gap-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/image/calender.svg.svg" alt="" className="h-16 w-16 shrink-0 object-contain md:h-20 md:w-20" />
+              <img src="/image/calender.svg.webp" alt="" className="h-16 w-16 shrink-0 object-contain md:h-20 md:w-20" />
               <div>
                 <p className="text-[14px] font-semibold text-neutral-700 md:text-[15px]">Masa Inkubasi</p>
                 <p className="text-[32px] font-bold leading-tight text-[#038F7A] md:text-[36px]">3-21 hari</p>
@@ -130,7 +130,7 @@ export default function GejalaCacarMonyet() {
         {/* Card 5 - full width */}
         <div className="mt-4 flex items-center gap-4 rounded-2xl bg-white p-4 shadow-[0px_0px_12.1px_0px_#0000001A] md:gap-5 md:p-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/image/fase5.svg" alt="" className="h-16 w-16 shrink-0 object-contain md:h-20 md:w-20" />
+          <img src="/image/fase5.webp" alt="" className="h-16 w-16 shrink-0 object-contain md:h-20 md:w-20" />
           <div>
             <p className="text-[14px] font-semibold leading-snug text-[#038F7A] md:text-[15px]">
               Pembesaran kelenjar getah bening (limfadenopati)

@@ -13,7 +13,7 @@ const PENULARAN_CARDS = [
     text: "Melalui tetesan air liur dari orang yang terinfeksi, terutama pada awal infeksi.",
   },
   {
-    image: "/image/bumi.png",
+    image: "/image/bumi.webp",
     title: "Air dan sanitasi buruk",
     text: "Virus berkembang pesat di lingkungan dengan sanitasi yang tidak memadai dan akses air bersih yang terbatas.",
   },

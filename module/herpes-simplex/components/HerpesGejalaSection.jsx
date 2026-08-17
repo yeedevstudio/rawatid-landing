@@ -63,7 +63,7 @@ const LOKASI_CARDS = [
     ),
   },
   {
-    src: "/image/hsv.png",
+    src: "/image/hsv.webp",
     alt: "herpes genital",
     title: "Herpes Genital (Umumnya Terjadi pada HSV-2)",
     text: (

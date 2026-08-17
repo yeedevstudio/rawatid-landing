@@ -55,7 +55,7 @@ export default function KomplikasiTifoid() {
           <SectionBadge>Komplikasi Utama — Darurat Bedah</SectionBadge>
           <div className="mt-5 flex flex-col gap-5">
 
-            <KomplikasiCard image="/image/warm.png" title={<><em>Perforasi</em> Usus (3–10% kasus tidak diobati)</>} titleColor="orange">
+            <KomplikasiCard image="/image/warm.webp" title={<><em>Perforasi</em> Usus (3–10% kasus tidak diobati)</>} titleColor="orange">
               <p className="text-[13px] font-normal leading-relaxed text-neutral-700 md:text-[14px]">
                 Ini adalah komplikasi paling berbahaya dan paling sering menyebabkan kematian pada penderita Demam{" "}
                 <em>Tifoid</em>. Bakteri menyebabkan peradangan dan <em>nekrosis</em> (kematian jaringan) pada dinding
@@ -98,7 +98,7 @@ export default function KomplikasiTifoid() {
           <SectionBadge>Komplikasi Lain</SectionBadge>
           <div className="mt-5 flex flex-col gap-5">
 
-            <KomplikasiCard image="/image/infeksi.png" title="Komplikasi Infeksi/Septik" titleColor="teal">
+            <KomplikasiCard image="/image/infeksi.webp" title="Komplikasi Infeksi/Septik" titleColor="teal">
               <ul className="flex flex-col gap-2">
                 <BulletItem>
                   <strong>Sepsis dan syok septik:</strong> penyebab kematian tersering pada Demam <em>Tifoid</em>, bakteri membanjiri aliran darah dan menyebabkan respons inflamasi sistemik yang masif.
@@ -121,7 +121,7 @@ export default function KomplikasiTifoid() {
               </ul>
             </KomplikasiCard>
 
-            <KomplikasiCard image="/image/badanijo.png" title="Komplikasi Non-Infeksi" titleColor="teal">
+            <KomplikasiCard image="/image/badanijo.webp" title="Komplikasi Non-Infeksi" titleColor="teal">
               <ul className="flex flex-col gap-2">
                 <BulletItem>
                   <strong>Hepatitis <em>tifosa</em>:</strong> peradangan hati yang menyebabkan peningkatan enzim hati dan kadang <em>ikterus</em> (kuning ringan).
@@ -138,7 +138,7 @@ export default function KomplikasiTifoid() {
               </ul>
             </KomplikasiCard>
 
-            <KomplikasiCard image="/image/virusmasuk.png" title={<><em>Carrier</em> Kronik</>} titleColor="teal">
+            <KomplikasiCard image="/image/virusmasuk.webp" title={<><em>Carrier</em> Kronik</>} titleColor="teal">
               <p className="text-[13px] font-normal leading-relaxed text-neutral-700 md:text-[14px]">
                 Sekitar 1–6% penderita Demam <em>Tifoid</em> yang sudah sembuh menjadi <em>carrier kronik</em>, mereka
                 terus mengeluarkan <em>S. Typhi</em> bersama tinja selama lebih dari satu tahun. <em>Carrier kronik</em>{" "}

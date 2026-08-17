@@ -13,7 +13,7 @@ const TOP_CARDS = [
     text: "Vaksinasi melindungi diri sendiri dan orang lain",
   },
   {
-    image: "/image/bumi.png",
+    image: "/image/bumi.webp",
     title: "Gerakan Global",
     text: "Program vaksinasi global  berhasil turunkan kasus",
   },

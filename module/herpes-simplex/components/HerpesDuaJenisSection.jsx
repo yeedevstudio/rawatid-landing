@@ -5,7 +5,7 @@ import { HERPES_CONTENT_INSET } from "@/module/herpes-simplex/herpesLayoutClases
 
 const JENIS_DATA = [
   {
-    src: "/image/bibir.png",
+    src: "/image/bibir.webp",
     alt: "HSV tipe 1 - herpes oral",
     title: "HSV tipe 1 (HSV-1)",
     points: [
@@ -15,7 +15,7 @@ const JENIS_DATA = [
     ],
   },
   {
-    src: "/image/hsv.png",
+    src: "/image/hsv.webp",
     alt: "HSV tipe 2 - herpes genital",
     title: "HSV tipe 2 (HSV-2)",
     points: [

@@ -42,7 +42,7 @@ export default function RawatDiriSection() {
           {/* Kanan: gambar */}
           <div className="flex items-center justify-center lg:justify-end">
             <Image
-              src="/images/phone.png"
+              src="/images/phone.webp"
               alt="Tampilan aplikasi RawatDiri di ponsel"
               width={640}
               height={420}

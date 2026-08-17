@@ -4,17 +4,17 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const TOP_CARDS = [
   {
-    image: "/image/bumi.png",
+    image: "/image/bumi.webp",
     title: "Penyakit Tropis",
     text: "DBD termasuk penyakit tropis yang paling cepat menyebar di dunia.",
   },
   {
-    image: "/image/nyamukhitam.png",
+    image: "/image/nyamukhitam.webp",
     title: "Ditularkan Nyamuk",
     text: "Melalui gigitan nyamuk Aedes aegypti dan Aedes albopictus yang terinfeksi.",
   },
   {
-    image: "/image/indo.png",
+    image: "/image/indo.webp",
     title: "Endemis di Indonesia",
     text: "Hampir seluruh wilayah Indonesia beresiko tinggi terkena DBD.",
   },

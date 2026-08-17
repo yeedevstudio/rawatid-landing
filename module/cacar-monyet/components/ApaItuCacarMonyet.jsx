@@ -2,11 +2,11 @@ import React from "react";
 
 const DEFINE_CARDS = [
   {
-    image: "/image/define1.svg",
+    image: "/image/define1.webp",
     text: "Pada November 2022, WHO secara resmi mengubah nama Monkeypox menjadi Mpox untuk menghindari stigma dan diskriminasi.",
   },
   {
-    image: "/image/define2.svg",
+    image: "/image/define2.webp",
     text: "Kasus manusia pertama dilaporkan terjadi pada tahun 1970 di Republik Demokratik Kongo (DRC).",
   },
   {
@@ -18,7 +18,7 @@ const DEFINE_CARDS = [
     text: "Indonesia melaporkan kasus Mpox pertama pada Agustus 2022.",
   },
   {
-    image: "/image/define5.svg",
+    image: "/image/define5.webp",
     text: "WHO menetapkan Mpox sebagai Public Health Emergency of International Concern (PHEIC) pada Juli 2022 dan kembali pada Agustus 2024 karena varian baru Clade IB.",
   },
 ];

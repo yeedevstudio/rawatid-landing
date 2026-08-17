@@ -62,7 +62,7 @@ export default function EpidemiologiPolio() {
         <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:items-center md:mt-6 md:gap-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/image/map.png"
+            src="/image/map.webp"
             alt=""
             className="h-auto w-full max-w-[480px] shrink-0 self-center object-contain sm:max-w-[540px] md:max-w-[600px]"
           />

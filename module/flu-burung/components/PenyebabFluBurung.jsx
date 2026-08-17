@@ -2,22 +2,22 @@ import React from "react";
 
 const KARAKTERISTIK_VIRUS = [
   {
-    image: "/image/penyebab1.svg",
+    image: "/image/penyebab1.webp",
     title: "Mutasi cepat (antigenic drift)",
     text: "virus influenza A bermutasi sangat cepat melalui perubahan bertahap pada protein H dan N-nya. Ini menyebabkan imunitas yang diperoleh dari paparan sebelumnya pada virus bisa menjadi tidak efektif terhadap varian baru.",
   },
   {
-    image: "/image/penyebab2.svg",
+    image: "/image/penyebab2.webp",
     title: "Pergeseran antigenik (antigenic shift)",
     text: "ini mekanisme yang paling berbahaya. Ketika dua virus influenza A berbeda menginfeksi sel yang sama secara bersamaan, misalnya pada babi atau manusia, gen-gen mereka bisa tercampur atau reassortment menghasilkan virus baru yang sama sekali berbeda. Inilah yang sering menjadi asal-usul pandemi influenza.",
   },
   {
-    image: "/image/penyebab3.svg",
+    image: "/image/penyebab3.webp",
     title: "Kemampuan menyeberangi spesies (zoonosis)",
     text: "dalam kondisi tertentu, virus flu burung dapat menginfeksi manusia secara langsung, terutama ketika manusia terpapar dalam jumlah besar atau berkepanjangan dengan unggas yang terinfeksi.",
   },
   {
-    image: "/image/penyebab4.svg",
+    image: "/image/penyebab4.webp",
     title: "Tidak ada kekebalan alami di populasi manusia",
     text: "karena sebagian besar manusia belum pernah terpapar virus flu burung, tidak ada kekebalan herd immunity yang melindungi. Inilah yang membuat flu burung berpotensi menjadi pandemi dahsyat jika virus ini memperoleh kemampuan penularan efisien antar manusia.",
   },

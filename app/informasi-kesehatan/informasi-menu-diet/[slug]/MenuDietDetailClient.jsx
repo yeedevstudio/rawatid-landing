@@ -68,8 +68,8 @@ export default function MenuDietDetailClient({ slug, initialData = null }) {
     const imgs = Array.isArray(menu?.images) ? menu.images : [];
     const item = imgs[index] || imgs[0] || null;
     const path = item?.file_path;
-    if (!path) return "/images/dummy-nutrion.png";
-    if (typeof path !== "string") return "/images/dummy-nutrion.png";
+    if (!path) return "/images/dummy-nutrion.webp";
+    if (typeof path !== "string") return "/images/dummy-nutrion.webp";
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     return new URL(path, "https://cm-api.rawat.id").toString();
   };
