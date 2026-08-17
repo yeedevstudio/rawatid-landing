@@ -42,8 +42,8 @@ export default function BlogDetail({
           2: "text-xl md:text-2xl lg:text-3xl font-semibold",
           3: "text-xl md:text-2xl lg:text-3xl font-medium",
           4: "text-lg md:text-xl lg:text-2xl font-medium",
-          5: "text-lg md:text-xl lg:text-2xl font-light",
-          6: "text-base md:text-lg lg:text-xl font-light",
+          5: "text-lg md:text-xl lg:text-2xl font-normal",
+          6: "text-base md:text-lg lg:text-xl font-normal",
         };
 
         elements.push(

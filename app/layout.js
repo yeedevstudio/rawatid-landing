@@ -11,11 +11,19 @@ import Footer from "@/common/layouts/Footer";
 import GlobalRouteSkeleton from "@/common/components/GlobalRouteSkeleton";
 import RouteClickSpinner from "@/common/components/RouteClickSpinner";
 
+// Bobot 300 dihapus: hanya dipakai 4 kali dan sudah dialihkan ke font-normal.
+// Setiap bobot = satu berkas woff2 (~8 KB) yang diunduh BERSAMAAN dengan gambar
+// hero. Di koneksi seluler, 5 font yang berebut bandwidth menahan gambar LCP
+// hampir 1,9 detik. preload dimatikan dengan alasan yang sama: `display: swap`
+// membuat teks tetap langsung tampil dengan font cadangan, jadi font asli tidak
+// perlu ikut antre di prioritas tertinggi bersama gambar LCP.
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
   display: "swap",
+  preload: false,
+  adjustFontFallback: true,
 });
 
 export const metadata = {
