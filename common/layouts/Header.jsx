@@ -118,7 +118,11 @@ export default function Header() {
   return (
     <div className="w-full">
       <header className="bg-white w-full h-[85px] px-5 md:px-12 flex items-center justify-between border-b border-black/5">
-        <Link href="/" title="beranda">
+        {/* prefetch dimatikan: logo ini selalu berada di viewport, sehingga
+            setiap halaman mem-prefetch payload RSC beranda — termasuk direktif
+            preload gambar hero-nya, yang lalu terunduh dengan prioritas High di
+            halaman yang tidak menampilkannya sama sekali. */}
+        <Link href="/" title="beranda" prefetch={false}>
           <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
         </Link>
 
@@ -152,7 +156,7 @@ export default function Header() {
               </button>
             </SheetTrigger>
             <SheetContent side="left">
-              <Link title="Rawat.ID" href="/" onClick={handleClose} className={"flex items-center gap-1 px-1 mt-7"}>
+              <Link title="Rawat.ID" href="/" prefetch={false} onClick={handleClose} className={"flex items-center gap-1 px-1 mt-7"}>
                 <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={false} quality={90} />
                 <SheetTitle className="text-green text-xl">Rawat.ID</SheetTitle>
               </Link>

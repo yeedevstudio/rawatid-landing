@@ -89,14 +89,16 @@ export default function BlogAll({ data, maxItems }) {
                 {visible?.map((article, index) => (
                   <div key={article?.slug || index} className={article?.span}>
                     <CardArticleAll
-                      src={article?.thumbnail?.url}
-                      alt={article?.thumbnail?.url}
+                      src={article?.thumbnail?.formats?.medium?.url || article?.thumbnail?.url}
+                      alt={article?.title || "Artikel Rawat.ID"}
                       category={article.category?.name}
                       title={article.title}
                       date={article?.updatedAt}
                       height={"h-[18rem] md:h-[20rem] lg:h-[18rem]"}
                       minHeightClassName="min-h-[400px]"
                       tagVariant="outline"
+                      // Kartu pertama berada di viewport awal pada mobile.
+                      priority={safePage === 0 && index === 0}
                       href={`/blog/detail/${article.slug}`}
                       onSelect={handleSelected}
                     />

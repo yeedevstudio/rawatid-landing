@@ -131,7 +131,7 @@ export default function PageByClientPagination({ categorySlug }) {
               <div key={article?.slug || index} className={article?.span}>
                 <CardArticleSidebar
                   src={article?.thumbnail?.formats?.small?.url}
-                  alt={article?.thumbnail?.formats?.small?.url}
+                  alt={article?.title || "Artikel Rawat.ID"}
                   category={article?.category?.name}
                   title={article?.title}
                   height={"h-[12rem] md:h-[14rem] lg:h-[18rem]"}

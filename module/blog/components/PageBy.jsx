@@ -61,8 +61,8 @@ export default function PageBy({ data, post, slug, title, author, pagination, cu
           <AvatarSection
             src={
               process.env.NEXT_PUBLIC_BASE_URL +
-              (author?.avatar?.formats?.large?.url ||
-                author?.avatar?.medium?.url ||
+              (author?.avatar?.formats?.thumbnail?.url ||
+                author?.avatar?.formats?.small?.url ||
                 author?.avatar?.url)
             }
             alt={
@@ -114,7 +114,7 @@ export default function PageBy({ data, post, slug, title, author, pagination, cu
               <div key={article?.slug || index} className={article.span}>
                 <CardArticleSidebar
                   src={article?.thumbnail?.formats?.small?.url}
-                  alt={article?.thumbnail?.formats?.small?.url}
+                  alt={article?.title || "Artikel Rawat.ID"}
                   category={article.category?.name}
                   title={article.title}
                   height={"h-[12rem] md:h-[14rem] lg:h-[18rem]"}

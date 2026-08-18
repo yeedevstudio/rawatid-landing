@@ -91,7 +91,8 @@ export default function BlogHighlight({ data }) {
         <div className="hidden md:block transition-all duration-300 ease-in-out">
           <CardArticle
             src={currentArticle?.thumbnail?.formats?.small?.url}
-            alt={currentArticle?.thumbnail?.formats?.small?.url}
+            alt={currentArticle?.title || "Artikel Rawat.ID"}
+            priority
             category={currentArticle?.category?.name}
             title={currentArticle?.title}
             index={currentIndex}
@@ -105,8 +106,9 @@ export default function BlogHighlight({ data }) {
           {blog.map((article, index) => (
             <div key={index}>
               <CardArticleSidebar
-                src={article?.thumbnail?.url}
-                alt={article?.thumbnail?.formats?.thumbnail?.url}
+                src={article?.thumbnail?.formats?.small?.url || article?.thumbnail?.url}
+                alt={article?.title || "Artikel Rawat.ID"}
+                priority={index === 0}
                 category={article.category?.name}
                 title={article.title}
                 index={index}

@@ -142,7 +142,7 @@ export default function BlogPage({ data, categories }) {
                 <div key={article?.slug || index} className={article?.span}>
                   <CardArticleAll
                     src={article?.thumbnail?.url}
-                    alt={article?.thumbnail?.url}
+                    alt={article?.title || "Artikel Rawat.ID"}
                     category={article?.category?.name}
                     height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
                     title={article?.title}

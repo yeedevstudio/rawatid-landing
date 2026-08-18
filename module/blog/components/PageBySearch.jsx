@@ -61,7 +61,7 @@ export default function PageBySearch({ data, pagination, slug }) {
             <div key={index} className={article.span}>
               <CardArticleAll
                 src={article?.thumbnail?.formats?.small?.url}
-                alt={article?.thumbnail?.formats?.small?.url}
+                alt={article?.title || "Artikel Rawat.ID"}
                 category={article.category?.name}
                 height={"h-[10rem] md:h-[12rem] lg:h-[14rem]"}
                 title={article.title}

@@ -8,8 +8,10 @@ export default function Authors({ post, author }) {
       <AvatarSection
         src={
           process.env.NEXT_PUBLIC_BASE_URL +
-          (author?.[0]?.avatar?.formats?.large?.url ||
-            author?.[0]?.avatar?.medium?.url ||
+          // Sebelumnya memakai format `large` (66 KB) untuk lingkaran 128 px.
+          // thumbnail/small sudah lebih dari cukup.
+          (author?.[0]?.avatar?.formats?.thumbnail?.url ||
+            author?.[0]?.avatar?.formats?.small?.url ||
             author?.[0]?.avatar?.url)
         }
         alt={

@@ -25,7 +25,7 @@ export default function LinkPopuler({ blog }) {
           <div key={index}>
             <CardArticlePopuler
               src={article?.thumbnail?.formats?.small?.url}
-              alt={article.thumbnail.formats?.small.url}
+              alt={article?.title || "Artikel Rawat.ID"}
               category={article.category?.name}
               height={"h-[11rem] md:h-[16rem] lg:h-[11rem]"}
               title={article.title}

@@ -308,7 +308,20 @@ export default function DrugDetailClient({ slug, initialData = null }) {
             </div>
 
             <div className="relative w-full overflow-hidden rounded-2xl bg-gray-50 aspect-[16/9]">
-              <Image src="/images/drugs.webp" alt="Ilustrasi obat" fill priority={false} className="object-cover" />
+              {/* Ilustrasi ini adalah elemen LCP halaman detail obat. Dengan
+                  priority={false} next/image memberinya loading="lazy", sehingga
+                  browser baru menemukannya setelah layout selesai — Load Delay-nya
+                  1.422 ms padahal berkasnya cuma perlu 40 ms untuk diunduh.
+                  priority membuatnya ikut di-preload sejak awal. */}
+              <Image
+                src="/images/drugs.webp"
+                alt="Ilustrasi obat"
+                fill
+                sizes="(max-width: 1024px) 100vw, 720px"
+                priority
+                fetchPriority="high"
+                className="object-cover"
+              />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

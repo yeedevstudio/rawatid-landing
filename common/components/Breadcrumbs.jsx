@@ -36,6 +36,13 @@ export default function Breadcrumbs({ items }) {
                 ) : (
                   <Link
                     href={it.href}
+                    // Breadcrumb jarang diklik, tetapi <Link> mem-prefetch rute
+                    // tujuannya secara otomatis. Di halaman detail obat itu
+                    // menarik 46 KB payload RSC halaman daftar dan 33 KB gambar
+                    // hero beranda — keduanya berebut bandwidth dengan gambar
+                    // LCP halaman ini, tanpa manfaat apa pun bagi mayoritas
+                    // pengunjung.
+                    prefetch={false}
                     className="hover:text-green transition-colors"
                   >
                     {it.label}

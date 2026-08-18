@@ -34,7 +34,7 @@ export default function RelatedArticle({ blog }) {
             <div key={index} className={article.span}>
               <CardArticleAll
                 src={article?.thumbnail?.formats?.small?.url}
-                alt={article?.thumbnail?.formats?.small?.url}
+                alt={article?.title || "Artikel Rawat.ID"}
                 category={article.category?.name}
                 height={"h-[180px]"}
                 title={article.title}

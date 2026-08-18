@@ -32,6 +32,10 @@ export const CardArticle = ({
   selected,
   onSelect,
   href,
+  // Kartu paling atas di /blog adalah elemen LCP halaman. Tanpa ini next/image
+  // memberinya loading="lazy", sehingga browser baru menemukannya setelah
+  // layout selesai — Load Delay-nya 1.427 ms.
+  priority = false,
   shadow = false,
 }) => {
   return (
@@ -47,7 +51,7 @@ export const CardArticle = ({
       onClick={onSelect}
     >
       <div className={cn("md:h-full min-h-[12rem] md:min-h-[18rem] ", "w-full", "relative rounded-2xl overflow-hidden")}>
-        <Image src={resolveImageSrc(src)} alt={alt} fill style={{ objectFit: "cover", position: "absolute" }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+        <Image src={resolveImageSrc(src)} alt={alt} fill priority={priority} style={{ objectFit: "cover", position: "absolute" }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
       </div>
       <div className="">
         <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-2 md:my-2 text-white bg-green">{category}</h3>
@@ -67,6 +71,7 @@ export const CardArticleAll = ({
   height,
   onSelect,
   href,
+  priority = false,
   tagVariant = "filled",
   date,
   minHeightClassName = "",
@@ -80,7 +85,7 @@ export const CardArticleAll = ({
     onClick={onSelect}
   >
     <div className={cn(height ? height : "h-full", width ? width : "w-full", "relative rounded-2xl overflow-hidden min-h-[12rem]")}>
-      <Image src={resolveImageSrc(src)} alt={alt} fill style={{ objectFit: "cover", position: "absolute" }} />
+      <Image src={resolveImageSrc(src)} alt={alt} fill priority={priority} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover", position: "absolute" }} />
     </div>
     <div className="">
       <h3
@@ -120,6 +125,7 @@ export const CardArticleSidebar = ({
   selected,
   onSelect,
   href,
+  priority = false,
   headline,
   shadow = false,
 }) => (
@@ -135,7 +141,7 @@ export const CardArticleSidebar = ({
     onClick={onSelect}
   >
     <div className={cn(height ? height : "h-full ", width ? width : "w-full", "relative rounded-2xl overflow-hidden min-h-[12rem] md:min-h-[13rem] lg:min-h-[8rem]")}>
-      <Image src={resolveImageSrc(src)} alt={alt} fill style={{ objectFit: "cover", position: "absolute" }} />
+      <Image src={resolveImageSrc(src)} alt={alt} fill priority={priority} sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", position: "absolute" }} />
     </div>
     <div>
       <h3 className="p-1 w-fit rounded-md text-[9px] px-5 my-1 md:my-1 text-white bg-green">{category}</h3>

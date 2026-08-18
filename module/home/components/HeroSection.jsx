@@ -1,4 +1,12 @@
 import JelajahiButton from "./JelajahiButton";
+// Catatan: preload manual (<link rel="preload">) sengaja TIDAK dipakai di sini.
+// Karena elemen ini berada di pohon RSC beranda, setiap halaman lain yang punya
+// <Link href="/"> (logo Header, Footer) akan mem-prefetch payload beranda dan
+// ikut menjalankan preload-nya — akibatnya gambar hero beranda terunduh dengan
+// prioritas High di halaman yang sama sekali tidak menampilkannya, berebut
+// bandwidth dengan gambar LCP halaman tersebut.
+// Tag <img> di bawah sudah berada dekat awal dokumen, jadi preload scanner
+// menemukannya cukup dini tanpa perlu hint tambahan.
 const HERO_SRCSET =
   "/image/newbackground-432.webp 432w, /image/newbackground-576.webp 576w, /image/newbackground-768.webp 768w, /image/newbackground-1088.webp 1088w";
 const HERO_SIZES =
@@ -6,18 +14,6 @@ const HERO_SIZES =
 
 export default function HeroSection() {
   return (
-    <>
-      {/* next/image biasanya menyisipkan preload sendiri untuk gambar priority.
-          Karena elemen hero kini <img> manual, preload-nya ditulis sendiri agar
-          browser mulai mengunduh berkas yang tepat sebelum CSS selesai diproses. */}
-      <link
-        rel="preload"
-        as="image"
-        href="/image/newbackground-576.webp"
-        imageSrcSet={HERO_SRCSET}
-        imageSizes={HERO_SIZES}
-        fetchPriority="high"
-      />
     <section className="my-8 md:my-10 w-full px-5 md:px-12 lg:px-20 xl:px-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center overflow-hidden">
       {/* IMAGE — first in DOM so it appears on top in mobile */}
       {/* Tanpa data-aos: aos.css memberi opacity:0 ke semua elemen fade, dan AOS
@@ -58,6 +54,5 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
-    </>
   );
 }

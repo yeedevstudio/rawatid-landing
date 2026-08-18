@@ -104,7 +104,7 @@ export default function BlogCategory({ category }) {
             <div key={article?.documentId ?? article?.slug ?? article?.id ?? index} className="min-w-0">
               <CardArticleAll
                 src={article?.thumbnail?.url}
-                alt={article?.thumbnail?.formats?.thumbnail?.url}
+                alt={article?.title || "Artikel Rawat.ID"}
                 category={article.category?.name}
                 height={"h-[10rem] md:h-[12rem] lg:h-[10rem]"}
                 title={article.title}

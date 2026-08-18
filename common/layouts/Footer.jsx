@@ -16,6 +16,7 @@ const Footer = () => {
           <div className="flex flex-col justify-between md:max-w-[260px] md:min-h-[280px]">
             <Link
               href="/"
+              prefetch={false}
               className="flex flex-col justify-start items-start gap-6 cursor-pointer scroll-smooth"
               itemProp="button"
             >

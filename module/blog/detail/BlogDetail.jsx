@@ -23,13 +23,39 @@ export default function BlogDetail({
 }) {
   const usedCategories = new Set();
   const usedSlugs = new Set();
-  const [loading, setLoading] = useState(true);
+  // Dulu diinisialisasi `true`, sehingga gambar utama artikel dirender dengan
+  // opacity-0 di HTML server dan baru terlihat setelah JS terhidrasi lalu
+  // onLoadingComplete menyala. Gambar itu adalah elemen LCP halaman ini —
+  // menyembunyikannya membuat LCP menunggu seluruh rantai hidrasi selesai.
+  // Gambarnya sudah ada di HTML server, jadi tidak ada alasan disembunyikan.
+  const [loading, setLoading] = useState(false);
+
+  const imageBase = process.env.NEXT_PUBLIC_BASE_URL || "";
+  const heroFormats = post?.thumbnail?.formats || {};
 
   const imageUrl =
-    process.env.NEXT_PUBLIC_BASE_URL +
-    (post?.thumbnail?.formats?.large?.url ||
-      post?.thumbnail?.formats?.medium?.url ||
-      post?.thumbnail?.url);
+    imageBase +
+    (heroFormats?.large?.url || heroFormats?.medium?.url || post?.thumbnail?.url);
+
+  // images.unoptimized=true membuat next/image tidak menghasilkan srcset, jadi
+  // satu berkas dipakai untuk semua lebar layar — mobile ikut menerima versi
+  // `medium` (31,3 KB) padahal `small` (17,6 KB) sudah lebih dari cukup.
+  // Strapi sudah menyediakan variannya, jadi srcset-nya disusun manual.
+  const heroSrcSet = [
+    heroFormats?.thumbnail,
+    heroFormats?.small,
+    heroFormats?.medium,
+    heroFormats?.large,
+  ]
+    .filter((f) => f?.url && f?.width)
+    .map((f) => `${imageBase}${f.url} ${f.width}w`)
+    .join(", ");
+
+  // Dimensi diambil dari berkas aslinya. Sebelumnya width={1000} dipasangkan
+  // dengan height dari format `small` (281) — rasionya meleset jauh, sehingga
+  // ruang yang dicadangkan browser salah dan menimbulkan layout shift.
+  const heroWidth = post?.thumbnail?.width || 960;
+  const heroHeight = post?.thumbnail?.height || 540;
 
   const renderedElements = post?.content?.flatMap((block, index) => {
     const elements = [];
@@ -414,15 +440,19 @@ export default function BlogDetail({
           )}
 
           {imageUrl && (
-            <Image
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
               src={imageUrl}
-              height={post?.thumbnail?.formats?.small?.height}
-              width={1000}
-              alt={post?.thumbnail?.name || "Post Image"}
-              className={`w-full h-auto transition-opacity duration-500 ${
-                loading ? "opacity-0" : "opacity-100"
-              }`}
-              onLoadingComplete={() => setLoading(false)}
+              srcSet={heroSrcSet || undefined}
+              sizes="(max-width: 1024px) 100vw, 1000px"
+              width={heroWidth}
+              height={heroHeight}
+              alt={post?.title || post?.thumbnail?.name || "Post Image"}
+              /* Elemen LCP halaman ini: harus diunduh lebih awal, bukan lazy. */
+              fetchPriority="high"
+              decoding="async"
+              className="w-full h-auto"
+              onLoad={() => setLoading(false)}
             />
           )}
         </div>

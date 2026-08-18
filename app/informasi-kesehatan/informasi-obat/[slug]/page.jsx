@@ -56,12 +56,36 @@ async function getInitialData(slug) {
   const drugsRaw = Array.isArray(drugsJson) ? drugsJson : drugsJson?.data ?? [];
   const relatedRaw = Array.isArray(relatedJson?.data) ? relatedJson.data : [];
 
+  // Semua data di halaman ini dikirim sebagai props ke komponen client, jadi
+  // ikut diserialisasi ke payload RSC — artinya terkirim DUA KALI: sekali
+  // sebagai HTML, sekali sebagai flight data. Pada halaman detail obat payload
+  // RSC-nya mencapai 77 KB dari total 120 KB HTML.
+  //
+  // Endpoint "obat lainnya" mengembalikan 42,8 KB untuk 8 item lengkap dengan
+  // description, medicinal_uses, overdose, drug_side_effects, dan images —
+  // padahal daftar itu hanya merender nama dan tautannya.
+  const slimRelated = (it) => ({ slug: it?.slug, name: it?.name });
+
+  // Tabel produk hanya memakai kolom di bawah ini; formatDrugStrength()
+  // membutuhkan keempat field ing_*.
+  const slimDrug = (d) => ({
+    id: d?.id ?? d?._id ?? null,
+    product_name: d?.product_name ?? d?.name ?? d?.product ?? null,
+    ing_name: d?.ing_name ?? d?.active_ingredient ?? d?.active ?? null,
+    form_name: d?.form_name ?? d?.dosage_form ?? d?.form ?? null,
+    ing_num: d?.ing_num ?? null,
+    ing_num_unit: d?.ing_num_unit ?? null,
+    ing_denom: d?.ing_denom ?? null,
+    ing_denom_unit: d?.ing_denom_unit ?? null,
+  });
+
   return {
     detail,
-    drugs: Array.isArray(drugsRaw) ? drugsRaw : [],
+    drugs: (Array.isArray(drugsRaw) ? drugsRaw : []).map(slimDrug),
     related: relatedRaw
       .filter((it) => it?.slug && it.slug !== detail?.slug)
-      .slice(0, 6),
+      .slice(0, 6)
+      .map(slimRelated),
   };
 }
 
