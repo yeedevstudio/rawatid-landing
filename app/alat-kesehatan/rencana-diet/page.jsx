@@ -1,6 +1,13 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import Page505 from "@/common/components/Page505";
 
+export const metadata = {
+  title: "Rencana Diet Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  alternates: {
+    canonical: "https://www.rawat.id/alat-kesehatan/rencana-diet",
+  },
+};
+
 export default function RencanaDietPage() {
   return (
     <div className="w-full">

@@ -122,12 +122,12 @@ export default function Header() {
             setiap halaman mem-prefetch payload RSC beranda — termasuk direktif
             preload gambar hero-nya, yang lalu terunduh dengan prioritas High di
             halaman yang tidak menampilkannya sama sekali. */}
-        <Link href="/" title="beranda" prefetch={false}>
+        <Link href="/" title="beranda" prefetch={false} className="shrink-0">
           <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-16">
-          <div className="flex gap-6 xl:gap-16">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-8 2xl:gap-16">
+          <div className="flex gap-4 xl:gap-8 2xl:gap-16">
             {headerValueBlog?.map((item, index) => {
               const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
               return (

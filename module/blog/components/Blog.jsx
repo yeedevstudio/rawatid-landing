@@ -100,7 +100,11 @@ export default function BlogPage({ data, categories }) {
 
   return (
     <ContainerBlog>
-      <div className="mx-5 md:mx-20 my-20 relative h-12 ">
+      <div className="text-center">
+        <h1 className="text-green font-semibold text-lg md:text-xl">Temukan berbagai artikel, tips dan informasi untuk kesehatanmu</h1>
+      </div>
+
+      <div className="mx-5 md:mx-20 mt-6 mb-20 relative h-12 ">
         <Input className="w-full h-12 pl-12 focus:pl-12 active:pl-12" placeholder="Cari Artikel" value={searchQuery} onChange={handleSearch} onKeyDown={handleKeyDown} />
         {suggestion && (
           <div className="absolute z-10 top-0 left-0 h-12 pl-[48.8px] pt-[1px] flex items-center pointer-events-none text-gray-200 text-sm md:text-lg max-w-xs md:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">

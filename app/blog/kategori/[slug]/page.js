@@ -20,8 +20,16 @@ export async function generateMetadata({ params }) {
     const dataSlug = postSlug.data?.[0] || null;
 
     if (dataSlug) {
+      // Strapi bisa mengembalikan field langsung atau terbungkus `attributes`,
+      // tergantung versi/konfigurasi — keduanya ditangani. Slug jadi cadangan
+      // terakhir agar title tetap unik walau `name` kosong.
+      const categoryName =
+        dataSlug?.attributes?.name ||
+        dataSlug?.name ||
+        slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
       return {
-        title: "Blog Teknologi dan Kesehatan dari Rawat.ID",
+        title: `${categoryName} - Blog Teknologi dan Kesehatan dari Rawat ID`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,
         },
