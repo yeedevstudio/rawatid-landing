@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { IconArrowLeft, IconMailFilled } from "@tabler/icons-react";
-import { CM_API_DEV_BASE } from "@/common/constant/api";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -48,7 +47,7 @@ export default function ForgotPasswordForm() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${CM_API_DEV_BASE}/auth/forgot-password`, {
+      const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim() }),

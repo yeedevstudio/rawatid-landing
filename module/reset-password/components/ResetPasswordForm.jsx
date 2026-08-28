@@ -11,7 +11,6 @@ import {
   IconCircleCheck,
   IconLockExclamation,
 } from "@tabler/icons-react";
-import { CM_API_DEV_BASE } from "@/common/constant/api";
 
 const PASSWORD_RULES = [
   { key: "length", label: "Minimal 8 karakter", test: (p) => p.length >= 8 },
@@ -129,7 +128,7 @@ export default function ResetPasswordForm({ token }) {
 
     setLoading(true);
     try {
-      const res = await fetch(`${CM_API_DEV_BASE}/auth/reset-password`, {
+      const res = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
