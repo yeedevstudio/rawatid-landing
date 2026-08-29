@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import SafeEmail from "@/common/components/SafeEmail";
 
 export default function TentangKamiPage() {
   const sections = useMemo(
@@ -209,12 +210,11 @@ export default function TentangKamiPage() {
               <ul className="list-disc pl-5 space-y-2 text-sm md:text-lg text-neutral90">
                 <li>
                   <span className="font-semibold text-neutral90">Email</span>:{" "}
-                  <a
-                    href="mailto:admin@rawat.id"
+                  <SafeEmail
+                    user="admin"
+                    domain="rawat.id"
                     className="text-greenBrand hover:text-greenHover transition-all duration-200 ease-in-out"
-                  >
-                    admin@rawat.id
-                  </a>
+                  />
                 </li>
                 <li>
                   <span className="font-semibold text-neutral90">

@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import SafeEmail from "@/common/components/SafeEmail";
 import { DUMMY_TYPE, DUMMY_CATEGORY, DUMMY_OWNERSHIP, dummyOf } from "@/common/constant/facility";
 
 const EMPTY = "-";
 
 const str = (v) => (v == null ? "" : String(v)).trim();
 
-// `referenced` diisi lewat rich text editor di admin, jadi isinya HTML. Kita
-// tampilkan sebagai teks biasa supaya tidak perlu dangerouslySetInnerHTML.
+
 const plain = (html) =>
   str(html)
     .replace(/<[^>]*>/g, " ")
@@ -53,10 +53,14 @@ function InfoValue({ label, value }) {
     );
   }
   if (label === "Email") {
+    const at = value.lastIndexOf("@");
+    if (at <= 0) return <span className="break-all">{value}</span>;
     return (
-      <a href={`mailto:${value}`} className="text-green underline break-all">
-        {value}
-      </a>
+      <SafeEmail
+        user={value.slice(0, at)}
+        domain={value.slice(at + 1)}
+        className="text-green underline break-all"
+      />
     );
   }
   if (label === "Telepon") {

@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail } from "lucide-react";
+import SafeEmail from "../components/SafeEmail";
 import { footerColumns, footerLegalLinks } from "../constant/footerValue";
 
 const Footer = () => {
@@ -40,13 +41,13 @@ const Footer = () => {
                 <Phone size={16} className="shrink-0" />
                 <span>0881-1998-854</span>
               </a>
-              <a
-                href="mailto:halo@rawat.id"
+              <SafeEmail
+                user="halo"
+                domain="rawat.id"
                 className="flex items-center gap-2 text-sm md:text-base text-white/90 hover:text-white transition-colors"
               >
                 <Mail size={16} className="shrink-0" />
-                <span>halo@rawat.id</span>
-              </a>
+              </SafeEmail>
             </div>
           </div>
 

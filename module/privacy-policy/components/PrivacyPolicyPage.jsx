@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import SafeEmail from "@/common/components/SafeEmail";
 
 export default function PrivacyPolicyPage() {
   const sections = useMemo(
@@ -411,12 +412,11 @@ export default function PrivacyPolicyPage() {
               <ul className="mt-4 list-disc pl-5 space-y-2 text-sm md:text-lg text-neutral90">
                 <li>
                   <span className="font-semibold text-neutral90">Email</span>:{" "}
-                  <a
-                    href="mailto:admin@rawat.id"
+                  <SafeEmail
+                    user="admin"
+                    domain="rawat.id"
                     className="text-greenBrand hover:text-greenHover transition-all duration-200 ease-in-out"
-                  >
-                    admin@rawat.id
-                  </a>
+                  />
                 </li>
                 <li>
                   <span className="font-semibold text-neutral90">
