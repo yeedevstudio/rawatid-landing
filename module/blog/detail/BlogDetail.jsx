@@ -57,6 +57,27 @@ export default function BlogDetail({
   const heroWidth = post?.thumbnail?.width || 960;
   const heroHeight = post?.thumbnail?.height || 540;
 
+  // Penyisipan artikel "Baca Juga" dulu memakai Math.random(). Server dan
+  // klien lalu memilih artikel yang berbeda, sehingga React mendeteksi
+  // hydration mismatch dan MEMBUANG seluruh pohon artikel hasil render server
+  // lalu membangunnya ulang di klien — merusak LCP dan membuat HTML yang
+  // dibaca crawler berbeda dari yang dilihat pengguna.
+  //
+  // Diganti PRNG yang di-seed dari slug: tiap artikel tetap dapat kombinasi
+  // "Baca Juga" yang berbeda-beda, tapi untuk satu artikel hasilnya selalu
+  // sama di server maupun klien.
+  const seededRandom = (() => {
+    let seed = 2166136261;
+    const key = String(slug || "");
+    for (let i = 0; i < key.length; i++) {
+      seed = (Math.imul(seed ^ key.charCodeAt(i), 16777619) >>> 0);
+    }
+    return () => {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+  })();
+
   const renderedElements = post?.content?.flatMap((block, index) => {
     const elements = [];
 
@@ -319,7 +340,7 @@ export default function BlogDetail({
       let attempts = 0;
 
       do {
-        randomIndex = Math.floor(Math.random() * postCategory.length);
+        randomIndex = Math.floor(seededRandom() * postCategory.length);
         selectedCategory = postCategory[randomIndex];
         attempts++;
       } while (
@@ -365,7 +386,7 @@ export default function BlogDetail({
     let attempts = 0;
 
     do {
-      randomIndex = Math.floor(Math.random() * postCategory.length);
+      randomIndex = Math.floor(seededRandom() * postCategory.length);
       selectedCategory = postCategory[randomIndex];
       attempts++;
     } while (usedSlugs.has(selectedCategory?.slug) && attempts < 100);

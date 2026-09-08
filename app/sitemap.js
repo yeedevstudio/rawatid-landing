@@ -56,12 +56,11 @@ export default async function sitemap() {
         changeFrequency: "daily",
         priority: 0.8,
       },
-      {
-        url: "https://www.rawat.id/blog/cari/",
-        lastModified: new Date().toISOString(),
-        changeFrequency: "daily",
-        priority: 0.6,
-      },
+      // /blog/cari sengaja TIDAK didaftarkan. Route-nya adalah
+      // /blog/cari/[slug] — tanpa kata kunci, /blog/cari sendiri tidak pernah
+      // ada dan selalu 404. Entri ini yang membuat crawler menemukannya.
+      // Halaman hasil pencarian juga bukan kandidat indeks yang baik: isinya
+      // berubah-ubah dan tak terhingga jumlahnya.
       ...categories.map((category) => ({
         url: `https://www.rawat.id/blog/kategori/${category?.slug}`,
         lastModified: new Date().toISOString(),

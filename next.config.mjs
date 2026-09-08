@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Allow search engines and ad networks to crawl the site
+ 
+  htmlLimitedBots: /.*/,
+
+ 
   headers: async () => {
     return [
       {
@@ -13,10 +16,7 @@ const nextConfig = {
         ],
       },
       {
-        // Aset di public/ sebelumnya hanya di-cache 4 jam (max-age=14400), yang
-        // dilaporkan PageSpeed sebagai "Use efficient cache lifetimes". Aman
-        // dipanjangkan karena Vercel menambahkan query ?dpl=<deployment-id> ke
-        // setiap URL aset, jadi tiap deploy otomatis menghasilkan URL baru.
+       
         source: "/:dir(image|images|dummy)/:path*",
         headers: [
           {
@@ -29,6 +29,22 @@ const nextConfig = {
   },
   redirects: async () => {
     return [
+     
+      {
+        source: "/contact",
+        destination: "/tentang-kami#hubungi",
+        permanent: true,
+      },
+      {
+        source: "/alat-kesehatan",
+        destination: "/alat-kesehatan/kalkulator-bmi",
+        permanent: true,
+      },
+      {
+        source: "/sistem-faskes",
+        destination: "/sistem-faskes/rekam-medis-elektronik",
+        permanent: true,
+      },
       { source: "/cacar-air", destination: "/interaktif/cacar-air", permanent: true },
       { source: "/herpes-simplex", destination: "/interaktif/herpes-simplex", permanent: true },
       { source: "/dbd", destination: "/interaktif/dbd", permanent: true },

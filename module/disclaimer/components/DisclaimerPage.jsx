@@ -237,12 +237,10 @@ export default function DisclaimerPage() {
                   </span>
                   :{" "}
                   <a
-                    href="https://www.rawat.id/contact"
+                    href="/tentang-kami#hubungi"
                     className="text-greenBrand hover:text-greenHover transition-all duration-200 ease-in-out"
-                    target="_blank"
-                    rel="noreferrer"
                   >
-                    www.rawat.id/contact
+                    www.rawat.id/tentang-kami#hubungi
                   </a>
                 </li>
               </ul>

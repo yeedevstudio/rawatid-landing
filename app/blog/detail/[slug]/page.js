@@ -25,10 +25,30 @@ export async function generateMetadata({ params }) {
       return text.slice(0, maxLength).replace(/\s+\S*$/, "") + "...";
     };
 
+    // `headline` tidak wajib diisi di Strapi, jadi sebuah artikel bisa terbit
+    // tanpa headline sama sekali. Dulu itu menghasilkan description string
+    // kosong, dan Next menghapus <meta name="description"> sepenuhnya —
+    // halamannya terbit tanpa deskripsi. Cadangannya diambil dari paragraf
+    // pembuka artikel, dan kalau itu pun kosong barulah dipakai kalimat umum.
+    const openingParagraphs = (dataSlug?.content || [])
+      .filter((block) => block?.type === "paragraph")
+      .map((block) =>
+        (block?.children || [])
+          .map((child) => child?.text || "")
+          .join("")
+          .trim()
+      )
+      .filter(Boolean)
+      .join(" ");
+
+    const description =
+      truncateText(dataSlug?.headline?.trim() || openingParagraphs, 200) ||
+      `Baca ${dataSlug?.title || "artikel kesehatan"} selengkapnya di Rawat.ID.`;
+
     if (dataSlug) {
       return {
         title: truncateText(`Rawat.ID - ${dataSlug?.title || ""}`, 60),
-        description: truncateText(dataSlug?.headline || "", 200),
+        description,
         keywords: (
           dataSlug?.tags?.map((tag) => tag.name) || ["Rawat.ID"]
         ).concat(["blog", "artikel"]),
@@ -38,7 +58,7 @@ export async function generateMetadata({ params }) {
         openGraph: {
           type: "article",
           title: dataSlug?.title,
-          description: dataSlug?.headline,
+          description,
           article: {
             publishedTime: dataSlug?.publishedAt || new Date().toISOString(),
             modifiedTime: dataSlug?.publishedAt || new Date().toISOString(),
