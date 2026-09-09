@@ -7,6 +7,7 @@ import PromotionSection from "@/module/home/components/PromotionSection";
 
 export const metadata = {
   title: "Sistem Faskes Rekam Medis Elektronik Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  description: "Sistem Faskes Rekam Medis Elektronik Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
   alternates: {
     canonical: "https://www.rawat.id/sistem-faskes/rekam-medis-elektronik",
   },

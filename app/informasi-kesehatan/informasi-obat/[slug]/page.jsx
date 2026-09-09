@@ -97,6 +97,7 @@ export async function generateMetadata({ params }) {
   const name = data?.data?.name || data?.name || slug;
   return {
     title: `${name} - Manfaat, Cara Penggunaan dan Efek Samping`,
+    description: `${name} - Manfaat, Cara Penggunaan dan Efek Samping`,
     alternates: {
       canonical: `https://www.rawat.id/informasi-kesehatan/informasi-obat/${slug}`,
     },

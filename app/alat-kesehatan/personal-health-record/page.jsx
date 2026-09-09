@@ -3,6 +3,7 @@ import Page505 from "@/common/components/Page505";
 
 export const metadata = {
   title: "Personal Health Record Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  description: "Personal Health Record Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
   alternates: {
     canonical: "https://www.rawat.id/alat-kesehatan/personal-health-record",
   },

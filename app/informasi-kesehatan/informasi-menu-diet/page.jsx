@@ -44,6 +44,7 @@ async function getInitialData() {
 
 export const metadata = {
   title: "Temukan Berbagai Referensi Menu Sehat untuk Dietmu",
+  description: "Temukan Berbagai Referensi Menu Sehat untuk Dietmu",
   alternates: {
     canonical: "https://www.rawat.id/informasi-kesehatan/informasi-menu-diet",
   },

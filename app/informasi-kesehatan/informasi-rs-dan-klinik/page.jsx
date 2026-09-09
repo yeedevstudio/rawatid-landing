@@ -4,6 +4,7 @@ import { getFacilities } from "@/lib/healthFacilities";
 
 export const metadata = {
   title: "Informasi Rumah Sakit dan Klinik Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  description: "Informasi Rumah Sakit dan Klinik Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
   alternates: {
     canonical: "https://www.rawat.id/informasi-kesehatan/informasi-rs-dan-klinik",
   },

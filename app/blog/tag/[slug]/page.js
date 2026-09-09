@@ -24,6 +24,7 @@ export async function generateMetadata({ params }) {
     if (dataSlug) {
       return {
         title: `Tag Rawat.ID - ${slug}`,
+        description: `Tag Rawat.ID - ${slug}`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/tag/${slug}`,
         },

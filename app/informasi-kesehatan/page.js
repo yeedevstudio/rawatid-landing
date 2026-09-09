@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Informasi Kesehatan Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  description: "Informasi Kesehatan Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
   alternates: {
     canonical: "https://www.rawat.id/informasi-kesehatan",
   },

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Sistem Faskes Panduan Penggunaan RME Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
+  description: "Sistem Faskes Panduan Penggunaan RME Rawat ID - Memberikan Solusi dan Informasi Terbaik untuk Merawat Kesehatanmu",
   alternates: {
     canonical: "https://www.rawat.id/sistem-faskes/rekam-medis-elektronik/panduan-penggunaan-rme",
   },

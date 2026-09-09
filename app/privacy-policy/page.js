@@ -5,6 +5,7 @@ export const metadata = {
     canonical: "https://www.rawat.id/privacy-policy",
   },
   title: "Privacy Policy - Rawat.ID",
+  description: "Privacy Policy - Rawat.ID",
 };
 
 export default function Page() {

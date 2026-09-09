@@ -5,6 +5,7 @@ export const metadata = {
     canonical: "https://www.rawat.id/disclaimer",
   },
   title: "Disclaimer - Rawat.ID",
+  description: "Disclaimer - Rawat.ID",
 };
 
 export default function Page() {

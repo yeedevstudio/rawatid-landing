@@ -42,6 +42,7 @@ export async function generateMetadata({ params }) {
   const name = json?.data?.menu_name || json?.menu_name || slug;
   return {
     title: `Kandungan Nutrisi untuk Menu Diet ${name}`,
+    description: `Kandungan Nutrisi untuk Menu Diet ${name}`,
     alternates: {
       canonical: `https://www.rawat.id/informasi-kesehatan/informasi-menu-diet/${slug}`,
     },

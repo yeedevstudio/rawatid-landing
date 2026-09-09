@@ -30,6 +30,7 @@ export async function generateMetadata({ params }) {
 
       return {
         title: `${categoryName} - Blog Teknologi dan Kesehatan dari Rawat ID`,
+        description: `${categoryName} - Blog Teknologi dan Kesehatan dari Rawat ID`,
         alternates: {
           canonical: `${process.env.NEXT_PUBLIC_URL}/kategori/${slug}`,
         },

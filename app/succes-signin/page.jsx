@@ -3,6 +3,7 @@ import { IconShieldCheck } from "@tabler/icons-react";
 
 export const metadata = {
   title: "Berhasil Masuk | Rawat.id",
+  description: "Berhasil Masuk | Rawat.id",
 };
 
 export default async function SuccesSigninPage({ searchParams }) {
