@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   IconSearch,
@@ -47,9 +47,6 @@ export default function FacilitiesClient({ initialData = null, options = null })
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState({});
 
-  // Halaman pertama sudah dirender server — jangan fetch ulang saat mount.
-  const skipInitialFetch = useRef(Boolean(initialData));
-
   // Mengetik tidak boleh memicu satu request per huruf.
   useEffect(() => {
     const t = setTimeout(() => setQuery(queryInput), 350);
@@ -81,11 +78,9 @@ export default function FacilitiesClient({ initialData = null, options = null })
     }
   }, [page, query, filters]);
 
+  // Data server dipakai untuk render awal (SEO), lalu tetap diambil ulang dari
+  // /api/health-facilities/public/list saat mount.
   useEffect(() => {
-    if (skipInitialFetch.current) {
-      skipInitialFetch.current = false;
-      return;
-    }
     const controller = new AbortController();
     load(controller.signal);
     return () => controller.abort();
