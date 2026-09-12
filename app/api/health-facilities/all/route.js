@@ -4,7 +4,7 @@ import { CM_API_BASE } from "@/common/constant/api";
 export async function GET(req) {
   try {
     const { search } = new URL(req.url);
-    const res = await fetch(`${CM_API_BASE}/health-facilities/public/all${search}`, {
+    const res = await fetch(`${CM_API_BASE}/health-facilities/all${search}`, {
       method: "GET",
       cache: "no-store",
       headers: { "Content-Type": "application/json" },

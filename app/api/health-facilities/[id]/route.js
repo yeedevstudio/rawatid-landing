@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { CM_API_BASE } from "@/common/constant/api";
+import { withFacilityMasterNames } from "@/lib/healthFacilities";
 
 // Master wilayah jarang berubah, jadi aman di-cache seharian.
 const WILAYAH_REVALIDATE = 86400;
@@ -71,7 +72,7 @@ export async function GET(req, { params }) {
     }
 
     if (res.ok && data?.data) {
-      data = { ...data, data: await withWilayah(data.data) };
+      data = { ...data, data: await withFacilityMasterNames(await withWilayah(data.data)) };
     }
 
     return NextResponse.json(data, { status: res.status });

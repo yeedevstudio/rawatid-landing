@@ -11,9 +11,11 @@ export const metadata = {
 };
 
 export default async function InformasiRsDanKlinikPage() {
-  // Halaman 1 + daftar opsi filter disiapkan di server. Browser tidak pernah
-  // menyentuh dataset 8,8 MB-nya.
-  const initial = await getFacilities({ page: 1, withOptions: true });
+  // Halaman 1 disiapkan di server supaya kartunya ikut ter-render untuk SEO;
+  // browser tidak pernah menyentuh dataset 8,8 MB-nya. Isi dropdown filter
+  // TIDAK diambil di sini — itu di-fetch client dari lima master terpisah
+  // (lihat FILTERS di FacilitiesClient) supaya request-nya terlihat di Network.
+  const initial = await getFacilities({ page: 1 });
 
   return (
     <div className="w-full">
@@ -41,7 +43,6 @@ export default async function InformasiRsDanKlinikPage() {
             total: initial.total,
             totalPages: initial.totalPages,
           }}
-          options={initial.options}
         />
       </main>
     </div>

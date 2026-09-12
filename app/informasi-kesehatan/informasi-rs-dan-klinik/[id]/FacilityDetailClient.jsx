@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import SafeEmail from "@/common/components/SafeEmail";
-import { DUMMY_TYPE, DUMMY_CATEGORY, DUMMY_OWNERSHIP, dummyOf } from "@/common/constant/facility";
 
 const EMPTY = "-";
 
@@ -17,13 +16,14 @@ const plain = (html) =>
     .replace(/\s+/g, " ")
     .trim();
 
+// Tipe/Jenis/Kepemilikan sudah di-resolve ke nama oleh lapisan server (lihat
+// lib/healthFacilities.js) — di sini cuma ditampilkan.
 const buildInfo = (d) => {
   if (!d) return [];
-  const seed = Number(d.id) || 0;
   return [
-    ["Tipe Fasilitas Kesehatan", dummyOf(DUMMY_TYPE, d.facilityTypeId, seed)],
-    ["Kategori Fasilitas Kesehatan", dummyOf(DUMMY_CATEGORY, d.facilityCategoryId, seed)],
-    ["Kepemilikan Fasilitas Kesehatan", dummyOf(DUMMY_OWNERSHIP, d.facilityOwnershipId, seed)],
+    ["Tipe Fasilitas Kesehatan", str(d.facilityTypeName)],
+    ["Kategori Fasilitas Kesehatan", str(d.facilityCategoryName)],
+    ["Kepemilikan Fasilitas Kesehatan", str(d.facilityOwnershipName)],
     ["Provinsi", str(d.provinceName)],
     ["Kabupaten/Kota", str(d.cityName)],
     ["Kecamatan", str(d.districtName)],

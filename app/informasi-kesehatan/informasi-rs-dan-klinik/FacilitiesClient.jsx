@@ -14,13 +14,69 @@ import {
 
 const PAGE_SIZE = 10;
 
+// key = nama parameter yang dikirim ke /api/health-facilities/list. Semuanya
+// mengirim kode/ID, bukan nama.
+//
+// url = master yang mengisi dropdown-nya, diambil dari browser saat mount supaya
+// kelihatan di tab Network. value/label memetakan bentuk respons masing-masing
+// master: wilayah pakai code/name, master faskes pakai id/nama.
+const digits = (v) => String(v ?? "").replace(/\D/g, "");
+
 const FILTERS = [
-  { key: "province", label: "Provinsi" },
-  { key: "city", label: "Kab/Kota" },
-  { key: "type", label: "Tipe Fasilitas Kesehatan" },
-  { key: "category", label: "Jenis Fasilitas Kesehatan" },
-  { key: "ownership", label: "Kepemilikan Fasilitas Kesehatan" },
+  {
+    key: "provinceId",
+    label: "Provinsi",
+    url: "/api/provinces/all",
+    value: (r) => String(r.id ?? ""),
+    label_: (r) => r.name,
+    // Dipakai hanya untuk menjembatani cascade, bukan dikirim sebagai parameter.
+    code: (r) => digits(r.code),
+  },
+  {
+    key: "cityId",
+    label: "Kab/Kota",
+    url: "/api/cities/all",
+    value: (r) => String(r.id ?? ""),
+    label_: (r) => r.name,
+    // Master kota cuma mengirim province_code, bukan province_id, jadi kodenya
+    // dipetakan ke id provinsi setelah kedua master selesai diambil.
+    parentCode: (r) => digits(r.province_code),
+  },
+  {
+    key: "facilityTypeId",
+    label: "Tipe Fasilitas Kesehatan",
+    url: "/api/health-facility-types/all",
+    value: (r) => String(r.id ?? ""),
+    label_: (r) => r.nama,
+  },
+  {
+    key: "facilityCategoryId",
+    label: "Jenis Fasilitas Kesehatan",
+    url: "/api/health-facility-categories/all",
+    value: (r) => String(r.id ?? ""),
+    label_: (r) => r.nama,
+  },
+  {
+    key: "facilityOwnershipId",
+    label: "Kepemilikan Fasilitas Kesehatan",
+    url: "/api/health-facility-ownerships/all",
+    value: (r) => String(r.id ?? ""),
+    label_: (r) => r.nama,
+  },
 ];
+
+// Satu master -> [{ value, label, parentCode? }], dibersihkan & diurutkan nama.
+const toOptions = (rows, f) =>
+  (Array.isArray(rows) ? rows : [])
+    .filter((r) => r.status == null || String(r.status) === "1")
+    .map((r) => ({
+      value: f.value(r),
+      label: String(f.label_(r) ?? "").trim(),
+      ...(f.code ? { code: f.code(r) } : {}),
+      ...(f.parentCode ? { parentCode: f.parentCode(r) } : {}),
+    }))
+    .filter((o) => o.value && o.label)
+    .sort((a, b) => a.label.localeCompare(b.label, "id"));
 
 function InfoRow({ icon: Icon, label, children }) {
   if (!children) return null;
@@ -35,7 +91,7 @@ function InfoRow({ icon: Icon, label, children }) {
   );
 }
 
-export default function FacilitiesClient({ initialData = null, options = null }) {
+export default function FacilitiesClient({ initialData = null }) {
   const [rows, setRows] = useState(initialData?.data ?? []);
   const [total, setTotal] = useState(initialData?.total ?? 0);
   const [totalPages, setTotalPages] = useState(initialData?.totalPages ?? 1);
@@ -46,12 +102,51 @@ export default function FacilitiesClient({ initialData = null, options = null })
   const [queryInput, setQueryInput] = useState("");
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState({});
+  const [options, setOptions] = useState({});
 
   // Mengetik tidak boleh memicu satu request per huruf.
   useEffect(() => {
     const t = setTimeout(() => setQuery(queryInput), 350);
     return () => clearTimeout(t);
   }, [queryInput]);
+
+  // Isi dropdown: lima master diambil paralel dari browser, sekali saat mount.
+  // Satu master gagal tidak boleh mengosongkan yang lain, jadi hasilnya
+  // dikumpulkan per filter dan yang gagal cuma jadi daftar kosong.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    (async () => {
+      const entries = await Promise.all(
+        FILTERS.map(async (f) => {
+          try {
+            const res = await fetch(f.url, { signal: controller.signal });
+            if (!res.ok) return [f.key, []];
+            const json = await res.json();
+            return [f.key, toOptions(json?.data ?? json, f)];
+          } catch {
+            return [f.key, []];
+          }
+        })
+      );
+      if (controller.signal.aborted) return;
+
+      const next = Object.fromEntries(entries);
+
+      // Master kota menyebut induknya lewat province_code, sedangkan dropdown
+      // Provinsi bernilai id. Kodenya ditukar ke id di sini supaya cascade bisa
+      // membandingkan id dengan id.
+      const idByCode = new Map((next.provinceId || []).map((o) => [o.code, o.value]));
+      next.cityId = (next.cityId || []).map(({ parentCode, ...o }) => ({
+        ...o,
+        parentId: idByCode.get(parentCode) || "",
+      }));
+
+      setOptions(next);
+    })();
+
+    return () => controller.abort();
+  }, []);
 
   const load = useCallback(async (signal) => {
     setLoading(true);
@@ -64,7 +159,7 @@ export default function FacilitiesClient({ initialData = null, options = null })
       });
       for (const { key } of FILTERS) if (filters[key]) params.set(key, filters[key]);
 
-      const res = await fetch(`/api/health-facilities/public/list?${params}`, { signal });
+      const res = await fetch(`/api/health-facilities/list?${params}`, { signal });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || "Gagal memuat data fasilitas.");
 
@@ -79,7 +174,7 @@ export default function FacilitiesClient({ initialData = null, options = null })
   }, [page, query, filters]);
 
   // Data server dipakai untuk render awal (SEO), lalu tetap diambil ulang dari
-  // /api/health-facilities/public/list saat mount.
+  // /api/health-facilities/list saat mount.
   useEffect(() => {
     const controller = new AbortController();
     load(controller.signal);
@@ -88,13 +183,12 @@ export default function FacilitiesClient({ initialData = null, options = null })
 
   // Pilihan Kab/Kota mengikuti Provinsi yang sedang dipilih.
   const cityOptions = useMemo(() => {
-    if (!options) return [];
-    const p = filters.province;
-    if (p && options.citiesByProvince?.[p]) return options.citiesByProvince[p];
-    return options.city || [];
-  }, [options, filters.province]);
+    const all = options.cityId || [];
+    const p = filters.provinceId;
+    return p ? all.filter((o) => o.parentId === p) : all;
+  }, [options.cityId, filters.provinceId]);
 
-  const optionsFor = (key) => (key === "city" ? cityOptions : options?.[key] || []);
+  const optionsFor = (key) => (key === "cityId" ? cityOptions : options[key] || []);
 
   const setFilter = (key) => (e) => {
     const value = e.target.value;
@@ -103,7 +197,7 @@ export default function FacilitiesClient({ initialData = null, options = null })
       const next = { ...prev, [key]: value };
       if (!value) delete next[key];
       // Ganti provinsi -> kota lama bisa jadi tidak relevan lagi.
-      if (key === "province") delete next.city;
+      if (key === "provinceId") delete next.cityId;
       return next;
     });
   };
@@ -147,8 +241,8 @@ export default function FacilitiesClient({ initialData = null, options = null })
           >
             <option value="">{f.label}</option>
             {optionsFor(f.key).map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
               </option>
             ))}
           </select>
