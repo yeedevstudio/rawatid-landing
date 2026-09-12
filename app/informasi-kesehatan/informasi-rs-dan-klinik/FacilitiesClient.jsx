@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   IconSearch,
@@ -17,30 +17,44 @@ const PAGE_SIZE = 10;
 // key = nama parameter yang dikirim ke /api/health-facilities/list. Semuanya
 // mengirim kode/ID, bukan nama.
 //
-// url = master yang mengisi dropdown-nya, diambil dari browser saat mount supaya
-// kelihatan di tab Network. value/label memetakan bentuk respons masing-masing
-// master: wilayah pakai code/name, master faskes pakai id/nama.
-const digits = (v) => String(v ?? "").replace(/\D/g, "");
-
+// Sumber isinya: `url` untuk master yang berdiri sendiri (diambil sekali saat
+// mount), `urlFor(parentValue)` untuk yang isinya menyempit mengikuti filter
+// lain — Kab/Kota ikut Provinsi, Kecamatan ikut Kab/Kota. Keduanya di-fetch dari
+// browser supaya request-nya terlihat di tab Network.
+//
+// value/label memetakan bentuk respons masing-masing master: wilayah pakai
+// code/name, master faskes pakai id/nama. Kode wilayah dikirim apa adanya dalam
+// bentuk bertitik seperti di master ("11", "11.11", "11.11.07"); sisi server
+// membandingkannya dalam bentuk digit saja.
 const FILTERS = [
   {
-    key: "provinceId",
+    key: "provinceCode",
     label: "Provinsi",
     url: "/api/provinces/all",
-    value: (r) => String(r.id ?? ""),
+    value: (r) => r.code,
     label_: (r) => r.name,
-    // Dipakai hanya untuk menjembatani cascade, bukan dikirim sebagai parameter.
-    code: (r) => digits(r.code),
   },
   {
-    key: "cityId",
+    key: "cityCode",
     label: "Kab/Kota",
-    url: "/api/cities/all",
-    value: (r) => String(r.id ?? ""),
+    parent: "provinceCode",
+    urlFor: (provinceCode) =>
+      provinceCode
+        ? `/api/cities/province/${encodeURIComponent(provinceCode)}`
+        : "/api/cities/all",
+    value: (r) => r.code,
     label_: (r) => r.name,
-    // Master kota cuma mengirim province_code, bukan province_id, jadi kodenya
-    // dipetakan ke id provinsi setelah kedua master selesai diambil.
-    parentCode: (r) => digits(r.province_code),
+  },
+  {
+    key: "districtCode",
+    label: "Kecamatan",
+    parent: "cityCode",
+    urlFor: (cityCode) =>
+      cityCode
+        ? `/api/districts/city/${encodeURIComponent(cityCode)}`
+        : "/api/districts/all",
+    value: (r) => r.code,
+    label_: (r) => r.name,
   },
   {
     key: "facilityTypeId",
@@ -65,18 +79,41 @@ const FILTERS = [
   },
 ];
 
-// Satu master -> [{ value, label, parentCode? }], dibersihkan & diurutkan nama.
+// Satu master -> [{ value, label }], dibersihkan & diurutkan menurut nama.
 const toOptions = (rows, f) =>
   (Array.isArray(rows) ? rows : [])
     .filter((r) => r.status == null || String(r.status) === "1")
-    .map((r) => ({
-      value: f.value(r),
-      label: String(f.label_(r) ?? "").trim(),
-      ...(f.code ? { code: f.code(r) } : {}),
-      ...(f.parentCode ? { parentCode: f.parentCode(r) } : {}),
-    }))
+    .map((r) => ({ value: f.value(r), label: String(f.label_(r) ?? "").trim() }))
     .filter((o) => o.value && o.label)
     .sort((a, b) => a.label.localeCompare(b.label, "id"));
+
+// Dropdown yang isinya bergantung filter lain, beserta induknya.
+const DEPENDENT = FILTERS.filter((f) => f.urlFor);
+
+// Mengisi satu dropdown yang sumbernya ikut nilai filter induknya. Dipanggil
+// sekali per filter dependen, jadi ganti Provinsi tidak ikut menarik ulang
+// daftar Kecamatan yang URL-nya belum berubah.
+function useDependentOptions(filter, parentValue, setOptions) {
+  useEffect(() => {
+    const controller = new AbortController();
+
+    (async () => {
+      const put = (list) =>
+        setOptions((prev) => ({ ...prev, [filter.key]: list }));
+      try {
+        const res = await fetch(filter.urlFor(parentValue), {
+          signal: controller.signal,
+        });
+        const json = res.ok ? await res.json() : null;
+        if (!controller.signal.aborted) put(toOptions(json?.data ?? json, filter));
+      } catch {
+        if (!controller.signal.aborted) put([]);
+      }
+    })();
+
+    return () => controller.abort();
+  }, [filter, parentValue, setOptions]);
+}
 
 function InfoRow({ icon: Icon, label, children }) {
   if (!children) return null;
@@ -110,7 +147,8 @@ export default function FacilitiesClient({ initialData = null }) {
     return () => clearTimeout(t);
   }, [queryInput]);
 
-  // Isi dropdown: lima master diambil paralel dari browser, sekali saat mount.
+  // Isi dropdown: master diambil paralel dari browser, sekali saat mount.
+  // Kab/Kota dikecualikan — sumbernya ikut Provinsi, ditangani effect di bawah.
   // Satu master gagal tidak boleh mengosongkan yang lain, jadi hasilnya
   // dikumpulkan per filter dan yang gagal cuma jadi daftar kosong.
   useEffect(() => {
@@ -118,7 +156,7 @@ export default function FacilitiesClient({ initialData = null }) {
 
     (async () => {
       const entries = await Promise.all(
-        FILTERS.map(async (f) => {
+        FILTERS.filter((f) => f.url).map(async (f) => {
           try {
             const res = await fetch(f.url, { signal: controller.signal });
             if (!res.ok) return [f.key, []];
@@ -129,24 +167,17 @@ export default function FacilitiesClient({ initialData = null }) {
           }
         })
       );
-      if (controller.signal.aborted) return;
-
-      const next = Object.fromEntries(entries);
-
-      // Master kota menyebut induknya lewat province_code, sedangkan dropdown
-      // Provinsi bernilai id. Kodenya ditukar ke id di sini supaya cascade bisa
-      // membandingkan id dengan id.
-      const idByCode = new Map((next.provinceId || []).map((o) => [o.code, o.value]));
-      next.cityId = (next.cityId || []).map(({ parentCode, ...o }) => ({
-        ...o,
-        parentId: idByCode.get(parentCode) || "",
-      }));
-
-      setOptions(next);
+      if (!controller.signal.aborted) setOptions(Object.fromEntries(entries));
     })();
 
     return () => controller.abort();
   }, []);
+
+  // Kab/Kota ikut Provinsi, Kecamatan ikut Kab/Kota. Tanpa induk yang dipilih,
+  // keduanya memakai master penuh (/cities/all, /districts/all); begitu induknya
+  // dipilih, daftarnya diambil ulang per-wilayah dari server.
+  useDependentOptions(DEPENDENT[0], filters[DEPENDENT[0].parent], setOptions);
+  useDependentOptions(DEPENDENT[1], filters[DEPENDENT[1].parent], setOptions);
 
   const load = useCallback(async (signal) => {
     setLoading(true);
@@ -181,14 +212,7 @@ export default function FacilitiesClient({ initialData = null }) {
     return () => controller.abort();
   }, [load]);
 
-  // Pilihan Kab/Kota mengikuti Provinsi yang sedang dipilih.
-  const cityOptions = useMemo(() => {
-    const all = options.cityId || [];
-    const p = filters.provinceId;
-    return p ? all.filter((o) => o.parentId === p) : all;
-  }, [options.cityId, filters.provinceId]);
-
-  const optionsFor = (key) => (key === "cityId" ? cityOptions : options[key] || []);
+  const optionsFor = (key) => options[key] || [];
 
   const setFilter = (key) => (e) => {
     const value = e.target.value;
@@ -196,8 +220,12 @@ export default function FacilitiesClient({ initialData = null }) {
     setFilters((prev) => {
       const next = { ...prev, [key]: value };
       if (!value) delete next[key];
-      // Ganti provinsi -> kota lama bisa jadi tidak relevan lagi.
-      if (key === "provinceId") delete next.cityId;
+      // Ganti induk -> pilihan turunannya bisa jadi tidak relevan lagi.
+      if (key === "provinceCode") {
+        delete next.cityCode;
+        delete next.districtCode;
+      }
+      if (key === "cityCode") delete next.districtCode;
       return next;
     });
   };
