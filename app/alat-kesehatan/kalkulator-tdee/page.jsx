@@ -1,14 +1,17 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { CONTAINER_CLASS } from "@/common/constant/containerValue";
-import KalkulatorBmiForm from "@/module/kalkulator-bmi";
+import KalkulatorTdeeForm from "@/module/kalkulator-tdee";
 
 export const metadata = {
-  title: "Kalkulator BMI - Hitung BMI dan Berat Badan Online dengan Akurat",
+  title: "Kalkulator TDEE - Hitung Kebutuhan Kalori Harian Online",
   description:
-    "Hitung Indeks Massa Tubuh (BMI) Anda secara mudah dan cepat. Ketahui apakah berat badan Anda ideal berdasarkan tinggi dan berat badan.",
+    "Hitung perkiraan berapa banyak kalori yang dibakar per hari berdasarkan tubuh dan aktivitas fisik harian kamu dengan Kalkulator TDEE (Total Daily Energy Expenditure).",
+  alternates: {
+    canonical: "https://www.rawat.id/alat-kesehatan/kalkulator-tdee",
+  },
 };
 
-export default function KalkulatorBmiPage() {
+export default function KalkulatorTdeePage() {
   return (
     <div className="w-full">
       <div className={`${CONTAINER_CLASS} pt-6`}>
@@ -16,13 +19,13 @@ export default function KalkulatorBmiPage() {
           items={[
             { label: "Beranda", href: "/" },
             { label: "Alat Kesehatan", href: "/alat-kesehatan/kalkulator-bmi" },
-            { label: "Kalkulator BMI", href: "/alat-kesehatan/kalkulator-bmi" },
+            { label: "Kalkulator TDEE", href: "/alat-kesehatan/kalkulator-tdee" },
           ]}
         />
       </div>
 
       <main className="w-full px-4 sm:px-8 md:px-16 lg:px-32 pb-16 pt-8">
-        <KalkulatorBmiForm />
+        <KalkulatorTdeeForm />
       </main>
     </div>
   );

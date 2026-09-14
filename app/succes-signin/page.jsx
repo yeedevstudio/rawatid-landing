@@ -8,11 +8,17 @@ export const metadata = {
 
 export default async function SuccesSigninPage({ searchParams }) {
   const params = await searchParams;
-  // ?from=bmi → user arrived here through the "Simpan Hasil BMI" flow.
-  const fromBmi = params?.from === "bmi";
+  // ?from=bmi / tdee / bmr → user arrived here through the "Simpan Hasil" flow
+  // of that calculator; the button returns to the cached result to save it.
+  const FROM_CALCULATOR = {
+    bmi: { label: "Lihat Riwayat Pemeriksaan BMI", href: "/alat-kesehatan/kalkulator-bmi" },
+    tdee: { label: "Lihat Riwayat Pemeriksaan TDEE", href: "/alat-kesehatan/kalkulator-tdee" },
+    bmr: { label: "Lihat Riwayat Pemeriksaan BMR", href: "/alat-kesehatan/kalkulator-bmr" },
+  };
+  const fromCalculator = FROM_CALCULATOR[params?.from];
 
-  const buttonLabel = fromBmi ? "Lihat Riwayat Pemeriksaan BMI" : "Lihat Profil Akun";
-  const buttonHref = fromBmi ? "/alat-kesehatan/kalkulator-bmi" : "/perbarui-akun";
+  const buttonLabel = fromCalculator?.label ?? "Lihat Profil Akun";
+  const buttonHref = fromCalculator?.href ?? "/perbarui-akun";
 
   return (
     <div className="min-h-[calc(100vh-85px)] flex items-center justify-center bg-gray-50 px-4 py-12">

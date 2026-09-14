@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import MenuDietClient from "./MenuDietClient";
 
 const CM_API = "https://cm-api.rawat.id";
@@ -55,7 +56,7 @@ export default async function InformasiMenuDietPage() {
 
   return (
     <div className="w-full">
-      <div className="px-4 md:px-8 pt-6">
+      <div className={`${CONTAINER_CLASS} pt-6`}>
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },

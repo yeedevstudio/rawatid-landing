@@ -96,6 +96,16 @@ export default function SigninForm() {
           router.push("/succes-signin?from=bmi");
           return;
         }
+        if (localStorage.getItem("tdee_pending_login")) {
+          localStorage.removeItem("tdee_pending_login");
+          router.push("/succes-signin?from=tdee");
+          return;
+        }
+        if (localStorage.getItem("bmr_pending_login")) {
+          localStorage.removeItem("bmr_pending_login");
+          router.push("/succes-signin?from=bmr");
+          return;
+        }
       }
 
       router.push("/succes-signin");

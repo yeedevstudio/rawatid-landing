@@ -109,12 +109,16 @@ export const blogSubnavGroups = [
     matchPrefixes: [
       "/alat-kesehatan",
       "/alat-kesehatan/kalkulator-bmi",
+      "/alat-kesehatan/kalkulator-tdee",
+      "/alat-kesehatan/kalkulator-bmr",
       "/alat-kesehatan/pengingat-minum-obat",
       "/alat-kesehatan/rencana-diet",
       "/alat-kesehatan/personal-health-record",
     ],
     items: [
       { title: "Kalkulator BMI", url: "/alat-kesehatan/kalkulator-bmi" },
+      { title: "Kalkulator TDEE", url: "/alat-kesehatan/kalkulator-tdee" },
+      { title: "Kalkulator BMR", url: "/alat-kesehatan/kalkulator-bmr" },
       {
         title: "Pengingat Minum Obat",
         url: "/alat-kesehatan/pengingat-minum-obat",

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import { INTERAKTIF_CONTENTS } from "@/common/constant/interaktifValue";
 
 export default function InteraktifPage() {
@@ -23,7 +24,7 @@ export default function InteraktifPage() {
 
   return (
     <div className="w-full">
-      <div className="px-5 md:px-12 pt-6">
+      <div className={`${CONTAINER_CLASS} pt-6`}>
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },

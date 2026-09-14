@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import FacilitiesClient from "./FacilitiesClient";
 import { getFacilities } from "@/lib/healthFacilities";
 
@@ -19,7 +20,7 @@ export default async function InformasiRsDanKlinikPage() {
 
   return (
     <div className="w-full">
-      <div className="px-5 md:px-12 pt-6">
+      <div className={`${CONTAINER_CLASS} pt-6`}>
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },

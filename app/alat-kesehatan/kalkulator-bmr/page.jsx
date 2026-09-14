@@ -1,14 +1,17 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { CONTAINER_CLASS } from "@/common/constant/containerValue";
-import KalkulatorBmiForm from "@/module/kalkulator-bmi";
+import KalkulatorBmrForm from "@/module/kalkulator-bmr";
 
 export const metadata = {
-  title: "Kalkulator BMI - Hitung BMI dan Berat Badan Online dengan Akurat",
+  title: "Kalkulator BMR - Hitung Kalori Minimum Tubuh Saat Istirahat Online",
   description:
-    "Hitung Indeks Massa Tubuh (BMI) Anda secara mudah dan cepat. Ketahui apakah berat badan Anda ideal berdasarkan tinggi dan berat badan.",
+    "Hitung jumlah minimum kalori yang dibakar tubuh saat istirahat untuk mempertahankan fungsi-fungsi penting tubuh dengan Kalkulator BMR (Basal Metabolic Rate).",
+  alternates: {
+    canonical: "https://www.rawat.id/alat-kesehatan/kalkulator-bmr",
+  },
 };
 
-export default function KalkulatorBmiPage() {
+export default function KalkulatorBmrPage() {
   return (
     <div className="w-full">
       <div className={`${CONTAINER_CLASS} pt-6`}>
@@ -16,13 +19,13 @@ export default function KalkulatorBmiPage() {
           items={[
             { label: "Beranda", href: "/" },
             { label: "Alat Kesehatan", href: "/alat-kesehatan/kalkulator-bmi" },
-            { label: "Kalkulator BMI", href: "/alat-kesehatan/kalkulator-bmi" },
+            { label: "Kalkulator BMR", href: "/alat-kesehatan/kalkulator-bmr" },
           ]}
         />
       </div>
 
       <main className="w-full px-4 sm:px-8 md:px-16 lg:px-32 pb-16 pt-8">
-        <KalkulatorBmiForm />
+        <KalkulatorBmrForm />
       </main>
     </div>
   );

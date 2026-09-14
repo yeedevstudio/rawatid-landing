@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, Pill, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { normalizeDrugRows, PAGE_SIZE } from "./normalizeDrugs";
@@ -15,20 +16,31 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-export default function InformasiObatClient({ initialData = null }) {
+export default function InformasiObatClient({ category }) {
+  const categoryCode = category?.code ?? "";
+  const categoryName = category?.name ?? "";
+  const categoryDescription = category?.description ?? "";
+  // Deskripsi dari BE bisa berupa HTML (seperti description pada obat) atau
+  // teks biasa; teks biasa dipecah per baris kosong menjadi paragraf.
+  const isDescriptionHtml = /<[a-z][\s\S]*>/i.test(categoryDescription);
+  const descriptionParagraphs = isDescriptionHtml
+    ? []
+    : categoryDescription.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  const categoryTags = category?.tags ?? [];
+  const categoryReferences = category?.references ?? [];
+  const categoryReferencesHtml = category?.referencesHtml ?? "";
+  const hasReferences = categoryReferences.length > 0 || Boolean(categoryReferencesHtml);
+  const containerClass = CONTAINER_CLASS;
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [navigasi, setNavigasi] = useState("");
-  const [items, setItems] = useState(initialData?.items ?? []);
-  const [isLoading, setIsLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [totalItems, setTotalItems] = useState(initialData?.totalItems ?? 0);
-  const [totalPages, setTotalPages] = useState(initialData?.totalPages ?? 1);
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
-  // Halaman pertama sudah dirender server, jadi jangan fetch ulang saat mount.
-  const skipInitialFetch = useRef(Boolean(initialData));
 
   useEffect(() => {
     setIsMounted(true);
@@ -39,12 +51,9 @@ export default function InformasiObatClient({ initialData = null }) {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  // Data obat diambil dari browser (terlihat di tab Network), termasuk halaman
+  // pertama saat halaman dibuka.
   useEffect(() => {
-    if (skipInitialFetch.current) {
-      skipInitialFetch.current = false;
-      return;
-    }
-
     const controller = new AbortController();
     async function fetchDrugIngredients() {
       try {
@@ -56,6 +65,7 @@ export default function InformasiObatClient({ initialData = null }) {
         params.set("perPage", String(PAGE_SIZE));
         params.set("search", query);
         params.set("navigasi", navigasi);
+        params.set("drug_category_code", categoryCode);
 
         const res = await fetch(
           `/api/drug-ingredients/public?${params.toString()}`,
@@ -84,7 +94,7 @@ export default function InformasiObatClient({ initialData = null }) {
     return () => {
       controller.abort();
     };
-  }, [page, query, navigasi]);
+  }, [page, query, navigasi, categoryCode]);
 
   const safePage = clamp(page, 1, Math.max(1, totalPages));
 
@@ -100,7 +110,7 @@ export default function InformasiObatClient({ initialData = null }) {
 
   return (
     <div className="w-full">
-      <div className="px-5 md:px-12 pt-6">
+      <div className={`${containerClass} pt-6`}>
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
@@ -109,17 +119,34 @@ export default function InformasiObatClient({ initialData = null }) {
               href: "/informasi-kesehatan/informasi-obat",
             },
             {
-              label: "Informasi Obat",
+              label: "Kategori Obat",
               href: "/informasi-kesehatan/informasi-obat",
+            },
+            {
+              label: categoryName,
+              href: `/informasi-kesehatan/informasi-obat/kategori/${category?.slug ?? ""}`,
             },
           ]}
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-10 pt-6">
-        <div className="text-center">
-          <h1 className="text-green font-semibold text-lg md:text-xl">Direktori Obat Lengkap: Informasi Manfaat, Dosis &amp; Efek Samping</h1>
-          <p className="text-gray-600 text-sm md:text-base mt-1">Cari obat berdasarkan nama untuk menemukan manfaat, aturan pakai, dosis anjuran, kontraindikasi hingga risiko overdosis</p>
+      <main className={`${containerClass} pb-12 pt-10 md:pt-16`}>
+        <div>
+          <h1 className="text-green font-semibold text-lg md:text-xl">{categoryName}</h1>
+          {isDescriptionHtml ? (
+            <div
+              className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_a]:text-green"
+              dangerouslySetInnerHTML={{ __html: categoryDescription }}
+            />
+          ) : descriptionParagraphs.length ? (
+            <div className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed space-y-4">
+              {descriptionParagraphs.map((p, idx) => (
+                <p key={idx} className="whitespace-pre-line">{p}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-600 text-sm md:text-base mt-1">-</p>
+          )}
         </div>
 
         <div className="mt-6 max-w-2xl mx-auto">
@@ -142,7 +169,7 @@ export default function InformasiObatClient({ initialData = null }) {
         </div>
 
         {isMounted ? (
-          <div className="mt-6 max-w-4xl mx-auto">
+          <div className="mt-6">
             <div className="text-gray-800 font-semibold text-sm mb-3">
               Alphabet Filter
             </div>
@@ -176,7 +203,7 @@ export default function InformasiObatClient({ initialData = null }) {
 
         <section className="mt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-gray-800 font-semibold">Daftar Obat</h2>
+            <h2 className="text-gray-800 font-semibold">Daftar Obat Kategori {categoryName}</h2>
             <div className="text-sm text-gray-500">
               {totalItems
                 ? `${(safePage - 1) * PAGE_SIZE + 1}-${Math.min(
@@ -206,6 +233,10 @@ export default function InformasiObatClient({ initialData = null }) {
             </div>
           ) : error ? (
             <div className="mt-6 text-sm text-red-600">{error}</div>
+          ) : !items.length ? (
+            <div className="mt-6 text-sm text-gray-500">
+              Belum ada obat pada kategori ini.
+            </div>
           ) : null}
 
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -285,6 +316,51 @@ export default function InformasiObatClient({ initialData = null }) {
               </PaginationContent>
             </Pagination>
           </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-gray-800 font-medium text-base md:text-lg">Tags</h2>
+          {categoryTags.length ? (
+            <div className="mt-3 flex flex-wrap gap-3 md:gap-5">
+              {categoryTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-green px-2.5 py-0.5 text-sm md:text-base text-green"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
+          )}
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-gray-800 font-medium text-base md:text-lg">Referensi</h2>
+          {!hasReferences ? (
+            <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
+          ) : categoryReferences.length ? (
+            <ul className="mt-3 space-y-2">
+              {categoryReferences.map((ref, idx) => (
+                <li key={`${ref.url}-${idx}`}>
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="text-sm md:text-base text-green break-all hover:text-greenHover hover:underline transition-colors"
+                  >
+                    {ref.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div
+              className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-2 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_li]:mb-2 [&_a]:text-green [&_a]:break-all hover:[&_a]:underline"
+              dangerouslySetInnerHTML={{ __html: categoryReferencesHtml }}
+            />
+          )}
         </section>
       </main>
     </div>

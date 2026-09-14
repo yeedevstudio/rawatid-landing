@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { blogSubnavGroups, headerValueBlog } from "../constant/headerValue";
+import { CONTAINER_CLASS } from "../constant/containerValue";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { IconChevronRight, IconMenu2, IconHome, IconHeartPlus, IconNews, IconDeviceDesktopAnalytics, IconBuildingCommunity, IconBriefcase, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
@@ -31,6 +32,8 @@ const mobileNavItems = [
     matchPrefixes: ["/alat-kesehatan"],
     items: [
       { title: "Kalkulator BMI", url: "/alat-kesehatan/kalkulator-bmi" },
+      { title: "Kalkulator TDEE", url: "/alat-kesehatan/kalkulator-tdee" },
+      { title: "Kalkulator BMR", url: "/alat-kesehatan/kalkulator-bmr" },
       { title: "Pengingat Minum Obat", url: "/alat-kesehatan/pengingat-minum-obat" },
       { title: "Rencana Diet", url: "/alat-kesehatan/rencana-diet" },
       { title: "Personal Health Record", url: "/alat-kesehatan/personal-health-record" },
@@ -95,8 +98,8 @@ export default function Header() {
 
   const subNavLinkClassName = (isActive) =>
     isActive
-      ? "flex items-center text-sm md:text-lg text-green font-semibold border-b-2 border-green px-1 h-[85px]"
-      : "flex items-center text-sm md:text-lg text-gray-800 hover:text-green transition-all px-1 h-[85px] border-b-2 border-transparent";
+      ? "flex items-center rounded-full bg-[#EBF6F9] px-5 py-2.5 text-lg font-medium text-green transition-colors"
+      : "flex items-center rounded-full px-5 py-2.5 text-lg font-medium text-gray-800 hover:text-green transition-colors";
 
   const activeBlogGroup = blogSubnavGroups?.find((g) => g.matchPrefixes?.some((p) => router.startsWith(p))) || null;
 
@@ -117,130 +120,131 @@ export default function Header() {
 
   return (
     <div className="w-full">
-      <header className="bg-white w-full h-[85px] px-5 md:px-12 flex items-center justify-between border-b border-black/5">
-        {/* prefetch dimatikan: logo ini selalu berada di viewport, sehingga
-            setiap halaman mem-prefetch payload RSC beranda — termasuk direktif
-            preload gambar hero-nya, yang lalu terunduh dengan prioritas High di
-            halaman yang tidak menampilkannya sama sekali. */}
-        <Link href="/" title="beranda" prefetch={false} className="shrink-0">
-          <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
-        </Link>
+      <header className="bg-white w-full border-b border-black/5">
+        <div className={`${CONTAINER_CLASS} h-[85px] flex items-center justify-between`}>
+          {/* prefetch dimatikan: logo ini selalu berada di viewport, sehingga
+              setiap halaman mem-prefetch payload RSC beranda — termasuk direktif
+              preload gambar hero-nya, yang lalu terunduh dengan prioritas High di
+              halaman yang tidak menampilkannya sama sekali. */}
+          <Link href="/" title="beranda" prefetch={false} className="shrink-0">
+            <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={true} quality={90} decoding="sync" />
+          </Link>
 
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-8 2xl:gap-16">
-          <div className="flex gap-4 xl:gap-8 2xl:gap-16">
-            {headerValueBlog?.map((item, index) => {
-              const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
-              return (
-                <Link href={item.url} key={index} itemProp="button">
-                  <h2 className={blogNavLinkClassName(isActive)}>{item.title}</h2>
-                </Link>
-              );
-            })}
-          </div>
-          {user ? (
-            <UserMenu user={user} onLogout={() => setUser(null)} />
-          ) : (
-            <Link href="/signin">
-              <Button className="bg-green hover:bg-green/90 text-white text-base font-semibold px-6 py-6 rounded-lg">
-                Masuk
-              </Button>
-            </Link>
-          )}
-        </nav>
-
-        <div className="flex lg:hidden">
-          <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <button aria-label="Menu">
-                <IconMenu2 className="w-8 h-8 text-green" role="button" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <Link title="Rawat.ID" href="/" prefetch={false} onClick={handleClose} className={"flex items-center gap-1 px-1 mt-7"}>
-                <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={false} quality={90} />
-                <SheetTitle className="text-green text-xl">Rawat.ID</SheetTitle>
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 2xl:gap-16">
+            <div className="flex gap-4 xl:gap-8 2xl:gap-16">
+              {headerValueBlog?.map((item, index) => {
+                const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
+                return (
+                  <Link href={item.url} key={index} itemProp="button">
+                    <h2 className={blogNavLinkClassName(isActive)}>{item.title}</h2>
+                  </Link>
+                );
+              })}
+            </div>
+            {user ? (
+              <UserMenu user={user} onLogout={() => setUser(null)} />
+            ) : (
+              <Link href="/signin">
+                <Button className="bg-green hover:bg-green/90 text-white text-base font-semibold px-6 py-6 rounded-lg">
+                  Masuk
+                </Button>
               </Link>
-              <nav className="mt-8">
-                <ul className="flex flex-col">
-                  {mobileNavItems.map((item) => {
-                    const Icon = item.icon;
-                    const isExpanded = expandedGroup === item.title;
+            )}
+          </nav>
 
-                    if (item.items) {
+          <div className="flex lg:hidden">
+            <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
+              <SheetTrigger asChild>
+                <button aria-label="Menu">
+                  <IconMenu2 className="w-8 h-8 text-green" role="button" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <Link title="Rawat.ID" href="/" prefetch={false} onClick={handleClose} className={"flex items-center gap-1 px-1 mt-7"}>
+                  <Image src={"/images/logo.webp"} alt="logo" width={50} height={50} priority={false} quality={90} />
+                  <SheetTitle className="text-green text-xl">Rawat.ID</SheetTitle>
+                </Link>
+                <nav className="mt-8">
+                  <ul className="flex flex-col">
+                    {mobileNavItems.map((item) => {
+                      const Icon = item.icon;
+                      const isExpanded = expandedGroup === item.title;
+
+                      if (item.items) {
+                        return (
+                          <li key={item.title}>
+                            <button
+                              onClick={() => setExpandedGroup(isExpanded ? null : item.title)}
+                              className={`w-full flex items-center justify-between px-4 py-4 text-base font-medium text-left transition-colors ${isExpanded ? "bg-[#EBF6F9] text-green" : "text-gray-800 hover:text-green"}`}
+                            >
+                              <span className="flex items-center gap-3">
+                                <Icon size={22} className={isExpanded ? "text-green" : "text-gray-500"} />
+                                {item.title}
+                              </span>
+                              {isExpanded ? <IconChevronUp size={18} className="text-green" /> : <IconChevronDown size={18} className="text-gray-400" />}
+                            </button>
+                            {isExpanded && (
+                              <ul className="bg-[#EBF6F9] pb-2">
+                                {item.items.map((sub) => {
+                                  const isActive = router === sub.url || router.startsWith(`${sub.url}/`);
+                                  return (
+                                    <li key={sub.url}>
+                                      <Link
+                                        href={sub.url}
+                                        onClick={handleClose}
+                                        className={`flex items-center pl-[52px] pr-4 py-3 text-base transition-colors ${isActive ? "text-green font-semibold border-l-[3px] border-green" : "text-gray-700 hover:text-green border-l-[3px] border-transparent"}`}
+                                      >
+                                        {sub.title}
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            )}
+                          </li>
+                        );
+                      }
+
+                      const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
                       return (
                         <li key={item.title}>
-                          <button
-                            onClick={() => setExpandedGroup(isExpanded ? null : item.title)}
-                            className={`w-full flex items-center justify-between px-4 py-4 text-base font-medium text-left transition-colors ${isExpanded ? "bg-[#EBF6F9] text-green" : "text-gray-800 hover:text-green"}`}
+                          <Link
+                            href={item.url}
+                            onClick={handleClose}
+                            className={`flex items-center gap-3 px-4 py-4 text-base font-medium transition-colors ${isActive ? "text-green font-semibold" : "text-gray-800 hover:text-green"}`}
                           >
-                            <span className="flex items-center gap-3">
-                              <Icon size={22} className={isExpanded ? "text-green" : "text-gray-500"} />
-                              {item.title}
-                            </span>
-                            {isExpanded ? <IconChevronUp size={18} className="text-green" /> : <IconChevronDown size={18} className="text-gray-400" />}
-                          </button>
-                          {isExpanded && (
-                            <ul className="bg-[#EBF6F9] pb-2">
-                              {item.items.map((sub) => {
-                                const isActive = router === sub.url || router.startsWith(`${sub.url}/`);
-                                return (
-                                  <li key={sub.url}>
-                                    <Link
-                                      href={sub.url}
-                                      onClick={handleClose}
-                                      className={`flex items-center pl-[52px] pr-4 py-3 text-base transition-colors ${isActive ? "text-green font-semibold border-l-[3px] border-green" : "text-gray-700 hover:text-green border-l-[3px] border-transparent"}`}
-                                    >
-                                      {sub.title}
-                                    </Link>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          )}
+                            <Icon size={22} className={isActive ? "text-green" : "text-gray-500"} />
+                            {item.title}
+                          </Link>
                         </li>
                       );
-                    }
-
-                    const isActive = item.url === "/" ? router === "/" : router === item.url || router.startsWith(`${item.url}/`);
-                    return (
-                      <li key={item.title}>
-                        <Link
-                          href={item.url}
-                          onClick={handleClose}
-                          className={`flex items-center gap-3 px-4 py-4 text-base font-medium transition-colors ${isActive ? "text-green font-semibold" : "text-gray-800 hover:text-green"}`}
-                        >
-                          <Icon size={22} className={isActive ? "text-green" : "text-gray-500"} />
-                          {item.title}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-            </SheetContent>
-          </Sheet>
+                    })}
+                  </ul>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </header>
 
       {activeBlogGroup ? (
-        <div className="hidden lg:block w-full bg-[#EBF6F9] border-b border-black/5 h-[85px]">
-          <div className="px-5 md:px-12 flex items-center gap-6 h-full">
-            <div className="hidden md:flex items-center gap-3 min-w-[16rem]">
-              <Link href={activeBlogGroup.groupUrl} className="text-sm md:text-lg text-gray-800 font-semibold hover:text-green transition-all">
+        <div className="hidden lg:block w-full bg-[#EBF6F9] border-b border-black/5">
+          <div className={`${CONTAINER_CLASS} py-8`}>
+            <div className="flex items-center gap-2 pl-5">
+              <Link href={activeBlogGroup.groupUrl} className="text-2xl text-green font-medium hover:text-greenHover transition-colors">
                 {activeBlogGroup.groupTitle}
               </Link>
-              <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
               {activeBlogSection?.sectionTitle ? (
                 <>
-                  <Link href={activeBlogSection.sectionUrl} className="text-sm md:text-lg text-gray-800 font-semibold hover:text-green transition-all">
+                  <IconChevronRight className="w-6 h-6 text-green" aria-hidden="true" suppressHydrationWarning />
+                  <Link href={activeBlogSection.sectionUrl} className="text-2xl text-green font-medium hover:text-greenHover transition-colors">
                     {activeBlogSection.sectionTitle}
                   </Link>
-                  <IconChevronRight className="w-7 h-6 text-gray-500" aria-hidden="true" suppressHydrationWarning />
                 </>
               ) : null}
             </div>
 
-            <nav className="flex items-stretch gap-8 md:gap-10 overflow-x-auto whitespace-nowrap">
+            <nav className="mt-6 inline-flex max-w-full items-center gap-10 overflow-x-auto whitespace-nowrap rounded-full bg-white p-2">
               {activeSubnavItems.map((it) => {
                 const isActive = router === it.url || router.startsWith(`${it.url}/`);
                 return (

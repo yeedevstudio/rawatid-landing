@@ -85,6 +85,28 @@ export default function UserMenu({ user, onLogout }) {
             <div className="mx-5 border-t border-gray-100" />
 
             <Link
+              href="/alat-kesehatan/kalkulator-tdee/riwayat-tdee"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 px-5 py-3 text-green font-semibold hover:bg-gray-50 transition-colors"
+            >
+              <IconHistory size={22} className="shrink-0" />
+              Lihat Riwayat Pemeriksaan TDEE
+            </Link>
+
+            <div className="mx-5 border-t border-gray-100" />
+
+            <Link
+              href="/alat-kesehatan/kalkulator-bmr/riwayat-bmr"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 px-5 py-3 text-green font-semibold hover:bg-gray-50 transition-colors"
+            >
+              <IconHistory size={22} className="shrink-0" />
+              Lihat Riwayat Pemeriksaan BMR
+            </Link>
+
+            <div className="mx-5 border-t border-gray-100" />
+
+            <Link
               href="/perbarui-akun"
               onClick={() => setOpen(false)}
               className="flex items-center gap-3 px-5 py-3 text-gray-800 font-medium hover:bg-gray-50 transition-colors"

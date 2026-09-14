@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import RmeHeroSection from "@/module/sistem-faskes/rekam-medis-elektronik/components/RmeHeroSection";
 import FiturSection from "@/module/home/components/FiturSection";
 import AdvertisSection from "@/module/home/components/AdvertisSection";
@@ -16,7 +17,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div className="w-full">
-      <div className="px-5 md:px-12 pt-6">
+      <div className={`${CONTAINER_CLASS} pt-6`}>
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },

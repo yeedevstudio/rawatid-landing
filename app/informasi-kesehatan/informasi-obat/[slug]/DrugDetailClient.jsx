@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
 import { IconBrandFacebook, IconBrandLinkedin, IconBrandWhatsapp, IconBrandX, IconLink } from "@tabler/icons-react";
 import Breadcrumbs from "@/common/components/Breadcrumbs";
+import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import NotFound from "@/app/not-found";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -117,7 +118,7 @@ export default function DrugDetailClient({ slug, initialData = null }) {
   // Server sudah menyiapkan detail + drugs + related, jadi jangan ulangi
   // rantai fetch-nya saat mount.
   const skipInitialFetch = useRef(Boolean(initialData));
-  const containerClass = "mx-auto w-full max-w-screen-2xl px-10 sm:px-6 lg:px-8";
+  const containerClass = CONTAINER_CLASS;
   const [copied, setCopied] = useState(false);
 
   const shareUrl = typeof window !== "undefined" ? window.location?.href || "" : "";
