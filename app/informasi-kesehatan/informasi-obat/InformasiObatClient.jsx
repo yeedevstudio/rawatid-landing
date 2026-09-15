@@ -65,7 +65,8 @@ export default function InformasiObatClient({ category }) {
         params.set("perPage", String(PAGE_SIZE));
         params.set("search", query);
         params.set("navigasi", navigasi);
-        params.set("drug_category_code", categoryCode);
+        // Tanpa kategori (halaman utama) = semua obat.
+        if (categoryCode) params.set("drug_category_code", categoryCode);
 
         const res = await fetch(
           `/api/drug-ingredients/public?${params.toString()}`,
@@ -119,35 +120,50 @@ export default function InformasiObatClient({ category }) {
               href: "/informasi-kesehatan/informasi-obat",
             },
             {
-              label: "Kategori Obat",
+              label: "Informasi Obat",
               href: "/informasi-kesehatan/informasi-obat",
             },
-            {
-              label: categoryName,
-              href: `/informasi-kesehatan/informasi-obat/kategori/${category?.slug ?? ""}`,
-            },
+            ...(category
+              ? [
+                  {
+                    label: "Kategori Obat",
+                    href: "/informasi-kesehatan/informasi-obat/kategori",
+                  },
+                  {
+                    label: categoryName,
+                    href: `/informasi-kesehatan/informasi-obat/kategori/${category.slug}`,
+                  },
+                ]
+              : []),
           ]}
         />
       </div>
 
       <main className={`${containerClass} pb-12 pt-10 md:pt-16`}>
-        <div>
-          <h1 className="text-green font-semibold text-lg md:text-xl">{categoryName}</h1>
-          {isDescriptionHtml ? (
-            <div
-              className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_a]:text-green"
-              dangerouslySetInnerHTML={{ __html: categoryDescription }}
-            />
-          ) : descriptionParagraphs.length ? (
-            <div className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed space-y-4">
-              {descriptionParagraphs.map((p, idx) => (
-                <p key={idx} className="whitespace-pre-line">{p}</p>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-600 text-sm md:text-base mt-1">-</p>
-          )}
-        </div>
+        {!category ? (
+          <div className="text-center">
+            <h1 className="text-green font-semibold text-lg md:text-xl">Direktori Obat Lengkap: Informasi Manfaat, Dosis &amp; Efek Samping</h1>
+            <p className="text-gray-600 text-sm md:text-base mt-1">Cari obat berdasarkan nama untuk menemukan manfaat, aturan pakai, dosis anjuran, kontraindikasi hingga risiko overdosis</p>
+          </div>
+        ) : (
+          <div>
+            <h1 className="text-green font-semibold text-lg md:text-xl">{categoryName}</h1>
+            {isDescriptionHtml ? (
+              <div
+                className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_a]:text-green"
+                dangerouslySetInnerHTML={{ __html: categoryDescription }}
+              />
+            ) : descriptionParagraphs.length ? (
+              <div className="text-gray-600 text-sm md:text-base mt-1 leading-relaxed space-y-4">
+                {descriptionParagraphs.map((p, idx) => (
+                  <p key={idx} className="whitespace-pre-line">{p}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600 text-sm md:text-base mt-1">-</p>
+            )}
+          </div>
+        )}
 
         <div className="mt-6 max-w-2xl mx-auto">
           <div className="flex items-stretch">
@@ -198,12 +214,29 @@ export default function InformasiObatClient({ category }) {
                 );
               })}
             </div>
+            {!category ? (
+              <Link
+                href="/informasi-kesehatan/informasi-obat/kategori"
+                className="group inline-block mt-4 text-sm md:text-base text-gray-500"
+              >
+                Atau cari Obat berdasarkan{" "}
+                <span className="font-bold text-green group-hover:text-greenHover transition-colors">
+                  Kategori
+                </span>{" "}
+                atau{" "}
+                <span className="font-bold text-green group-hover:text-greenHover transition-colors">
+                  Golongan
+                </span>
+              </Link>
+            ) : null}
           </div>
         ) : null}
 
         <section className="mt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-gray-800 font-semibold">Daftar Obat Kategori {categoryName}</h2>
+            <h2 className="text-gray-800 font-semibold">
+              {category ? `Daftar Obat Kategori ${categoryName}` : "Daftar Obat"}
+            </h2>
             <div className="text-sm text-gray-500">
               {totalItems
                 ? `${(safePage - 1) * PAGE_SIZE + 1}-${Math.min(
@@ -235,7 +268,7 @@ export default function InformasiObatClient({ category }) {
             <div className="mt-6 text-sm text-red-600">{error}</div>
           ) : !items.length ? (
             <div className="mt-6 text-sm text-gray-500">
-              Belum ada obat pada kategori ini.
+              {category ? "Belum ada obat pada kategori ini." : "Obat tidak ditemukan."}
             </div>
           ) : null}
 
@@ -318,50 +351,54 @@ export default function InformasiObatClient({ category }) {
           </div>
         </section>
 
-        <section className="mt-12">
-          <h2 className="text-gray-800 font-medium text-base md:text-lg">Tags</h2>
-          {categoryTags.length ? (
-            <div className="mt-3 flex flex-wrap gap-3 md:gap-5">
-              {categoryTags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-green px-2.5 py-0.5 text-sm md:text-base text-green"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
-          )}
-        </section>
+        {category ? (
+          <>
+            <section className="mt-12">
+              <h2 className="text-gray-800 font-medium text-base md:text-lg">Tags</h2>
+              {categoryTags.length ? (
+                <div className="mt-3 flex flex-wrap gap-3 md:gap-5">
+                  {categoryTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-green px-2.5 py-0.5 text-sm md:text-base text-green"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
+              )}
+            </section>
 
-        <section className="mt-12">
-          <h2 className="text-gray-800 font-medium text-base md:text-lg">Referensi</h2>
-          {!hasReferences ? (
-            <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
-          ) : categoryReferences.length ? (
-            <ul className="mt-3 space-y-2">
-              {categoryReferences.map((ref, idx) => (
-                <li key={`${ref.url}-${idx}`}>
-                  <a
-                    href={ref.url}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="text-sm md:text-base text-green break-all hover:text-greenHover hover:underline transition-colors"
-                  >
-                    {ref.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div
-              className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-2 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_li]:mb-2 [&_a]:text-green [&_a]:break-all hover:[&_a]:underline"
-              dangerouslySetInnerHTML={{ __html: categoryReferencesHtml }}
-            />
-          )}
-        </section>
+            <section className="mt-12">
+              <h2 className="text-gray-800 font-medium text-base md:text-lg">Referensi</h2>
+              {!hasReferences ? (
+                <p className="mt-3 text-sm md:text-base text-gray-600">-</p>
+              ) : categoryReferences.length ? (
+                <ul className="mt-3 space-y-2">
+                  {categoryReferences.map((ref, idx) => (
+                    <li key={`${ref.url}-${idx}`}>
+                      <a
+                        href={ref.url}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="text-sm md:text-base text-green break-all hover:text-greenHover hover:underline transition-colors"
+                      >
+                        {ref.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div
+                  className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed [&_p]:mb-2 [&_ol]:ml-5 [&_ol]:list-decimal [&_ul]:ml-5 [&_ul]:list-disc [&_li]:mb-2 [&_a]:text-green [&_a]:break-all hover:[&_a]:underline"
+                  dangerouslySetInnerHTML={{ __html: categoryReferencesHtml }}
+                />
+              )}
+            </section>
+          </>
+        ) : null}
       </main>
     </div>
   );

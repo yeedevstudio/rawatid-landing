@@ -19,10 +19,10 @@ export const headerValue = [
 ];
 
 export const headerValueBlog = [
-  {
-    title: "Beranda",
-    url: "/",
-  },
+  // {
+  //   title: "Beranda",
+  //   url: "/",
+  // },
   {
     title: "Informasi Kesehatan",
     url: "/informasi-kesehatan/informasi-obat",
@@ -39,10 +39,10 @@ export const headerValueBlog = [
     title: "Alat Kesehatan Digital",
     url: "/alat-kesehatan",
   },
-  {
-    title: "Sistem Digital Faskes",
-    url: "/sistem-faskes",
-  },
+  // {
+  //   title: "Sistem Digital Faskes",
+  //   url: "/sistem-faskes",
+  // },
 ];
 
 export const blogSubnavGroups = [
@@ -124,10 +124,10 @@ export const blogSubnavGroups = [
         url: "/alat-kesehatan/pengingat-minum-obat",
       },
       { title: "Rencana Diet", url: "/alat-kesehatan/rencana-diet" },
-      {
-        title: "Personal Health Record",
-        url: "/alat-kesehatan/personal-health-record",
-      },
+      // {
+      //   title: "Personal Health Record",
+      //   url: "/alat-kesehatan/personal-health-record",
+      // },
     ],
   },
 

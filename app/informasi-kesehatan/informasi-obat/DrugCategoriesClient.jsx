@@ -62,8 +62,12 @@ export default function DrugCategoriesClient() {
               href: "/informasi-kesehatan/informasi-obat",
             },
             {
-              label: "Kategori Obat",
+              label: "Informasi Obat",
               href: "/informasi-kesehatan/informasi-obat",
+            },
+            {
+              label: "Kategori Obat",
+              href: "/informasi-kesehatan/informasi-obat/kategori",
             },
           ]}
         />
@@ -90,7 +94,6 @@ export default function DrugCategoriesClient() {
                 >
                   <Skeleton className="w-6 h-6 rounded-md" />
                   <Skeleton className="h-5 w-3/4 mt-3" />
-                  <Skeleton className="h-4 w-full mt-2" />
                   <Skeleton className="h-4 w-28 mt-3" />
                 </div>
               ))}
@@ -112,11 +115,6 @@ export default function DrugCategoriesClient() {
                   <h2 className="font-semibold text-gray-900 text-base md:text-lg mt-3">
                     {c.name}
                   </h2>
-                  {c.description ? (
-                    <p className="text-gray-600 text-sm mt-1 line-clamp-2">
-                      {c.description}
-                    </p>
-                  ) : null}
                   <Link
                     href={`/informasi-kesehatan/informasi-obat/kategori/${c.slug}`}
                     className="inline-flex items-center gap-1 text-green font-semibold text-sm md:text-base mt-2 hover:text-greenHover transition-colors"

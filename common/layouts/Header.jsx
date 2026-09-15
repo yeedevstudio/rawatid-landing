@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 import UserMenu from "./UserMenu";
 
 const mobileNavItems = [
-  { title: "Beranda", url: "/", icon: IconHome },
+  // { title: "Beranda", url: "/", icon: IconHome },
   {
     title: "Informasi Kesehatan",
     icon: IconHeartPlus,
@@ -25,7 +25,7 @@ const mobileNavItems = [
   },
   { title: "Artikel", url: "/blog", icon: IconNews },
   { title: "Interaktif", url: "/interaktif", icon: IconDeviceDesktopAnalytics },
-  { title: "Sistem Faskes", url: "/sistem-faskes", icon: IconBuildingCommunity },
+  // { title: "Sistem Faskes", url: "/sistem-faskes", icon: IconBuildingCommunity },
   {
     title: "Alat Kesehatan",
     icon: IconBriefcase,

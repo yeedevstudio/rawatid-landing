@@ -1,8 +1,8 @@
-import DrugCategoriesClient from "./DrugCategoriesClient";
+import InformasiObatClient from "./InformasiObatClient";
 
-// Halaman utama Informasi Obat menampilkan daftar kategori obat. Kategori
-// diambil per halaman dari browser (/api/drug-categories/public) agar terlihat di tab Network.
-// Daftar obat per kategori ada di /informasi-obat/kategori/[slug].
+// Halaman utama Informasi Obat menampilkan daftar semua obat
+// (/api/drug-ingredients/public tanpa filter kategori). Daftar kategori ada di
+// /informasi-obat/kategori, dan obat per kategori di /informasi-obat/kategori/[slug].
 export default function Page() {
-  return <DrugCategoriesClient />;
+  return <InformasiObatClient />;
 }
