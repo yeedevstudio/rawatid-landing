@@ -30,8 +30,8 @@ jobs:
             echo "${{ vars.ENV_DEV }}" > .env
             echo "TAG=dev" >> $GITHUB_ENV
           else
-            # echo "${{ vars.ENV_PROD }}" > .env
-            # echo "TAG=prod" >> $GITHUB_ENV
+            echo "${{ vars.ENV_PROD }}" > .env
+            echo "TAG=prod" >> $GITHUB_ENV
           fi
 
       - name: Check isi file .env
@@ -68,8 +68,8 @@ jobs:
             TAG=dev
             PORT="${{ vars.EXPOSE_PORT_DEV }}"
           else
-            # TAG=prod
-            # PORT="${{ vars.EXPOSE_PORT_PROD }}"
+            TAG=prod
+            PORT="${{ vars.EXPOSE_PORT_PROD }}"
           fi
 
           ssh -o StrictHostKeyChecking=no "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}" \
