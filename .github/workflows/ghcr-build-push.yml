@@ -1,0 +1,81 @@
+name: Build and Push Docker image to GitHub Container Registry
+
+on:
+  push:
+    branches:
+      # - main // landing page production sekarang tidak pakai vps
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for authentication # digenerate otomatis oleh github, tidak perlu dibuat manual
+
+      - name: Prepare .env file
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
+            echo "${{ vars.ENV_DEV }}" > .env
+            echo "TAG=dev" >> $GITHUB_ENV
+          else
+            echo "${{ vars.ENV_PROD }}" > .env
+            echo "TAG=prod" >> $GITHUB_ENV
+          fi
+
+      - name: Check isi file .env
+        run: cat .env
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2 | tr '[:upper:]' '[:lower:]')
+          IMAGE=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${TAG}
+          echo "Building ${IMAGE}"
+          docker build --no-cache -t "${IMAGE}" .
+          docker push "${IMAGE}"
+
+      - name: Clean up .env
+        if: always()
+        run: rm -f .env
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ vars.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          IMAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2 | tr '[:upper:]' '[:lower:]')
+          if [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
+            TAG=dev
+            PORT="${{ vars.EXPOSE_PORT_DEV }}"
+          else
+            TAG=prod
+            PORT="${{ vars.EXPOSE_PORT_PROD }}"
+          fi
+
+          ssh -o StrictHostKeyChecking=no "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}" \
+            "docker login ghcr.io -u '${{ github.actor }}' -p '${{ secrets.GHCR_PAT }}' && \
+             docker stop ${IMAGE_NAME}-${TAG} || true && \
+             docker rm -f ${IMAGE_NAME}-${TAG} || true && \
+             docker rmi -f ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${TAG} || true && \
+             docker pull ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${TAG} && \
+             docker run -d --name ${IMAGE_NAME}-${TAG} -p ${PORT} --restart unless-stopped ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${TAG}"
