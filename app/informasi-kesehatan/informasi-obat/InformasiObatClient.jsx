@@ -8,7 +8,7 @@ import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { normalizeDrugRows, PAGE_SIZE } from "./normalizeDrugs";
+import { normalizeDrugRows, PAGE_SIZE, DRUG_GROUPS } from "./normalizeDrugs";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -16,7 +16,10 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-export default function InformasiObatClient({ category }) {
+// category: kategori atau golongan yang sedang dibuka; kind menentukan yang
+// mana ("kategori" default, atau "golongan") — lihat DRUG_GROUPS.
+export default function InformasiObatClient({ category, kind = "kategori" }) {
+  const group = DRUG_GROUPS[kind];
   const categoryCode = category?.code ?? "";
   const categoryName = category?.name ?? "";
   const categoryDescription = category?.description ?? "";
@@ -65,8 +68,8 @@ export default function InformasiObatClient({ category }) {
         params.set("perPage", String(PAGE_SIZE));
         params.set("search", query);
         params.set("navigasi", navigasi);
-        // Tanpa kategori (halaman utama) = semua obat.
-        if (categoryCode) params.set("drug_category_code", categoryCode);
+        // Tanpa kategori/golongan (halaman utama) = semua obat.
+        if (categoryCode) params.set(group.filterParam, categoryCode);
 
         const res = await fetch(
           `/api/drug-ingredients/public?${params.toString()}`,
@@ -95,7 +98,7 @@ export default function InformasiObatClient({ category }) {
     return () => {
       controller.abort();
     };
-  }, [page, query, navigasi, categoryCode]);
+  }, [page, query, navigasi, categoryCode, group.filterParam]);
 
   const safePage = clamp(page, 1, Math.max(1, totalPages));
 
@@ -126,12 +129,12 @@ export default function InformasiObatClient({ category }) {
             ...(category
               ? [
                   {
-                    label: "Kategori Obat",
-                    href: "/informasi-kesehatan/informasi-obat/kategori",
+                    label: `${group.label} Obat`,
+                    href: group.href,
                   },
                   {
                     label: categoryName,
-                    href: `/informasi-kesehatan/informasi-obat/kategori/${category.slug}`,
+                    href: `${group.href}/${category.slug}`,
                   },
                 ]
               : []),
@@ -215,19 +218,22 @@ export default function InformasiObatClient({ category }) {
               })}
             </div>
             {!category ? (
-              <Link
-                href="/informasi-kesehatan/informasi-obat/kategori"
-                className="group inline-block mt-4 text-sm md:text-base text-gray-500"
-              >
+              <p className="mt-4 text-sm md:text-base text-gray-500">
                 Atau cari Obat berdasarkan{" "}
-                <span className="font-bold text-green group-hover:text-greenHover transition-colors">
+                <Link
+                  href={DRUG_GROUPS.kategori.href}
+                  className="font-bold text-green hover:text-greenHover transition-colors"
+                >
                   Kategori
-                </span>{" "}
+                </Link>{" "}
                 atau{" "}
-                <span className="font-bold text-green group-hover:text-greenHover transition-colors">
+                <Link
+                  href={DRUG_GROUPS.golongan.href}
+                  className="font-bold text-green hover:text-greenHover transition-colors"
+                >
                   Golongan
-                </span>
-              </Link>
+                </Link>
+              </p>
             ) : null}
           </div>
         ) : null}
@@ -235,7 +241,7 @@ export default function InformasiObatClient({ category }) {
         <section className="mt-10">
           <div className="flex items-center justify-between">
             <h2 className="text-gray-800 font-semibold">
-              {category ? `Daftar Obat Kategori ${categoryName}` : "Daftar Obat"}
+              {category ? `Daftar Obat ${group.label} ${categoryName}` : "Daftar Obat"}
             </h2>
             <div className="text-sm text-gray-500">
               {totalItems
@@ -268,7 +274,7 @@ export default function InformasiObatClient({ category }) {
             <div className="mt-6 text-sm text-red-600">{error}</div>
           ) : !items.length ? (
             <div className="mt-6 text-sm text-gray-500">
-              {category ? "Belum ada obat pada kategori ini." : "Obat tidak ditemukan."}
+              {category ? `Belum ada obat pada ${group.label.toLowerCase()} ini.` : "Obat tidak ditemukan."}
             </div>
           ) : null}
 

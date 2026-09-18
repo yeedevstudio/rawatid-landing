@@ -72,7 +72,7 @@ export default async function InformasiMenuDietPage() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 md:px-6 pb-10 pt-6">
+      <main className={`${CONTAINER_CLASS} pb-10 pt-6`}>
         <MenuDietClient initialData={initialData} />
       </main>
     </div>

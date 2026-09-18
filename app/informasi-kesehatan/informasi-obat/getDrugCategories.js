@@ -1,11 +1,12 @@
-import { normalizeCategories } from "./normalizeDrugs";
+import { CM_API_BASE } from "@/common/constant/api";
+import { DRUG_GROUPS, normalizeCategories } from "./normalizeDrugs";
 
-// Dipakai halaman daftar kategori dan halaman kategori/[slug]. URL + opsi
+// Dipakai halaman daftar kategori/golongan dan halaman [slug]-nya. URL + opsi
 // fetch-nya sama, jadi dalam satu render pass (generateMetadata + Page) Next
-// memoize request ini — API kategori hanya dipanggil sekali.
-export async function getDrugCategories() {
+// memoize request ini — API-nya hanya dipanggil sekali.
+async function getDrugGroups(kind) {
   try {
-    const res = await fetch("https://cm-api.rawat.id/drug-categories/public/all", {
+    const res = await fetch(`${CM_API_BASE}/${DRUG_GROUPS[kind].apiPath}/public/all`, {
       next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
@@ -14,3 +15,6 @@ export async function getDrugCategories() {
     return null;
   }
 }
+
+export const getDrugCategories = () => getDrugGroups("kategori");
+export const getDrugClasses = () => getDrugGroups("golongan");

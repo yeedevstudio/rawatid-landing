@@ -36,7 +36,7 @@ export default async function InformasiRsDanKlinikPage() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-12 pb-16 pt-6">
+      <main className={`${CONTAINER_CLASS} pb-16 pt-6`}>
         <FacilitiesClient
           initialData={{
             data: initial.data,

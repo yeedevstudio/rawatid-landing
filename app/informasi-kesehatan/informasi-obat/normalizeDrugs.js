@@ -53,6 +53,24 @@ export function normalizeDrugRows(json) {
 
 export const CATEGORY_PAGE_SIZE = 12;
 
+// Obat bisa dikelompokkan per kategori atau per golongan. Keduanya punya bentuk
+// API yang sama ({ id, code, name, description, tags, ... }), jadi halaman
+// daftar & halaman detailnya memakai komponen yang sama dengan konfigurasi ini.
+export const DRUG_GROUPS = {
+  kategori: {
+    label: "Kategori",
+    apiPath: "drug-categories",
+    filterParam: "drug_category_code",
+    href: "/informasi-kesehatan/informasi-obat/kategori",
+  },
+  golongan: {
+    label: "Golongan",
+    apiPath: "drug-classes",
+    filterParam: "drug_class_code",
+    href: "/informasi-kesehatan/informasi-obat/golongan",
+  },
+};
+
 // Tags kategori: terima array (string / { name }) atau string dipisah koma/baris.
 function toTagList(value) {
   const arr = Array.isArray(value) ? value : String(value ?? "").split(/[\n,]/);

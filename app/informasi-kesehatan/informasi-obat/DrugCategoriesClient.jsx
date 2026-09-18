@@ -7,9 +7,12 @@ import Breadcrumbs from "@/common/components/Breadcrumbs";
 import { CONTAINER_CLASS } from "@/common/constant/containerValue";
 import PaginationPage from "@/common/components/PaginationPage";
 import { Skeleton } from "@/components/ui/skeleton";
-import { normalizeCategories, CATEGORY_PAGE_SIZE } from "./normalizeDrugs";
+import { normalizeCategories, CATEGORY_PAGE_SIZE, DRUG_GROUPS } from "./normalizeDrugs";
 
-export default function DrugCategoriesClient() {
+// kind: "kategori" (default) atau "golongan" — lihat DRUG_GROUPS.
+export default function DrugCategoriesClient({ kind = "kategori" }) {
+  const group = DRUG_GROUPS[kind];
+  const noun = group.label.toLowerCase();
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -18,7 +21,7 @@ export default function DrugCategoriesClient() {
   const [pageCount, setPageCount] = useState(1);
   const containerClass = CONTAINER_CLASS;
 
-  // Kategori diambil per halaman dari browser (terlihat di tab Network).
+  // Kategori/golongan diambil per halaman dari browser (terlihat di tab Network).
   // Paginasi dari API: { data, total, page, perPage, totalPages }.
   useEffect(() => {
     const controller = new AbortController();
@@ -27,19 +30,19 @@ export default function DrugCategoriesClient() {
         setIsLoading(true);
         setError("");
         const res = await fetch(
-          `/api/drug-categories/public?page=${page}&perPage=${CATEGORY_PAGE_SIZE}`,
+          `/api/${group.apiPath}/public?page=${page}&perPage=${CATEGORY_PAGE_SIZE}`,
           { signal: controller.signal }
         );
         const json = await res.json();
         if (!res.ok) {
-          throw new Error(json?.error || "Gagal memuat kategori obat");
+          throw new Error(json?.error || `Gagal memuat ${noun} obat`);
         }
         setCategories(normalizeCategories(json));
         setTotalItems(Number(json?.total) || 0);
         setPageCount(Math.max(1, Number(json?.totalPages) || 1));
       } catch (e) {
         if (e?.name !== "AbortError") {
-          setError(e?.message || "Gagal memuat kategori obat");
+          setError(e?.message || `Gagal memuat ${noun} obat`);
         }
       } finally {
         setIsLoading(false);
@@ -47,7 +50,7 @@ export default function DrugCategoriesClient() {
     })();
 
     return () => controller.abort();
-  }, [page]);
+  }, [page, group.apiPath, noun]);
 
   const start = (page - 1) * CATEGORY_PAGE_SIZE;
 
@@ -66,8 +69,8 @@ export default function DrugCategoriesClient() {
               href: "/informasi-kesehatan/informasi-obat",
             },
             {
-              label: "Kategori Obat",
-              href: "/informasi-kesehatan/informasi-obat/kategori",
+              label: `${group.label} Obat`,
+              href: group.href,
             },
           ]}
         />
@@ -76,11 +79,11 @@ export default function DrugCategoriesClient() {
       <main className={`${containerClass} pb-12 pt-10 md:pt-16`}>
         <div>
           <h1 className="text-green font-semibold text-lg md:text-xl">
-            Temukan Obat Berdasarkan Kategori
+            Temukan Obat Berdasarkan {group.label}
           </h1>
           <p className="text-gray-600 text-sm md:text-base mt-1">
             Temukan manfaat, aturan pakai, dosis anjuran, kontraindikasi hingga
-            risiko overdosis obat berdasarkan kategori
+            risiko overdosis obat berdasarkan {noun}
           </p>
         </div>
 
@@ -102,7 +105,7 @@ export default function DrugCategoriesClient() {
             <div className="text-sm text-red-600">{error}</div>
           ) : !categories.length ? (
             <div className="text-sm text-gray-500">
-              Belum ada kategori obat.
+              Belum ada {noun} obat.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -116,10 +119,10 @@ export default function DrugCategoriesClient() {
                     {c.name}
                   </h2>
                   <Link
-                    href={`/informasi-kesehatan/informasi-obat/kategori/${c.slug}`}
+                    href={`${group.href}/${c.slug}`}
                     className="inline-flex items-center gap-1 text-green font-semibold text-sm md:text-base mt-2 hover:text-greenHover transition-colors"
                   >
-                    Lihat Kategori <ChevronRight className="w-4 h-4" />
+                    Lihat {group.label} <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
               ))}
